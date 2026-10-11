@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# The audio here is 45-second excerpts, published for review.
+# Full recordings are on streaming platforms; search MP.
+Disallow: /*.mp3$
+
+Sitemap: /sitemap.xml

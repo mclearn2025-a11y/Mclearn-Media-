@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Page not found · McLearn Media</title>
+  <meta name="description" content="That page is not here. The music, the books and the advisory work are." />
+  <meta name="robots" content="noindex" />
+  <meta name="theme-color" content="#8A3A1A" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%238A3A1A'/%3E%3Ctext x='32' y='45' font-family='Georgia,serif' font-size='38' font-weight='700' text-anchor='middle' fill='%23FAF1E5'%3EM%3C/text%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500&family=Hanken+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #15100C; --line: #43362A; --paper: #FAF1E5;
+      --muted: #C9B6A1; --brand: #C45D34; --gold: #E4B458;
+      --serif: "Fraunces", Georgia, serif;
+      --sans: "Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { background: var(--ink); color-scheme: dark; }
+    body {
+      min-height: 100vh; display: grid; place-items: center; padding: 40px 20px;
+      background:
+        radial-gradient(760px 420px at 50% 6%, rgba(196,93,52,0.26), transparent 62%),
+        var(--ink);
+      color: var(--paper); font-family: var(--sans); line-height: 1.6;
+      -webkit-font-smoothing: antialiased; text-align: center;
+    }
+    .bulb { margin: 0 auto 26px; width: 2px; height: 86px; background: #2A2019; position: relative; }
+    .bulb::after {
+      content: ""; position: absolute; left: 50%; bottom: -17px; width: 30px; height: 30px;
+      transform: translateX(-50%); border-radius: 50%; background: #FFF3DB;
+      box-shadow: 0 0 46px 20px rgba(232,131,90,.45);
+    }
+    h1 { font-family: var(--serif); font-size: clamp(2.2rem, 7vw, 3.2rem); font-weight: 500; line-height: 1.08; margin-bottom: 16px; }
+    p { max-width: 430px; margin: 0 auto 10px; color: var(--muted); }
+    .links { display: flex; flex-wrap: wrap; gap: 11px; justify-content: center; margin-top: 30px; }
+    a.btn {
+      display: inline-flex; min-height: 48px; align-items: center; padding: 12px 22px;
+      border: 1px solid var(--line); border-radius: 999px; color: var(--paper);
+      font-weight: 700; text-decoration: none;
+    }
+    a.btn:hover { border-color: var(--brand); background: #1E1813; }
+    a.btn.lead { border-color: transparent; background: var(--brand); }
+    a.btn.lead:hover { background: #E8835A; color: var(--ink); }
+    .tag { margin-top: 34px; color: var(--gold); font-family: var(--serif); font-size: 18px; }
+    .foot { margin-top: 10px; color: var(--muted); font-size: 13.5px; }
+    .foot a { color: var(--gold); }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="bulb" aria-hidden="true"></div>
+    <h1>Nothing at this address.</h1>
+    <p>The page you were looking for is not here. Everything else still is.</p>
+    <nav class="links" aria-label="Where to go instead">
+      <a class="btn lead" href="/">McLearn Media</a>
+      <a class="btn" href="/listen.html">Listen</a>
+      <a class="btn" href="/legal.html">Privacy &amp; Terms</a>
+    </nav>
+    <p class="tag">One Sound. Many Stories.</p>
+    <p class="foot">
+      McLearn Media LLC · Brandon, Mississippi ·
+      <a href="mailto:Mclearn2025@gmail.com">Mclearn2025@gmail.com</a> ·
+      <a href="tel:+16018089559">601-808-9559</a>
+    </p>
+  </main>
+</body>
+</html>
