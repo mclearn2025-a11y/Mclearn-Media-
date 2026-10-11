@@ -121,6 +121,41 @@
       color: var(--gold); font-size: 13.5px; font-weight: 700; text-decoration: none;
     }
     .everywhere:hover { color: var(--brand-hi); }
+    .trackbar {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px;
+      margin: -4px 0 12px 67px;
+    }
+    .trackbar .everywhere { margin: 0; padding: 0; }
+    .scanbtn {
+      display: inline-flex; align-items: center; gap: 7px; min-height: 38px;
+      padding: 7px 15px; border: 1px solid var(--line); border-radius: 999px;
+      background: transparent; color: var(--muted);
+      font: inherit; font-size: 13px; font-weight: 700; cursor: pointer;
+    }
+    .scanbtn::before {
+      content: ""; width: 13px; height: 13px; flex: none;
+      border: 2px solid currentColor; border-radius: 3px;
+    }
+    .scanbtn:hover { color: var(--paper); border-color: var(--brand-hi); }
+    .qrpanel {
+      display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
+      margin: 0 0 16px 67px; padding: 16px;
+      border: 1px solid var(--line); border-radius: var(--r-lg);
+      background: rgba(255,255,255,0.04);
+    }
+    .qrpanel[hidden] { display: none; }
+    .qrpanel svg { border-radius: 8px; }
+    .qrnote { max-width: 340px; color: var(--muted); font-size: 13px; line-height: 1.55; }
+    .qrcopy {
+      min-height: 38px; padding: 8px 15px; border: 1px solid var(--line);
+      border-radius: 999px; background: transparent; color: var(--muted);
+      font: inherit; font-size: 13px; font-weight: 700; cursor: pointer;
+      word-break: break-all; text-align: left;
+    }
+    .qrcopy:hover { color: var(--paper); border-color: var(--brand-hi); }
+    @media (max-width: 760px) {
+      .trackbar, .qrpanel { margin-left: 0; }
+    }
     .panel { padding: 24px; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--ink-2); }
     .panel h3 { margin-bottom: 10px; font-family: var(--serif); font-size: 22px; font-weight: 500; }
     .panel p { color: var(--muted); }
@@ -298,6 +333,248 @@
     "Thank You":         ""
   };
 
+/* QR Code Model 2, byte mode, versions 1-10. Ported from the verified
+   Python encoder; every matrix is compared against it before shipping. */
+function mcQR(text, level) {
+  level = level || 'Q';
+  var EXP = new Array(512), LOG = new Array(256), x = 1, i;
+  for (i = 0; i < 255; i++) { EXP[i] = x; LOG[x] = i; x <<= 1; if (x & 0x100) x ^= 0x11D; }
+  for (i = 255; i < 512; i++) EXP[i] = EXP[i - 255];
+  function mul(a, b) { return (a === 0 || b === 0) ? 0 : EXP[LOG[a] + LOG[b]]; }
+  function genPoly(n) {
+    var p = [1], k, j, q, r;
+    for (k = 0; k < n; k++) {
+      q = [1, EXP[k]]; r = new Array(p.length + 1).fill(0);
+      for (j = 0; j < p.length; j++) for (var m = 0; m < q.length; m++) r[j + m] ^= mul(p[j], q[m]);
+      p = r;
+    }
+    return p;
+  }
+  function ecWords(data, n) {
+    var gen = genPoly(n), res = data.slice().concat(new Array(n).fill(0)), j, c;
+    for (var k = 0; k < data.length; k++) {
+      c = res[k];
+      if (c) for (j = 0; j < gen.length; j++) res[k + j] ^= mul(gen[j], c);
+    }
+    return res.slice(data.length);
+  }
+  var BLOCKS = {
+    1:{L:[7,[[1,19]]],M:[10,[[1,16]]],Q:[13,[[1,13]]],H:[17,[[1,9]]]},
+    2:{L:[10,[[1,34]]],M:[16,[[1,28]]],Q:[22,[[1,22]]],H:[28,[[1,16]]]},
+    3:{L:[15,[[1,55]]],M:[26,[[1,44]]],Q:[18,[[2,17]]],H:[22,[[2,13]]]},
+    4:{L:[20,[[1,80]]],M:[18,[[2,32]]],Q:[26,[[2,24]]],H:[16,[[4,9]]]},
+    5:{L:[26,[[1,108]]],M:[24,[[2,43]]],Q:[18,[[2,15],[2,16]]],H:[22,[[2,11],[2,12]]]},
+    6:{L:[18,[[2,68]]],M:[16,[[4,27]]],Q:[24,[[4,19]]],H:[28,[[4,15]]]},
+    7:{L:[20,[[2,78]]],M:[18,[[4,31]]],Q:[18,[[2,14],[4,15]]],H:[26,[[4,13],[1,14]]]},
+    8:{L:[24,[[2,97]]],M:[22,[[2,38],[2,39]]],Q:[22,[[4,18],[2,19]]],H:[26,[[4,14],[2,15]]]},
+    9:{L:[30,[[2,116]]],M:[22,[[3,36],[2,37]]],Q:[20,[[4,16],[4,17]]],H:[24,[[4,12],[4,13]]]},
+    10:{L:[18,[[2,68],[2,69]]],M:[26,[[4,43],[1,44]]],Q:[24,[[6,19],[2,20]]],H:[28,[[6,15],[2,16]]]}
+  };
+  var ALIGN = {1:[],2:[6,18],3:[6,22],4:[6,26],5:[6,30],6:[6,34],7:[6,22,38],8:[6,24,42],9:[6,26,46],10:[6,28,50]};
+  var ECB = {L:1, M:0, Q:3, H:2};
+  function cap(v, l) { var s = 0; BLOCKS[v][l][1].forEach(function (b) { s += b[0] * b[1]; }); return s; }
+
+  var bytes = [];
+  for (i = 0; i < text.length; i++) {
+    var cp = text.charCodeAt(i);
+    if (cp < 0x80) bytes.push(cp);
+    else if (cp < 0x800) bytes.push(0xC0 | (cp >> 6), 0x80 | (cp & 63));
+    else { bytes.push(0xE0 | (cp >> 12), 0x80 | ((cp >> 6) & 63), 0x80 | (cp & 63)); }
+  }
+  var version = 0;
+  for (i = 1; i <= 10; i++) if (bytes.length + 2 <= cap(i, level)) { version = i; break; }
+  if (!version) return null;
+
+  var bits = [];
+  function put(val, len) { for (var k = len - 1; k >= 0; k--) bits.push((val >> k) & 1); }
+  var capBits = cap(version, level) * 8;
+  put(4, 4); put(bytes.length, version <= 9 ? 8 : 16);
+  bytes.forEach(function (b) { put(b, 8); });
+  put(0, Math.min(4, capBits - bits.length));
+  while (bits.length % 8) bits.push(0);
+  var cws = [];
+  for (i = 0; i < bits.length; i += 8) {
+    var v = 0; for (var k = 0; k < 8; k++) v = (v << 1) | bits[i + k];
+    cws.push(v);
+  }
+  var pad = [0xEC, 0x11], pi = 0;
+  while (cws.length < cap(version, level)) cws.push(pad[pi++ % 2]);
+
+  var ecCount = BLOCKS[version][level][0], spec = BLOCKS[version][level][1];
+  var dBlocks = [], eBlocks = [], pos = 0;
+  spec.forEach(function (s) {
+    for (var n = 0; n < s[0]; n++) {
+      var blk = cws.slice(pos, pos + s[1]); pos += s[1];
+      dBlocks.push(blk); eBlocks.push(ecWords(blk, ecCount));
+    }
+  });
+  var inter = [], maxLen = Math.max.apply(null, dBlocks.map(function (b) { return b.length; }));
+  for (i = 0; i < maxLen; i++) dBlocks.forEach(function (b) { if (i < b.length) inter.push(b[i]); });
+  for (i = 0; i < ecCount; i++) eBlocks.forEach(function (b) { inter.push(b[i]); });
+
+  var size = version * 4 + 17;
+  var base = []; for (i = 0; i < size; i++) base.push(new Array(size).fill(null));
+  function finder(m, r, c) {
+    for (var dr = -1; dr <= 7; dr++) for (var dc = -1; dc <= 7; dc++) {
+      var rr = r + dr, cc = c + dc;
+      if (rr >= 0 && rr < size && cc >= 0 && cc < size) {
+        var inside = dr >= 0 && dr <= 6 && dc >= 0 && dc <= 6;
+        var dark = inside && (dr === 0 || dr === 6 || dc === 0 || dc === 6 || (dr >= 2 && dr <= 4 && dc >= 2 && dc <= 4));
+        m[rr][cc] = dark ? 1 : 0;
+      }
+    }
+  }
+  finder(base, 0, 0); finder(base, 0, size - 7); finder(base, size - 7, 0);
+  for (i = 8; i < size - 8; i++) {
+    var tv = i % 2 === 0 ? 1 : 0;
+    if (base[6][i] === null) base[6][i] = tv;
+    if (base[i][6] === null) base[i][6] = tv;
+  }
+  var ctr = ALIGN[version];
+  ctr.forEach(function (r) {
+    ctr.forEach(function (c) {
+      if ((r === 6 && c === 6) || (r === 6 && c === size - 7) || (r === size - 7 && c === 6)) return;
+      for (var dr = -2; dr <= 2; dr++) for (var dc = -2; dc <= 2; dc++)
+        base[r + dr][c + dc] = Math.max(Math.abs(dr), Math.abs(dc)) !== 1 ? 1 : 0;
+    });
+  });
+  base[size - 8][8] = 1;
+  for (i = 0; i < 9; i++) { if (base[8][i] === null) base[8][i] = 0; if (base[i][8] === null) base[i][8] = 0; }
+  for (i = 0; i < 8; i++) {
+    if (base[8][size - 1 - i] === null) base[8][size - 1 - i] = 0;
+    if (base[size - 1 - i][8] === null) base[size - 1 - i][8] = 0;
+  }
+  if (version >= 7) for (i = 0; i < 6; i++) for (var j = 0; j < 3; j++) {
+    base[size - 11 + j][i] = 0; base[i][size - 11 + j] = 0;
+  }
+
+  var positions = [], col = size - 1, up = true;
+  while (col > 0) {
+    if (col === 6) col -= 1;
+    for (var n = 0; n < size; n++) {
+      var row = up ? size - 1 - n : n;
+      for (var ci = 0; ci < 2; ci++) {
+        var cc2 = col - ci;
+        if (base[row][cc2] === null) positions.push([row, cc2]);
+      }
+    }
+    col -= 2; up = !up;
+  }
+  var stream = [];
+  inter.forEach(function (cw) { for (var k = 7; k >= 0; k--) stream.push((cw >> k) & 1); });
+  while (stream.length < positions.length) stream.push(0);
+
+  var MASKS = [
+    function (r, c) { return (r + c) % 2 === 0; },
+    function (r) { return r % 2 === 0; },
+    function (r, c) { return c % 3 === 0; },
+    function (r, c) { return (r + c) % 3 === 0; },
+    function (r, c) { return (Math.floor(r / 2) + Math.floor(c / 3)) % 2 === 0; },
+    function (r, c) { return (r * c) % 2 + (r * c) % 3 === 0; },
+    function (r, c) { return ((r * c) % 2 + (r * c) % 3) % 2 === 0; },
+    function (r, c) { return ((r + c) % 2 + (r * c) % 3) % 2 === 0; }
+  ];
+  function penalty(g) {
+    var score = 0, lines = [], r, c;
+    for (r = 0; r < size; r++) lines.push(g[r]);
+    for (c = 0; c < size; c++) { var colArr = []; for (r = 0; r < size; r++) colArr.push(g[r][c]); lines.push(colArr); }
+    lines.forEach(function (line) {
+      var run = 1, prev = line[0];
+      for (var k = 1; k < line.length; k++) {
+        if (line[k] === prev) run++;
+        else { if (run >= 5) score += 3 + (run - 5); run = 1; prev = line[k]; }
+      }
+      if (run >= 5) score += 3 + (run - 5);
+    });
+    for (r = 0; r < size - 1; r++) for (c = 0; c < size - 1; c++)
+      if (g[r][c] === g[r][c + 1] && g[r][c] === g[r + 1][c] && g[r][c] === g[r + 1][c + 1]) score += 3;
+    var p1 = '10111010000', p2 = '00001011101';
+    lines.forEach(function (line) {
+      var s = line.join('');
+      for (var k = 0; k + 11 <= s.length; k++) { var seg = s.substr(k, 11); if (seg === p1 || seg === p2) score += 40; }
+    });
+    var dark = 0;
+    for (r = 0; r < size; r++) for (c = 0; c < size; c++) dark += g[r][c];
+    var pct = Math.floor(dark * 100 / (size * size));
+    score += 10 * Math.floor(Math.abs(pct - 50) / 5);
+    return score;
+  }
+  function bitLen(n) { var l = 0; while (n) { l++; n = Math.floor(n / 2); } return l; }
+  function fmtBits(lvl, mask) {
+    var data = (ECB[lvl] << 3) | mask, rem = data << 10, gen = 0x537;
+    while (bitLen(rem) >= 11) rem ^= gen << (bitLen(rem) - 11);
+    return ((data << 10) | rem) ^ 0x5412;
+  }
+  function verBits(v) {
+    var rem = v * 4096, gen = 0x1F25;
+    while (bitLen(rem) >= 13) rem ^= gen * Math.pow(2, bitLen(rem) - 13);
+    return v * 4096 + rem;
+  }
+
+  var best = null;
+  for (var mk = 0; mk < 8; mk++) {
+    var g = base.map(function (row) { return row.slice(); });
+    for (i = 0; i < positions.length; i++) {
+      var p = positions[i];
+      g[p[0]][p[1]] = stream[i] ^ (MASKS[mk](p[0], p[1]) ? 1 : 0);
+    }
+    var f = fmtBits(level, mk);
+    for (i = 0; i < 15; i++) {
+      var bit = (f >> i) & 1;
+      if (i < 6) g[i][8] = bit;
+      else if (i === 6) g[7][8] = bit;
+      else if (i === 7) g[8][8] = bit;
+      else if (i === 8) g[8][7] = bit;
+      else g[8][14 - i] = bit;
+      if (i < 8) g[8][size - 1 - i] = bit;
+      else g[size - 15 + i][8] = bit;
+    }
+    g[size - 8][8] = 1;
+    if (version >= 7) {
+      var vb = verBits(version);
+      for (i = 0; i < 18; i++) {
+        var vbit = Math.floor(vb / Math.pow(2, i)) % 2;
+        g[size - 11 + (i % 3)][Math.floor(i / 3)] = vbit;
+        g[Math.floor(i / 3)][size - 11 + (i % 3)] = vbit;
+      }
+    }
+    var sc = penalty(g);
+    if (best === null || sc < best[0]) best = [sc, g];
+  }
+  return best[1];
+}
+
+/* slug + QR rendering shared by both pages */
+function mcSlug(t) {
+  return t.toLowerCase().replace(/[()']/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+function mcTrackUrl(title, link) {
+  var u = (link || '').trim();
+  if (u) return u;
+  var base = location.href.split('#')[0].split('?')[0];
+  return base + '?t=' + mcSlug(title);
+}
+function mcQRSvg(text, px) {
+  var m = mcQR(text, 'Q');
+  if (!m) return null;
+  var n = m.length, b = 3, dim = n + b * 2;
+  var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', '0 0 ' + dim + ' ' + dim);
+  svg.setAttribute('width', px); svg.setAttribute('height', px);
+  svg.setAttribute('role', 'img');
+  svg.setAttribute('shape-rendering', 'crispEdges');
+  var bg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+  bg.setAttribute('width', dim); bg.setAttribute('height', dim); bg.setAttribute('fill', '#FFFFFF');
+  svg.appendChild(bg);
+  var d = '';
+  for (var r = 0; r < n; r++) for (var c = 0; c < n; c++)
+    if (m[r][c]) d += 'M' + (c + b) + ' ' + (r + b) + 'h1v1h-1z';
+  var path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  path.setAttribute('d', d); path.setAttribute('fill', '#15100C');
+  svg.appendChild(path);
+  return svg;
+}
+
   const TRACKS = [
     { t:"These Regrets",      g:"Southern Soul · 4:10",  w:"now",  d:"Out now", f:"these-regrets.mp3" },
     { t:"Who Got Your Back",  g:"Soul / Rap · 4:46",     w:"now",  d:"Out now", f:"who-got-your-back.mp3" },
@@ -330,7 +607,9 @@
   const say = (m) => { live.textContent = ''; setTimeout(() => live.textContent = m, 20); };
 
   function paint() {
-    [...root.children].forEach((el, i) => {
+    /* Each track contributes three elements (button, link bar, QR panel),
+       so select the buttons rather than indexing root's children. */
+    [...root.querySelectorAll('.track')].forEach((el, i) => {
       const on = i === current && !audio.paused;
       el.setAttribute('aria-pressed', on ? 'true' : 'false');
       const icon = el.querySelector('.play svg');
@@ -374,6 +653,9 @@
     root.appendChild(b);
 
     const url = (LINKS[tr.t] || '').trim();
+    const bar = document.createElement('div');
+    bar.className = 'trackbar';
+
     if (url) {
       const a = document.createElement('a');
       a.className = 'everywhere';
@@ -382,9 +664,72 @@
       a.rel = 'noopener';
       a.textContent = 'Listen everywhere \u2192';
       a.setAttribute('aria-label', 'Listen to ' + tr.t + ' on all platforms');
-      root.appendChild(a);
+      bar.appendChild(a);
     }
+
+    const scan = document.createElement('button');
+    scan.type = 'button';
+    scan.className = 'scanbtn';
+    scan.textContent = 'Scan to listen';
+    scan.setAttribute('aria-expanded', 'false');
+    scan.setAttribute('aria-label', 'Show a scannable code for ' + tr.t);
+    const panel = document.createElement('div');
+    panel.className = 'qrpanel';
+    panel.hidden = true;
+    scan.addEventListener('click', () => {
+      if (scan.getAttribute('aria-expanded') === 'true') {
+        scan.setAttribute('aria-expanded', 'false'); panel.hidden = true; say('Code hidden.'); return;
+      }
+      if (!panel.childNodes.length) {
+        const target = mcTrackUrl(tr.t, url);
+        const svg = mcQRSvg(target, 168);
+        if (!svg) {
+          const p = document.createElement('p');
+          p.className = 'qrnote';
+          p.textContent = 'That link is too long to turn into a code.';
+          panel.appendChild(p);
+        } else {
+          svg.setAttribute('aria-label', 'Scannable code for ' + tr.t);
+          panel.appendChild(svg);
+          const note = document.createElement('p');
+          note.className = 'qrnote';
+          note.textContent = url
+            ? 'Point a phone camera here to open ' + tr.t + ' on any streaming platform.'
+            : 'Point a phone camera here to open ' + tr.t + ' on this page.';
+          panel.appendChild(note);
+          const copy = document.createElement('button');
+          copy.type = 'button';
+          copy.className = 'qrcopy';
+          copy.textContent = 'Copy the link';
+          copy.addEventListener('click', () => {
+            const done = () => { copy.textContent = 'Copied'; say('Link copied.');
+              setTimeout(() => { copy.textContent = 'Copy the link'; }, 2200); };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+              navigator.clipboard.writeText(target).then(done, () => { copy.textContent = target; });
+            } else { copy.textContent = target; }
+          });
+          panel.appendChild(copy);
+        }
+      }
+      scan.setAttribute('aria-expanded', 'true');
+      panel.hidden = false;
+      say('Showing a scannable code for ' + tr.t + '.');
+    });
+    bar.appendChild(scan);
+    root.appendChild(bar);
+    root.appendChild(panel);
   });
+
+  /* A scanned code carries ?t=<song>. Queue that track. */
+  (function () {
+    const wanted = new URLSearchParams(location.search).get('t');
+    if (!wanted) return;
+    const idx = TRACKS.findIndex(x => mcSlug(x.t) === wanted.toLowerCase());
+    if (idx >= 0) { current = idx; paint();
+      const el = root.querySelectorAll('.track')[idx];
+      if (el) el.scrollIntoView({ block: 'center' });
+      say(TRACKS[idx].t + ' is ready. Press play.'); }
+  })();
 
   dockBtn.addEventListener('click', () => select(current));
   audio.addEventListener('timeupdate', () => {
