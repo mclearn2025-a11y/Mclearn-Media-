@@ -17,6 +17,7 @@ page is a single self-contained HTML file.
 | `legal.html` | privacy notice, terms of use, accessibility statement |
 | `404.html` | not-found page |
 | `speakeasy/index.html` | Speakeasy — the talk app (AAC) for nonspeaking autistic kids and adults, served at `/speakeasy/` |
+| `SPEAKEASY-UPDATE-GUIDE.md` | step-by-step: check a Speakeasy update is live and test it on a phone |
 | `og-image.png` | the preview image shown when a link is shared |
 | `*.mp3` | twelve 45-second excerpts |
 | `_headers` | security headers and cache rules |
