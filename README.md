@@ -16,6 +16,7 @@ page is a single self-contained HTML file.
 | `listen.html` | the listen page (the QR code destination) |
 | `legal.html` | privacy notice, terms of use, accessibility statement |
 | `404.html` | not-found page |
+| `speakeasy/index.html` | Speakeasy — the talk app (AAC) for nonspeaking autistic kids and adults, served at `/speakeasy/` |
 | `og-image.png` | the preview image shown when a link is shared |
 | `*.mp3` | twelve 45-second excerpts |
 | `_headers` | security headers and cache rules |
