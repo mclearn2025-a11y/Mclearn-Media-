@@ -17,11 +17,10 @@ page is a single self-contained HTML file.
 | `legal.html` | privacy notice, terms of use, accessibility statement |
 | `404.html` | not-found page |
 | `speakeasy/index.html` | Speakeasy — the talk app (AAC) for nonspeaking autistic kids and adults, served at `/speakeasy/` |
-| `speak-easy-2.html` | Speak Easy 2 — a second copy of the Speakeasy app, served at `/speak-easy-2` |
 | `og-image.png` | the preview image shown when a link is shared |
 | `*.mp3` | twelve 45-second excerpts |
 | `_headers` | security headers and cache rules |
-| `_redirects` | `/listen`, `/privacy`, `/terms` shortcuts |
+| `_redirects` | `/listen`, `/privacy`, `/terms` shortcuts; old `/speak-easy-2` links go to `/speakeasy/` |
 
 ## Deploying
 
