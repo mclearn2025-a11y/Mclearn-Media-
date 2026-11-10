@@ -1722,6 +1722,12 @@ function mcQRSvg(text, px) {
     { cat:'Room', title:'App House', desc:'Four planned tools', room:'apphouse' },
     { cat:'Room', title:'Build Log', desc:'The working record', room:'buildlog' },
     { cat:'Room', title:'Executive Suite', desc:'Advisory inquiries', room:'exec' },
+    { cat:'Room', title:'McLearn Arena', desc:'Game hub: 3-D chess, checkers, Spades, Blackjack trainer, Parcheesi', href:'/arena/', keys:'games play game hub board cards card table' },
+    { cat:'Game', title:'Chess', desc:'3-D board, five AI levels, puzzles, championship', href:'/arena/?game=chess', keys:'chess grandmaster checkmate puzzles drills elo ladder' },
+    { cat:'Game', title:'Checkers', desc:'American rules, three AI levels, 3-D', href:'/arena/?game=checkers', keys:'checkers draughts' },
+    { cat:'Game', title:'Spades', desc:'You and an AI partner, nil bids, bid coach', href:'/arena/?game=spades', keys:'spades cards card game bid nil' },
+    { cat:'Game', title:'Blackjack Trainer', desc:'Free practice chips with a strategy coach', href:'/arena/?game=blackjack', keys:'blackjack 21 cards card game strategy' },
+    { cat:'Game', title:'Parcheesi', desc:'Four players, dice, blockades and bonuses', href:'/arena/?game=parcheesi', keys:'parcheesi dice board game family' },
     { cat:'Buy',  title:'Buy Grace Over the Grind', desc:'Digital edition, $19', room:'mall' },
     { cat:'Help', title:'Contact McLearn Media', desc:'Email, phone, advisory inquiry', room:'exec' }
   ];
@@ -2369,6 +2375,7 @@ function mcQRSvg(text, px) {
     if (lastFocus && lastFocus.focus) lastFocus.focus();
   }
   function pick(item) {
+    if (item.href) { closePalette(); location.href = item.href; return; }
     closePalette();
     if (typeof item.track === 'number') Player.load(item.track, false);
     setRoom(item.room);
@@ -2376,7 +2383,8 @@ function mcQRSvg(text, px) {
   }
   function renderResults() {
     const q = input.value.trim().toLowerCase();
-    results = SEARCH.filter(i => !q || (i.cat + ' ' + i.title + ' ' + i.desc).toLowerCase().includes(q));
+    results = SEARCH.filter(i => !q || (i.cat + ' ' + i.title + ' ' + i.desc + ' ' + (i.keys || '')).toLowerCase().includes(q));
+    if (q) results.sort((a, b) => (b.title.toLowerCase().startsWith(q) ? 1 : 0) - (a.title.toLowerCase().startsWith(q) ? 1 : 0));
     if (active >= results.length) active = results.length - 1;
     resultsEl.replaceChildren();
     if (!results.length) {

@@ -400,7 +400,7 @@ body.event .felt{max-width:min(1100px,100%)}
     <div class="logo"><svg viewBox="0 0 45 45" class="pc w" style="width:34px;height:34px;filter:none"><use href="#pc-K"/></svg></div>
     <div>
       <div class="row"><h1 class="title">McLEARN ARENA</h1><span class="pill" style="color:var(--amber)">10X PRO</span></div>
-      <p class="sub">MCLEARN MEDIA PRODUCTION &bull; MS, USA &bull; <span style="color:var(--amber)">GAME HUB v4.1</span></p>
+      <p class="sub">MCLEARN MEDIA PRODUCTION &bull; MS, USA &bull; <span style="color:var(--amber)">GAME HUB v4.2</span></p>
     </div>
   </div>
   <div class="hstats">
@@ -4360,7 +4360,8 @@ function go(v) {
 document.addEventListener('click', e => { const b = e.target.closest('[data-go],[data-view]'); if (b && (b.dataset.go || b.closest('#gamenav'))) go(b.dataset.go || b.dataset.view); });
 SH.go = go;
 const h = (location.hash || '').slice(1);
-go(/^mcl-/.test(h) ? 'chess' : LS.get('view', 'lobby'));
+let qGame = null; try { qGame = new URLSearchParams(location.search).get('game'); } catch (e) { /* no query */ }
+go(/^mcl-/.test(h) ? 'chess' : views.includes(qGame) ? qGame : LS.get('view', 'lobby'));
 })();
 
 </script>
