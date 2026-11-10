@@ -1017,6 +1017,25 @@ body.event .gwrap .felt{transform:none}
 .kpay b{font-family:var(--mono);color:#ffe6a8}.kpay small{font-family:var(--mono);font-size:10px;color:var(--rose-300);min-width:70px;text-align:right}
 .kpay.on{background:var(--goldg);color:#2a0718}.kpay.on b,.kpay.on small{color:#2a0718}
 @media (max-width:820px){.kn-board{gap:3px}.kcell{border-radius:6px;font-size:12px}.kball{--ks:48px}.kball b{font-size:16px}}
+
+/* ===== Booray — bayou night table ===== */
+.br-felt{display:block;position:relative;min-height:500px;border-radius:250px/170px;background:radial-gradient(ellipse at 50% 40%,#3d5a24 0%,#2a4218 45%,#16260c 82%,#0c1606 100%);border:18px solid #2a1606;box-shadow:inset 0 0 0 6px #5a3a14,inset 0 0 0 8px #c8961e,inset 0 0 80px rgba(0,0,0,.6),0 0 0 3px #120802,0 30px 70px rgba(0,0,0,.8)}
+.br-felt::before{content:none}
+.br-logo{position:absolute;left:50%;top:72%;transform:translate(-50%,-50%);font-family:var(--serif);font-weight:900;font-size:clamp(18px,3vw,30px);letter-spacing:.4em;color:rgba(244,200,106,.13);pointer-events:none}
+.br-seat{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:2px;z-index:2}
+.br-seat.passed{opacity:.45}.br-seat.on .pk-pod{border-color:var(--amber);box-shadow:0 0 0 2px rgba(244,200,106,.5),0 0 26px rgba(244,200,106,.4)}
+.br-seat.won .pk-pod{animation:pulse .5s infinite alternate;border-color:var(--amber)}
+.br-backs{display:flex;--cw:30px;margin-bottom:-6px}.br-backs .pcard+.pcard{margin-left:-22px}
+.br-mid{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:18px;z-index:1}
+.br-trump{display:flex;flex-direction:column;align-items:center;gap:4px;--cw:52px}
+.br-trump .br-up{transform:rotate(8deg)}
+.br-ts{font-family:var(--serif);font-size:12px;text-transform:capitalize}
+#br-trick{position:absolute;inset:0;pointer-events:none;z-index:3;--cw:clamp(50px,7vw,66px)}
+.br-tc{position:absolute;transform:translate(-50%,-50%);animation:toCenter3d .4s cubic-bezier(.2,.9,.3,1.2) both}
+.br-tc .pcard.win{box-shadow:0 0 0 3px var(--amber),0 0 22px rgba(244,200,106,.7)}
+.br-dock .pk-ctl .fan{--cw:clamp(58px,8vw,80px)}
+@media (max-width:820px){.br-felt{min-height:420px;border-width:10px;border-radius:150px/110px}.br-backs{--cw:22px}.br-backs .pcard+.pcard{margin-left:-16px}.br-mid{top:38%;gap:10px}.br-trump{--cw:40px}#br-trick{--cw:44px}}
+@media (max-width:700px){.br-seat .pk-pod{flex-direction:column;gap:2px;padding:4px 6px;border-radius:14px;text-align:center}.br-seat .pk-id{align-items:center}.br-seat .pk-id b{font-size:9.5px}.br-seat .pk-id span{font-size:9.5px}.br-seat .ava{--as:26px}}
 </style>
 </head>
 <body>
@@ -1035,7 +1054,7 @@ body.event .gwrap .felt{transform:none}
 <marker id="ah-gold" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto"><path d="M0 0L10 5L0 10z" fill="#f2c4cb"/></marker>
 <marker id="ah-threat" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ef4444"/></marker>
 <marker id="ah-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto"><path d="M0 0L10 5L0 10z" fill="#4ade80"/></marker>
-<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol><symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></symbol><symbol id="gi-chess" viewBox="0 0 24 24"><path d="M12 2.5v4M10 4.5h4"/><path d="M8 13a4 4 0 0 1 8 0l-1 5H9z"/><path d="M7 21h10M8.5 18h7"/><path d="M9.5 9.5h5"/></symbol><symbol id="gi-checkers" viewBox="0 0 24 24"><ellipse cx="12" cy="8" rx="7.5" ry="3.2"/><path d="M4.5 8v3.4c0 1.8 3.4 3.2 7.5 3.2s7.5-1.4 7.5-3.2V8"/><path d="M4.5 13v3.4c0 1.8 3.4 3.2 7.5 3.2s7.5-1.4 7.5-3.2V13"/><ellipse cx="12" cy="8" rx="3.5" ry="1.4"/></symbol><symbol id="gi-spades" viewBox="0 0 24 24"><path d="M12 2.5c3.2 4.2 7.5 6.4 7.5 10.6a4.2 4.2 0 0 1-6.8 3.3l.8 5.1h-3l.8-5.1a4.2 4.2 0 0 1-6.8-3.3c0-4.2 4.3-6.4 7.5-10.6z"/></symbol><symbol id="gi-blackjack" viewBox="0 0 24 24"><rect x="3" y="6" width="11" height="15" rx="2" transform="rotate(-10 8.5 13.5)"/><rect x="10" y="3" width="11" height="15" rx="2"/><path d="M13.5 8.2c.4-.8 1.3-1.2 2-1 1 .3 1.3 1.4.6 2.3l-2.6 3h3.2M18 7v6"/></symbol><symbol id="gi-parcheesi" viewBox="0 0 24 24"><path d="M9 2.5h6v6.5h6.5v6H15v6.5H9V15H2.5V9H9z"/><circle cx="12" cy="12" r="1.7" fill="currentColor"/><path d="M12 5v1.5M12 17.5V19M5 12h1.5M17.5 12H19"/></symbol><symbol id="gi-colorclash" viewBox="0 0 24 24"><rect x="4.5" y="2.5" width="15" height="19" rx="3"/><path d="M12 6.5l4.5 5.5L12 17.5 7.5 12z"/><path d="M12 9.5l2 2.5-2 2.5-2-2.5z" fill="currentColor"/></symbol><symbol id="gi-pittypat" viewBox="0 0 24 24"><rect x="2.5" y="6" width="9.5" height="14" rx="2"/><rect x="12" y="4" width="9.5" height="14" rx="2"/><path d="M7.2 11.5c-.9-1.4-2.6-.6-2 .8.4.9 2 2 2 2s1.6-1.1 2-2c.6-1.4-1.1-2.2-2 -.8zM16.7 9.5c-.9-1.4-2.6-.6-2 .8.4.9 2 2 2 2s1.6-1.1 2-2c.6-1.4-1.1-2.2-2-.8z"/></symbol><symbol id="gi-mogul" viewBox="0 0 24 24"><path d="M2.5 21.5h19"/><path d="M4.5 21.5V11h4.5v10.5M10 21.5V3.5h5.5v18M16.5 21.5V9l4-2v14.5"/><path d="M12 7h2.5M12 10h2.5M12 13h2.5M6 14h1.5M6 17h1.5M18 12h1M18 15h1"/></symbol><symbol id="gi-dominoes" viewBox="0 0 24 24"><rect x="6.5" y="1.5" width="11" height="21" rx="2.8"/><path d="M7.5 12h9"/><circle cx="12" cy="6.8" r="1.3" fill="currentColor"/><circle cx="9.6" cy="15" r="1.2" fill="currentColor"/><circle cx="14.4" cy="19" r="1.2" fill="currentColor"/><circle cx="12" cy="17" r="1.2" fill="currentColor"/></symbol><symbol id="gi-bidwhist" viewBox="0 0 24 24"><rect x="4.5" y="2.5" width="15" height="19" rx="3"/><path d="M12 6.5l1.5 3.2 3.4.4-2.6 2.3.8 3.4-3.1-1.8-3.1 1.8.8-3.4-2.6-2.3 3.4-.4z"/><path d="M7.5 19h9"/></symbol><symbol id="gi-poker" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5"/><path d="M12 2.5v3.3M12 18.2v3.3M2.5 12h3.3M18.2 12h3.3M5.3 5.3l2.3 2.3M16.4 16.4l2.3 2.3M5.3 18.7l2.3-2.3M16.4 7.6l2.3-2.3"/></symbol><symbol id="gi-tonk" viewBox="0 0 24 24"><rect x="2.5" y="7" width="8" height="12.5" rx="1.6" transform="rotate(-14 6.5 13)"/><rect x="8" y="4.5" width="8" height="12.5" rx="1.6"/><rect x="13.5" y="7" width="8" height="12.5" rx="1.6" transform="rotate(14 17.5 13)"/></symbol><symbol id="gi-gofish" viewBox="0 0 24 24"><path d="M2.5 12c3.2-5.2 9.6-6.2 13.6-2l5.4-3.3-1.7 5.3 1.7 5.3-5.4-3.3c-4 4.2-10.4 3.2-13.6-2z"/><circle cx="8" cy="11.2" r="1.1" fill="currentColor"/><path d="M11.5 9.5c.8 1.6.8 3.4 0 5"/></symbol><symbol id="gi-war" viewBox="0 0 24 24"><path d="M3 3l10.5 10.5M3 3h3.8l9.7 9.7M14 17l3-3M16 19l-2.5-2.5M17 14l2.5 2.5M19 19l2 2"/><path d="M21 3L10.5 13.5M21 3h-3.8l-9.7 9.7M10 17l-3-3M8 19l2.5-2.5M7 14l-2.5 2.5M5 19l-2 2"/></symbol><symbol id="gi-keno" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/><circle cx="6" cy="6" r="1.4" fill="currentColor"/><circle cx="18" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="18" r="1.4" fill="currentColor"/></symbol><symbol id="gi-bingo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5.2"/><path d="M10.6 9.8h1.9a1.1 1.1 0 0 1 0 2.2h-1.9zM10.6 12h2.2a1.1 1.1 0 0 1 0 2.2h-2.2zM10.6 9.8v4.4"/></symbol><symbol id="gi-showdown" viewBox="0 0 24 24"><rect x="9" y="2.5" width="6" height="11.5" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5v4M8.5 21.5h7"/><path d="M9 6.5h6M9 9h6"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol><symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></symbol><symbol id="gi-chess" viewBox="0 0 24 24"><path d="M12 2.5v4M10 4.5h4"/><path d="M8 13a4 4 0 0 1 8 0l-1 5H9z"/><path d="M7 21h10M8.5 18h7"/><path d="M9.5 9.5h5"/></symbol><symbol id="gi-checkers" viewBox="0 0 24 24"><ellipse cx="12" cy="8" rx="7.5" ry="3.2"/><path d="M4.5 8v3.4c0 1.8 3.4 3.2 7.5 3.2s7.5-1.4 7.5-3.2V8"/><path d="M4.5 13v3.4c0 1.8 3.4 3.2 7.5 3.2s7.5-1.4 7.5-3.2V13"/><ellipse cx="12" cy="8" rx="3.5" ry="1.4"/></symbol><symbol id="gi-spades" viewBox="0 0 24 24"><path d="M12 2.5c3.2 4.2 7.5 6.4 7.5 10.6a4.2 4.2 0 0 1-6.8 3.3l.8 5.1h-3l.8-5.1a4.2 4.2 0 0 1-6.8-3.3c0-4.2 4.3-6.4 7.5-10.6z"/></symbol><symbol id="gi-blackjack" viewBox="0 0 24 24"><rect x="3" y="6" width="11" height="15" rx="2" transform="rotate(-10 8.5 13.5)"/><rect x="10" y="3" width="11" height="15" rx="2"/><path d="M13.5 8.2c.4-.8 1.3-1.2 2-1 1 .3 1.3 1.4.6 2.3l-2.6 3h3.2M18 7v6"/></symbol><symbol id="gi-parcheesi" viewBox="0 0 24 24"><path d="M9 2.5h6v6.5h6.5v6H15v6.5H9V15H2.5V9H9z"/><circle cx="12" cy="12" r="1.7" fill="currentColor"/><path d="M12 5v1.5M12 17.5V19M5 12h1.5M17.5 12H19"/></symbol><symbol id="gi-colorclash" viewBox="0 0 24 24"><rect x="4.5" y="2.5" width="15" height="19" rx="3"/><path d="M12 6.5l4.5 5.5L12 17.5 7.5 12z"/><path d="M12 9.5l2 2.5-2 2.5-2-2.5z" fill="currentColor"/></symbol><symbol id="gi-pittypat" viewBox="0 0 24 24"><rect x="2.5" y="6" width="9.5" height="14" rx="2"/><rect x="12" y="4" width="9.5" height="14" rx="2"/><path d="M7.2 11.5c-.9-1.4-2.6-.6-2 .8.4.9 2 2 2 2s1.6-1.1 2-2c.6-1.4-1.1-2.2-2 -.8zM16.7 9.5c-.9-1.4-2.6-.6-2 .8.4.9 2 2 2 2s1.6-1.1 2-2c.6-1.4-1.1-2.2-2-.8z"/></symbol><symbol id="gi-mogul" viewBox="0 0 24 24"><path d="M2.5 21.5h19"/><path d="M4.5 21.5V11h4.5v10.5M10 21.5V3.5h5.5v18M16.5 21.5V9l4-2v14.5"/><path d="M12 7h2.5M12 10h2.5M12 13h2.5M6 14h1.5M6 17h1.5M18 12h1M18 15h1"/></symbol><symbol id="gi-dominoes" viewBox="0 0 24 24"><rect x="6.5" y="1.5" width="11" height="21" rx="2.8"/><path d="M7.5 12h9"/><circle cx="12" cy="6.8" r="1.3" fill="currentColor"/><circle cx="9.6" cy="15" r="1.2" fill="currentColor"/><circle cx="14.4" cy="19" r="1.2" fill="currentColor"/><circle cx="12" cy="17" r="1.2" fill="currentColor"/></symbol><symbol id="gi-bidwhist" viewBox="0 0 24 24"><rect x="4.5" y="2.5" width="15" height="19" rx="3"/><path d="M12 6.5l1.5 3.2 3.4.4-2.6 2.3.8 3.4-3.1-1.8-3.1 1.8.8-3.4-2.6-2.3 3.4-.4z"/><path d="M7.5 19h9"/></symbol><symbol id="gi-poker" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5"/><path d="M12 2.5v3.3M12 18.2v3.3M2.5 12h3.3M18.2 12h3.3M5.3 5.3l2.3 2.3M16.4 16.4l2.3 2.3M5.3 18.7l2.3-2.3M16.4 7.6l2.3-2.3"/></symbol><symbol id="gi-tonk" viewBox="0 0 24 24"><rect x="2.5" y="7" width="8" height="12.5" rx="1.6" transform="rotate(-14 6.5 13)"/><rect x="8" y="4.5" width="8" height="12.5" rx="1.6"/><rect x="13.5" y="7" width="8" height="12.5" rx="1.6" transform="rotate(14 17.5 13)"/></symbol><symbol id="gi-gofish" viewBox="0 0 24 24"><path d="M2.5 12c3.2-5.2 9.6-6.2 13.6-2l5.4-3.3-1.7 5.3 1.7 5.3-5.4-3.3c-4 4.2-10.4 3.2-13.6-2z"/><circle cx="8" cy="11.2" r="1.1" fill="currentColor"/><path d="M11.5 9.5c.8 1.6.8 3.4 0 5"/></symbol><symbol id="gi-war" viewBox="0 0 24 24"><path d="M3 3l10.5 10.5M3 3h3.8l9.7 9.7M14 17l3-3M16 19l-2.5-2.5M17 14l2.5 2.5M19 19l2 2"/><path d="M21 3L10.5 13.5M21 3h-3.8l-9.7 9.7M10 17l-3-3M8 19l2.5-2.5M7 14l-2.5 2.5M5 19l-2 2"/></symbol><symbol id="gi-bourre" viewBox="0 0 24 24"><path d="M12 2.5c1.6 2.6 1.6 5.2 0 7.8-1.6-2.6-1.6-5.2 0-7.8z"/><path d="M12 10.3c-3-.6-6.2.4-7.8 3.2 2.9.9 5.7.2 7.8-3.2zM12 10.3c3-.6 6.2.4 7.8 3.2-2.9.9-5.7.2-7.8-3.2z"/><path d="M8 15.5h8M12 10.3v10M9 21h6"/></symbol><symbol id="gi-keno" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/><circle cx="6" cy="6" r="1.4" fill="currentColor"/><circle cx="18" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="18" r="1.4" fill="currentColor"/></symbol><symbol id="gi-bingo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5.2"/><path d="M10.6 9.8h1.9a1.1 1.1 0 0 1 0 2.2h-1.9zM10.6 12h2.2a1.1 1.1 0 0 1 0 2.2h-2.2zM10.6 9.8v4.4"/></symbol><symbol id="gi-showdown" viewBox="0 0 24 24"><rect x="9" y="2.5" width="6" height="11.5" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5v4M8.5 21.5h7"/><path d="M9 6.5h6M9 9h6"/></symbol>
 <symbol id="gi-pluck" viewBox="0 0 24 24"><path d="M19.5 3.5C12 4 6.5 9 5 17.5l-1 3"/><path d="M19.5 3.5c.5 6-3 11-9.5 13"/><path d="M8 13.5l3.5.5M10.5 10l3.2.8M13 7l2.8.6"/></symbol><symbol id="i-crown" viewBox="0 0 24 24"><path d="M3 18h18l1.2-11-5.7 4.2L12 4 7.5 11.2 1.8 7z"/><path d="M4 21h16"/></symbol>
 <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
 <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
@@ -1127,6 +1146,7 @@ body.event .gwrap .felt{transform:none}
 <main class="gwrap hidden" id="view-showdown"></main>
 <main class="gwrap hidden" id="view-bingo"></main>
 <main class="gwrap hidden" id="view-keno"></main>
+<main class="gwrap hidden" id="view-bourre"></main>
 <main class="gwrap hidden" id="view-pluck"></main>
 <main class="wrap view" id="view-chess">
   <!-- LEFT -->
@@ -8331,6 +8351,309 @@ SH.games.keno = { onShow() { if (!$('kn-board').children.length) { startSession(
 
 </script>
 <script>
+// McLearn Booray (Bourré) — the Louisiana trick-taking game. Practice chips only (free, no purchases, no cash value).
+(function () {
+'use strict';
+const SH = window.McShared, $ = id => document.getElementById(id), LS = SH.LS, C = SH.cards;
+McRules.register('bourre', {
+  title: 'Booray',
+  proNote: 'Pro: six at the table, no coach, uncapped booray penalties and a 20-second clock.',
+  schema: [
+    { key: 'players', label: 'Players at the table', type: 'select', options: [[4, '4 (you + 3)'], [5, '5 (you + 4)'], [6, '6 (you + 5)']] },
+    { key: 'ante', label: 'Ante each hand', type: 'select', options: [[5, '5'], [10, '10'], [25, '25']] },
+    { key: 'pot', label: 'Who gets the pot', help: 'Most tricks: the leader takes it all and ties roll it over. Split: each trick is worth a fifth of the pot', type: 'select', options: [['most', 'Most tricks takes it'], ['split', 'Split by tricks']] },
+    { key: 'cap', label: 'Booray penalty cap', help: 'Getting boorayed (zero tricks) means matching the pot — a cap keeps it friendly', type: 'select', options: [[0, 'No cap (match the pot)'], [100, 'Cap at 100'], [250, 'Cap at 250']] },
+    { key: 'draw', label: 'Trade in cards', help: 'After staying in, swap up to 4 cards from the deck', type: 'bool' },
+    { key: 'aceLead', label: 'Must lead the ace of trump', help: 'If you hold it and you lead, you must lead it', type: 'bool' },
+    { key: 'hands', label: 'Session length', type: 'select', options: [[10, '10 hands'], [15, '15 hands'], [25, '25 hands']] },
+    { key: 'coach', label: 'Coach', type: 'bool' },
+    { key: 'timer', label: 'Turn clock', type: 'select', options: [[0, 'Off'], [20, '20 seconds'], [40, '40 seconds']] }
+  ],
+  presets: { standard: { players: 5, ante: 10, pot: 'most', cap: 100, draw: true, aceLead: true, hands: 15, coach: true, timer: 0 }, pro: { players: 6, cap: 0, coach: false, timer: 20 } }
+});
+let RU = McRules.get('bourre');
+const tmr = McRules.timer();
+const START = 500;
+const NAMES = ['You', 'T-Boy', 'Miss Odile', 'Nonc Pierre', 'Boudreaux', 'Tante Rose'];
+const STYLE = [null, 0.9, 1.35, 1.1, 0.75, 1.2]; // trick estimate needed to stay (lower = gutsier)
+const SUITS = ['s', 'h', 'd', 'c'], SYM = { s: '♠', h: '♥', d: '♦', c: '♣' }, SNAME = { s: 'spades', h: 'hearts', d: 'diamonds', c: 'clubs' };
+const G = { n: 5, stack: [], hands: [], deck: [], trump: null, upcard: null, pot: 0, carry: 0, inHand: [], tricks: [], trick: [], lead: 0, turn: 0, dealer: -1, phase: 'idle', token: 0, log: [], decideTurn: 0, decided: [], drawTurn: 0, sel: [], handNo: 0, over: false, fast: false, stats: LS.get('br-stats', { w: 0, l: 0, d: 0 }), result: null };
+const wait = ms => G.fast ? Promise.resolve() : new Promise(r => setTimeout(r, ms));
+const vb = (s, a, b) => s ? b : a;
+const fmt = x => Math.round(x).toLocaleString();
+function log(t) { G.log.push(t); const el = $('br-log'); if (el) { el.innerHTML = G.log.slice(-80).map(x => `<div class="tiny" style="color:var(--wg-400)">${x}</div>`).join(''); el.scrollTop = 1e9; } }
+const live = s => G.stack[s] > 0 || G.inHand[s];
+function sortHand(h) { const so = s => s === G.trump ? -1 : SUITS.indexOf(s); h.sort((a, b) => so(a.s) - so(b.s) || b.r - a.r); }
+// ---------- trick rules ----------
+function winning(trick) { const L = trick[0].c.s; let best = trick[0]; for (const p of trick) { const b = best.c, c = p.c; if ((c.s === G.trump && b.s !== G.trump) || (c.s === b.s && c.r > b.r)) best = p; } return best; }
+function legal(s) {
+  const h = G.hands[s];
+  if (!G.trick.length) { // leading
+    if (RU.aceLead) { const ace = h.find(c => c.s === G.trump && c.r === 14); if (ace) return [ace]; }
+    return h.slice();
+  }
+  const L = G.trick[0].c.s, w = winning(G.trick).c, follow = h.filter(c => c.s === L);
+  if (follow.length) { // must follow, and must beat if you can (unless the trick is already trumped by someone else)
+    if (w.s === L) { const beat = follow.filter(c => c.r > w.r); if (beat.length) return beat; }
+    return follow;
+  }
+  const tr = h.filter(c => c.s === G.trump);
+  if (tr.length) { if (w.s === G.trump) { const over = tr.filter(c => c.r > w.r); if (over.length) return over; } return tr; }
+  return h.slice();
+}
+// ---------- estimates ----------
+function est(h) { // rough tricks this hand can take
+  let t = 0; const tr = h.filter(c => c.s === G.trump).sort((a, b) => b.r - a.r);
+  tr.forEach((c, i) => { t += c.r === 14 ? 1 : c.r === 13 ? 0.8 : c.r === 12 ? 0.55 : c.r >= 10 ? 0.35 : 0.22; });
+  if (tr.length >= 3) t += 0.4;
+  for (const c of h) if (c.s !== G.trump && c.r === 14) t += 0.55; else if (c.s !== G.trump && c.r === 13) t += 0.2;
+  return t;
+}
+function keepScore(c) { return c.s === G.trump ? 100 + c.r : c.r === 14 ? 60 : c.r === 13 ? 30 : c.r; }
+
+// ---------- flow ----------
+function newSession() {
+  RU = McRules.get('bourre'); G.token++; tmr.stop(); G.n = RU.players; G.stack = Array(G.n).fill(START); G.carry = 0; G.handNo = 0; G.dealer = Math.floor(Math.random() * G.n); G.over = false; G.log = []; showMsg('');
+  log(`<b>New session</b> — ${G.n} players, ${START} practice chips each, ${RU.hands} hands. Ante ${RU.ante}.`);
+  deal();
+}
+function deal() {
+  G.token++; tmr.stop(); G.handNo++; G.result = null;
+  const seats = [...Array(G.n).keys()].filter(s => G.stack[s] > 0);
+  if (seats.length < 2 || !G.stack[0]) return finish();
+  G.dealer = (function () { for (let k = 1; k <= G.n; k++) { const s = (G.dealer + k) % G.n; if (G.stack[s] > 0) return s; } return 0; })();
+  G.pot = G.carry; G.carry = 0;
+  for (const s of seats) { const a = Math.min(RU.ante, G.stack[s]); G.stack[s] -= a; G.pot += a; }
+  G.deck = C.shuffle(C.deck()); G.hands = Array.from({ length: G.n }, () => []);
+  for (let k = 0; k < 5; k++) for (const s of seats) G.hands[s].push(G.deck.pop());
+  G.upcard = G.hands[G.dealer][4]; G.trump = G.upcard.s;
+  G.hands.forEach(sortHand);
+  G.inHand = Array(G.n).fill(false); G.decided = Array(G.n).fill(false); G.tricks = Array(G.n).fill(0); G.trick = []; G.sel = [];
+  G.phase = 'decide'; G.decideTurn = nextSeat(G.dealer, s => G.stack[s] > 0 || G.hands[s].length);
+  log(`Hand ${G.handNo}: ${NAMES[G.dealer]} ${vb(G.dealer, 'deal', 'deals')} and turns up ${C.name(G.upcard)} — <b>${SNAME[G.trump]} are trump</b>. Pot ${fmt(G.pot)}.`);
+  SH.Sound.play('start'); render(true); decideLoop();
+}
+function nextSeat(s, f) { for (let k = 1; k <= G.n; k++) { const t = (s + k) % G.n; if (f(t)) return t; } return -1; }
+const dealtIn = s => G.hands[s] && G.hands[s].length > 0;
+async function decideLoop() {
+  const tok = G.token;
+  if (G.phase !== 'decide') return;
+  const s = G.decideTurn;
+  if (G.decided.every((d, i) => d || !dealtIn(i))) return afterDecide();
+  if (s === 0) { render(); return; }
+  await wait(650); if (tok !== G.token) return;
+  const e = est(G.hands[s]) + (RU.draw ? 0.35 : 0), need = STYLE[s] * (G.pot > RU.ante * G.n * 2 ? 1.1 : 1);
+  const stay = e >= need || (s === G.dealer && G.inHand.filter(Boolean).length === 0 && e > 0.6);
+  decide(s, stay);
+}
+function decide(s, stay) {
+  G.inHand[s] = stay; G.decided[s] = true; log(`${NAMES[s]} ${stay ? vb(s, 'stay in', 'stays in') : vb(s, 'pass', 'passes')}.`); SH.Sound.play(stay ? 'move' : 'tick');
+  G.decideTurn = nextSeat(s, t => dealtIn(t) && !G.decided[t]);
+  render(); if (G.decideTurn < 0) afterDecide(); else decideLoop();
+}
+async function afterDecide() {
+  const tok = G.token, ins = [...Array(G.n).keys()].filter(s => G.inHand[s]);
+  if (ins.length === 0) { log('Everybody passed — the pot rolls over.'); G.carry = G.pot; G.pot = 0; return endHand(); }
+  if (ins.length === 1) { const w = ins[0]; G.stack[w] += G.pot; log(`<b>${NAMES[w]} ${vb(w, 'take', 'takes')} the pot of ${fmt(G.pot)}</b> — nobody else stayed in.`); G.result = { text: `${NAMES[w]} ${vb(w, 'take', 'takes')} ${fmt(G.pot)} uncontested`, winners: [w] }; G.pot = 0; SH.Sound.play(w === 0 ? 'good' : 'tick'); return endHand(); }
+  if (RU.draw) { G.phase = 'draw'; G.drawTurn = nextSeat(G.dealer, t => G.inHand[t]); render(); await wait(300); if (tok !== G.token) return; return drawLoop(); }
+  startPlay();
+}
+async function drawLoop() {
+  const tok = G.token;
+  if (G.phase !== 'draw') return;
+  const s = G.drawTurn;
+  if (s === 0) { render(); return; }
+  await wait(600); if (tok !== G.token) return;
+  const h = G.hands[s], toss = h.slice().sort((a, b) => keepScore(a) - keepScore(b)).filter(c => keepScore(c) < 28).slice(0, 4);
+  doDraw(s, toss);
+}
+function doDraw(s, toss) {
+  const h = G.hands[s]; for (const c of toss) h.splice(h.indexOf(c), 1);
+  for (let i = 0; i < toss.length && G.deck.length; i++) h.push(G.deck.pop());
+  sortHand(h); G.sel = [];
+  log(`${NAMES[s]} ${vb(s, 'trade', 'trades')} ${toss.length || 'no'} card${toss.length === 1 ? '' : 's'}.`); SH.Sound.play('tick');
+  const nx = nextSeat(s, t => G.inHand[t]), first = nextSeat(G.dealer, t => G.inHand[t]);
+  if (nx === first || nx < 0) return startPlay();
+  G.drawTurn = nx; render(); drawLoop();
+}
+function startPlay() {
+  G.phase = 'play'; G.lead = nextSeat(G.dealer, t => G.inHand[t]); G.turn = G.lead; G.trick = [];
+  render(); playLoop();
+}
+async function playLoop() {
+  const tok = G.token;
+  if (G.phase !== 'play') return;
+  const ins = [...Array(G.n).keys()].filter(s => G.inHand[s]);
+  if (G.trick.length === ins.length) {
+    const w = winning(G.trick); G.tricks[w.s]++;
+    log(`${NAMES[w.s]} ${vb(w.s, 'take', 'takes')} the trick with ${C.name(w.c)}.`); SH.Sound.play(w.s === 0 ? 'capture' : 'tick');
+    G.lastWin = w.s; render(); await wait(950); if (tok !== G.token) return;
+    G.trick = []; G.turn = w.s; G.lead = w.s;
+    if (!G.hands[w.s].length) return scoreHand();
+    render();
+  }
+  const s = G.turn;
+  if (s === 0) { render(); return; }
+  await wait(620); if (tok !== G.token) return;
+  play(s, aiPlay(s));
+}
+function play(s, c) {
+  const h = G.hands[s]; h.splice(h.indexOf(c), 1); G.trick.push({ s, c }); SH.Sound.play('move');
+  G.turn = nextSeat(s, t => G.inHand[t]); G.lastWin = null; render(); playLoop();
+}
+function aiPlay(s) {
+  const lg = legal(s); if (lg.length === 1) return lg[0];
+  if (!G.trick.length) { // lead: top trump, then side aces, else low
+    const tr = lg.filter(c => c.s === G.trump).sort((a, b) => b.r - a.r);
+    if (tr.length && tr[0].r >= 13) return tr[0];
+    const ace = lg.find(c => c.s !== G.trump && c.r === 14); if (ace) return ace;
+    return lg.slice().sort((a, b) => keepScore(a) - keepScore(b))[0];
+  }
+  // following: play the cheapest card that wins, otherwise the cheapest card
+  const ins = [...Array(G.n).keys()].filter(t => G.inHand[t]), last = G.trick.length === ins.length - 1;
+  const winners = lg.filter(c => winning(G.trick.concat({ s, c })).s === s).sort((a, b) => keepScore(a) - keepScore(b));
+  if (winners.length && (last || G.tricks[s] === 0 || keepScore(winners[0]) >= 60)) return winners[0];
+  return lg.slice().sort((a, b) => keepScore(a) - keepScore(b))[0];
+}
+function scoreHand() {
+  const ins = [...Array(G.n).keys()].filter(s => G.inHand[s]), pot = G.pot;
+  const max = Math.max(...ins.map(s => G.tricks[s])), top = ins.filter(s => G.tricks[s] === max);
+  let text = '';
+  if (RU.pot === 'split') {
+    let paid = 0; for (const s of ins) { const share = Math.floor(pot * G.tricks[s] / 5); G.stack[s] += share; paid += share; }
+    G.carry += pot - paid; text = ins.filter(s => G.tricks[s]).map(s => `${NAMES[s]} ${G.tricks[s]} trick${G.tricks[s] === 1 ? '' : 's'}`).join(' · ') + ' — the pot is split';
+    G.result = { text, winners: top };
+  } else if (top.length === 1) {
+    G.stack[top[0]] += pot; text = `${NAMES[top[0]]} ${vb(top[0], 'win', 'wins')} the pot of ${fmt(pot)} with ${max} tricks`; G.result = { text, winners: top };
+  } else { G.carry += pot; text = `Tie at ${max} tricks (${top.map(s => NAMES[s]).join(' & ')}) — the pot rolls over`; G.result = { text, winners: [] }; }
+  G.pot = 0;
+  // booray: stayed in, took nothing — match the pot into the next one
+  const bourred = ins.filter(s => G.tricks[s] === 0);
+  for (const s of bourred) { const owe = Math.min(G.stack[s], RU.cap ? Math.min(RU.cap, pot) : pot); G.stack[s] -= owe; G.carry += owe; text += ` · <b style="color:#ff8a8a">${NAMES[s]} ${vb(s, 'got', 'got')} boorayed</b> (pays ${fmt(owe)})`; }
+  log(`<b>${text}</b>`); G.result.text = text.replace(/<[^>]+>/g, '');
+  if (bourred.includes(0)) { flash('BOORAY!'); SH.Sound.play('bad'); } else if (G.result.winners.includes(0)) { flash('You take the pot!'); SH.Sound.play('victory'); } else SH.Sound.play('draw');
+  endHand();
+}
+function endHand() {
+  G.phase = 'between'; tmr.stop(); render();
+  if (G.handNo >= RU.hands || !G.stack[0] || [...Array(G.n).keys()].filter(s => G.stack[s] > 0).length < 2) return finish();
+  showMsg(`<div class="label">Hand ${G.handNo} of ${RU.hands}</div><div class="tiny" style="margin:6px 0">${G.result ? G.result.text : 'Pot rolls over.'}</div><div class="tiny muted">Your stack ${fmt(G.stack[0])}${G.carry ? ` · next pot starts at ${fmt(G.carry)}` : ''}</div><button class="btn-gold" style="margin-top:10px" id="br-next">Deal again</button>`);
+  $('br-next').onclick = () => { showMsg(''); deal(); };
+}
+function finish() {
+  G.over = true; G.phase = 'idle'; tmr.stop();
+  const best = Math.max(...G.stack), you = G.stack[0], res = you === best && G.stack.filter(x => x === best).length === 1 ? 'w' : you === best ? 'd' : 'l';
+  G.stats[res]++; LS.set('br-stats', G.stats);
+  SH.Sound.play(res === 'w' ? 'victory' : res === 'd' ? 'draw' : 'defeat');
+  const rank = G.stack.map((x, s) => [x, s]).sort((a, b) => b[0] - a[0]);
+  showMsg(`<h4 class="serif" style="margin:0 0 4px;font-size:22px">${res === 'w' ? 'Biggest stack at the table!' : res === 'd' ? 'Tied for the top!' : 'Session over'}</h4><div class="tiny muted">${rank.map(([x, s]) => `${NAMES[s]} ${fmt(x)}`).join(' · ')}</div><div class="tiny muted" style="margin-top:4px">Practice chips only — no money, just bragging rights.</div><button class="btn-gold" style="margin-top:12px" id="br-again">New session</button>`);
+  $('br-again').onclick = newSession;
+  if (SH.onResult) SH.onResult('bourre', res, { pro: !!RU.pro });
+  render();
+}
+
+// ---------- you ----------
+function youDecide(stay) { if (G.phase !== 'decide' || G.decideTurn !== 0) return; tmr.stop(); SH.Sound.unlock(); decide(0, stay); }
+function youDraw() { if (G.phase !== 'draw' || G.drawTurn !== 0) return; tmr.stop(); SH.Sound.unlock(); doDraw(0, G.sel.slice()); }
+function youPlay(c) {
+  if (G.phase !== 'play' || G.turn !== 0) return;
+  const lg = legal(0); if (!lg.includes(c)) { SH.toast(whyNot(), 'x'); return; }
+  tmr.stop(); SH.Sound.unlock(); play(0, c);
+}
+function whyNot() {
+  if (!G.trick.length) return 'You hold the ace of trump — you must lead it.';
+  const L = G.trick[0].c.s, h = G.hands[0];
+  if (h.some(c => c.s === L)) return `Follow suit with ${SNAME[L]} — and beat the trick if you can.`;
+  if (h.some(c => c.s === G.trump)) return `No ${SNAME[L]} — you must trump (and overtrump if you can).`;
+  return 'That card is not allowed.';
+}
+
+// ---------- render ----------
+const POS = { 4: [[50, 90], [13, 50], [50, 8], [87, 50]], 5: [[50, 90], [13, 62], [24, 10], [76, 10], [87, 62]], 6: [[50, 90], [13, 66], [15, 18], [50, 6], [85, 18], [87, 66]] };
+const POS_M = { 4: [[50, 90], [12, 48], [50, 8], [88, 48]], 5: [[50, 90], [12, 62], [24, 10], [76, 10], [88, 62]], 6: [[50, 90], [13, 68], [16, 22], [50, 7], [84, 22], [87, 68]] };
+function showMsg(html) { const m = $('br-msg'); m.innerHTML = html ? `<div class="glass" style="padding:14px 16px;text-align:center">${html}</div>` : ''; m.classList.toggle('hidden', !html); }
+function flash(t) { if (G.fast) return; const el = $('br-flash'); el.textContent = t; el.classList.remove('show'); void el.offsetWidth; el.classList.add('show'); }
+function render(dealing) {
+  if (!G.stack.length) return;
+  const pos = (innerWidth < 700 ? POS_M : POS)[G.n];
+  $('br-seats').innerHTML = [...Array(G.n).keys()].filter(s => s).map(s => {
+    const [x, y] = pos[s], on = (G.phase === 'decide' && G.decideTurn === s) || (G.phase === 'draw' && G.drawTurn === s) || (G.phase === 'play' && G.turn === s && G.trick.length < G.inHand.filter(Boolean).length);
+    const status = G.stack[s] <= 0 && !G.inHand[s] ? 'Out' : G.phase === 'decide' && !G.decided[s] ? 'thinking' : G.phase !== 'idle' && G.phase !== 'between' && G.decided[s] ? (G.inHand[s] ? `in · ${G.tricks[s]} trick${G.tricks[s] === 1 ? '' : 's'}` : 'passed') : '';
+    const n = G.hands[s] ? G.hands[s].length : 0, show = G.inHand[s] || G.phase === 'decide';
+    return `<div class="br-seat ${on ? 'on' : ''} ${G.decided[s] && !G.inHand[s] ? 'passed' : ''} ${G.lastWin === s ? 'won' : ''}" style="left:${x}%;top:${y}%"><div class="br-backs">${show ? Array.from({ length: Math.min(n, 5) }, () => C.html(null, { back: true })).join('') : ''}</div><div class="pk-pod">${SH.avatar(NAMES[s], [0, 25, 300, 200, 110, 340][s])}<div class="pk-id"><b>${NAMES[s]}${G.dealer === s ? ' · D' : ''}</b><span>${fmt(G.stack[s])}${status ? ' · ' + status : ''}</span></div></div></div>`;
+  }).join('');
+  // center: pot + trump + trick
+  $('br-pot').innerHTML = `${G.pot ? SH.chips.stack(G.pot, { size: 28, label: false }) : ''}<span class="pk-potlab">Pot <b>${fmt(G.pot)}</b>${G.carry && G.phase !== 'between' ? '' : ''}</span>`;
+  $('br-trump').innerHTML = G.upcard ? `<span class="label">Trump</span>${C.html(G.upcard, { cls: 'br-up' })}<b class="br-ts" style="color:${G.trump === 'h' || G.trump === 'd' ? '#ff8fa3' : '#fff'}">${SYM[G.trump]} ${SNAME[G.trump]}</b>` : '';
+  const ins = G.inHand.filter(Boolean).length;
+  $('br-trick').innerHTML = G.trick.map(p => { const [x, y] = pos[p.s], tx = 50 + (x - 50) * .32, ty = 48 + (y - 48) * .3; return `<div class="br-tc" style="left:${tx}%;top:${ty}%">${C.html(p.c, { cls: G.trick.length === ins && winning(G.trick).s === p.s ? 'win' : '' })}</div>`; }).join('');
+  // you
+  const myPlay = G.phase === 'play' && G.turn === 0 && G.trick.length < ins, lg = myPlay ? legal(0) : [];
+  const drawing = G.phase === 'draw' && G.drawTurn === 0;
+  const tip = RU.coach && myPlay ? aiPlay(0) : null;
+  $('br-hand').innerHTML = (G.hands[0] || []).map((c, i) => C.html(c, { cls: (myPlay ? (lg.includes(c) ? 'playable' : 'dim') : drawing ? 'playable' + (G.sel.includes(c) ? ' bury' : '') : '') + (tip === c ? ' tip' : '') + (dealing ? ' dealt' : '') + (G.phase === 'play' && !G.inHand[0] ? ' dim' : ''), attr: `data-i="${i}"`, style: `--d:${i * 70}ms` })).join('');
+  $('br-you').innerHTML = `<div class="pk-pod me ${myPlay || drawing || (G.phase === 'decide' && G.decideTurn === 0) ? 'on' : ''}">${SH.avatar('You', 42)}<div class="pk-id"><b>You${G.dealer === 0 ? ' · D' : ''}</b><span>${fmt(G.stack[0])} chips${G.inHand[0] ? ` · ${G.tricks[0]} trick${G.tricks[0] === 1 ? '' : 's'}` : ''}</span></div></div>`;
+  const deciding = G.phase === 'decide' && G.decideTurn === 0;
+  $('br-decide').classList.toggle('hidden', !deciding); $('br-drawbar').classList.toggle('hidden', !drawing);
+  if (drawing) $('br-drawbtn').innerHTML = `<b>${G.sel.length ? `Trade ${G.sel.length}` : 'Keep all'}</b><small>ENTER</small>`;
+  const e = G.hands[0] && G.hands[0].length ? est(G.hands[0]) : 0;
+  $('br-tip').innerHTML = deciding ? (RU.coach ? `Coach: you can expect about <b>${e.toFixed(1)}</b> trick${e >= 0.95 && e < 1.05 ? '' : 's'}${RU.draw ? ' before trading' : ''}. ${e >= 1.2 ? 'Stay in.' : e >= 0.8 ? 'Close call — staying risks getting boorayed.' : 'Pass — getting boorayed would cost you the pot.'}` : 'Stay in or pass?') : drawing ? 'Tap up to 4 cards to trade, then Trade.' : myPlay ? (tip ? `Tip: ${C.name(tip)}` : 'Your play.') : G.phase === 'play' && !G.inHand[0] ? 'You passed this hand — watch and learn.' : '';
+  $('br-hd').textContent = G.handNo ? `Hand ${G.handNo} of ${RU.hands}` : '';
+  $('br-rb').textContent = McRules.label('bourre'); $('br-rb').className = 'rbadge r-' + McRules.mode('bourre');
+  $('br-rec').textContent = `W${G.stats.w} L${G.stats.l}`;
+  if ((deciding || drawing || myPlay) && RU.timer) { const key = G.phase + G.handNo + (G.hands[0] || []).length + G.trick.length; if (G._tKey !== key) { G._tKey = key; tmr.start(RU.timer, $('br-timer'), () => { G._tKey = null; SH.toast('Time! Auto-move', 'clock'); if (G.phase === 'decide') youDecide(est(G.hands[0]) >= 1.2); else if (G.phase === 'draw') { G.sel = []; youDraw(); } else youPlay(aiPlay(0)); }); } }
+  else { G._tKey = null; tmr.stop(); }
+}
+const root = $('view-bourre');
+root.innerHTML = `
+<section class="col center" style="width:100%">
+  <div class="felt br-felt" id="br-felt">
+    <div class="pk-inlay"></div><div class="br-logo" aria-hidden="true">BOORAY</div>
+    <div id="br-seats"></div>
+    <div class="br-mid"><div class="pk-pot" id="br-pot"></div><div class="br-trump" id="br-trump"></div></div>
+    <div id="br-trick"></div>
+    <div class="cc-flash" id="br-flash"></div>
+    <div class="felt-msg hidden" id="br-msg"></div>
+  </div>
+  <div class="pk-dock br-dock">
+    <div class="pk-me"><div id="br-you"></div><span class="ptimer hidden" id="br-timer"></span></div>
+    <div class="pk-ctl">
+      <div class="fan" id="br-hand"></div>
+      <div class="pk-main hidden" id="br-decide" style="grid-template-columns:1fr 1fr"><button class="cbtn c-fold" id="br-pass"><b>Pass</b><small>P</small></button><button class="cbtn c-call" id="br-stay"><b>Stay in</b><small>S</small></button></div>
+      <div class="pk-main hidden" id="br-drawbar" style="grid-template-columns:1fr"><button class="cbtn c-raise" id="br-drawbtn"><b>Keep all</b><small>ENTER</small></button></div>
+      <div class="tiny" id="br-tip" style="color:var(--amber);text-align:center;min-height:18px"></div>
+    </div>
+  </div>
+</section>
+<section class="col right">
+  <div class="glass card stack">
+    <div class="between"><h3 class="h3">McLearn Booray</h3><span class="row" style="gap:6px"><span class="rbadge" id="br-rb">Standard</span><span class="pill" id="br-rec"></span></span></div>
+    <div class="pill" id="br-hd" style="align-self:flex-start"></div>
+    <div class="tiny muted">Booray (also spelled Bourré) — the Louisiana table game. Everyone antes, gets 5 cards, and the dealer's last card sets trump. Stay in or pass. Stay, trade in up to 4 cards, then play 5 tricks: <b>follow suit, trump if you can't, and beat the trick if you can</b>. Most tricks takes the pot. Stay in and take <b>zero</b> tricks and you get <b>boorayed</b> — you match the pot. Practice chips only.</div>
+    <div id="rules-bourre"></div>
+    <button class="btn btn-lux" id="br-new">New Session</button>
+    <div><span class="label">Table log</span><div class="moves" id="br-log" style="margin-top:6px;height:130px;font-family:var(--sans)"></div></div>
+  </div>
+</section>`;
+$('br-hand').addEventListener('click', e => {
+  const el = e.target.closest('.pcard[data-i]'); if (!el) return; SH.Sound.unlock();
+  const c = G.hands[0][+el.dataset.i];
+  if (G.phase === 'draw' && G.drawTurn === 0) { const k = G.sel.indexOf(c); if (k >= 0) G.sel.splice(k, 1); else if (G.sel.length < 4) G.sel.push(c); else SH.toast('Trade up to 4 cards', 'x'); render(); return; }
+  youPlay(c);
+});
+$('br-pass').onclick = () => youDecide(false);
+$('br-stay').onclick = () => youDecide(true);
+$('br-drawbtn').onclick = youDraw;
+$('br-new').onclick = newSession;
+document.addEventListener('keydown', e => { if (root.classList.contains('hidden') || /INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)) return; const k = e.key.toLowerCase(); if (G.phase === 'decide' && G.decideTurn === 0 && (k === 's' || k === 'p')) youDecide(k === 's'); else if (G.phase === 'draw' && G.drawTurn === 0 && e.key === 'Enter') youDraw(); });
+window.addEventListener('resize', () => { if (!root.classList.contains('hidden')) render(); });
+McRules.mount('bourre', $('rules-bourre'));
+McRules.onChange('bourre', () => { if (!G.stack.length || G.over || G.handNo <= 1) newSession(); else SH.toast('New rules apply from your next session'); });
+SH.games.bourre = { onShow() { if (!G.stack.length) newSession(); else render(); }, _G: G, _newSession: newSession, _youDecide: youDecide, _youDraw: youDraw, _youPlay: youPlay, _aiPlay: aiPlay, _legal: legal, _est: est };
+})();
+
+</script>
+<script>
 // McLearn Pluck — three-handed trick taking: quotas 7-6-4, dealer calls trump, over-quota players PLUCK the under-quota players' best cards.
 (function () {
 'use strict';
@@ -8630,6 +8953,7 @@ const ACH = [
   { id: 'plucker', name: 'Plucked Clean', desc: 'Win a game of Pluck', icon: '🪶' },
   { id: 'bingo', name: 'BINGO!', desc: 'Win a McLearn Media Bingo match', icon: '🎱' },
   { id: 'keno', name: 'Lucky Spots', desc: 'Catch a 20× win (or better) in McLearn Keno', icon: '🔢' },
+  { id: 'booray', name: 'Bayou Boss', desc: 'Finish a Booray session with the biggest stack', icon: '⚜️' },
   { id: 'procircuit', name: 'Pro Circuit', desc: 'Win in Pro mode in 3 different games', icon: '🥇' }
 ];
 function save() { LS.set('player', P); renderChip(); }
@@ -8651,7 +8975,7 @@ function addXP(n, silent) {
 }
 function floatXP(n) { const el = document.createElement('div'); el.className = 'xpfloat'; el.textContent = `+${n} XP`; document.body.appendChild(el); setTimeout(() => el.remove(), 1400); }
 
-const GAME_NAMES = { keno: 'Keno', bingo: 'Bingo', pluck: 'Pluck', dominoes: 'Dominoes', bidwhist: 'Biz Wiz', poker: "Hold'em", tonk: 'Tonk', gofish: 'Go Fish', war: 'I Declare War', showdown: 'Studio Showdown', mogul: 'Mega Media Mogul', pittypat: 'Pitty Pat', colorclash: 'Color Clash', 'blackjack-tourney': 'Blackjack Tournament', chess: 'Chess', checkers: 'Checkers', spades: 'Spades', blackjack: '21 · Blackjack', parcheesi: 'Parcheesi', academy: 'Chess Academy' };
+const GAME_NAMES = { bourre: 'Booray', keno: 'Keno', bingo: 'Bingo', pluck: 'Pluck', dominoes: 'Dominoes', bidwhist: 'Biz Wiz', poker: "Hold'em", tonk: 'Tonk', gofish: 'Go Fish', war: 'I Declare War', showdown: 'Studio Showdown', mogul: 'Mega Media Mogul', pittypat: 'Pitty Pat', colorclash: 'Color Clash', 'blackjack-tourney': 'Blackjack Tournament', chess: 'Chess', checkers: 'Checkers', spades: 'Spades', blackjack: '21 · Blackjack', parcheesi: 'Parcheesi', academy: 'Chess Academy' };
 SH.onResult = function (game, res, extra) {
   extra = extra || {};
   const g = P.games[game] = P.games[game] || { w: 0, l: 0, d: 0 };
@@ -8672,13 +8996,13 @@ SH.onResult = function (game, res, extra) {
   if (game === 'colorclash' && res === 'w') unlock('clash');
   if (game === 'pittypat' && res === 'w') unlock('pat');
   if (game === 'mogul' && res === 'w') unlock('mogul');
-  if (res === 'w') { const m = { dominoes: 'domino', bidwhist: 'boston', poker: 'holdem', tonk: 'tonk', gofish: 'fish', war: 'general', showdown: 'owner', pluck: 'plucker', bingo: 'bingo', keno: 'keno' }[game]; if (m) unlock(m); }
+  if (res === 'w') { const m = { dominoes: 'domino', bidwhist: 'boston', poker: 'holdem', tonk: 'tonk', gofish: 'fish', war: 'general', showdown: 'owner', pluck: 'plucker', bingo: 'bingo', keno: 'keno', bourre: 'booray' }[game]; if (m) unlock(m); }
   if (game === 'blackjack') {
     if (extra.bj) { unlock('natural'); queueCard({ kind: 'win', headline: 'BLACKJACK!', sub: 'A natural 21 at the McLearn Arena table', icon: '🂡' }); }
     const st = LS.get('bj', null); if (st && st.total >= 50 && st.good / st.total >= 0.95) unlock('strategist');
   }
   if (game === 'academy') { const pz = LS.get('puzzles', { solved: [] }); if (pz.solved.length >= 7) unlock('drills'); queueCard({ kind: 'win', headline: 'PUZZLE SOLVED', sub: extra.name || 'McLearn Academy drill', icon: '🎓' }); }
-  if (res === 'w' && big && game !== 'blackjack-tourney') queueCard({ kind: 'win', headline: game === 'chess' ? (extra.reason === 'checkmate' ? 'CHECKMATE' : 'VICTORY') : 'VICTORY', sub: `${extra.pro ? 'Pro · ' : ''}${GAME_NAMES[game]}${extra.vs ? ' vs ' + extra.vs : ''}`, icon: { chess: '♚', checkers: '⛀', spades: '♠', parcheesi: '⚄', colorclash: '✦', pittypat: '🂫', mogul: '🏙', dominoes: '🁫', bidwhist: '🃏', poker: '♦', tonk: '♣', gofish: '🐟', war: '⚔️', showdown: '🎤', pluck: '🪶' , bingo: '🎱', keno: '🔢' }[game] || '🏆' });
+  if (res === 'w' && big && game !== 'blackjack-tourney') queueCard({ kind: 'win', headline: game === 'chess' ? (extra.reason === 'checkmate' ? 'CHECKMATE' : 'VICTORY') : 'VICTORY', sub: `${extra.pro ? 'Pro · ' : ''}${GAME_NAMES[game]}${extra.vs ? ' vs ' + extra.vs : ''}`, icon: { chess: '♚', checkers: '⛀', spades: '♠', parcheesi: '⚄', colorclash: '✦', pittypat: '🂫', mogul: '🏙', dominoes: '🁫', bidwhist: '🃏', poker: '♦', tonk: '♣', gofish: '🐟', war: '⚔️', showdown: '🎤', pluck: '🪶' , bingo: '🎱', keno: '🔢', bourre: '⚜️' }[game] || '🏆' });
   if (game !== 'blackjack' || (P.games.blackjack.w + P.games.blackjack.l + P.games.blackjack.d) % 6 === 0) setTimeout(() => Minute.maybe(), 2600);
 };
 SH.onEvent = function (game, ev, data) {
@@ -8784,7 +9108,7 @@ function openPlayerCard() {
   const rec = k => { const g = P.games[k] || { w: 0, l: 0, d: 0 }; return `${g.w}W ${g.l}L${g.d ? ' ' + g.d + 'D' : ''}`; };
   $('pcm-body').innerHTML = `
     <div class="row" style="gap:14px;align-items:center"><div class="lvl big">${lv}</div><div><div class="serif" style="font-size:22px">${title(lv)}</div><div class="tiny muted">${P.xp.toLocaleString()} XP · ${(next - P.xp).toLocaleString()} to level ${lv + 1}</div><div class="tiny" style="color:var(--amber)">${P.season} season · ${P.sxp.toLocaleString()} XP this season · best streak ${P.bestStreak}</div></div></div>
-    <div class="grid3" style="margin-top:12px">${['chess', 'checkers', 'spades', 'blackjack', 'parcheesi', 'colorclash', 'pittypat', 'mogul', 'dominoes', 'bidwhist', 'poker', 'tonk', 'gofish', 'war', 'showdown', 'pluck', 'bingo', 'keno'].map(k => `<div class="stat"><span>${GAME_NAMES[k]}</span><b style="font-size:12px">${rec(k)}</b></div>`).join('')}<div class="stat"><span>Chess Elo</span><b style="font-size:12px">${SH.profile.elo}</b></div></div>
+    <div class="grid3" style="margin-top:12px">${['chess', 'checkers', 'spades', 'blackjack', 'parcheesi', 'colorclash', 'pittypat', 'mogul', 'dominoes', 'bidwhist', 'poker', 'tonk', 'gofish', 'war', 'showdown', 'pluck', 'bingo', 'keno', 'bourre'].map(k => `<div class="stat"><span>${GAME_NAMES[k]}</span><b style="font-size:12px">${rec(k)}</b></div>`).join('')}<div class="stat"><span>Chess Elo</span><b style="font-size:12px">${SH.profile.elo}</b></div></div>
     <div class="label" style="margin:14px 0 6px">Achievements · ${Object.keys(P.ach).length}/${ACH.length}</div>
     <div class="achgrid">${ACH.map(a => `<div class="ach ${P.ach[a.id] ? 'on' : ''}" title="${esc(a.desc)}"><span>${a.icon}</span><b>${esc(a.name)}</b><small>${esc(a.desc)}</small></div>`).join('')}</div>
     <div class="label" style="margin:16px 0 6px">Event Mode — big screen for churches, schools &amp; fundraisers</div>
@@ -8839,6 +9163,7 @@ const GAMES = [
   { v: 'showdown', title: 'Studio Showdown', sub: 'Pen · Mic · Contract. Rock-paper-scissors that teaches the music business.', cats: ['orig'], icon: 'showdown', h1: '#2b0a33', h2: '#b8306e', stat: () => rec('sd-stats'), keys: 'rock paper scissors rps pen mic contract' },
   { v: 'colorclash', title: 'Color Clash', sub: 'Match colors and symbols. Skip, Reverse, +2, Wilds — call “Last Card!”', cats: ['orig', 'cards'], icon: 'colorclash', h1: '#2a1350', h2: '#d9466b', stat: () => rec('cc-stats'), keys: 'uno color clash wild draw' },
   { v: 'pluck', title: 'Pluck', sub: 'Three-handed: make your 7-6-4 quota, then pluck the best cards from whoever fell short.', cats: ['cards'], icon: 'pluck', h1: '#0b3324', h2: '#1f8a5c', stat: () => rec('pl-stats'), keys: 'pluck plucking three handed jokers quota' },
+  { v: 'bourre', title: 'Booray', sub: 'The Louisiana table game. Stay in or pass, take the most tricks — or get boorayed. Practice chips.', cats: ['cards'], icon: 'bourre', h1: '#1d2a14', h2: '#6b8a2a', stat: () => rec('br-stats'), keys: 'booray bourre bourré boo-ray louisiana cajun tricks pot' },
   { v: 'tonk', title: 'Tonk', sub: 'The fast rummy game. Spread, hit, drop — or Tonk out.', cats: ['cards'], icon: 'tonk', h1: '#0d2440', h2: '#2468b3', stat: () => rec('tk-stats'), keys: 'tonk tunk tink rummy spread drop' },
   { v: 'pittypat', title: 'Pitty Pat', sub: 'The Southern pairing game, with the out-of-turn “Pat!” house rule.', cats: ['cards'], icon: 'pittypat', h1: '#4a0f2a', h2: '#b51747', stat: () => rec('pp-stats'), keys: 'pitty pat pairs' },
   { v: 'checkers', title: 'Checkers', sub: 'American rules, flying kings, three AI levels — in 3-D.', cats: ['board'], icon: 'checkers', h1: '#1c1c28', h2: '#4a4a70', stat: () => { const s = LS.get('ck-stats', { w: 0, l: 0, d: 0 }); return `${s.w}W ${s.l}L ${s.d}D`; }, keys: 'checkers draughts kings' },
@@ -8849,7 +9174,7 @@ const GAMES = [
   { v: 'keno', title: 'McLearn Keno', sub: 'Pick up to 10 numbers, watch 20 balls drop. Gold Ball doubles it. Practice credits only.', cats: ['casino'], icon: 'keno', h1: '#0d1a3a', h2: '#2e5fd0', stat: () => `Credits ${(LS.get('kn', { bank: 500 }).bank).toLocaleString()}`, keys: 'keno lottery numbers 80 balls lounge casino' },
   { v: 'poker', title: "Hold'em Poker", sub: 'Sit & Go tournament with practice chips and a live win-odds coach.', cats: ['casino'], icon: 'poker', h1: '#052c2a', h2: '#13806e', stat: () => { const s = LS.get('pk-stats', { w: 0, l: 0 }); return `${s.w} titles`; }, keys: 'poker holdem texas chips' }
 ];
-const TAG = { dominoes: 'Slam the bones.', chess: 'Think like a grandmaster.', spades: 'Bid it. Make it. Bag it.', bidwhist: 'Uptown, Downtown — your call.', mogul: 'Own the whole catalog.', showdown: 'Write it. Sing it. Own it.', bingo: 'Daub it. Shout it. BINGO!', keno: 'Pick your spots. Watch them drop.', colorclash: 'Match it or draw it.', tonk: 'Drop it like it’s low.', pittypat: 'Pair it up, Pitty Pat!', checkers: 'King me.', parcheesi: 'Race every pawn home.', gofish: 'Ask, fish, book it.', war: 'I — DE — CLARE — WAR!', blackjack: 'Get to 21 — beat the dealer.', poker: 'Last stack standing.' };
+const TAG = { dominoes: 'Slam the bones.', chess: 'Think like a grandmaster.', spades: 'Bid it. Make it. Bag it.', bidwhist: 'Uptown, Downtown — your call.', mogul: 'Own the whole catalog.', showdown: 'Write it. Sing it. Own it.', bingo: 'Daub it. Shout it. BINGO!', keno: 'Pick your spots. Watch them drop.', bourre: 'Take a trick or get boorayed.', colorclash: 'Match it or draw it.', tonk: 'Drop it like it’s low.', pittypat: 'Pair it up, Pitty Pat!', checkers: 'King me.', parcheesi: 'Race every pawn home.', gofish: 'Ask, fish, book it.', war: 'I — DE — CLARE — WAR!', blackjack: 'Get to 21 — beat the dealer.', poker: 'Last stack standing.' };
 const SOLO = (() => { try { return new URLSearchParams(location.search).get('solo') === '1'; } catch (e) { return false; } })();
 if (SOLO) document.body.classList.add('solo');
 const views = ['lobby'].concat(GAMES.map(g => g.v)).filter(v => document.getElementById('view-' + v));
