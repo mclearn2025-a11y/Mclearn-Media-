@@ -984,6 +984,39 @@ body.event .gwrap .felt{transform:none}
 .gtile:hover .gicon{transform:rotateY(18deg) rotateX(-8deg) translateZ(20px) scale(1.06)}
 .gtile{transform-style:preserve-3d}
 .bj-tot:empty{display:none}
+
+/* ===== McLearn Keno lounge ===== */
+#view-keno .felt.kn-felt{display:block;min-height:0;padding:18px;border-radius:26px;background:radial-gradient(ellipse at 50% 0%,rgba(80,130,255,.22),transparent 60%),repeating-linear-gradient(90deg,rgba(244,200,106,.05) 0 1px,transparent 1px 40px),linear-gradient(180deg,#0b1430,#060a1c);border:2px solid #c8961e;box-shadow:inset 0 0 0 6px #0a1027,inset 0 0 0 7px rgba(244,200,106,.4),0 24px 60px rgba(0,0,0,.75)}
+#view-keno .felt.kn-felt::before{content:none}
+.kn-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.kn-sign{font-size:clamp(22px,4vw,36px);letter-spacing:.2em;color:#ffe6a8;text-shadow:0 0 18px rgba(244,200,106,.55)}
+.kn-sign b{color:#fff;text-shadow:0 0 14px rgba(120,170,255,.9),0 0 30px rgba(80,130,255,.6)}
+.kn-now{display:flex;align-items:center;gap:10px;color:#cfe0ff}
+.kball{--ks:62px;width:var(--ks);height:var(--ks);border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 34% 28%,#fff 0 10%,#7fa8ff 30%,#2e5fd0 60%,#122a6b);box-shadow:inset -4px -6px 12px rgba(0,0,0,.35),0 8px 18px rgba(0,0,0,.5);animation:balldrop .4s cubic-bezier(.3,1.5,.5,1) both}
+.kball b{width:60%;height:60%;border-radius:50%;background:#fff;display:grid;place-items:center;font-family:var(--serif);font-weight:900;font-size:20px;color:#0b1430}
+.kball.hit{background:radial-gradient(circle at 34% 28%,#fff 0 10%,#7ff0b8 30%,#1f9a62 60%,#0b4a2e)}
+.kball.gold{background:radial-gradient(circle at 34% 28%,#fff 0 10%,#ffe6a8 30%,#e6b84a 60%,#7a5410);box-shadow:0 0 30px rgba(244,200,106,.8)}
+.kball.idle{opacity:.5;animation:none}
+.kn-board{display:grid;grid-template-columns:repeat(10,1fr);gap:5px}
+.kcell{aspect-ratio:1.25;border-radius:8px;border:1px solid rgba(160,190,255,.22);background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.02));color:#cfe0ff;font-family:var(--serif);font-weight:900;font-size:clamp(12px,1.8vw,17px);transition:transform .12s,background .2s}
+.kcell:nth-child(n+41){margin-top:0}.kcell:nth-child(41){grid-column:1}
+.kn-board .kcell:nth-child(n+41):nth-child(-n+50){border-top:2px solid rgba(244,200,106,.5)}
+.kcell:hover:not(:disabled){transform:scale(1.06);border-color:#ffe6a8}
+.kcell.pick{background:radial-gradient(circle,#b3264a 0 55%,#6d0a22 100%);color:#fff;border-color:#f2c4cb;box-shadow:0 0 12px rgba(179,38,74,.6)}
+.kcell.drawn{background:linear-gradient(180deg,#2e5fd0,#173a8f);color:#fff;border-color:#7fa8ff;animation:kdrop .35s ease-out}
+.kcell.hit{background:radial-gradient(circle,#2ad38a 0 50%,#0f7a4c 100%);color:#fff;border-color:#b8ffd9;box-shadow:0 0 18px rgba(42,211,138,.8);animation:khit .5s cubic-bezier(.3,1.6,.5,1)}
+.kcell.goldc{background:radial-gradient(circle,#ffe6a8 0 40%,#e6b84a 70%,#9c6a14)!important;color:#2a0718!important;box-shadow:0 0 22px rgba(244,200,106,.9)!important}
+@keyframes kdrop{from{transform:scale(1.3);filter:brightness(1.8)}}
+@keyframes khit{0%{transform:scale(1.5) rotate(-10deg)}100%{transform:none}}
+.kn-result{text-align:center;min-height:22px;margin-top:10px;color:#cfe0ff;font-size:14px}
+.kn-ctl{flex-direction:column;align-items:center;gap:10px;border-radius:22px;max-width:760px}
+#kn-bets .chip.bjchip{width:52px;height:52px}
+#kn-bets .chip.on{transform:translateY(-6px);box-shadow:0 0 0 3px #ffe6a8,0 10px 18px rgba(0,0,0,.5)}
+.kn-paybox{padding:10px 12px;border-radius:14px;background:rgba(0,0,0,.28);border:1px solid rgba(244,200,106,.2)}
+.kpay{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:5px 6px;border-radius:8px;font-size:12.5px}
+.kpay b{font-family:var(--mono);color:#ffe6a8}.kpay small{font-family:var(--mono);font-size:10px;color:var(--rose-300);min-width:70px;text-align:right}
+.kpay.on{background:var(--goldg);color:#2a0718}.kpay.on b,.kpay.on small{color:#2a0718}
+@media (max-width:820px){.kn-board{gap:3px}.kcell{border-radius:6px;font-size:12px}.kball{--ks:48px}.kball b{font-size:16px}}
 </style>
 </head>
 <body>
@@ -1002,7 +1035,7 @@ body.event .gwrap .felt{transform:none}
 <marker id="ah-gold" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto"><path d="M0 0L10 5L0 10z" fill="#f2c4cb"/></marker>
 <marker id="ah-threat" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ef4444"/></marker>
 <marker id="ah-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto"><path d="M0 0L10 5L0 10z" fill="#4ade80"/></marker>
-<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol><symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></symbol><symbol id="gi-chess" viewBox="0 0 24 24"><path d="M12 2.5v4M10 4.5h4"/><path d="M8 13a4 4 0 0 1 8 0l-1 5H9z"/><path d="M7 21h10M8.5 18h7"/><path d="M9.5 9.5h5"/></symbol><symbol id="gi-checkers" viewBox="0 0 24 24"><ellipse cx="12" cy="8" rx="7.5" ry="3.2"/><path d="M4.5 8v3.4c0 1.8 3.4 3.2 7.5 3.2s7.5-1.4 7.5-3.2V8"/><path d="M4.5 13v3.4c0 1.8 3.4 3.2 7.5 3.2s7.5-1.4 7.5-3.2V13"/><ellipse cx="12" cy="8" rx="3.5" ry="1.4"/></symbol><symbol id="gi-spades" viewBox="0 0 24 24"><path d="M12 2.5c3.2 4.2 7.5 6.4 7.5 10.6a4.2 4.2 0 0 1-6.8 3.3l.8 5.1h-3l.8-5.1a4.2 4.2 0 0 1-6.8-3.3c0-4.2 4.3-6.4 7.5-10.6z"/></symbol><symbol id="gi-blackjack" viewBox="0 0 24 24"><rect x="3" y="6" width="11" height="15" rx="2" transform="rotate(-10 8.5 13.5)"/><rect x="10" y="3" width="11" height="15" rx="2"/><path d="M13.5 8.2c.4-.8 1.3-1.2 2-1 1 .3 1.3 1.4.6 2.3l-2.6 3h3.2M18 7v6"/></symbol><symbol id="gi-parcheesi" viewBox="0 0 24 24"><path d="M9 2.5h6v6.5h6.5v6H15v6.5H9V15H2.5V9H9z"/><circle cx="12" cy="12" r="1.7" fill="currentColor"/><path d="M12 5v1.5M12 17.5V19M5 12h1.5M17.5 12H19"/></symbol><symbol id="gi-colorclash" viewBox="0 0 24 24"><rect x="4.5" y="2.5" width="15" height="19" rx="3"/><path d="M12 6.5l4.5 5.5L12 17.5 7.5 12z"/><path d="M12 9.5l2 2.5-2 2.5-2-2.5z" fill="currentColor"/></symbol><symbol id="gi-pittypat" viewBox="0 0 24 24"><rect x="2.5" y="6" width="9.5" height="14" rx="2"/><rect x="12" y="4" width="9.5" height="14" rx="2"/><path d="M7.2 11.5c-.9-1.4-2.6-.6-2 .8.4.9 2 2 2 2s1.6-1.1 2-2c.6-1.4-1.1-2.2-2 -.8zM16.7 9.5c-.9-1.4-2.6-.6-2 .8.4.9 2 2 2 2s1.6-1.1 2-2c.6-1.4-1.1-2.2-2-.8z"/></symbol><symbol id="gi-mogul" viewBox="0 0 24 24"><path d="M2.5 21.5h19"/><path d="M4.5 21.5V11h4.5v10.5M10 21.5V3.5h5.5v18M16.5 21.5V9l4-2v14.5"/><path d="M12 7h2.5M12 10h2.5M12 13h2.5M6 14h1.5M6 17h1.5M18 12h1M18 15h1"/></symbol><symbol id="gi-dominoes" viewBox="0 0 24 24"><rect x="6.5" y="1.5" width="11" height="21" rx="2.8"/><path d="M7.5 12h9"/><circle cx="12" cy="6.8" r="1.3" fill="currentColor"/><circle cx="9.6" cy="15" r="1.2" fill="currentColor"/><circle cx="14.4" cy="19" r="1.2" fill="currentColor"/><circle cx="12" cy="17" r="1.2" fill="currentColor"/></symbol><symbol id="gi-bidwhist" viewBox="0 0 24 24"><rect x="4.5" y="2.5" width="15" height="19" rx="3"/><path d="M12 6.5l1.5 3.2 3.4.4-2.6 2.3.8 3.4-3.1-1.8-3.1 1.8.8-3.4-2.6-2.3 3.4-.4z"/><path d="M7.5 19h9"/></symbol><symbol id="gi-poker" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5"/><path d="M12 2.5v3.3M12 18.2v3.3M2.5 12h3.3M18.2 12h3.3M5.3 5.3l2.3 2.3M16.4 16.4l2.3 2.3M5.3 18.7l2.3-2.3M16.4 7.6l2.3-2.3"/></symbol><symbol id="gi-tonk" viewBox="0 0 24 24"><rect x="2.5" y="7" width="8" height="12.5" rx="1.6" transform="rotate(-14 6.5 13)"/><rect x="8" y="4.5" width="8" height="12.5" rx="1.6"/><rect x="13.5" y="7" width="8" height="12.5" rx="1.6" transform="rotate(14 17.5 13)"/></symbol><symbol id="gi-gofish" viewBox="0 0 24 24"><path d="M2.5 12c3.2-5.2 9.6-6.2 13.6-2l5.4-3.3-1.7 5.3 1.7 5.3-5.4-3.3c-4 4.2-10.4 3.2-13.6-2z"/><circle cx="8" cy="11.2" r="1.1" fill="currentColor"/><path d="M11.5 9.5c.8 1.6.8 3.4 0 5"/></symbol><symbol id="gi-war" viewBox="0 0 24 24"><path d="M3 3l10.5 10.5M3 3h3.8l9.7 9.7M14 17l3-3M16 19l-2.5-2.5M17 14l2.5 2.5M19 19l2 2"/><path d="M21 3L10.5 13.5M21 3h-3.8l-9.7 9.7M10 17l-3-3M8 19l2.5-2.5M7 14l-2.5 2.5M5 19l-2 2"/></symbol><symbol id="gi-bingo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5.2"/><path d="M10.6 9.8h1.9a1.1 1.1 0 0 1 0 2.2h-1.9zM10.6 12h2.2a1.1 1.1 0 0 1 0 2.2h-2.2zM10.6 9.8v4.4"/></symbol><symbol id="gi-showdown" viewBox="0 0 24 24"><rect x="9" y="2.5" width="6" height="11.5" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5v4M8.5 21.5h7"/><path d="M9 6.5h6M9 9h6"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol><symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></symbol><symbol id="gi-chess" viewBox="0 0 24 24"><path d="M12 2.5v4M10 4.5h4"/><path d="M8 13a4 4 0 0 1 8 0l-1 5H9z"/><path d="M7 21h10M8.5 18h7"/><path d="M9.5 9.5h5"/></symbol><symbol id="gi-checkers" viewBox="0 0 24 24"><ellipse cx="12" cy="8" rx="7.5" ry="3.2"/><path d="M4.5 8v3.4c0 1.8 3.4 3.2 7.5 3.2s7.5-1.4 7.5-3.2V8"/><path d="M4.5 13v3.4c0 1.8 3.4 3.2 7.5 3.2s7.5-1.4 7.5-3.2V13"/><ellipse cx="12" cy="8" rx="3.5" ry="1.4"/></symbol><symbol id="gi-spades" viewBox="0 0 24 24"><path d="M12 2.5c3.2 4.2 7.5 6.4 7.5 10.6a4.2 4.2 0 0 1-6.8 3.3l.8 5.1h-3l.8-5.1a4.2 4.2 0 0 1-6.8-3.3c0-4.2 4.3-6.4 7.5-10.6z"/></symbol><symbol id="gi-blackjack" viewBox="0 0 24 24"><rect x="3" y="6" width="11" height="15" rx="2" transform="rotate(-10 8.5 13.5)"/><rect x="10" y="3" width="11" height="15" rx="2"/><path d="M13.5 8.2c.4-.8 1.3-1.2 2-1 1 .3 1.3 1.4.6 2.3l-2.6 3h3.2M18 7v6"/></symbol><symbol id="gi-parcheesi" viewBox="0 0 24 24"><path d="M9 2.5h6v6.5h6.5v6H15v6.5H9V15H2.5V9H9z"/><circle cx="12" cy="12" r="1.7" fill="currentColor"/><path d="M12 5v1.5M12 17.5V19M5 12h1.5M17.5 12H19"/></symbol><symbol id="gi-colorclash" viewBox="0 0 24 24"><rect x="4.5" y="2.5" width="15" height="19" rx="3"/><path d="M12 6.5l4.5 5.5L12 17.5 7.5 12z"/><path d="M12 9.5l2 2.5-2 2.5-2-2.5z" fill="currentColor"/></symbol><symbol id="gi-pittypat" viewBox="0 0 24 24"><rect x="2.5" y="6" width="9.5" height="14" rx="2"/><rect x="12" y="4" width="9.5" height="14" rx="2"/><path d="M7.2 11.5c-.9-1.4-2.6-.6-2 .8.4.9 2 2 2 2s1.6-1.1 2-2c.6-1.4-1.1-2.2-2 -.8zM16.7 9.5c-.9-1.4-2.6-.6-2 .8.4.9 2 2 2 2s1.6-1.1 2-2c.6-1.4-1.1-2.2-2-.8z"/></symbol><symbol id="gi-mogul" viewBox="0 0 24 24"><path d="M2.5 21.5h19"/><path d="M4.5 21.5V11h4.5v10.5M10 21.5V3.5h5.5v18M16.5 21.5V9l4-2v14.5"/><path d="M12 7h2.5M12 10h2.5M12 13h2.5M6 14h1.5M6 17h1.5M18 12h1M18 15h1"/></symbol><symbol id="gi-dominoes" viewBox="0 0 24 24"><rect x="6.5" y="1.5" width="11" height="21" rx="2.8"/><path d="M7.5 12h9"/><circle cx="12" cy="6.8" r="1.3" fill="currentColor"/><circle cx="9.6" cy="15" r="1.2" fill="currentColor"/><circle cx="14.4" cy="19" r="1.2" fill="currentColor"/><circle cx="12" cy="17" r="1.2" fill="currentColor"/></symbol><symbol id="gi-bidwhist" viewBox="0 0 24 24"><rect x="4.5" y="2.5" width="15" height="19" rx="3"/><path d="M12 6.5l1.5 3.2 3.4.4-2.6 2.3.8 3.4-3.1-1.8-3.1 1.8.8-3.4-2.6-2.3 3.4-.4z"/><path d="M7.5 19h9"/></symbol><symbol id="gi-poker" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5"/><path d="M12 2.5v3.3M12 18.2v3.3M2.5 12h3.3M18.2 12h3.3M5.3 5.3l2.3 2.3M16.4 16.4l2.3 2.3M5.3 18.7l2.3-2.3M16.4 7.6l2.3-2.3"/></symbol><symbol id="gi-tonk" viewBox="0 0 24 24"><rect x="2.5" y="7" width="8" height="12.5" rx="1.6" transform="rotate(-14 6.5 13)"/><rect x="8" y="4.5" width="8" height="12.5" rx="1.6"/><rect x="13.5" y="7" width="8" height="12.5" rx="1.6" transform="rotate(14 17.5 13)"/></symbol><symbol id="gi-gofish" viewBox="0 0 24 24"><path d="M2.5 12c3.2-5.2 9.6-6.2 13.6-2l5.4-3.3-1.7 5.3 1.7 5.3-5.4-3.3c-4 4.2-10.4 3.2-13.6-2z"/><circle cx="8" cy="11.2" r="1.1" fill="currentColor"/><path d="M11.5 9.5c.8 1.6.8 3.4 0 5"/></symbol><symbol id="gi-war" viewBox="0 0 24 24"><path d="M3 3l10.5 10.5M3 3h3.8l9.7 9.7M14 17l3-3M16 19l-2.5-2.5M17 14l2.5 2.5M19 19l2 2"/><path d="M21 3L10.5 13.5M21 3h-3.8l-9.7 9.7M10 17l-3-3M8 19l2.5-2.5M7 14l-2.5 2.5M5 19l-2 2"/></symbol><symbol id="gi-keno" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/><circle cx="6" cy="6" r="1.4" fill="currentColor"/><circle cx="18" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="18" r="1.4" fill="currentColor"/></symbol><symbol id="gi-bingo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5.2"/><path d="M10.6 9.8h1.9a1.1 1.1 0 0 1 0 2.2h-1.9zM10.6 12h2.2a1.1 1.1 0 0 1 0 2.2h-2.2zM10.6 9.8v4.4"/></symbol><symbol id="gi-showdown" viewBox="0 0 24 24"><rect x="9" y="2.5" width="6" height="11.5" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5v4M8.5 21.5h7"/><path d="M9 6.5h6M9 9h6"/></symbol>
 <symbol id="gi-pluck" viewBox="0 0 24 24"><path d="M19.5 3.5C12 4 6.5 9 5 17.5l-1 3"/><path d="M19.5 3.5c.5 6-3 11-9.5 13"/><path d="M8 13.5l3.5.5M10.5 10l3.2.8M13 7l2.8.6"/></symbol><symbol id="i-crown" viewBox="0 0 24 24"><path d="M3 18h18l1.2-11-5.7 4.2L12 4 7.5 11.2 1.8 7z"/><path d="M4 21h16"/></symbol>
 <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
 <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
@@ -1093,6 +1126,7 @@ body.event .gwrap .felt{transform:none}
 <main class="gwrap hidden" id="view-war"></main>
 <main class="gwrap hidden" id="view-showdown"></main>
 <main class="gwrap hidden" id="view-bingo"></main>
+<main class="gwrap hidden" id="view-keno"></main>
 <main class="gwrap hidden" id="view-pluck"></main>
 <main class="wrap view" id="view-chess">
   <!-- LEFT -->
@@ -8155,6 +8189,148 @@ SH.games.bingo = {
 
 </script>
 <script>
+// McLearn Keno — 80-number Keno with practice credits only (free, no purchases, no cash value). Teaches the real odds.
+(function () {
+'use strict';
+const SH = window.McShared, $ = id => document.getElementById(id), LS = SH.LS;
+McRules.register('keno', {
+  title: 'Keno',
+  proNote: 'Pro: the 20-game Keno Challenge — 500 credits, no odds coach, finish with your best stack.',
+  schema: [
+    { key: 'session', label: 'Session', type: 'select', options: [['free', 'Free play'], ['challenge', '20-game challenge']] },
+    { key: 'table', label: 'Paytable', help: 'Classic matches a typical lounge table; Generous pays more for fun', type: 'select', options: [['classic', 'Classic'], ['generous', 'Generous']] },
+    { key: 'gold', label: 'Gold Ball', help: 'The last ball is gold — catch it and your win doubles', type: 'bool' },
+    { key: 'speed', label: 'Draw speed', type: 'select', options: [['normal', 'Normal'], ['fast', 'Fast'], ['instant', 'Instant']] },
+    { key: 'coach', label: 'Odds coach', help: 'Shows your chance of each catch and the true return of the table', type: 'bool' }
+  ],
+  presets: { standard: { session: 'free', table: 'classic', gold: true, speed: 'normal', coach: true }, pro: { session: 'challenge', coach: false } }
+});
+let RU = McRules.get('keno');
+const START = 500;
+const PAY = {
+  classic: { 1: { 1: 3 }, 2: { 2: 12 }, 3: { 2: 1, 3: 42 }, 4: { 2: 1, 3: 4, 4: 100 }, 5: { 3: 2, 4: 20, 5: 400 }, 6: { 3: 1, 4: 5, 5: 75, 6: 1500 }, 7: { 3: 1, 4: 2, 5: 20, 6: 350, 7: 5000 }, 8: { 5: 9, 6: 90, 7: 1500, 8: 10000 }, 9: { 4: 1, 5: 4, 6: 50, 7: 280, 8: 4000, 9: 10000 }, 10: { 5: 2, 6: 20, 7: 140, 8: 1000, 9: 5000, 10: 10000 } },
+  generous: { 1: { 1: 3.5 }, 2: { 1: 1, 2: 12 }, 3: { 2: 2, 3: 45 }, 4: { 2: 2, 3: 6, 4: 120 }, 5: { 3: 3, 4: 25, 5: 500 }, 6: { 3: 2, 4: 7, 5: 90, 6: 1800 }, 7: { 3: 1, 4: 4, 5: 25, 6: 400, 7: 6000 }, 8: { 4: 2, 5: 12, 6: 100, 7: 1800, 8: 12000 }, 9: { 4: 2, 5: 6, 6: 60, 7: 300, 8: 4500, 9: 12000 }, 10: { 0: 2, 5: 3, 6: 25, 7: 160, 8: 1200, 9: 6000, 10: 12000 } }
+};
+const st = LS.get('kn', { bank: START, games: 0, won: 0, best: 0, bigCatch: '' });
+const CH = { on: false, bank: START, game: 0, of: 20, best: LS.get('kn-cbest', 0) };
+const A = () => (CH.on ? CH : st);
+const G = { picks: [], drawn: [], phase: 'pick', bet: LS.get('kn-bet', 5), token: 0, last: null, fast: false, auto: 0 };
+const wait = ms => G.fast || RU.speed === 'instant' ? Promise.resolve() : new Promise(r => setTimeout(r, RU.speed === 'fast' ? ms * 0.4 : ms));
+// odds: chance of catching k of n spots when 20 of 80 are drawn
+const comb = (n, k) => { if (k < 0 || k > n) return 0; let r = 1; for (let i = 1; i <= k; i++) r = r * (n - k + i) / i; return r; };
+const pCatch = (n, k) => comb(20, k) * comb(60, n - k) / comb(80, n);
+const rtp = n => { let e = 0; const t = PAY[RU.table][n] || {}; for (let k = 0; k <= n; k++) e += pCatch(n, k) * (t[k] || 0); return e; };
+function quickPick(n) { const all = Array.from({ length: 80 }, (_, i) => i + 1); SH.cards.shuffle(all); G.picks = all.slice(0, n || Math.max(G.picks.length, 6)).sort((a, b) => a - b); G.drawn = []; G.last = null; render(); }
+function toggle(n) {
+  if (G.phase !== 'pick') return;
+  if (G.drawn.length) { G.drawn = []; G.last = null; }
+  const i = G.picks.indexOf(n);
+  if (i >= 0) G.picks.splice(i, 1); else if (G.picks.length < 10) G.picks.push(n); else { SH.toast('Up to 10 spots — tap one to remove it', 'x'); return; }
+  SH.Sound.play('tick'); render();
+}
+async function play() {
+  if (G.phase !== 'pick') return;
+  if (!G.picks.length) { SH.toast('Pick 1 to 10 numbers first (or tap Quick Pick)', 'x'); return; }
+  if (A().bank < G.bet) { SH.toast(CH.on ? 'Not enough credits left in the challenge' : 'Out of credits — tap Free refill', 'x'); return; }
+  if (CH.on && CH.game >= CH.of) return;
+  SH.Sound.unlock();
+  const tok = ++G.token; G.phase = 'draw'; A().bank -= G.bet; LS.set('kn-bet', G.bet);
+  const pool = Array.from({ length: 80 }, (_, i) => i + 1); SH.cards.shuffle(pool);
+  const draw = pool.slice(0, 20); G.drawn = []; G.last = null; render();
+  for (let i = 0; i < 20; i++) {
+    await wait(170); if (tok !== G.token) return;
+    G.drawn.push(draw[i]); const hit = G.picks.includes(draw[i]);
+    SH.Sound.play(hit ? 'capture' : 'tick');
+    if (!G.fast && RU.speed !== 'instant') renderDraw(draw[i], hit, i === 19 && RU.gold);
+  }
+  const n = G.picks.length, catches = G.picks.filter(x => G.drawn.includes(x)).length, gold = RU.gold && G.picks.includes(G.drawn[19]);
+  const mult = (PAY[RU.table][n] || {})[catches] || 0, win = Math.round(G.bet * mult * (gold && mult ? 2 : 1));
+  A().bank += win; G.last = { n, catches, win, gold, mult };
+  if (!CH.on) { st.games++; if (win) st.won++; if (win > st.best) { st.best = win; st.bigCatch = `${catches} of ${n}`; } LS.set('kn', st); }
+  SH.Sound.play(win >= G.bet * 20 ? 'victory' : win > G.bet ? 'good' : win ? 'tick' : 'bad');
+  if (win >= G.bet * 20) { flash(`${catches} of ${n}! +${win.toLocaleString()}`); if (!CH.on && SH.onResult) SH.onResult('keno', 'w', { pro: false }); }
+  else if (gold && win) flash('GOLD BALL ×2!');
+  G.phase = 'pick';
+  if (CH.on) { CH.game++; if (CH.game >= CH.of) return endChallenge(); }
+  render();
+  if (G.auto > 1 && tok === G.token) { G.auto--; await wait(900); if (tok === G.token) play(); } else G.auto = 0;
+}
+function endChallenge() {
+  const best = CH.bank > CH.best; if (best) { CH.best = CH.bank; LS.set('kn-cbest', CH.best); }
+  const res = CH.bank > START ? 'w' : CH.bank === START ? 'd' : 'l';
+  showMsg(`<h4 class="serif" style="margin:0 0 4px;font-size:22px">Challenge complete</h4><div class="tiny muted">You finished with ${CH.bank.toLocaleString()} credits (started with ${START})${best ? ' — a new personal best!' : ` · best ${CH.best.toLocaleString()}`}</div><button class="btn-gold" style="margin-top:12px" id="kn-again">Run it again</button>`);
+  $('kn-again').onclick = () => { showMsg(''); startSession(); };
+  if (SH.onResult) SH.onResult('keno', res, { pro: !!RU.pro });
+  render();
+}
+function startSession() { RU = McRules.get('keno'); G.token++; G.auto = 0; G.phase = 'pick'; G.drawn = []; G.last = null; CH.on = RU.session === 'challenge'; CH.bank = START; CH.game = 0; showMsg(''); if (CH.on) SH.toast(`Keno Challenge: ${CH.of} games, ${START} credits — finish strong`); render(); }
+
+// ---------- render ----------
+function showMsg(html) { const m = $('kn-msg'); m.innerHTML = html ? `<div class="glass" style="padding:16px 18px;text-align:center">${html}</div>` : ''; m.classList.toggle('hidden', !html); }
+function flash(t) { if (G.fast) return; const el = $('kn-flash'); el.textContent = t; el.classList.remove('show'); void el.offsetWidth; el.classList.add('show'); }
+function renderDraw(v, hit, gold) {
+  $('kn-ball').innerHTML = `<span class="kball ${hit ? 'hit' : ''} ${gold ? 'gold' : ''}"><b>${v}</b></span>`;
+  const c = document.querySelector(`#kn-board [data-n="${v}"]`); if (c) { c.classList.add('drawn'); if (hit) c.classList.add('hit'); if (gold) c.classList.add('goldc'); }
+  $('kn-count').textContent = `${G.drawn.length} / 20 drawn · ${G.picks.filter(x => G.drawn.includes(x)).length} caught`;
+}
+function render() {
+  const picks = new Set(G.picks), drawn = new Set(G.drawn), goldN = RU.gold && G.drawn.length === 20 ? G.drawn[19] : null;
+  $('kn-board').innerHTML = Array.from({ length: 80 }, (_, i) => { const n = i + 1, p = picks.has(n), d = drawn.has(n); return `<button class="kcell ${p ? 'pick' : ''} ${d ? 'drawn' : ''} ${p && d ? 'hit' : ''} ${n === goldN ? 'goldc' : ''}" data-n="${n}" aria-pressed="${p}">${n}</button>`; }).join('');
+  const n = G.picks.length, t = PAY[RU.table][n] || {};
+  $('kn-pay').innerHTML = n ? `<div class="between"><span class="label">Pays for ${n} spot${n > 1 ? 's' : ''}</span><span class="tiny muted">× your bet</span></div>${Object.keys(t).sort((a, b) => b - a).map(k => `<div class="kpay ${G.last && G.last.catches === +k && G.last.n === n ? 'on' : ''}"><span>Catch ${k}</span><b>${t[k].toLocaleString()}×</b>${RU.coach ? `<small>${(pCatch(n, +k) * 100) < 0.01 ? '1 in ' + Math.round(1 / pCatch(n, +k)).toLocaleString() : (pCatch(n, +k) * 100).toFixed(2) + '%'}</small>` : ''}</div>`).join('')}${RU.coach ? `<div class="tiny muted" style="margin-top:6px">Over time this table returns <b style="color:#ffe6a8">${(rtp(n) * 100).toFixed(1)}%</b> of what you put in${RU.gold ? ' (a little more with the Gold Ball)' : ''}. That gap is why casinos win — here it's practice credits only.</div>` : ''}` : '<div class="tiny muted">Pick 1 to 10 numbers on the board to see what they pay.</div>';
+  const L = G.last;
+  $('kn-ball').innerHTML = G.drawn.length ? `<span class="kball ${picks.has(G.drawn[G.drawn.length - 1]) ? 'hit' : ''} ${goldN ? 'gold' : ''}"><b>${G.drawn[G.drawn.length - 1]}</b></span>` : `<span class="kball idle"><b>K</b></span>`;
+  $('kn-count').textContent = G.drawn.length ? `${G.drawn.length} / 20 drawn · ${G.picks.filter(x => drawn.has(x)).length} caught` : `${n} spot${n === 1 ? '' : 's'} picked`;
+  $('kn-result').innerHTML = L ? (L.win ? `<b style="color:#ffe6a8">Caught ${L.catches} of ${L.n} — won ${L.win.toLocaleString()}${L.gold ? ' (Gold Ball ×2)' : ''}</b>` : `Caught ${L.catches} of ${L.n} — no pay this time.`) : '';
+  $('kn-bank').textContent = A().bank.toLocaleString();
+  $('kn-sess').textContent = CH.on ? `Challenge · game ${Math.min(CH.game + (G.phase === 'pick' ? 1 : 0), CH.of)} of ${CH.of}` : `Free play · ${st.games} game${st.games === 1 ? "" : "s"} · best win ${st.best.toLocaleString()}`;
+  $('kn-betv').textContent = G.bet;
+  document.querySelectorAll('#kn-bets [data-bet]').forEach(b => b.classList.toggle('on', +b.dataset.bet === G.bet));
+  const busy = G.phase !== 'pick';
+  ['kn-play', 'kn-auto', 'kn-qp', 'kn-clear'].forEach(id => { $(id).disabled = busy; });
+  $('kn-refill').disabled = CH.on || st.bank >= START;
+  $('kn-rb').textContent = McRules.label('keno') + (CH.on ? ' · Challenge' : ''); $('kn-rb').className = 'rbadge r-' + McRules.mode('keno');
+}
+const root = $('view-keno');
+root.innerHTML = `
+<section class="col center" style="width:100%">
+  <div class="felt kn-felt" id="kn-felt">
+    <div class="kn-top"><div class="kn-sign serif">McLEARN <b>KENO</b></div><div class="kn-now"><div id="kn-ball"></div><div class="tiny" id="kn-count"></div></div></div>
+    <div class="kn-board" id="kn-board"></div>
+    <div class="kn-result" id="kn-result"></div>
+    <div class="cc-flash" id="kn-flash"></div>
+    <div class="felt-msg hidden" id="kn-msg"></div>
+  </div>
+  <div class="glass controls kn-ctl">
+    <div class="row" id="kn-bets" style="gap:8px">${[1, 5, 25, 100].map(v => `<button class="chip bjchip" data-bet="${v}" style="--c:${SH.chips.colors[v]}" aria-label="Bet ${v}"><b>${v}</b></button>`).join('')}</div>
+    <div class="row" style="gap:8px;flex-wrap:wrap;justify-content:center"><button class="btn btn-sec" id="kn-qp">Quick Pick</button><button class="btn btn-sec" id="kn-clear">Clear</button><span class="mono">Bet <b id="kn-betv"></b></span><button class="cbtn c-hit" id="kn-play"><b>Play</b><small>ENTER</small></button><button class="cbtn c-split" id="kn-auto"><b>Auto ×5</b><small>A</small></button></div>
+  </div>
+</section>
+<section class="col right">
+  <div class="glass card stack">
+    <div class="between"><h3 class="h3">McLearn Keno</h3><span class="rbadge" id="kn-rb">Standard</span></div>
+    <div class="grid2"><div class="stat"><span>Credits</span><b id="kn-bank"></b></div><div class="stat"><span>Session</span><b id="kn-sess" style="font-size:10.5px"></b></div></div>
+    <div class="kn-paybox" id="kn-pay"></div>
+    <div id="rules-keno"></div>
+    <button class="btn btn-sec" id="kn-refill">Free refill to ${START} credits</button>
+    <div class="note">Practice credits are free, can't be bought or cashed out, and have no value. Keno draws 20 of 80 numbers — catch your picked numbers to win. The odds coach shows exactly how often each catch happens.</div>
+  </div>
+</section>`;
+$('kn-board').addEventListener('click', e => { const b = e.target.closest('[data-n]'); if (b) { SH.Sound.unlock(); toggle(+b.dataset.n); } });
+$('kn-bets').addEventListener('click', e => { const b = e.target.closest('[data-bet]'); if (b && G.phase === 'pick') { G.bet = +b.dataset.bet; SH.Sound.play('tick'); render(); } });
+$('kn-qp').onclick = () => quickPick();
+$('kn-clear').onclick = () => { G.picks = []; G.drawn = []; G.last = null; render(); };
+$('kn-play').onclick = play;
+$('kn-auto').onclick = () => { G.auto = 5; play(); };
+$('kn-refill').onclick = () => { st.bank = START; LS.set('kn', st); SH.toast('Credits refilled — practice only'); render(); };
+document.addEventListener('keydown', e => { if (root.classList.contains('hidden') || /INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)) return; if (e.key === 'Enter') play(); else if (e.key.toLowerCase() === 'a' && G.phase === 'pick') { G.auto = 5; play(); } else if (e.key.toLowerCase() === 'q' && G.phase === 'pick') quickPick(); });
+McRules.mount('keno', $('rules-keno'));
+McRules.onChange('keno', () => { if (G.phase === 'pick') startSession(); else SH.toast('New rules apply after this draw'); });
+SH.games.keno = { onShow() { if (!$('kn-board').children.length) { startSession(); if (!G.picks.length) quickPick(6); } else render(); }, _G: G, _play: play, _quickPick: quickPick, _pCatch: pCatch, _rtp: rtp, _start: startSession, _CH: CH };
+})();
+
+</script>
+<script>
 // McLearn Pluck — three-handed trick taking: quotas 7-6-4, dealer calls trump, over-quota players PLUCK the under-quota players' best cards.
 (function () {
 'use strict';
@@ -8453,6 +8629,7 @@ const ACH = [
   { id: 'owner', name: 'Own Your Masters', desc: 'Win a Studio Showdown match', icon: '🎤' },
   { id: 'plucker', name: 'Plucked Clean', desc: 'Win a game of Pluck', icon: '🪶' },
   { id: 'bingo', name: 'BINGO!', desc: 'Win a McLearn Media Bingo match', icon: '🎱' },
+  { id: 'keno', name: 'Lucky Spots', desc: 'Catch a 20× win (or better) in McLearn Keno', icon: '🔢' },
   { id: 'procircuit', name: 'Pro Circuit', desc: 'Win in Pro mode in 3 different games', icon: '🥇' }
 ];
 function save() { LS.set('player', P); renderChip(); }
@@ -8474,7 +8651,7 @@ function addXP(n, silent) {
 }
 function floatXP(n) { const el = document.createElement('div'); el.className = 'xpfloat'; el.textContent = `+${n} XP`; document.body.appendChild(el); setTimeout(() => el.remove(), 1400); }
 
-const GAME_NAMES = { bingo: 'Bingo', pluck: 'Pluck', dominoes: 'Dominoes', bidwhist: 'Bid Whiz', poker: "Hold'em", tonk: 'Tonk', gofish: 'Go Fish', war: 'I Declare War', showdown: 'Studio Showdown', mogul: 'Mega Media Mogul', pittypat: 'Pitty Pat', colorclash: 'Color Clash', 'blackjack-tourney': 'Blackjack Tournament', chess: 'Chess', checkers: 'Checkers', spades: 'Spades', blackjack: '21 · Blackjack', parcheesi: 'Parcheesi', academy: 'Chess Academy' };
+const GAME_NAMES = { keno: 'Keno', bingo: 'Bingo', pluck: 'Pluck', dominoes: 'Dominoes', bidwhist: 'Bid Whiz', poker: "Hold'em", tonk: 'Tonk', gofish: 'Go Fish', war: 'I Declare War', showdown: 'Studio Showdown', mogul: 'Mega Media Mogul', pittypat: 'Pitty Pat', colorclash: 'Color Clash', 'blackjack-tourney': 'Blackjack Tournament', chess: 'Chess', checkers: 'Checkers', spades: 'Spades', blackjack: '21 · Blackjack', parcheesi: 'Parcheesi', academy: 'Chess Academy' };
 SH.onResult = function (game, res, extra) {
   extra = extra || {};
   const g = P.games[game] = P.games[game] || { w: 0, l: 0, d: 0 };
@@ -8495,13 +8672,13 @@ SH.onResult = function (game, res, extra) {
   if (game === 'colorclash' && res === 'w') unlock('clash');
   if (game === 'pittypat' && res === 'w') unlock('pat');
   if (game === 'mogul' && res === 'w') unlock('mogul');
-  if (res === 'w') { const m = { dominoes: 'domino', bidwhist: 'boston', poker: 'holdem', tonk: 'tonk', gofish: 'fish', war: 'general', showdown: 'owner', pluck: 'plucker', bingo: 'bingo' }[game]; if (m) unlock(m); }
+  if (res === 'w') { const m = { dominoes: 'domino', bidwhist: 'boston', poker: 'holdem', tonk: 'tonk', gofish: 'fish', war: 'general', showdown: 'owner', pluck: 'plucker', bingo: 'bingo', keno: 'keno' }[game]; if (m) unlock(m); }
   if (game === 'blackjack') {
     if (extra.bj) { unlock('natural'); queueCard({ kind: 'win', headline: 'BLACKJACK!', sub: 'A natural 21 at the McLearn Arena table', icon: '🂡' }); }
     const st = LS.get('bj', null); if (st && st.total >= 50 && st.good / st.total >= 0.95) unlock('strategist');
   }
   if (game === 'academy') { const pz = LS.get('puzzles', { solved: [] }); if (pz.solved.length >= 7) unlock('drills'); queueCard({ kind: 'win', headline: 'PUZZLE SOLVED', sub: extra.name || 'McLearn Academy drill', icon: '🎓' }); }
-  if (res === 'w' && big && game !== 'blackjack-tourney') queueCard({ kind: 'win', headline: game === 'chess' ? (extra.reason === 'checkmate' ? 'CHECKMATE' : 'VICTORY') : 'VICTORY', sub: `${extra.pro ? 'Pro · ' : ''}${GAME_NAMES[game]}${extra.vs ? ' vs ' + extra.vs : ''}`, icon: { chess: '♚', checkers: '⛀', spades: '♠', parcheesi: '⚄', colorclash: '✦', pittypat: '🂫', mogul: '🏙', dominoes: '🁫', bidwhist: '🃏', poker: '♦', tonk: '♣', gofish: '🐟', war: '⚔️', showdown: '🎤', pluck: '🪶' , bingo: '🎱' }[game] || '🏆' });
+  if (res === 'w' && big && game !== 'blackjack-tourney') queueCard({ kind: 'win', headline: game === 'chess' ? (extra.reason === 'checkmate' ? 'CHECKMATE' : 'VICTORY') : 'VICTORY', sub: `${extra.pro ? 'Pro · ' : ''}${GAME_NAMES[game]}${extra.vs ? ' vs ' + extra.vs : ''}`, icon: { chess: '♚', checkers: '⛀', spades: '♠', parcheesi: '⚄', colorclash: '✦', pittypat: '🂫', mogul: '🏙', dominoes: '🁫', bidwhist: '🃏', poker: '♦', tonk: '♣', gofish: '🐟', war: '⚔️', showdown: '🎤', pluck: '🪶' , bingo: '🎱', keno: '🔢' }[game] || '🏆' });
   if (game !== 'blackjack' || (P.games.blackjack.w + P.games.blackjack.l + P.games.blackjack.d) % 6 === 0) setTimeout(() => Minute.maybe(), 2600);
 };
 SH.onEvent = function (game, ev, data) {
@@ -8607,7 +8784,7 @@ function openPlayerCard() {
   const rec = k => { const g = P.games[k] || { w: 0, l: 0, d: 0 }; return `${g.w}W ${g.l}L${g.d ? ' ' + g.d + 'D' : ''}`; };
   $('pcm-body').innerHTML = `
     <div class="row" style="gap:14px;align-items:center"><div class="lvl big">${lv}</div><div><div class="serif" style="font-size:22px">${title(lv)}</div><div class="tiny muted">${P.xp.toLocaleString()} XP · ${(next - P.xp).toLocaleString()} to level ${lv + 1}</div><div class="tiny" style="color:var(--amber)">${P.season} season · ${P.sxp.toLocaleString()} XP this season · best streak ${P.bestStreak}</div></div></div>
-    <div class="grid3" style="margin-top:12px">${['chess', 'checkers', 'spades', 'blackjack', 'parcheesi', 'colorclash', 'pittypat', 'mogul', 'dominoes', 'bidwhist', 'poker', 'tonk', 'gofish', 'war', 'showdown', 'pluck', 'bingo'].map(k => `<div class="stat"><span>${GAME_NAMES[k]}</span><b style="font-size:12px">${rec(k)}</b></div>`).join('')}<div class="stat"><span>Chess Elo</span><b style="font-size:12px">${SH.profile.elo}</b></div></div>
+    <div class="grid3" style="margin-top:12px">${['chess', 'checkers', 'spades', 'blackjack', 'parcheesi', 'colorclash', 'pittypat', 'mogul', 'dominoes', 'bidwhist', 'poker', 'tonk', 'gofish', 'war', 'showdown', 'pluck', 'bingo', 'keno'].map(k => `<div class="stat"><span>${GAME_NAMES[k]}</span><b style="font-size:12px">${rec(k)}</b></div>`).join('')}<div class="stat"><span>Chess Elo</span><b style="font-size:12px">${SH.profile.elo}</b></div></div>
     <div class="label" style="margin:14px 0 6px">Achievements · ${Object.keys(P.ach).length}/${ACH.length}</div>
     <div class="achgrid">${ACH.map(a => `<div class="ach ${P.ach[a.id] ? 'on' : ''}" title="${esc(a.desc)}"><span>${a.icon}</span><b>${esc(a.name)}</b><small>${esc(a.desc)}</small></div>`).join('')}</div>
     <div class="label" style="margin:16px 0 6px">Event Mode — big screen for churches, schools &amp; fundraisers</div>
@@ -8669,9 +8846,10 @@ const GAMES = [
   { v: 'gofish', title: 'Go Fish', sub: 'The family favorite. Ask, fish, and make your books.', cats: ['cards'], icon: 'gofish', h1: '#052f45', h2: '#1aa0c8', stat: () => rec('gf-stats'), keys: 'go fish kids family' },
   { v: 'war', title: 'I Declare War', sub: 'Classic War — plus a Pro Tactics mode where you pick your fighter.', cats: ['cards'], icon: 'war', h1: '#3b0b0b', h2: '#a02020', stat: () => rec('war-stats'), keys: 'war i declare war' },
   { v: 'blackjack', title: '21 · Blackjack', sub: 'The card game 21 on a real casino table. Practice chips, and a coach that grades every decision.', cats: ['casino'], icon: 'blackjack', h1: '#0f3a26', h2: '#22845a', stat: () => `Chips ${(LS.get('bj', { bank: 1000 }).bank).toLocaleString()}`, keys: '21 twenty-one twenty one blackjack card game casino' },
+  { v: 'keno', title: 'McLearn Keno', sub: 'Pick up to 10 numbers, watch 20 balls drop. Gold Ball doubles it. Practice credits only.', cats: ['casino'], icon: 'keno', h1: '#0d1a3a', h2: '#2e5fd0', stat: () => `Credits ${(LS.get('kn', { bank: 500 }).bank).toLocaleString()}`, keys: 'keno lottery numbers 80 balls lounge casino' },
   { v: 'poker', title: "Hold'em Poker", sub: 'Sit & Go tournament with practice chips and a live win-odds coach.', cats: ['casino'], icon: 'poker', h1: '#052c2a', h2: '#13806e', stat: () => { const s = LS.get('pk-stats', { w: 0, l: 0 }); return `${s.w} titles`; }, keys: 'poker holdem texas chips' }
 ];
-const TAG = { dominoes: 'Slam the bones.', chess: 'Think like a grandmaster.', spades: 'Bid it. Make it. Bag it.', bidwhist: 'Uptown, Downtown — your call.', mogul: 'Own the whole catalog.', showdown: 'Write it. Sing it. Own it.', bingo: 'Daub it. Shout it. BINGO!', colorclash: 'Match it or draw it.', tonk: 'Drop it like it’s low.', pittypat: 'Pair it up, Pitty Pat!', checkers: 'King me.', parcheesi: 'Race every pawn home.', gofish: 'Ask, fish, book it.', war: 'I — DE — CLARE — WAR!', blackjack: 'Get to 21 — beat the dealer.', poker: 'Last stack standing.' };
+const TAG = { dominoes: 'Slam the bones.', chess: 'Think like a grandmaster.', spades: 'Bid it. Make it. Bag it.', bidwhist: 'Uptown, Downtown — your call.', mogul: 'Own the whole catalog.', showdown: 'Write it. Sing it. Own it.', bingo: 'Daub it. Shout it. BINGO!', keno: 'Pick your spots. Watch them drop.', colorclash: 'Match it or draw it.', tonk: 'Drop it like it’s low.', pittypat: 'Pair it up, Pitty Pat!', checkers: 'King me.', parcheesi: 'Race every pawn home.', gofish: 'Ask, fish, book it.', war: 'I — DE — CLARE — WAR!', blackjack: 'Get to 21 — beat the dealer.', poker: 'Last stack standing.' };
 const SOLO = (() => { try { return new URLSearchParams(location.search).get('solo') === '1'; } catch (e) { return false; } })();
 if (SOLO) document.body.classList.add('solo');
 const views = ['lobby'].concat(GAMES.map(g => g.v)).filter(v => document.getElementById('view-' + v));
