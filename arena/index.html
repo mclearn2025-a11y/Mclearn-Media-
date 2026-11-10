@@ -427,6 +427,120 @@ body.event .felt{max-width:min(1100px,100%)}
 .mg-deed{border-radius:12px;overflow:hidden;background:#fbf4ea;color:#1e0007;padding:0 12px 12px}
 .mg-deed-h{margin:0 -12px;padding:10px 12px;color:#fff;font-family:var(--serif);font-weight:700;text-align:center;text-shadow:0 1px 2px rgba(0,0,0,.4)}
 .mg-deed .lb td{border-bottom-color:rgba(0,0,0,.08);color:#1e0007}.mg-deed .tiny{color:#4a3a36}
+/* ===== v4.7 games: War, Go Fish, Tonk, Dominoes, Hold'em, Bid Whist, Studio Showdown ===== */
+.gamenav{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;scrollbar-width:thin;padding-bottom:4px;-webkit-overflow-scrolling:touch}
+.gamenav button{flex:none}
+@media (min-width:1500px){.gamenav{justify-content:center}}
+.gamenav button.feat::after{content:'★';font-size:9px;color:var(--amber);margin-left:2px}
+.trick .tc.win{box-shadow:0 0 0 3px var(--amber),0 0 18px rgba(244,200,106,.6)}
+/* War */
+.war-felt{grid-template-columns:1fr;grid-template-rows:auto 1fr auto;justify-items:center;gap:10px;min-height:470px;padding:20px 14px}
+.war-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center}
+.war-pile{display:flex;flex-direction:column;align-items:center;gap:4px;--cw:56px}
+.war-field{display:flex;align-items:center;justify-content:center;gap:22px;--cw:clamp(70px,12vw,96px);min-height:180px}
+.war-side{display:flex;align-items:center;gap:8px}
+.war-down{display:flex;--cw:52px}
+.war-up{animation:deal .3s ease-out both}
+.war-ghost{opacity:.12;border:2px dashed #dfa6af;background:none}
+.war-vs{font-size:clamp(22px,4vw,34px);color:var(--amber);text-shadow:0 0 14px rgba(244,200,106,.5)}
+.war-meter{width:100%;max-width:520px;height:10px;border-radius:999px;background:var(--burg-900);border:1px solid var(--line);overflow:hidden;margin-top:10px}
+.war-meter div{height:100%;background:linear-gradient(90deg,#b76e79,#f4c86a);transition:width .4s}
+/* Go Fish */
+.gf-mini{--cw:26px;gap:4px;margin-top:2px}
+.gf-mini .pp-pair .pcard+.pcard{margin-left:-18px}
+.seat-tag.gf-target{cursor:pointer;border-color:var(--amber);animation:pulse .8s infinite alternate}
+.seat-tag.gf-target:hover{background:var(--burg-800)}
+/* Tonk */
+.tk-spreads{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:10px;--cw:38px}
+.tk-spread{display:flex;align-items:flex-end;padding:4px 6px 14px;border-radius:10px;background:rgba(18,0,4,.55);border:1px solid rgba(197,125,136,.3);position:relative;cursor:pointer}
+.tk-spread .pcard+.pcard{margin-left:-22px}
+.tk-spread small{position:absolute;bottom:1px;left:0;right:0;text-align:center;font-size:9px;color:var(--rose-300)}
+.tk-spread.fit{border-color:var(--amber);box-shadow:0 0 14px rgba(244,200,106,.5)}
+.tk-live .pcard{box-shadow:0 0 0 3px var(--amber);cursor:pointer}
+.fan .pcard.sel,.fan .pcard.bury{transform:translateY(-16px);box-shadow:0 0 0 3px var(--amber),0 8px 16px rgba(0,0,0,.5)}
+.fan .pcard.bury{filter:brightness(.8)}
+/* Dominoes */
+.dm-felt{grid-template-columns:auto minmax(0,1fr) auto;min-height:470px;border-radius:28px;background:radial-gradient(ellipse at 50% 40%,#3d2412 0%,#2a170b 60%,#1a0d05 100%);border-color:#5a3418}
+.dm-felt::before{content:'McLEARN MEDIA · DOMINOES'}
+.dm-board{grid-column:2;grid-row:2;position:relative;min-height:320px;width:100%}
+.dm-empty{position:absolute;inset:0;display:grid;place-items:center;color:rgba(242,196,203,.5);font-size:18px}
+.dom{--u:26px;position:absolute;display:flex;background:linear-gradient(150deg,#fffdf8,#eadfd2);border-radius:calc(var(--u)*.18);box-shadow:0 2px 5px rgba(0,0,0,.55),inset 0 -2px 0 rgba(0,0,0,.08);border:1px solid #c9b8a6}
+.dom.v{flex-direction:column}
+.dom .dh{flex:1;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);padding:12%;gap:6%}
+.dom .dh i{border-radius:50%}.dom .dh i.on{background:radial-gradient(circle at 35% 35%,#7a1730,#2a0010)}
+.dom>b{flex:none;background:#b9a48e;width:1px;margin:10% 0}
+.dom.v>b{width:auto;height:1px;margin:0 10%}
+.dom.spin{box-shadow:0 0 0 2px var(--amber),0 2px 6px rgba(0,0,0,.6)}
+.dom.fresh{animation:pop .35s ease-out}
+.dom.ghost{background:rgba(244,200,106,.15);border:2px dashed var(--amber);cursor:pointer;box-shadow:0 0 14px rgba(244,200,106,.5);animation:pulse .7s infinite alternate}
+.dom.ghost .dh i.on{background:rgba(244,200,106,.6)}.dom.ghost>b{background:var(--amber)}
+.dom.back{position:relative;width:18px;height:34px;background:linear-gradient(150deg,#680d22,#3a0612);border-color:#dfa6af;display:grid;place-items:center}
+.dom.back span{font-family:var(--serif);font-weight:900;color:#f2c4cb;font-size:11px}
+.dm-mini{display:flex;flex-wrap:wrap;gap:3px;max-width:150px;justify-content:center}
+.dm-felt .seat.w,.dm-felt .seat.e{max-width:96px}.dm-felt .seat.w .dm-mini,.dm-felt .seat.e .dm-mini{max-width:60px}.dm-felt .seat.w .dom.back,.dm-felt .seat.e .dom.back{width:13px;height:24px}.dm-felt .seat.w .dom.back span,.dm-felt .seat.e .dom.back span{font-size:8px}
+.dm-felt .seat-tag{max-width:96px;text-align:center}
+.dm-hand{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:10px 4px 4px;max-width:100%}
+.dm-hand .dom{position:relative;width:clamp(34px,6vw,46px);height:clamp(68px,12vw,92px);transition:transform .15s}
+.dm-hand .dom.playable{cursor:pointer}.dm-hand .dom.playable:hover{transform:translateY(-10px)}
+.dm-hand .dom.dim{filter:brightness(.55)}
+.dm-hand .dom.tip{box-shadow:0 0 0 3px var(--amber)}
+.dm-hand .dom.sel{transform:translateY(-14px);box-shadow:0 0 0 3px var(--amber),0 8px 16px rgba(0,0,0,.5)}
+.dm-hand .dom.dealt{animation:deal .35s ease-out both;animation-delay:var(--d,0ms)}
+.dm-yard{display:flex;align-items:center;gap:6px}
+.dm-yard.live{cursor:pointer}.dm-yard.live .dom{box-shadow:0 0 0 3px var(--amber);animation:pulse .8s infinite alternate}
+.dm-count{background:linear-gradient(135deg,#e6b84a,#b07d18);color:#1e0007;border:0}
+@media (max-width:820px){.dm-board{min-height:240px}.dm-mini{max-width:80px}}
+/* Hold'em */
+.pk-felt{display:block;min-height:470px;border-radius:220px/150px;position:relative}
+.pk-felt::before{content:"McLEARN HOLD'EM";top:66%}
+.pk-seat{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:3px;--cw:38px;z-index:2}
+.pk-seat.folded{opacity:.5}.pk-seat.busted{opacity:.3}
+.pk-seat.won .seat-tag{border-color:var(--amber);box-shadow:0 0 18px rgba(244,200,106,.7)}
+.pk-seat .seat-tag{white-space:nowrap}
+#pk-msg{align-items:flex-end;padding-bottom:18px}
+.pk-cards{display:flex}.pk-cards .pcard+.pcard{margin-left:-14px}
+.pk-bet{font-family:var(--mono);font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;background:radial-gradient(circle,#b76e79 40%,#800020);color:#fff;border:1px dashed rgba(255,255,255,.7)}
+.pk-btn{display:inline-grid;place-items:center;width:15px;height:15px;border-radius:50%;background:#fff;color:#1e0007;font-size:9px;font-weight:900;vertical-align:1px}
+.pk-mid{position:absolute;left:50%;top:47%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:8px}
+.pk-board{display:flex;gap:6px;--cw:clamp(42px,7vw,62px)}
+.pk-slot{background:none;border:2px dashed rgba(223,166,175,.25);box-shadow:none}
+.pk-pot{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--amber);background:rgba(18,0,4,.7);padding:3px 12px;border-radius:999px;border:1px solid rgba(244,200,106,.4)}
+.pk-hand{--cw:clamp(60px,10vw,84px)}.pk-hand .pcard{margin-left:6px}.pk-hand .pcard:first-child{margin-left:0}
+.pk-eq{height:8px;border-radius:999px;background:var(--burg-900);overflow:hidden;margin-top:4px}
+.pk-eq i{display:block;height:100%;background:linear-gradient(90deg,#b76e79,#f4c86a)}
+.pk-acts{width:100%;max-width:520px;display:flex;flex-direction:column;gap:8px;padding:10px 12px}
+.pk-acts input[type=range]{accent-color:#f4c86a}
+@media (max-width:820px){.pk-felt{min-height:400px;border-radius:120px/90px}.pk-seat{--cw:28px}.pk-seat .seat-tag{font-size:10px;padding:3px 6px}.pk-board{--cw:38px;gap:3px}}
+/* Bid Whist */
+.bw-bidrow{display:grid;grid-template-columns:28px repeat(3,1fr);gap:6px;align-items:center}
+.bw-bidrow b{font-family:var(--serif);font-size:18px;color:var(--amber);text-align:center}
+.bw-bidrow .btn{min-height:34px;padding:5px;font-size:12px}
+#bw-hand .pcard{margin-left:calc(var(--cw) * -0.55)}#bw-hand .pcard:first-child{margin-left:0}
+@media (max-width:620px){#bw-hand{--cw:40px}#bw-hand .pcard{margin-left:calc(var(--cw) * -0.6)}}
+.gcard.feat{position:relative;border-color:var(--amber);box-shadow:0 0 0 1px rgba(244,200,106,.4),0 10px 30px rgba(244,200,106,.12)}
+.feat-tag{align-self:flex-start;font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#1e0007;background:linear-gradient(135deg,#e6b84a,#f4c86a);padding:2px 9px;border-radius:999px}
+/* Studio Showdown */
+.sd-felt{grid-template-columns:1fr;grid-template-rows:auto 1fr auto auto;justify-items:center;gap:8px;min-height:450px;padding:20px 14px}
+.sd-felt::before{content:'WRITE IT · SING IT · OWN IT';font-size:clamp(14px,3vw,24px)}
+.sd-stage{display:flex;align-items:center;justify-content:center;gap:clamp(12px,4vw,36px);min-height:200px}
+.sd-card{width:clamp(108px,20vw,150px);aspect-ratio:3/4;border-radius:16px;background:linear-gradient(160deg,#fffdf8,#efe6dc);color:#1e0007;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;box-shadow:0 8px 22px rgba(0,0,0,.55);animation:pop .35s ease-out;border:3px solid transparent}
+.sd-card .sd-ic{font-size:clamp(40px,8vw,60px);line-height:1}
+.sd-card b{font-family:var(--serif);font-size:18px}.sd-card small{font-size:10px;color:#7a1730;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.sd-card.back{background:repeating-linear-gradient(45deg,#680d22 0 8px,#4a0011 8px 16px);border-color:#dfa6af}
+.sd-card.back .sd-ic{font-family:var(--serif);font-weight:900;color:#f2c4cb}
+.sd-card.back.mine{animation:bob .4s infinite}
+.sd-card.win{border-color:var(--amber);box-shadow:0 0 0 3px var(--amber),0 0 30px rgba(244,200,106,.6)}
+.sd-card.lose{filter:grayscale(.6) brightness(.7)}
+.sd-vs{font-size:clamp(20px,4vw,30px);color:var(--amber);text-shadow:0 0 14px rgba(244,200,106,.5);min-width:70px;text-align:center}
+.sd-countword{font-size:clamp(24px,5vw,40px);color:var(--amber);min-height:44px}
+.sd-countword.pop{animation:pop .35s ease-out}
+.sd-why{text-align:center;max-width:520px;font-size:13px;min-height:44px}
+.sd-pick{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.sd-btn{display:flex;flex-direction:column;align-items:center;gap:2px;width:clamp(72px,14vw,96px);padding:10px 4px;border-radius:14px;background:linear-gradient(160deg,#4a0011,#2a0008);border:2px solid var(--rose-400);color:#fff;transition:transform .15s}
+.sd-btn span{font-size:32px;line-height:1}.sd-btn b{font-size:12px}
+.sd-btn:hover:not(:disabled){transform:translateY(-4px);border-color:var(--amber)}
+.sd-btn:disabled{opacity:.45}
+.sd-top{display:flex;justify-content:center}
 </style>
 </head>
 <body>
@@ -493,7 +607,7 @@ body.event .felt{max-width:min(1100px,100%)}
     <div class="logo"><svg viewBox="0 0 45 45" class="pc w" style="width:34px;height:34px;filter:none"><use href="#pc-K"/></svg></div>
     <div>
       <div class="row"><h1 class="title">McLEARN ARENA</h1><span class="pill" style="color:var(--amber)">10X PRO</span></div>
-      <p class="sub">MCLEARN MEDIA PRODUCTION &bull; MS, USA &bull; <span style="color:var(--amber)">GAME HUB v4.6</span></p>
+      <p class="sub">MCLEARN MEDIA PRODUCTION &bull; MS, USA &bull; <span style="color:var(--amber)">GAME HUB v4.7</span></p>
     </div>
   </div>
   <div class="hstats">
@@ -521,6 +635,13 @@ body.event .felt{max-width:min(1100px,100%)}
   <button data-view="colorclash"><svg viewBox="0 0 24 24" style="width:16px;height:16px"><rect x="4" y="2" width="12" height="17" rx="2.5" fill="#d9466b"/><rect x="8" y="5" width="12" height="17" rx="2.5" fill="#3f7fd9" stroke="#1e0007"/></svg>Color Clash</button>
   <button data-view="pittypat"><span style="font-size:14px;line-height:1">🂫</span>Pitty Pat</button>
   <button data-view="mogul"><span style="font-size:14px;line-height:1">🏙</span>Media Mogul</button>
+  <button data-view="dominoes" class="feat"><svg viewBox="0 0 24 24" style="width:16px;height:16px"><rect x="7" y="1" width="10" height="22" rx="2.5" fill="#fbf4ea"/><line x1="8.5" y1="12" x2="15.5" y2="12" stroke="#7a1730"/><circle cx="12" cy="6.5" r="1.6" fill="#7a1730"/><circle cx="10" cy="16" r="1.4" fill="#7a1730"/><circle cx="14" cy="19" r="1.4" fill="#7a1730"/></svg>Dominoes</button>
+  <button data-view="bidwhist"><span style="font-size:14px;line-height:1">🃏</span>Bid Whist</button>
+  <button data-view="poker"><span style="font-size:14px;line-height:1;color:#ff8fa3">♦</span>Hold'em</button>
+  <button data-view="tonk"><span style="font-size:14px;line-height:1">♣</span>Tonk</button>
+  <button data-view="gofish"><span style="font-size:14px;line-height:1">🐟</span>Go Fish</button>
+  <button data-view="war"><span style="font-size:14px;line-height:1">⚔️</span>War</button>
+  <button data-view="showdown"><span style="font-size:14px;line-height:1">🎤</span>Showdown</button>
   <button data-view="checkers"><svg viewBox="0 0 24 24" style="width:16px;height:16px"><circle cx="12" cy="12" r="9" fill="#2a0a12" stroke="#dfa6af" stroke-width="2"/><circle cx="12" cy="12" r="5" fill="none" stroke="#dfa6af" stroke-width="1.5"/></svg>Checkers</button>
 </nav>
 <section class="view lobby hidden" id="view-lobby">
@@ -529,8 +650,8 @@ body.event .felt{max-width:min(1100px,100%)}
     <div class="hero-text">
       <span class="label">McLearn Media Game Hub</span>
       <h2 class="serif" style="font-size:clamp(26px,4vw,40px);margin:6px 0 8px;line-height:1.1">Pull up a chair.</h2>
-      <p class="muted" style="margin:0 0 16px;max-width:460px;line-height:1.6">Grandmaster chess in full 3-D, spades with a partner, checkers, blackjack and parcheesi — with a coach at every table, live rooms with friends, and a ladder to climb.</p>
-      <div class="row" style="flex-wrap:wrap"><button class="btn btn-lux" data-go="chess">Play Chess</button><button class="btn btn-sec" data-go="spades">Spades</button><button class="btn btn-sec" data-go="checkers">Checkers</button></div>
+      <p class="muted" style="margin:0 0 16px;max-width:460px;line-height:1.6">Fifteen McLearn games under one roof — Grandmaster chess in full 3-D, Dominoes, Spades and Bid Whist with a partner, Hold'em, Tonk, Pitty Pat, Mega Media Mogul and more — with a coach at every table, Standard, Pro and House Rules for every game, and a ladder to climb.</p>
+      <div class="row" style="flex-wrap:wrap"><button class="btn btn-lux" data-go="chess">Play Chess</button><button class="btn btn-sec" data-go="dominoes">★ Dominoes</button><button class="btn btn-sec" data-go="spades">Spades</button><button class="btn btn-sec" data-go="bidwhist">Bid Whist</button></div>
     </div>
   </div>
   <div class="lobby-cards" id="lobby-cards"></div>
@@ -543,6 +664,13 @@ body.event .felt{max-width:min(1100px,100%)}
 <main class="gwrap hidden" id="view-colorclash"></main>
 <main class="gwrap hidden" id="view-pittypat"></main>
 <main class="gwrap hidden mg-gwrap" id="view-mogul"></main>
+<main class="gwrap hidden" id="view-dominoes"></main>
+<main class="gwrap hidden" id="view-bidwhist"></main>
+<main class="gwrap hidden" id="view-poker"></main>
+<main class="gwrap hidden" id="view-tonk"></main>
+<main class="gwrap hidden" id="view-gofish"></main>
+<main class="gwrap hidden" id="view-war"></main>
+<main class="gwrap hidden" id="view-showdown"></main>
 <main class="wrap view" id="view-chess">
   <!-- LEFT -->
   <section class="col left">
@@ -5428,6 +5556,1880 @@ SH.games.mogul = { onShow() { if (!G.pl.length) newGame(); else render(); }, _G:
 
 </script>
 <script>
+// McLearn Dominoes — Draw, Block and All Fives (spinner scoring). Featured game.
+(function () {
+'use strict';
+const SH = window.McShared, $ = id => document.getElementById(id), LS = SH.LS;
+McRules.register('dominoes', {
+  title: 'Dominoes',
+  proNote: 'Pro: All Fives to 250 with sharp opponents, no tips, and a 20-second turn clock.',
+  schema: [
+    { key: 'game', label: 'Game', help: 'Draw: pull from the boneyard when stuck. Block: no drawing, you knock. All Fives: score when the open ends add up to 5, 10, 15…', type: 'select', options: [['draw', 'Draw game'], ['block', 'Block game'], ['fives', 'All Fives (spinner)']] },
+    { key: 'players', label: 'Players at the table', type: 'select', options: [[2, '2 (you + 1)'], [3, '3 (you + 2)'], [4, '4 (you + 3)']] },
+    { key: 'partners', label: 'Partners (4 players)', help: 'You and the player across from you score as one team', type: 'bool' },
+    { key: 'set', label: 'Domino set', type: 'select', options: [[6, 'Double-six (28 bones)'], [9, 'Double-nine (55 bones)']] },
+    { key: 'target', label: 'Play to', type: 'select', options: [[61, '61 points'], [100, '100 points'], [150, '150 points'], [250, '250 points']] },
+    { key: 'lead', label: 'Who leads the first hand', type: 'select', options: [['double', 'Highest double'], ['random', 'Random player']] },
+    { key: 'ai', label: 'Opponents', type: 'select', options: [['easy', 'Friendly'], ['sharp', 'Sharp (count bones)']] },
+    { key: 'tips', label: 'Play tips', type: 'bool' },
+    { key: 'timer', label: 'Turn clock', type: 'select', options: [[0, 'Off'], [20, '20 seconds'], [40, '40 seconds']] }
+  ],
+  presets: {
+    standard: { game: 'draw', players: 2, partners: false, set: 6, target: 100, lead: 'double', ai: 'easy', tips: true, timer: 0 },
+    pro: { game: 'fives', target: 250, ai: 'sharp', tips: false, timer: 20 }
+  }
+});
+let RU = McRules.get('dominoes');
+const tmr = McRules.timer();
+const NAMES = ['You', 'Big Ced', 'Ms. Gloria', 'Unc'];
+const G = { n: 2, hands: [], bone: [], first: null, arms: { L: [], R: [], U: [], D: [] }, spinner: false, turn: 0, phase: 'idle', passes: 0, score: [0, 0, 0, 0], token: 0, log: [], sel: null, over: false, fast: false, stats: LS.get('dm-stats', { w: 0, l: 0 }), handNo: 0, lastWinner: -1, lastPlay: null };
+const wait = ms => G.fast ? Promise.resolve() : new Promise(r => setTimeout(r, ms));
+const pips = t => t.a + t.b, dbl = t => t.a === t.b;
+const hp = s => G.hands[s].reduce((x, t) => x + pips(t), 0);
+const team = s => RU.partners && G.n === 4 ? s % 2 : s;
+const teamName = s => RU.partners && G.n === 4 ? (s % 2 ? 'Ced & Unc' : 'You & Gloria') : NAMES[s];
+const vb = (s, a, b) => s ? b : a;
+function log(t) { G.log.push(t); const el = $('dm-log'); if (el) { el.innerHTML = G.log.slice(-70).map(x => `<div class="tiny" style="color:var(--wg-400)">${x}</div>`).join(''); el.scrollTop = 1e9; } }
+const tname = t => `${t.a}–${t.b}`;
+
+// ---------- the line of play ----------
+function endVal(k) {
+  const arm = G.arms[k];
+  if (arm.length) return arm[arm.length - 1].b;
+  if (k === 'L') return G.first.a; if (k === 'R') return G.first.b;
+  return G.first.a; // spinner arms
+}
+function openEnds() {
+  if (!G.first) return [];
+  const e = ['L', 'R'];
+  if (G.spinner && G.arms.L.length && G.arms.R.length) e.push('U', 'D');
+  return e;
+}
+function legal(s) { // [{t, end}]
+  const out = [], h = G.hands[s];
+  if (!G.first) { for (const t of h) if (!G.forceFirst || t === G.forceFirst) out.push({ t, end: 'F' }); return out; }
+  const ends = openEnds(), seen = new Set();
+  for (const t of h) for (const k of ends) {
+    const v = endVal(k); if (t.a !== v && t.b !== v) continue;
+    const key = tname(t) + v; if (seen.has(key) && (k === 'U' || k === 'D')) continue; seen.add(key);
+    out.push({ t, end: k });
+  }
+  return out;
+}
+function count() { // All Fives count of the open ends
+  if (!G.first) return 0;
+  const L = G.arms.L, R = G.arms.R, f = G.first, fd = dbl(f); let c = 0;
+  const outer = arm => { const t = arm[arm.length - 1]; return dbl(t) ? t.a * 2 : t.b; };
+  if (!L.length && !R.length) c = fd ? f.a * 2 : f.a + f.b;
+  else { c += L.length ? outer(L) : (fd ? f.a * 2 : f.a); c += R.length ? outer(R) : (fd ? f.a * 2 : f.b); }
+  if (G.spinner) for (const k of ['U', 'D']) if (G.arms[k].length) c += outer(G.arms[k]);
+  return c;
+}
+function place(s, t, end) {
+  const h = G.hands[s]; h.splice(h.indexOf(t), 1);
+  if (end === 'F') { G.first = { a: t.a, b: t.b }; G.spinner = RU.game === 'fives' && dbl(t); G.forceFirst = null; }
+  else { const v = endVal(end); G.arms[end].push(t.a === v ? { a: t.a, b: t.b } : { a: t.b, b: t.a }); }
+  G.lastPlay = { end, n: end === 'F' ? 0 : G.arms[end].length };
+  G.passes = 0; SH.Sound.play(dbl(t) ? 'capture' : 'move');
+  let pts = 0;
+  if (RU.game === 'fives') { const c = count(); if (c > 0 && c % 5 === 0) pts = c; }
+  log(`${NAMES[s]} ${vb(s, 'play', 'plays')} ${tname(t)}${pts ? ` — <b style="color:var(--amber)">${pts}!</b>` : ''}`);
+  if (pts) { addScore(s, pts); flash(`${s ? NAMES[s] + ' scores' : 'You score'} ${pts}!`); }
+}
+function addScore(s, p) { G.score[team(s)] += p; }
+
+// ---------- AI ----------
+function unseen(s) { // bones s cannot see: everyone else's hands + boneyard
+  const out = []; for (let k = 0; k < G.n; k++) if (k !== s) out.push(...G.hands[k]); return out.concat(G.bone);
+}
+function simCount(t, end) { // count after placing t at end, without mutating
+  const saveF = G.first, saveSp = G.spinner, arm = G.arms[end === 'F' ? 'L' : end];
+  let undo;
+  if (end === 'F') { G.first = { a: t.a, b: t.b }; G.spinner = RU.game === 'fives' && dbl(t); undo = () => { G.first = saveF; G.spinner = saveSp; }; }
+  else { const v = endVal(end); arm.push(t.a === v ? { a: t.a, b: t.b } : { a: t.b, b: t.a }); undo = () => arm.pop(); }
+  const c = count(); undo(); return c;
+}
+function scoreMove(s, m) {
+  const sharp = RU.ai === 'sharp' || s === 0;
+  let v = pips(m.t) * 1.2 + (dbl(m.t) ? 3 : 0);
+  if (RU.game === 'fives') { const c = simCount(m.t, m.end); if (c % 5 === 0 && c > 0) v += c * 4; else if (sharp) v -= ((5 - c % 5) % 5 === 0 ? 0 : 0); }
+  // keep a variety of numbers in hand so you are not shut out
+  const rest = G.hands[s].filter(t => t !== m.t), nums = new Set(); rest.forEach(t => { nums.add(t.a); nums.add(t.b); });
+  v += nums.size * (sharp ? 1.5 : 0.5);
+  if (sharp && G.first) { // avoid leaving an end opponents are likely to match on a fives count
+    const un = unseen(s); const after = m.end === 'F' ? null : (m.t.a === endVal(m.end) ? m.t.b : m.t.a);
+    if (after != null) { const cnt = un.filter(t => t.a === after || t.b === after).length; v += cnt === 0 ? 6 : -cnt * 0.4; }
+  }
+  if (RU.ai === 'easy' && s !== 0) v += Math.random() * 6;
+  return v;
+}
+function aiChoose(s) { const ms = legal(s); if (!ms.length) return null; let best = ms[0], bv = -1e9; for (const m of ms) { const v = scoreMove(s, m); if (v > bv) { bv = v; best = m; } } return best; }
+
+// ---------- flow ----------
+function newGame() {
+  RU = McRules.get('dominoes'); G.token++; tmr.stop(); G.n = RU.players; G.score = [0, 0, 0, 0]; G.over = false; G.log = []; G.handNo = 0; G.lastWinner = -1; showMsg('');
+  log(`<b>New game</b> — ${RU.game === 'fives' ? 'All Fives' : RU.game === 'block' ? 'Block' : 'Draw'} dominoes to ${RU.target}.`);
+  deal();
+}
+function deal() {
+  G.token++; G.handNo++; tmr.stop();
+  const set = []; for (let a = 0; a <= RU.set; a++) for (let b = a; b <= RU.set; b++) set.push({ a, b });
+  SH.cards.shuffle(set);
+  const per = RU.set === 9 ? (G.n === 2 ? 9 : 7) : (G.n === 2 ? 7 : G.n === 3 ? 6 : 5) + (RU.game === 'block' && G.n === 4 ? 2 : 0);
+  G.hands = Array.from({ length: G.n }, () => set.splice(0, per));
+  G.bone = set; G.first = null; G.arms = { L: [], R: [], U: [], D: [] }; G.spinner = false; G.passes = 0; G.sel = null; G.lastPlay = null;
+  // who leads
+  let lead = 0;
+  if (G.lastWinner >= 0) lead = G.lastWinner;
+  else if (RU.lead === 'random') lead = Math.floor(Math.random() * G.n);
+  else { let best = -1; for (let s = 0; s < G.n; s++) for (const t of G.hands[s]) if (dbl(t) && t.a > best) { best = t.a; lead = s; } if (best < 0) { let hi = -1; for (let s = 0; s < G.n; s++) for (const t of G.hands[s]) if (pips(t) > hi) { hi = pips(t); lead = s; } } }
+  G.forceFirst = null;
+  if (G.lastWinner < 0 && RU.lead === 'double') { const ds = G.hands[lead].filter(dbl).sort((x, y) => y.a - x.a); if (ds.length) G.forceFirst = ds[0]; }
+  G.turn = lead; G.phase = 'play';
+  log(`Hand ${G.handNo}: ${per} bones each. ${NAMES[lead]} ${vb(lead, 'lead', 'leads')}.`);
+  SH.Sound.play('start'); render(true); loop();
+}
+function nextTurn() { G.turn = (G.turn + 1) % G.n; G.sel = null; render(); loop(); }
+function afterPlay(s) {
+  if (!G.hands[s].length) return endHand(s, 'domino');
+  nextTurn();
+}
+async function loop() {
+  const tok = G.token; if (G.phase !== 'play') return;
+  const s = G.turn;
+  if (!legal(s).length) { // stuck
+    if (RU.game !== 'block' && G.bone.length > (G.n === 2 ? 0 : 0)) {
+      if (s === 0) { render(); return; } // you draw by tapping the boneyard
+      await wait(500); if (tok !== G.token) return;
+      while (!legal(s).length && G.bone.length) { G.hands[s].push(G.bone.pop()); SH.Sound.play('tick'); }
+      log(`${NAMES[s]} draws from the boneyard.`); render();
+      if (!legal(s).length) return pass(s);
+    } else {
+      if (s === 0) { render(); await wait(900); if (tok !== G.token) return; return pass(0); }
+      await wait(500); if (tok !== G.token) return; return pass(s);
+    }
+  }
+  if (s === 0) { render(); return; }
+  await wait(750); if (tok !== G.token) return;
+  const m = aiChoose(s); place(s, m.t, m.end); afterPlay(s);
+}
+function pass(s) {
+  G.passes++; log(`${NAMES[s]} ${vb(s, 'knock', 'knocks')} — pass.`); SH.Sound.play('tick');
+  if (G.passes >= G.n) return endHand(-1, 'blocked');
+  nextTurn();
+}
+function endHand(w, how) {
+  G.phase = 'idle'; tmr.stop(); G.token++;
+  let winner = w, note;
+  if (how === 'blocked') {
+    // lowest hand (or lowest team) wins a blocked game
+    let best = 1e9, who = -1, tie = false;
+    for (let s = 0; s < G.n; s++) { const v = hp(s); if (v < best) { best = v; who = s; tie = false; } else if (v === best && team(s) !== team(who)) tie = true; }
+    winner = tie ? -1 : who; note = tie ? 'Blocked — tied low count, no points.' : `Blocked — ${NAMES[who]} ${vb(who, 'have', 'has')} the lowest count (${best}).`;
+  }
+  let pts = 0;
+  if (winner >= 0) {
+    for (let s = 0; s < G.n; s++) if (team(s) !== team(winner)) pts += hp(s);
+    if (RU.game === 'fives') pts = Math.round(pts / 5) * 5;
+    addScore(winner, pts); G.lastWinner = winner;
+    if (how === 'domino') note = `${NAMES[winner]} ${vb(winner, 'domino', 'dominoes')}! ${pts ? '+' + pts + ' from the bones left in other hands.' : ''}`;
+    else note += ` +${pts}.`;
+  }
+  log(`<b>${note}</b>`); SH.Sound.play(winner >= 0 && team(winner) === team(0) ? 'good' : 'draw');
+  const scores = scoreLine();
+  const champ = [...new Set(Array.from({ length: G.n }, (_, s) => team(s)))].find(t => G.score[t] >= RU.target && G.score[t] === Math.max(...G.score));
+  if (champ != null) return finish(champ);
+  showMsg(`<div class="label">Hand ${G.handNo}</div><div class="tiny" style="margin:6px 0">${note}</div><div class="tiny muted">${scores} — first to ${RU.target}</div><button class="btn btn-lux" style="margin-top:8px" id="dm-next">Next hand</button>`);
+  $('dm-next').onclick = () => { showMsg(''); deal(); };
+  render();
+}
+function scoreLine() { const seen = new Set(), out = []; for (let s = 0; s < G.n; s++) { const t = team(s); if (seen.has(t)) continue; seen.add(t); out.push(`${teamName(s)} ${G.score[t]}`); } return out.join(' · '); }
+function finish(t) {
+  G.over = true; const you = t === team(0);
+  G.stats[you ? 'w' : 'l']++; LS.set('dm-stats', G.stats);
+  SH.Sound.play(you ? 'victory' : 'defeat');
+  showMsg(`<h4 class="serif" style="margin:0 0 4px;font-size:22px">${you ? 'You win the game!' : teamName(t === 0 ? 0 : t) + ' win' + (RU.partners && G.n === 4 ? '' : 's')}</h4><div class="tiny muted">${scoreLine()}</div><button class="btn btn-lux" style="margin-top:10px" id="dm-again">Play again</button>`);
+  $('dm-again').onclick = newGame;
+  if (SH.onResult) SH.onResult('dominoes', you ? 'w' : 'l', { pro: !!RU.pro });
+  render();
+}
+
+// ---------- you ----------
+function youTap(i) {
+  if (G.turn !== 0 || G.phase !== 'play') return;
+  const t = G.hands[0][i], ms = legal(0).filter(m => m.t === t);
+  if (!ms.length) { SH.toast(G.first ? `${tname(t)} doesn't match an open end` : 'Pick a bone', 'x'); return; }
+  const ends = [...new Set(ms.map(m => m.end))];
+  if (ends.length === 1) return youPlay(t, ends[0]);
+  G.sel = t; render();
+}
+function youPlay(t, end) { if (G.turn !== 0 || G.phase !== 'play') return; tmr.stop(); SH.Sound.unlock(); place(0, t, end); G.sel = null; afterPlay(0); }
+function youDraw() {
+  if (G.turn !== 0 || G.phase !== 'play' || legal(0).length || RU.game === 'block') return;
+  if (!G.bone.length) return pass(0);
+  const t = G.bone.pop(); G.hands[0].push(t); SH.Sound.play('tick'); log(`You draw ${tname(t)}.`);
+  if (!legal(0).length && !G.bone.length) { render(); return pass(0); }
+  render();
+}
+
+// ---------- layout & render ----------
+const PIP = { 0: [], 1: [4], 2: [0, 8], 3: [0, 4, 8], 4: [0, 2, 6, 8], 5: [0, 2, 4, 6, 8], 6: [0, 2, 3, 5, 6, 8], 7: [0, 2, 3, 4, 5, 6, 8], 8: [0, 1, 2, 3, 5, 6, 7, 8], 9: [0, 1, 2, 3, 4, 5, 6, 7, 8] };
+const half = v => `<span class="dh">${Array.from({ length: 9 }, (_, i) => `<i class="${PIP[v].includes(i) ? 'on' : ''}"></i>`).join('')}</span>`;
+function boneHtml(t, opts) {
+  opts = opts || {};
+  if (opts.back) return `<div class="dom back ${opts.cls || ''}" style="${opts.style || ''}"><span>M</span></div>`;
+  return `<div class="dom ${opts.vert ? 'v' : ''} ${opts.cls || ''}" style="${opts.style || ''}" ${opts.attr || ''}>${half(t.a)}<b></b>${half(t.b)}</div>`;
+}
+function layout() { // tiles in grid units (1 unit = half a bone); arms snake around corners
+  const out = [], ghosts = {}; if (!G.first) return { tiles: out, ghosts };
+  const f = G.first, fd = dbl(f);
+  out.push({ t: f, x: 0, y: 0, w: fd ? 1 : 2, h: fd ? 2 : 1, flip: false, key: 'F' });
+  const hw = fd ? 0.5 : 1;
+  const arms = [['L', [-1, 0], [0, 1]], ['R', [1, 0], [0, -1]], ['U', [0, -1], null], ['D', [0, 1], null]];
+  for (const [k, d0, turn] of arms) {
+    const isSp = !turn;
+    let d = d0, cx = isSp ? 0 : d0[0] * hw, cy = isSp ? d0[1] : 0, seg = 0, used = 0, lastPerp = isSp ? 0.5 : (fd ? 1 : 0.5);
+    const limits = [10, 8, 99];
+    const step = (t, ghost) => {
+      const db = dbl(t), len = db ? 1 : 2, wid = db ? 2 : 1;
+      if (!isSp && used + len > limits[seg]) { // turn the corner: hug the side of the last bone
+        const nd = seg === 0 ? turn : [-d0[0], -d0[1]];
+        cx = cx - d[0] * wid / 2 + nd[0] * lastPerp; cy = cy - d[1] * wid / 2 + nd[1] * lastPerp;
+        d = nd; seg++; used = 0;
+      }
+      const horiz = d[1] === 0, w = horiz ? len : wid, h = horiz ? wid : len;
+      const x = cx + d[0] * len / 2, y = cy + d[1] * len / 2;
+      cx += d[0] * len; cy += d[1] * len; used += len; lastPerp = wid / 2;
+      return { t, x, y, w, h, flip: d[0] < 0 || d[1] < 0, key: k, ghost };
+    };
+    for (const t of G.arms[k]) out.push(step(t, false));
+    ghosts[k] = step;
+  }
+  return { tiles: out, ghosts };
+}
+function render(dealing) {
+  if (!G.hands.length) return;
+  const lay = layout(), tiles = lay.tiles;
+  // ghosts for the selected bone
+  const ghosts = [];
+  if (G.sel && G.turn === 0) for (const m of legal(0).filter(m => m.t === G.sel)) { const v = endVal(m.end); const g = lay.ghosts[m.end]({ a: v, b: G.sel.a === v ? G.sel.b : G.sel.a }, true); g.end = m.end; ghosts.push(g); }
+  const all = tiles.concat(ghosts);
+  const box = all.reduce((b, t) => ({ x0: Math.min(b.x0, t.x - t.w / 2), x1: Math.max(b.x1, t.x + t.w / 2), y0: Math.min(b.y0, t.y - t.h / 2), y1: Math.max(b.y1, t.y + t.h / 2) }), { x0: -2, x1: 2, y0: -1.5, y1: 1.5 });
+  const el = $('dm-board'), W = el.clientWidth || 640, H = el.clientHeight || 300;
+  const u = Math.min(34, (W - 16) / (box.x1 - box.x0), (H - 16) / (box.y1 - box.y0));
+  const ox = W / 2 - (box.x0 + box.x1) / 2 * u, oy = H / 2 - (box.y0 + box.y1) / 2 * u;
+  const lp = G.lastPlay;
+  el.style.setProperty('--u', u.toFixed(2) + 'px');
+  el.innerHTML = all.map(t => {
+    const left = ox + (t.x - t.w / 2) * u, top = oy + (t.y - t.h / 2) * u;
+    const a = t.flip ? t.t.b : t.t.a, b = t.flip ? t.t.a : t.t.b;
+    const isNew = lp && !t.ghost && ((lp.end === 'F' && t.key === 'F') || (t.key === lp.end && G.arms[lp.end].length === lp.n && G.arms[lp.end][lp.n - 1] === t.t));
+    return boneHtml({ a, b }, { vert: t.h > t.w, cls: (t.ghost ? 'ghost' : '') + (isNew ? ' fresh' : '') + (t.key === 'F' && G.spinner ? ' spin' : ''), style: `left:${left.toFixed(1)}px;top:${top.toFixed(1)}px;width:${(t.w * u).toFixed(1)}px;height:${(t.h * u).toFixed(1)}px`, attr: t.ghost ? `data-end="${t.end}" title="Play here"` : '' });
+  }).join('') + (G.first ? '' : `<div class="dm-empty serif">${G.turn === 0 && G.phase === 'play' ? 'Your lead — set any bone' : 'Waiting for the lead…'}</div>`);
+  // seats
+  const pos = { 2: { 1: 'n' }, 3: { 1: 'w', 2: 'e' }, 4: { 1: 'w', 2: 'n', 3: 'e' } }[G.n];
+  for (const p of ['n', 'w', 'e']) {
+    const s = +Object.keys(pos).find(k => pos[k] === p); const box2 = $('dm-seat-' + p);
+    if (!s) { box2.innerHTML = ''; continue; }
+    const n = G.hands[s].length, on = G.turn === s && G.phase === 'play';
+    box2.innerHTML = `<div class="seat-tag ${on ? 'on' : ''}"><b>${NAMES[s]}${RU.partners && G.n === 4 && s === 2 ? ' (partner)' : ''}</b><span>${n} bones · ${G.score[team(s)]} pts</span></div><div class="dm-mini">${Array.from({ length: Math.min(n, 9) }, () => boneHtml(null, { back: true })).join('')}</div>`;
+  }
+  const mine = G.turn === 0 && G.phase === 'play', lg = mine ? legal(0) : [];
+  const tip = RU.tips && mine && lg.length ? aiChoose(0) : null;
+  $('dm-hand').innerHTML = G.hands[0].map((t, i) => boneHtml(t, { vert: true, cls: (mine && lg.some(m => m.t === t) ? 'playable' : mine ? 'dim' : '') + (G.sel === t ? ' sel' : '') + (tip && tip.t === t ? ' tip' : '') + (dealing ? ' dealt' : ''), attr: `data-i="${i}"`, style: `--d:${i * 50}ms` })).join('');
+  const stuck = mine && !lg.length;
+  $('dm-bone').innerHTML = `<div class="dm-yard ${stuck && RU.game !== 'block' && G.bone.length ? 'live' : ''}" id="dm-yard" title="Boneyard">${RU.game === 'block' ? '<span class="tiny muted">Block game — no boneyard</span>' : `${boneHtml(null, { back: true })}<span class="pill">Boneyard ${G.bone.length}</span>`}</div>${RU.game === 'fives' ? `<div class="pill dm-count">Count ${count()}</div>` : ''}`;
+  $('dm-you').innerHTML = `<div class="seat-tag ${mine ? 'on' : ''}"><b>You</b><span>${G.hands[0].length} bones · ${hp(0)} pips · ${G.score[team(0)]} pts</span></div>`;
+  $('dm-tip').textContent = !mine ? (G.phase === 'play' ? `${NAMES[G.turn]} is thinking…` : '') : stuck ? (RU.game === 'block' || !G.bone.length ? 'No play — you knock.' : 'No play — tap the boneyard to draw.') : G.sel ? 'Tap a glowing spot to choose which end.' : tip ? `Tip: play ${tname(tip.t)}${RU.game === 'fives' && simCount(tip.t, tip.end) % 5 === 0 && simCount(tip.t, tip.end) ? ` for ${simCount(tip.t, tip.end)} points` : ''}.` : 'Tap a bone to play it.';
+  $('dm-score').innerHTML = scoreLine() + ` <span class="muted">· to ${RU.target}</span>`;
+  $('dm-rb').textContent = McRules.label('dominoes'); $('dm-rb').className = 'rbadge r-' + McRules.mode('dominoes');
+  $('dm-rec').textContent = `W${G.stats.w} L${G.stats.l}`;
+  if (mine && RU.timer) { const key = 'h' + G.handNo + '-' + G.hands[0].length + '-' + G.bone.length + tiles.length; if (G._tKey !== key) { G._tKey = key; tmr.start(RU.timer, $('dm-timer'), () => { G._tKey = null; SH.toast('Time! Auto-play', 'clock'); if (!legal(0).length) { while (!legal(0).length && G.bone.length && RU.game !== 'block') G.hands[0].push(G.bone.pop()); if (!legal(0).length) return pass(0); } const m = aiChoose(0); youPlay(m.t, m.end); }); } }
+  else { G._tKey = null; tmr.stop(); }
+}
+function showMsg(html) { const m = $('dm-msg'); m.innerHTML = html ? `<div class="glass" style="padding:14px 16px;text-align:center">${html}</div>` : ''; m.classList.toggle('hidden', !html); }
+function flash(t) { if (G.fast) return; const el = $('dm-flash'); el.textContent = t; el.classList.remove('show'); void el.offsetWidth; el.classList.add('show'); }
+
+const root = $('view-dominoes');
+root.innerHTML = `
+<section class="col center" style="width:100%">
+  <div class="felt dm-felt" id="dm-felt">
+    <div class="seat n" id="dm-seat-n"></div><div class="seat w" id="dm-seat-w"></div><div class="seat e" id="dm-seat-e"></div>
+    <div class="dm-board" id="dm-board"></div>
+    <div class="cc-flash" id="dm-flash"></div>
+    <div class="felt-msg hidden" id="dm-msg"></div>
+  </div>
+  <div class="row" style="justify-content:center;gap:10px;flex-wrap:wrap;margin-top:6px;align-items:center"><div id="dm-you"></div><div class="row" id="dm-bone" style="gap:10px;align-items:center"></div><span class="ptimer hidden" id="dm-timer"></span></div>
+  <div class="dm-hand" id="dm-hand"></div>
+  <div class="tiny" id="dm-tip" style="color:var(--amber);text-align:center;min-height:18px"></div>
+</section>
+<section class="col right">
+  <div class="glass card stack">
+    <div class="between"><h3 class="h3">McLearn Dominoes</h3><span class="row" style="gap:6px"><span class="rbadge" id="dm-rb">Standard</span><span class="pill" id="dm-rec"></span></span></div>
+    <div class="stat"><span>Score</span><b id="dm-score" style="font-size:14px"></b></div>
+    <div class="tiny muted">Match a bone to an open end. Can't play? Draw from the boneyard (Draw game) or knock (Block game). Play your last bone to <b>domino</b> and score what everyone else is holding. In <b>All Fives</b>, the first double is the spinner — and every time the open ends add up to 5, 10, 15 or more, you score it on the spot.</div>
+    <div id="rules-dominoes"></div>
+    <button class="btn btn-lux" id="dm-new">New Game</button>
+    <div><span class="label">Table log</span><div class="moves" id="dm-log" style="margin-top:6px;height:120px;font-family:var(--sans)"></div></div>
+  </div>
+</section>`;
+$('dm-hand').addEventListener('click', e => { const el = e.target.closest('.dom[data-i]'); if (el) { SH.Sound.unlock(); youTap(+el.dataset.i); } });
+$('dm-board').addEventListener('click', e => { const el = e.target.closest('.dom[data-end]'); if (el && G.sel) youPlay(G.sel, el.dataset.end); });
+$('dm-bone').addEventListener('click', e => { if (e.target.closest('#dm-yard')) { SH.Sound.unlock(); youDraw(); } });
+$('dm-new').onclick = newGame;
+window.addEventListener('resize', () => { if (!$('view-dominoes').classList.contains('hidden')) render(); });
+McRules.mount('dominoes', $('rules-dominoes'));
+McRules.onChange('dominoes', () => { if (!G.hands.length || G.over || (G.handNo <= 1 && !G.first)) newGame(); else SH.toast('New rules apply from your next game'); });
+SH.games.dominoes = { onShow() { if (!G.hands.length) newGame(); else render(); }, _G: G, _newGame: newGame, _legal: legal, _count: count, _aiChoose: aiChoose, _place: place, _youPlay: youPlay, _youDraw: youDraw, _layout: layout };
+})();
+
+</script>
+<script>
+// McLearn Bid Whist ("Bid Whiz") — partners, 54 cards with jokers, kitty, Uptown / Downtown / No Trump.
+(function () {
+'use strict';
+const SH = window.McShared, $ = id => document.getElementById(id), LS = SH.LS, C = SH.cards;
+McRules.register('bidwhist', {
+  title: 'Bid Whist',
+  proNote: 'Pro: game to 11, no bid or play coach, and a 20-second turn clock.',
+  schema: [
+    { key: 'target', label: 'Play to', help: 'Lose by falling to minus the same number', type: 'select', options: [[7, '7 points'], [11, '11 points'], [21, '21 points']] },
+    { key: 'minBid', label: 'Lowest bid', help: 'A 3 bid means 9 books (the kitty counts as your first book)', type: 'select', options: [[3, '3'], [4, '4']] },
+    { key: 'ntDouble', label: 'No Trump counts double', type: 'bool' },
+    { key: 'dealerTake', label: 'Dealer can take the bid', help: 'The dealer may match the high bid instead of beating it', type: 'bool' },
+    { key: 'allPass', label: 'If everyone passes', type: 'select', options: [['dealer', 'Dealer is stuck with the lowest bid'], ['redeal', 'Throw them in and redeal']] },
+    { key: 'boston', label: 'Boston wins the game', help: 'Take all 13 books and the game is yours', type: 'bool' },
+    { key: 'tips', label: 'Bid & play coach', type: 'bool' },
+    { key: 'timer', label: 'Turn clock', type: 'select', options: [[0, 'Off'], [20, '20 seconds'], [40, '40 seconds']] }
+  ],
+  presets: { standard: { target: 7, minBid: 3, ntDouble: true, dealerTake: false, allPass: 'dealer', boston: true, tips: true, timer: 0 }, pro: { target: 11, tips: false, timer: 20 } }
+});
+let RU = McRules.get('bidwhist');
+const tmr = McRules.timer();
+const NAMES = ['You', 'Brother Earl', 'Mama Jean', 'Big Hank'];
+const POS = ['s', 'w', 'n', 'e'];
+const SUITS = ['s', 'h', 'd', 'c'], SYM = { s: '♠', h: '♥', d: '♦', c: '♣' };
+const TYPE = { up: 'Uptown', down: 'Downtown', nt: 'No Trump' };
+const G = { hands: [], kitty: [], dealer: 3, phase: 'idle', bids: [], high: null, bidTurn: 0, decl: -1, type: null, trump: null, dir: 'up', trick: [], lead: 0, turn: 0, books: [0, 0], score: [0, 0], played: new Set(), token: 0, log: [], over: false, fast: false, sel: [], stats: LS.get('bw-stats', { w: 0, l: 0 }), handNo: 0, lastTrick: null };
+const wait = ms => G.fast ? Promise.resolve() : new Promise(r => setTimeout(r, ms));
+const team = s => s % 2, vb = (s, a, b) => s ? b : a;
+const key = c => c.joker ? 'J' + c.joker : c.s + c.r;
+const bidText = b => b ? `${b.n} ${TYPE[b.type]}` : '—';
+function log(t) { G.log.push(t); const el = $('bw-log'); if (el) { el.innerHTML = G.log.slice(-80).map(x => `<div class="tiny" style="color:var(--wg-400)">${x}</div>`).join(''); el.scrollTop = 1e9; } }
+function makeDeck() { const d = C.deck(); d.push({ joker: 'big', r: 20, s: 'j' }, { joker: 'little', r: 19, s: 'j' }); return d; }
+
+// ---------- card power ----------
+const rv = (c, dir) => dir === 'down' ? (c.r === 14 ? 14 : 15 - c.r) : c.r; // downtown: A, 2, 3 … K
+function effSuit(c) { if (c.joker) return G.trump ? G.trump : 'x'; return c.s; }
+function power(c, led) {
+  if (c.joker) return G.trump ? (c.joker === 'big' ? 100 : 99) : 0;
+  if (G.trump && c.s === G.trump) return 50 + rv(c, G.dir);
+  if (c.s === led) return rv(c, G.dir);
+  return 0;
+}
+function ledSuit(trick) { for (const p of trick) { const s = effSuit(p.c); if (s !== 'x') return s; } return null; }
+function legal(s) {
+  const h = G.hands[s], L = ledSuit(G.trick);
+  if (!L) return h.slice();
+  const f = h.filter(c => effSuit(c) === L);
+  return f.length ? f : h.slice();
+}
+function winner(trick) { const L = ledSuit(trick); let best = trick[0]; for (const p of trick) if (power(p.c, L) > power(best.c, L)) best = p; return best; }
+function sortHand(h) {
+  const so = s => s === G.trump ? -1 : SUITS.indexOf(s);
+  h.sort((a, b) => (a.joker ? -2 : so(a.s)) - (b.joker ? -2 : so(b.s)) || (b.joker ? b.r : rv(b, G.dir)) - (a.joker ? a.r : rv(a, G.dir)));
+}
+
+// ---------- hand estimates ----------
+function estSuited(h, dir, trump) {
+  let t = 0; const bySuit = {}; for (const c of h) if (!c.joker) (bySuit[c.s] = bySuit[c.s] || []).push(rv(c, dir));
+  t += h.filter(c => c.joker).length * 1;
+  const tr = (bySuit[trump] || []).sort((a, b) => b - a), tl = tr.length + h.filter(c => c.joker).length;
+  tr.forEach((v, i) => { if (v >= 14 - i) t += 0.95; else if (v >= 13 - i) t += 0.6; });
+  t += Math.max(0, tl - 4) * 0.75;
+  for (const s of SUITS) if (s !== trump) { const vs = (bySuit[s] || []).sort((a, b) => b - a); if (vs[0] === 14) t += 0.85; if (vs[1] === 13 && vs[0] === 14) t += 0.5; else if (vs[0] === 13 && vs.length >= 2) t += 0.35; if (!vs.length && tl >= 3) t += 0.5; }
+  return t;
+}
+function estNT(h, dir) {
+  let t = 0; const bySuit = {}; for (const c of h) if (!c.joker) (bySuit[c.s] = bySuit[c.s] || []).push(rv(c, dir));
+  for (const s of SUITS) { const vs = (bySuit[s] || []).sort((a, b) => b - a); let run = 0; for (let i = 0; i < vs.length; i++) { if (vs[i] === 14 - i) run++; else break; } t += run * 0.95; if (run >= 2) t += Math.max(0, vs.length - 4) * 0.7; else if (vs[0] === 13 && vs.length >= 2 && run === 0) t += 0.4; }
+  return t - h.filter(c => c.joker).length * 0.2;
+}
+function bestPlan(h) { // best contract type + trump for a hand
+  let best = { e: -1 };
+  for (const dir of ['up', 'down']) {
+    for (const s of SUITS) { const e = estSuited(h, dir, s); if (e > best.e) best = { e, type: dir, trump: s, dir }; }
+    const e = estNT(h, dir) + 0.4; if (e > best.e) best = { e, type: 'nt', trump: null, dir };
+  }
+  return best;
+}
+function aiBidFor(s) {
+  const p = bestPlan(G.hands[s]); const partnerBid = G.bids[(s + 2) % 4];
+  const teamEst = p.e + 1.15 /* kitty */ + 2.6 /* partner */ + (partnerBid && partnerBid !== 'pass' ? 0.6 : 0) + (Math.random() - 0.5) * 0.6;
+  let n = Math.floor(teamEst - 5 + 0.15);
+  n = Math.min(7, n);
+  return { n, type: p.type, plan: p };
+}
+function beatsBid(b, h, dealer) {
+  if (!h) return b.n >= RU.minBid;
+  if (b.n > h.n) return true;
+  if (b.n === h.n && b.type === 'nt' && h.type !== 'nt') return true;
+  if (dealer && RU.dealerTake && b.n === h.n) return true;
+  return false;
+}
+
+// ---------- flow ----------
+function newGame() { RU = McRules.get('bidwhist'); G.token++; tmr.stop(); G.score = [0, 0]; G.over = false; G.log = []; G.handNo = 0; G.dealer = 3; showMsg(''); log(`<b>New game</b> — Bid Whist to ${RU.target}. You and Mama Jean vs Brother Earl and Big Hank.`); deal(); }
+function deal() {
+  G.token++; tmr.stop(); G.handNo++;
+  G.dealer = (G.dealer + 1) % 4;
+  const d = C.shuffle(makeDeck());
+  G.trump = null; G.dir = 'up'; G.type = null;
+  G.hands = [0, 1, 2, 3].map(i => d.slice(i * 12, i * 12 + 12)); G.kitty = d.slice(48);
+  G.hands.forEach(sortHand);
+  G.bids = [null, null, null, null]; G.high = null; G.decl = -1; G.trick = []; G.books = [0, 0]; G.played = new Set(); G.sel = []; G.lastTrick = null;
+  G.bidTurn = (G.dealer + 1) % 4; G.bidCount = 0; G.phase = 'bid'; G.forced = false;
+  log(`Hand ${G.handNo}: ${NAMES[G.dealer]} deals. Bidding starts with ${NAMES[G.bidTurn]}.`);
+  SH.Sound.play('start'); render(true); bidLoop();
+}
+async function bidLoop() {
+  const tok = G.token;
+  if (G.phase !== 'bid') return;
+  if (G.bidCount >= 4) return endBidding();
+  const s = G.bidTurn, dealer = s === G.dealer, forced = dealer && !G.high && RU.allPass === 'dealer';
+  if (s === 0) { render(); return; }
+  await wait(700); if (tok !== G.token) return;
+  const a = aiBidFor(s);
+  let bid = null;
+  G.forced = forced;
+  if (forced) bid = { n: RU.minBid, type: a.type };
+  else if (a.n >= RU.minBid) {
+    // bid the least that wins the auction, never more than the hand is worth; don't overcall your partner without real extra strength
+    let n = !G.high ? RU.minBid : beatsBid({ n: G.high.n, type: a.type }, G.high, dealer) ? G.high.n : G.high.n + 1;
+    if (G.high && team(G.highBy) === team(s) && a.n < G.high.n + 2) n = 99;
+    if (n <= a.n) bid = { n, type: a.type };
+  }
+  placeBid(s, bid);
+}
+function placeBid(s, bid) {
+  if (bid) { G.high = bid; G.highBy = s; G.bids[s] = bid; log(`${NAMES[s]} ${vb(s, 'bid', 'bids')} <b>${bidText(bid)}</b>.`); SH.Sound.play('move'); }
+  else { G.bids[s] = 'pass'; log(`${NAMES[s]} ${vb(s, 'pass', 'passes')}.`); SH.Sound.play('tick'); }
+  G.bidCount++; G.bidTurn = (s + 1) % 4; render(); bidLoop();
+}
+function youBid(n, type) {
+  if (G.phase !== 'bid' || G.bidTurn !== 0) return;
+  tmr.stop(); SH.Sound.unlock();
+  if (n == null) { if (G.dealer === 0 && !G.high && RU.allPass === 'dealer') { SH.toast('Everyone passed — the dealer must bid', 'x'); return; } return placeBid(0, null); }
+  G.forced = G.dealer === 0 && !G.high && RU.allPass === 'dealer';
+  const b = { n, type }; if (!beatsBid(b, G.high, G.dealer === 0)) { SH.toast('That bid does not beat ' + bidText(G.high), 'x'); return; }
+  placeBid(0, b);
+}
+async function endBidding() {
+  if (!G.high) { log('Everyone passed — throw them in.'); SH.toast('All pass — redeal'); await wait(900); return deal(); }
+  G.decl = G.highBy; G.type = G.high.type;
+  log(`<b>${NAMES[G.decl]} ${vb(G.decl, 'win', 'wins')} the bid: ${bidText(G.high)}.</b> ${team(G.decl) === 0 ? 'Your team' : 'They'} need ${6 + G.high.n} books.`);
+  G.hands[G.decl].push(...G.kitty); G.kitty = [];
+  if (G.decl === 0) { G.phase = 'kitty'; G.dir = G.type === 'down' ? 'down' : 'up'; G.trump = null; G.sel = []; G.pick = G.type === 'nt' ? 'up' : null; sortHand(G.hands[0]); render(); return; }
+  G.phase = 'kitty'; render(); await wait(900);
+  const h = G.hands[G.decl], plan = bestPlanFor(h, G.type);
+  G.dir = plan.dir; G.trump = plan.trump;
+  const disc = chooseDiscards(h); for (const c of disc) h.splice(h.indexOf(c), 1);
+  G.kitty = disc; startPlay();
+}
+function bestPlanFor(h, type) {
+  if (type === 'nt') { const u = estNT(h, 'up'), d = estNT(h, 'down'); return u >= d ? { dir: 'up', trump: null } : { dir: 'down', trump: null }; }
+  let best = null, be = -1; for (const s of SUITS) { const e = estSuited(h, type, s); if (e > be) { be = e; best = s; } }
+  return { dir: type, trump: best };
+}
+function keepValue(c, h) {
+  if (c.joker) return G.trump ? 200 + c.r : -50;
+  if (G.trump && c.s === G.trump) return 100 + rv(c, G.dir);
+  const len = h.filter(x => !x.joker && x.s === c.s).length, v = rv(c, G.dir);
+  return (v === 14 ? 60 : v === 13 && len >= 2 ? 30 : 0) + v + len * (G.trump ? 1 : 3);
+}
+function chooseDiscards(h) { // assumes G.trump / G.dir already set
+  const saveT = G.trump; const ord = h.slice().sort((a, b) => keepValue(a, h) - keepValue(b, h)); G.trump = saveT;
+  return ord.slice(0, 6);
+}
+function youKitty() {
+  if (G.phase !== 'kitty' || G.decl !== 0) return;
+  if (G.type !== 'nt' && !G.trump) { SH.toast('Name your trump suit first', 'x'); return; }
+  if (G.sel.length !== 6) { SH.toast(`Choose exactly 6 cards to bury (${G.sel.length} chosen)`, 'x'); return; }
+  if (G.type === 'nt') G.dir = G.pick || 'up';
+  const h = G.hands[0]; for (const c of G.sel) h.splice(h.indexOf(c), 1);
+  G.kitty = G.sel.slice(); G.sel = []; startPlay();
+}
+function coachKitty() {
+  if (G.type === 'nt') { const p = bestPlanFor(G.hands[0], 'nt'); G.pick = p.dir; G.dir = p.dir; }
+  else { const p = bestPlanFor(G.hands[0], G.type); G.trump = p.trump; G.dir = p.dir; }
+  G.sel = chooseDiscards(G.hands[0]); sortHand(G.hands[0]); render();
+}
+function startPlay() {
+  G.hands.forEach(sortHand);
+  log(`${G.type === 'nt' ? `No Trump, ${G.dir === 'down' ? 'Downtown (low wins)' : 'Uptown (high wins)'}` : `Trump: <b>${SYM[G.trump]}</b> · ${G.dir === 'down' ? 'Downtown — ace, then low cards win' : 'Uptown — high cards win'}`}. The kitty is the first book for ${NAMES[G.decl]}.`);
+  G.books[team(G.decl)] = 1; // the kitty counts as a book
+  G.phase = 'play'; G.lead = G.decl; G.turn = G.decl; G.trick = [];
+  SH.Sound.play('start'); render(); playLoop();
+}
+async function playLoop() {
+  const tok = G.token;
+  if (G.phase !== 'play') return;
+  if (G.trick.length === 4) {
+    const w = winner(G.trick); G.books[team(w.s)]++; G.lastTrick = { cards: G.trick.slice(), w: w.s };
+    log(`${NAMES[w.s]} ${vb(w.s, 'take', 'takes')} the book with ${C.name(w.c)}.`); SH.Sound.play(team(w.s) === 0 ? 'capture' : 'tick');
+    render(); await wait(1000); if (tok !== G.token) return;
+    G.trick = []; G.lead = w.s; G.turn = w.s;
+    if (!G.hands[0].length) return endHand();
+    render();
+  }
+  const s = G.turn;
+  if (s === 0) { render(); return; }
+  await wait(650); if (tok !== G.token) return;
+  playCard(s, aiPlay(s));
+}
+function playCard(s, c) {
+  const h = G.hands[s]; h.splice(h.indexOf(c), 1); G.trick.push({ s, c }); G.played.add(key(c));
+  SH.Sound.play('move'); G.turn = (s + 1) % 4; render(); playLoop();
+}
+function youPlay(c) {
+  if (G.phase !== 'play' || G.turn !== 0 || G.trick.length === 4) return;
+  if (!legal(0).includes(c)) { const L = ledSuit(G.trick); SH.toast(`Follow suit — play a ${L === G.trump ? 'trump' : SYM[L]} card`, 'x'); return; }
+  tmr.stop(); SH.Sound.unlock(); playCard(0, c);
+}
+function endHand() {
+  G.phase = 'idle'; tmr.stop();
+  const dt = team(G.decl), need = 6 + G.high.n, got = G.books[dt], mult = G.type === 'nt' && RU.ntDouble ? 2 : 1;
+  let pts, note;
+  if (got >= need) { pts = (got - 6) * mult; G.score[dt] += pts; note = `${dt === 0 ? 'Your team makes it' : 'They make it'}: ${got} books on a ${bidText(G.high)} bid — +${pts}.`; }
+  else { pts = G.high.n * mult; G.score[dt] -= pts; note = `${dt === 0 ? 'Your team is set' : 'They are set'}: ${got} of ${need} books — −${pts}.`; }
+  (G.results = G.results || []).push({ forced: !!G.forced, made: got >= need, n: G.high.n, type: G.type });
+  const boston = got === 13 && RU.boston;
+  log(`<b>${note}</b>${boston ? ' <b style="color:var(--amber)">BOSTON!</b>' : ''}`);
+  SH.Sound.play((got >= need) === (dt === 0) ? 'good' : 'bad');
+  if (boston) return finish(dt === 0, 'Boston — all 13 books!');
+  for (const t of [0, 1]) { if (G.score[t] >= RU.target) return finish(t === 0, ''); if (G.score[t] <= -RU.target) return finish(t !== 0, `${t === 0 ? 'Your team' : 'They'} fell to ${G.score[t]}.`); }
+  showMsg(`<div class="label">Hand ${G.handNo}</div><div class="tiny" style="margin:6px 0">${note}</div><div class="tiny muted">Us ${G.score[0]} · Them ${G.score[1]} — to ${RU.target}</div><button class="btn btn-lux" style="margin-top:8px" id="bw-next">Next deal</button>`);
+  $('bw-next').onclick = () => { showMsg(''); deal(); };
+  render();
+}
+function finish(you, why) {
+  G.over = true; G.stats[you ? 'w' : 'l']++; LS.set('bw-stats', G.stats);
+  SH.Sound.play(you ? 'victory' : 'defeat');
+  showMsg(`<h4 class="serif" style="margin:0 0 4px;font-size:22px">${you ? 'You and Mama Jean win!' : 'Earl and Hank win'}</h4><div class="tiny muted">${why ? why + ' ' : ''}Us ${G.score[0]} · Them ${G.score[1]}</div><button class="btn btn-lux" style="margin-top:10px" id="bw-again">Play again</button>`);
+  $('bw-again').onclick = newGame;
+  if (SH.onResult) SH.onResult('bidwhist', you ? 'w' : 'l', { pro: !!RU.pro });
+  render();
+}
+
+// ---------- AI play ----------
+function isBoss(c, s) { // no unseen card can beat c in its own suit
+  const suit = effSuit(c); if (suit === 'x') return false;
+  const p = power(c, suit);
+  for (const x of makeDeckCache()) {
+    if (G.played.has(key(x)) || G.hands[s].some(y => key(y) === key(x))) continue;
+    if (effSuit(x) === suit && power(x, suit) > p) return false;
+  }
+  return true;
+}
+let _deck = null; const makeDeckCache = () => _deck || (_deck = makeDeck());
+function low(cs) { const L = ledSuit(G.trick); return cs.slice().sort((a, b) => (power(a, L) + (G.trump && effSuit(a) === G.trump ? 40 : 0)) - (power(b, L) + (G.trump && effSuit(b) === G.trump ? 40 : 0)) || rv(a, G.dir) - rv(b, G.dir))[0]; }
+function trumpsOut(s) { if (!G.trump) return 0; let n = 0; for (const x of makeDeckCache()) if (effSuit(x) === G.trump && !G.played.has(key(x)) && !G.hands[s].some(y => key(y) === key(x))) n++; return n; }
+function aiPlay(s) {
+  const lg = legal(s);
+  if (lg.length === 1) return lg[0];
+  if (!G.trick.length) { // leading
+    const myTeamDecl = team(s) === team(G.decl);
+    const trumps = lg.filter(c => G.trump && effSuit(c) === G.trump);
+    if (myTeamDecl && trumps.length && trumpsOut(s) > 0) { const b = trumps.filter(c => isBoss(c, s)); if (b.length) return b[0]; if (trumps.length >= 4) return trumps.sort((a, b) => power(b, G.trump) - power(a, G.trump))[0]; }
+    const bosses = lg.filter(c => !(G.trump && effSuit(c) === G.trump) && effSuit(c) !== 'x' && isBoss(c, s));
+    if (bosses.length) return bosses[0];
+    // lead low from the longest side suit
+    const side = lg.filter(c => effSuit(c) !== G.trump && effSuit(c) !== 'x');
+    if (side.length) { const len = su => side.filter(c => c.s === su).length; return side.sort((a, b) => len(b.s) - len(a.s) || rv(a, G.dir) - rv(b, G.dir))[0]; }
+    return low(lg);
+  }
+  const L = ledSuit(G.trick), w = winner(G.trick), partnerWinning = team(w.s) === team(s), last = G.trick.length === 3;
+  if (partnerWinning && (last || isBoss(w.c, s) || power(w.c, L) >= 50)) return low(lg);
+  const winners = lg.filter(c => power(c, L || effSuit(c)) > power(w.c, L || effSuit(w.c)) && (L || effSuit(c) !== 'x'));
+  if (winners.length) {
+    winners.sort((a, b) => power(a, L) - power(b, L));
+    if (last || partnerWinning === false) return last ? winners[0] : (isBoss(winners[winners.length - 1], s) ? winners[winners.length - 1] : winners[0]);
+  }
+  return low(lg);
+}
+function tipFor() { return G.phase === 'play' && G.turn === 0 ? aiPlay(0) : null; }
+
+// ---------- render ----------
+function showMsg(html) { const m = $('bw-msg'); m.innerHTML = html ? `<div class="glass" style="padding:14px 16px;text-align:center">${html}</div>` : ''; m.classList.toggle('hidden', !html); }
+function render(dealing) {
+  if (!G.hands.length) return;
+  for (const s of [1, 2, 3]) {
+    const n = G.hands[s].length, on = (G.phase === 'bid' && G.bidTurn === s) || (G.phase === 'play' && G.turn === s && G.trick.length < 4) || (G.phase === 'kitty' && G.decl === s);
+    const bid = G.bids[s] ? (G.bids[s] === 'pass' ? 'Pass' : bidText(G.bids[s])) : '';
+    $('bw-s' + s).innerHTML = `<div class="seat-tag ${on ? 'on' : ''}"><b>${NAMES[s]}${s === 2 ? ' (partner)' : ''}${G.dealer === s ? ' · D' : ''}</b><span>${n} cards${bid ? ' · ' + bid : ''}${G.decl === s ? ' · ★' : ''}</span></div><div class="mini-hand">${Array.from({ length: Math.min(n, 12) }, (_, i) => C.html(null, { back: true, style: `margin-left:${i ? -30 : 0}px` })).join('')}</div>`;
+  }
+  const show = G.trick.length ? G.trick : [];
+  $('bw-trick').innerHTML = show.map(p => C.html(p.c, { cls: 'tc ' + POS[p.s] + (G.trick.length === 4 && winner(G.trick).s === p.s ? ' win' : '') })).join('');
+  const mine = G.phase === 'play' && G.turn === 0 && G.trick.length < 4, lg = mine ? legal(0) : [];
+  const tip = RU.tips && mine ? tipFor() : null, kit = G.phase === 'kitty' && G.decl === 0;
+  $('bw-hand').innerHTML = G.hands[0].map((c, i) => C.html(c, { cls: (kit ? 'playable' + (G.sel.includes(c) ? ' bury' : '') : mine ? (lg.includes(c) ? 'playable' : 'dim') : '') + (tip === c ? ' tip' : '') + (dealing ? ' dealt' : ''), attr: `data-i="${i}"`, style: `--d:${i * 30}ms` })).join('');
+  // bid panel
+  const bidding = G.phase === 'bid' && G.bidTurn === 0;
+  $('bw-bid').classList.toggle('hidden', !bidding);
+  if (bidding) {
+    const forced = G.dealer === 0 && !G.high && RU.allPass === 'dealer', a = aiBidFor(0);
+    let rows = '';
+    for (let n = RU.minBid; n <= 7; n++) rows += `<div class="bw-bidrow"><b>${n}</b>${['up', 'down', 'nt'].map(t => `<button class="btn btn-sec" data-bid="${n}-${t}" ${beatsBid({ n, type: t }, G.high, G.dealer === 0) ? '' : 'disabled'}>${TYPE[t]}</button>`).join('')}</div>`;
+    $('bw-bidbtns').innerHTML = rows + `<button class="btn btn-lux" data-bid="pass" ${forced ? 'disabled' : ''}>Pass</button>`;
+    $('bw-sugg').textContent = RU.tips ? (a.n >= RU.minBid ? `Coach: about ${bidText({ n: a.n, type: a.type })} — your best is ${a.type === 'nt' ? 'No Trump' : TYPE[a.type] + ' ' + SYM[a.plan.trump]}` : 'Coach: pass — not enough for a bid' + (forced ? ' (but you are stuck as dealer)' : '')) : '';
+  }
+  // kitty panel
+  $('bw-kit').classList.toggle('hidden', !kit);
+  if (kit) {
+    $('bw-kitinfo').innerHTML = `You won ${bidText(G.high)}. Choose <b>6 cards to bury</b> (${G.sel.length}/6) — they become your first book.`;
+    $('bw-kitpick').innerHTML = G.type === 'nt'
+      ? ['up', 'down'].map(d => `<button class="btn ${G.pick === d ? 'btn-lux' : 'btn-sec'}" data-dir="${d}">${d === 'up' ? 'Uptown (high wins)' : 'Downtown (low wins)'}</button>`).join('')
+      : SUITS.map(s => `<button class="btn ${G.trump === s ? 'btn-lux' : 'btn-sec'}" data-tr="${s}" style="font-size:18px;min-width:48px">${SYM[s]}</button>`).join('');
+  }
+  // info
+  const contract = G.high && G.decl >= 0 ? `${NAMES[G.decl]}: ${bidText(G.high)}${G.trump ? ' · ' + SYM[G.trump] + ' trump' : G.phase === 'play' ? (G.dir === 'down' ? ' · low' : ' · high') : ''}` : G.high ? `High bid: ${bidText(G.high)} (${NAMES[G.highBy]})` : 'Bidding…';
+  $('bw-contract').textContent = contract;
+  $('bw-us').textContent = G.score[0]; $('bw-them').textContent = G.score[1];
+  $('bw-books').textContent = G.phase === 'play' || G.phase === 'idle' ? `Books — Us ${G.books[0]} · Them ${G.books[1]}${G.decl >= 0 ? ` · need ${6 + G.high.n}` : ''}` : '';
+  $('bw-tip').textContent = bidding ? 'Your bid.' : kit ? 'Tap cards to bury them, pick trump, then Confirm.' : mine ? (tip ? `Tip: ${C.name(tip)}` : 'Your play.') : G.phase === 'play' ? `${NAMES[G.turn]}…` : '';
+  $('bw-tgt').textContent = RU.target;
+  $('bw-rb').textContent = McRules.label('bidwhist'); $('bw-rb').className = 'rbadge r-' + McRules.mode('bidwhist');
+  $('bw-rec').textContent = `W${G.stats.w} L${G.stats.l}`;
+  const myTurn = bidding || mine || kit;
+  if (myTurn && RU.timer) { const k2 = G.phase + G.handNo + G.hands[0].length + G.trick.length; if (G._tKey !== k2) { G._tKey = k2; tmr.start(RU.timer, $('bw-timer'), () => { G._tKey = null; SH.toast('Time! Auto-move', 'clock'); if (G.phase === 'bid') { const a = aiBidFor(0); if (a.n >= RU.minBid && beatsBid(a, G.high, G.dealer === 0)) youBid(a.n, a.type); else if (G.dealer === 0 && !G.high && RU.allPass === 'dealer') youBid(RU.minBid, a.type); else youBid(null); } else if (G.phase === 'kitty') { coachKitty(); youKitty(); } else youPlay(aiPlay(0)); }); } }
+  else { G._tKey = null; tmr.stop(); }
+}
+const root = $('view-bidwhist');
+root.innerHTML = `
+<section class="col center" style="width:100%">
+  <div class="felt" id="bw-felt">
+    <div class="seat n" id="bw-s2"></div><div class="seat w" id="bw-s1"></div><div class="seat e" id="bw-s3"></div>
+    <div class="trick" id="bw-trick"></div>
+    <div class="felt-msg hidden" id="bw-msg"></div>
+  </div>
+  <div class="row" style="justify-content:center;gap:8px;margin-top:4px"><span class="pill" id="bw-books"></span><span class="ptimer hidden" id="bw-timer"></span></div>
+  <div class="fan" id="bw-hand"></div>
+  <div class="tiny" id="bw-tip" style="color:var(--amber);text-align:center;min-height:18px"></div>
+  <div class="glass card hidden" id="bw-bid" style="width:100%;max-width:620px">
+    <div class="between"><span class="label">Your bid</span></div>
+    <div class="tiny" style="color:var(--amber);margin:4px 0" id="bw-sugg"></div>
+    <div class="stack" id="bw-bidbtns" style="gap:6px"></div>
+  </div>
+  <div class="glass card hidden" id="bw-kit" style="width:100%;max-width:620px">
+    <div class="tiny" id="bw-kitinfo"></div>
+    <div class="row" id="bw-kitpick" style="gap:6px;flex-wrap:wrap;margin:8px 0"></div>
+    <div class="row" style="gap:8px;flex-wrap:wrap"><button class="btn btn-lux" id="bw-kitok">Confirm</button>${'<button class="btn btn-sec" id="bw-kitcoach">Coach’s pick</button>'}</div>
+  </div>
+</section>
+<section class="col right">
+  <div class="glass card stack">
+    <div class="between"><h3 class="h3">McLearn Bid Whist</h3><span class="row" style="gap:6px"><span class="rbadge" id="bw-rb">Standard</span><span class="pill" id="bw-rec"></span></span></div>
+    <div class="grid2">
+      <div class="stat"><span>Us (You + Mama Jean)</span><b id="bw-us">0</b></div>
+      <div class="stat"><span>Them (Earl + Hank)</span><b id="bw-them">0</b></div>
+    </div>
+    <div class="stat"><span>Contract · playing to <b id="bw-tgt"></b></span><b id="bw-contract" style="font-size:13px"></b></div>
+    <div class="tiny muted">Partners across the table. Bid how many books over six your team will take — <b>Uptown</b> (high cards win), <b>Downtown</b> (ace, then low cards win) or <b>No Trump</b>. The winner picks up the 6-card kitty, buries 6 (that's your first book) and names trump. Big Joker and Little Joker are the top trumps.</div>
+    <div id="rules-bidwhist"></div>
+    <button class="btn btn-lux" id="bw-new">New Game</button>
+    <div><span class="label">Table log</span><div class="moves" id="bw-log" style="margin-top:6px;height:120px;font-family:var(--sans)"></div></div>
+  </div>
+</section>`;
+$('bw-hand').addEventListener('click', e => {
+  const el = e.target.closest('.pcard[data-i]'); if (!el) return; SH.Sound.unlock();
+  const c = G.hands[0][+el.dataset.i];
+  if (G.phase === 'kitty' && G.decl === 0) { const k = G.sel.indexOf(c); if (k >= 0) G.sel.splice(k, 1); else if (G.sel.length < 6) G.sel.push(c); else SH.toast('Already 6 — tap one to put it back', 'x'); render(); return; }
+  youPlay(c);
+});
+$('bw-bidbtns').addEventListener('click', e => { const b = e.target.closest('[data-bid]'); if (!b || b.disabled) return; if (b.dataset.bid === 'pass') return youBid(null); const [n, t] = b.dataset.bid.split('-'); youBid(+n, t); });
+$('bw-kitpick').addEventListener('click', e => { const b = e.target.closest('[data-tr],[data-dir]'); if (!b) return; if (b.dataset.tr) { G.trump = b.dataset.tr; G.dir = G.type; } else { G.pick = b.dataset.dir; G.dir = b.dataset.dir; } sortHand(G.hands[0]); render(); });
+$('bw-kitok').onclick = youKitty;
+$('bw-kitcoach').onclick = coachKitty;
+$('bw-new').onclick = newGame;
+McRules.mount('bidwhist', $('rules-bidwhist'));
+McRules.onChange('bidwhist', () => { if (!G.hands.length || G.over || (G.handNo <= 1 && G.phase === 'bid')) newGame(); else SH.toast('New rules apply from your next game'); });
+SH.games.bidwhist = { onShow() { if (!G.hands.length) newGame(); else render(); }, _G: G, _newGame: newGame, _youBid: youBid, _youPlay: youPlay, _aiPlay: aiPlay, _aiBid: aiBidFor, _coachKitty: coachKitty, _youKitty: youKitty, _legal: legal, _winner: winner };
+})();
+
+</script>
+<script>
+// McLearn Hold'em — Texas Hold'em sit-and-go with practice chips (no money, nothing to buy). Equity coach.
+(function () {
+'use strict';
+const SH = window.McShared, $ = id => document.getElementById(id), LS = SH.LS, C = SH.cards;
+McRules.register('poker', {
+  title: "Hold'em Poker",
+  proNote: 'Pro: 6-handed turbo — blinds climb every 6 hands, no odds coach, 20-second action clock.',
+  schema: [
+    { key: 'players', label: 'Players at the table', type: 'select', options: [[2, 'Heads-up (you + 1)'], [4, '4 players'], [6, '6 players']] },
+    { key: 'stack', label: 'Starting chips', type: 'select', options: [[1000, '1,000'], [1500, '1,500'], [3000, '3,000 (deep)']] },
+    { key: 'speed', label: 'Blinds go up every', type: 'select', options: [[6, '6 hands (turbo)'], [10, '10 hands'], [15, '15 hands (slow)']] },
+    { key: 'betting', label: 'Betting', type: 'select', options: [['nl', 'No-Limit'], ['pl', 'Pot-Limit']] },
+    { key: 'coach', label: 'Odds coach', help: 'Shows your chance to win and whether the price is right to call', type: 'bool' },
+    { key: 'showAll', label: 'Show folded hands after each hand', help: 'Learning mode: peek at what everyone had', type: 'bool' },
+    { key: 'timer', label: 'Action clock', type: 'select', options: [[0, 'Off'], [20, '20 seconds'], [40, '40 seconds']] }
+  ],
+  presets: { standard: { players: 4, stack: 1500, speed: 10, betting: 'nl', coach: true, showAll: false, timer: 0 }, pro: { players: 6, speed: 6, coach: false, timer: 20 } }
+});
+let RU = McRules.get('poker');
+const tmr = McRules.timer();
+const NAMES = ['You', 'Cool Breeze', 'Lady Ace', 'Big Tex', 'Smooth Sal', 'Sister Queen'];
+// personality: tight = equity margin needed, aggr = how often to bet/raise, bluff = bluff rate
+const STYLE = [null, { tight: 0.04, aggr: 0.55, bluff: 0.10 }, { tight: 0.08, aggr: 0.35, bluff: 0.04 }, { tight: -0.02, aggr: 0.7, bluff: 0.16 }, { tight: 0.05, aggr: 0.45, bluff: 0.07 }, { tight: 0.1, aggr: 0.3, bluff: 0.03 }];
+const LEVELS = [[10, 20], [15, 30], [25, 50], [50, 100], [75, 150], [100, 200], [150, 300], [200, 400], [300, 600], [500, 1000], [800, 1600], [1000, 2000], [1500, 3000], [2500, 5000]];
+const G = { n: 4, stack: [], hole: [], board: [], deck: [], folded: [], allin: [], bet: [], contrib: [], dealer: -1, turn: 0, street: 'idle', cur: 0, minRaise: 20, need: new Set(), hands: 0, level: 0, token: 0, log: [], over: false, fast: false, out: [], place: 0, stats: LS.get('pk-stats', { w: 0, l: 0, best: 0 }), show: false, result: null, eqCache: null };
+const wait = ms => G.fast ? Promise.resolve() : new Promise(r => setTimeout(r, G.folded[0] || G.out[0] ? Math.min(ms, 300) : ms));
+const blinds = () => LEVELS[Math.min(G.level, LEVELS.length - 1)];
+const live = s => !G.out[s] && !G.folded[s];
+const canAct = s => live(s) && !G.allin[s];
+const pot = () => G.contrib.reduce((a, b) => a + b, 0);
+const nextSeat = (s, f) => { for (let k = 1; k <= G.n; k++) { const t = (s + k) % G.n; if (f(t)) return t; } return -1; };
+const fmt = x => x.toLocaleString();
+function log(t) { G.log.push(t); const el = $('pk-log'); if (el) { el.innerHTML = G.log.slice(-80).map(x => `<div class="tiny" style="color:var(--wg-400)">${x}</div>`).join(''); el.scrollTop = 1e9; } }
+
+// ---------- hand evaluator (best 5 of 5–7) ----------
+const CAT = ['High card', 'Pair', 'Two pair', 'Three of a kind', 'Straight', 'Flush', 'Full house', 'Four of a kind', 'Straight flush'];
+const RN = r => ({ 11: 'Jack', 12: 'Queen', 13: 'King', 14: 'Ace' })[r] || String(r);
+const RP = r => r === 6 ? 'Sixes' : RN(r) + 's';
+function straightHigh(rset) { // rset: Set of ranks
+  for (let h = 14; h >= 5; h--) { let ok = true; for (let k = 0; k < 5; k++) { const r = h - k === 1 ? 14 : h - k; if (!rset.has(r)) { ok = false; break; } } if (ok) return h; }
+  return 0;
+}
+function enc(cat, ks) { let v = cat; for (let i = 0; i < 5; i++) v = v * 15 + (ks[i] || 0); return v; }
+function evalHand(cs) {
+  const cnt = {}, bys = { s: [], h: [], d: [], c: [] };
+  for (const c of cs) { cnt[c.r] = (cnt[c.r] || 0) + 1; bys[c.s].push(c.r); }
+  for (const s in bys) if (bys[s].length >= 5) {
+    const sh = straightHigh(new Set(bys[s]));
+    if (sh) return { v: enc(8, [sh]), cat: 8, hi: sh };
+  }
+  const groups = Object.keys(cnt).map(Number).sort((a, b) => cnt[b] - cnt[a] || b - a);
+  const ranks = cs.map(c => c.r).sort((a, b) => b - a);
+  const kick = (ex, k) => [...new Set(ranks)].filter(r => !ex.includes(r)).slice(0, k);
+  if (cnt[groups[0]] === 4) return { v: enc(7, [groups[0], ...kick([groups[0]], 1)]), cat: 7, hi: groups[0] };
+  const trips = groups.filter(r => cnt[r] === 3), pairs = groups.filter(r => cnt[r] === 2);
+  if (trips.length && (trips.length > 1 || pairs.length)) { const t = trips[0], p = Math.max(trips[1] || 0, pairs[0] || 0); return { v: enc(6, [t, p]), cat: 6, hi: t, lo: p }; }
+  for (const s in bys) if (bys[s].length >= 5) { const f = bys[s].sort((a, b) => b - a).slice(0, 5); return { v: enc(5, f), cat: 5, hi: f[0] }; }
+  const sh = straightHigh(new Set(ranks)); if (sh) return { v: enc(4, [sh]), cat: 4, hi: sh };
+  if (trips.length) return { v: enc(3, [trips[0], ...kick([trips[0]], 2)]), cat: 3, hi: trips[0] };
+  if (pairs.length >= 2) return { v: enc(2, [pairs[0], pairs[1], ...kick([pairs[0], pairs[1]], 1)]), cat: 2, hi: pairs[0], lo: pairs[1] };
+  if (pairs.length) return { v: enc(1, [pairs[0], ...kick([pairs[0]], 3)]), cat: 1, hi: pairs[0] };
+  return { v: enc(0, ranks.slice(0, 5)), cat: 0, hi: ranks[0] };
+}
+function handName(e) {
+  switch (e.cat) {
+    case 8: return e.hi === 14 ? 'Royal flush' : `Straight flush, ${RN(e.hi)} high`;
+    case 7: return `Four ${RP(e.hi)}`;
+    case 6: return `Full house, ${RP(e.hi)} over ${RP(e.lo)}`;
+    case 5: return `Flush, ${RN(e.hi)} high`;
+    case 4: return `Straight, ${RN(e.hi)} high`;
+    case 3: return `Three ${RP(e.hi)}`;
+    case 2: return `Two pair, ${RP(e.hi)} and ${RP(e.lo)}`;
+    case 1: return `Pair of ${RP(e.hi)}`;
+    default: return `${RN(e.hi)} high`;
+  }
+}
+// Monte Carlo equity: chance to win (ties count as a share) vs `opp` random hands
+function equity(hole, board, opp, iters) {
+  if (opp <= 0) return 1;
+  const used = new Set([...hole, ...board].map(c => c.s + c.r)), rest = C.deck().filter(c => !used.has(c.s + c.r));
+  let win = 0;
+  for (let it = 0; it < iters; it++) {
+    // partial Fisher-Yates for just the cards we need
+    const need = 5 - board.length + opp * 2;
+    for (let i = 0; i < need; i++) { const j = i + Math.floor(Math.random() * (rest.length - i)); const t = rest[i]; rest[i] = rest[j]; rest[j] = t; }
+    const b = board.concat(rest.slice(0, 5 - board.length));
+    const me = evalHand(hole.concat(b)).v; let best = 0, ties = 0, k = 5 - board.length;
+    for (let o = 0; o < opp; o++) { const v = evalHand([rest[k], rest[k + 1]].concat(b)).v; k += 2; if (v > best) { best = v; ties = 0; } if (v === best) ties++; }
+    if (me > best) win += 1; else if (me === best) win += 1 / (ties + 1);
+  }
+  return win / iters;
+}
+
+// ---------- flow ----------
+function newGame() {
+  RU = McRules.get('poker'); G.token++; tmr.stop(); G.n = RU.players; G.stack = Array(G.n).fill(RU.stack); G.out = Array(G.n).fill(false);
+  G.dealer = Math.floor(Math.random() * G.n); G.hands = 0; G.level = 0; G.over = false; G.log = []; G.place = 0; G.result = null; showMsg('');
+  log(`<b>Sit & Go</b> — ${G.n} players, ${fmt(RU.stack)} practice chips each, ${RU.betting === 'nl' ? 'No-Limit' : 'Pot-Limit'}. Last one with chips wins.`);
+  startHand();
+}
+function post(s, amt) { const a = Math.min(amt, G.stack[s]); G.stack[s] -= a; G.bet[s] += a; G.contrib[s] += a; if (!G.stack[s]) G.allin[s] = true; return a; }
+function startHand() {
+  G.token++; tmr.stop();
+  G.hands++; const lv = Math.floor((G.hands - 1) / RU.speed); if (lv > G.level) { G.level = lv; const [s, b] = blinds(); log(`<b style="color:var(--amber)">Blinds up: ${s}/${b}</b>`); SH.toast(`Blinds up — ${s}/${b}`, 'clock'); }
+  const N = G.n; G.folded = Array(N).fill(false); G.allin = Array(N).fill(false); G.bet = Array(N).fill(0); G.contrib = Array(N).fill(0); G.board = []; G.show = false; G.result = null; G.eqCache = null;
+  for (let s = 0; s < N; s++) if (G.out[s]) G.folded[s] = true;
+  G.dealer = nextSeat(G.dealer, s => !G.out[s]);
+  const alive = G.stack.filter((x, s) => !G.out[s]).length;
+  const [sb, bb] = blinds();
+  const sbS = alive === 2 ? G.dealer : nextSeat(G.dealer, s => !G.out[s]);
+  const bbS = nextSeat(sbS, s => !G.out[s]);
+  post(sbS, sb); post(bbS, bb);
+  G.deck = C.shuffle(C.deck()); G.hole = Array.from({ length: N }, () => []);
+  for (let k = 0; k < 2; k++) for (let s = 0; s < N; s++) if (!G.out[s]) G.hole[s].push(G.deck.pop());
+  G.street = 'pre'; G.cur = bb; G.minRaise = bb;
+  G.need = new Set(); for (let s = 0; s < N; s++) if (canAct(s)) G.need.add(s);
+  G.turn = nextSeat(bbS, canAct);
+  log(`Hand ${G.hands} · blinds ${sb}/${bb} · ${NAMES[G.dealer]} on the button.`);
+  SH.Sound.play('start'); render(true);
+  if (G.turn < 0 || roundDone()) return endRound();
+  loop();
+}
+function roundDone() {
+  const actors = [...Array(G.n).keys()].filter(canAct);
+  if (actors.every(s => !G.need.has(s) && G.bet[s] === G.cur)) return true;
+  return actors.length === 0;
+}
+function act(s, type, to) {
+  const toCall = G.cur - G.bet[s];
+  if (type === 'fold') { G.folded[s] = true; log(`${NAMES[s]} ${s ? 'folds' : 'fold'}.`); SH.Sound.play('tick'); }
+  else if (type === 'check') { log(`${NAMES[s]} ${s ? 'checks' : 'check'}.`); SH.Sound.play('tick'); }
+  else if (type === 'call') { const a = post(s, toCall); log(`${NAMES[s]} ${s ? 'calls' : 'call'} ${fmt(a)}${G.allin[s] ? ' — all in!' : ''}.`); SH.Sound.play('move'); }
+  else if ((to = Math.min(to, G.bet[s] + G.stack[s])) <= G.cur) { const a = post(s, Math.max(0, toCall)); log(`${NAMES[s]} ${s ? 'calls' : 'call'} ${fmt(a)}${G.allin[s] ? ' — all in!' : ''}.`); SH.Sound.play('move'); }
+  else { // raise / bet to `to`
+    const raiseBy = to - G.cur; post(s, to - G.bet[s]);
+    if (raiseBy >= G.minRaise) G.minRaise = raiseBy;
+    const was = G.cur; G.cur = Math.max(G.cur, G.bet[s]);
+    G.need = new Set([...Array(G.n).keys()].filter(t => t !== s && canAct(t)));
+    log(`${NAMES[s]} ${was ? (s ? 'raises' : 'raise') : (s ? 'bets' : 'bet')} ${was ? 'to ' : ''}${fmt(G.bet[s])}${G.allin[s] ? ' — all in!' : ''}.`); SH.Sound.play(G.allin[s] ? 'check' : 'capture');
+    if (G.allin[s]) flash(`${s ? NAMES[s] : 'You'} — ALL IN!`);
+  }
+  G.need.delete(s); G.eqCache = null;
+  if ([...Array(G.n).keys()].filter(live).length === 1) return endRound();
+  if (roundDone()) return endRound();
+  G.turn = nextSeat(s, t => canAct(t) && (G.need.has(t) || G.bet[t] < G.cur));
+  if (G.turn < 0) return endRound();
+  render(); loop();
+}
+async function endRound() {
+  const tok = G.token;
+  G.bet = Array(G.n).fill(0); G.cur = 0; G.minRaise = blinds()[1];
+  const liveSeats = [...Array(G.n).keys()].filter(live);
+  if (liveSeats.length === 1) return award();
+  const order = ['pre', 'flop', 'turn', 'river'], i = order.indexOf(G.street);
+  if (G.street === 'river') return showdown();
+  G.street = order[i + 1];
+  G.deck.pop(); // burn
+  if (G.street === 'flop') G.board.push(G.deck.pop(), G.deck.pop(), G.deck.pop()); else G.board.push(G.deck.pop());
+  log(`<span style="color:var(--rose-300)">${G.street[0].toUpperCase() + G.street.slice(1)}: ${G.board.map(C.name).join(' ')}</span>`);
+  SH.Sound.play('move'); G.eqCache = null;
+  const actors = liveSeats.filter(canAct);
+  G.need = new Set(actors.length > 1 ? actors : []);
+  render(true);
+  if (actors.length <= 1) { await wait(900); if (tok !== G.token) return; return endRound(); } // run it out
+  G.turn = nextSeat(G.dealer, canAct);
+  loop();
+}
+function award() {
+  const w = [...Array(G.n).keys()].find(live), p = pot();
+  G.stack[w] += p; G.contrib = Array(G.n).fill(0);
+  log(`<b>${NAMES[w]} ${w ? 'wins' : 'win'} ${fmt(p)}</b> — everyone else folded.`);
+  G.result = { winners: [w], text: `${NAMES[w]} ${w ? 'takes' : 'take'} ${fmt(p)}` };
+  SH.Sound.play(w === 0 ? 'good' : 'tick');
+  afterHand();
+}
+function showdown() {
+  G.show = true;
+  const ev = []; for (let s = 0; s < G.n; s++) if (live(s)) ev[s] = evalHand(G.hole[s].concat(G.board));
+  // side pots
+  const levels = [...new Set(G.contrib.filter(x => x > 0))].sort((a, b) => a - b);
+  let prev = 0; const wonBy = {}, lines = [];
+  for (const L of levels) {
+    let amt = 0; for (let s = 0; s < G.n; s++) amt += Math.max(0, Math.min(G.contrib[s], L) - prev);
+    let elig = [...Array(G.n).keys()].filter(s => live(s) && G.contrib[s] >= L);
+    prev = L; if (!amt) continue;
+    if (!elig.length) elig.push(...[...Array(G.n).keys()].filter(live)); // folded money above every live stack
+    const best = Math.max(...elig.map(s => ev[s].v)), ws = elig.filter(s => ev[s].v === best);
+    const share = Math.floor(amt / ws.length); let odd = amt - share * ws.length;
+    for (const s of ws) { G.stack[s] += share; wonBy[s] = (wonBy[s] || 0) + share; }
+    if (odd) { const s = nextSeat(G.dealer, t => ws.includes(t)); G.stack[s] += odd; wonBy[s] = (wonBy[s] || 0) + odd; }
+  }
+  for (const s of Object.keys(wonBy)) lines.push(`${NAMES[s]} ${+s ? 'wins' : 'win'} ${fmt(wonBy[s])} with ${handName(ev[s])}`);
+  for (let s = 0; s < G.n; s++) if (live(s)) log(`${NAMES[s]}: ${G.hole[s].map(C.name).join(' ')} — ${handName(ev[s])}`);
+  log(`<b>${lines.join('; ')}</b>`);
+  G.contrib = Array(G.n).fill(0);
+  const ws = Object.keys(wonBy).map(Number);
+  G.result = { winners: ws, text: lines.join(' · '), ev };
+  SH.Sound.play(ws.includes(0) ? 'victory' : 'draw');
+  if (ws.includes(0)) flash('You win the pot!');
+  afterHand();
+}
+function afterHand() {
+  G.street = 'done'; G.turn = -1; tmr.stop();
+  const alive0 = G.stack.filter((x, s) => !G.out[s]).length;
+  for (let s = 0; s < G.n; s++) if (!G.out[s] && G.stack[s] <= 0) { G.out[s] = true; log(`<span style="color:#ff8a8a">${NAMES[s]} ${s ? 'is' : 'are'} out of chips.</span>`); }
+  const alive = [...Array(G.n).keys()].filter(s => !G.out[s]);
+  render();
+  if (G.out[0]) { G.place = alive.length + 1; return finish(false, alive0); }
+  if (alive.length === 1) { G.place = 1; return finish(true); }
+  showMsg(`<div class="tiny" style="margin-bottom:6px">${G.result.text}</div><button class="btn btn-lux" id="pk-next">Next hand</button>`);
+  $('pk-next').onclick = () => { showMsg(''); startHand(); };
+  if (G.auto) { const tok = G.token; setTimeout(() => { if (tok === G.token && !G.over) { showMsg(''); startHand(); } }, G.fast ? 0 : 1400); }
+}
+function finish(won) {
+  G.over = true; tmr.stop();
+  G.stats[won ? 'w' : 'l']++; if (won && (!G.stats.best || G.stats.best > G.hands)) G.stats.best = G.hands; LS.set('pk-stats', G.stats);
+  SH.Sound.play(won ? 'victory' : 'defeat');
+  const ord = ['', '1st', '2nd', '3rd', '4th', '5th', '6th'][G.place];
+  showMsg(`<h4 class="serif" style="margin:0 0 4px;font-size:22px">${won ? 'Champion of the table!' : `You finish ${ord}`}</h4><div class="tiny muted">${won ? `You took every chip in ${G.hands} hands.` : `Out on hand ${G.hands}. ${G.result ? G.result.text : ''}`}</div><div class="tiny muted" style="margin-top:4px">Practice chips only — just for fun and skill.</div><button class="btn btn-lux" style="margin-top:10px" id="pk-again">New tournament</button>`);
+  $('pk-again').onclick = newGame;
+  if (SH.onResult) SH.onResult('poker', won ? 'w' : 'l', { pro: !!RU.pro, place: G.place });
+}
+
+// ---------- AI ----------
+function limits(s) { // [minTo, maxTo] for a raise
+  const toCall = G.cur - G.bet[s], all = G.bet[s] + G.stack[s];
+  let minTo = G.cur + Math.max(G.minRaise, blinds()[1]), maxTo = all;
+  if (RU.betting === 'pl') maxTo = Math.min(all, G.cur + pot() + toCall);
+  minTo = Math.min(minTo, all);
+  return [minTo, Math.max(minTo, maxTo)];
+}
+function opps(s) { return [...Array(G.n).keys()].filter(t => t !== s && live(t)).length; }
+function aiAct(s) {
+  const st = STYLE[s] || STYLE[1], toCall = G.cur - G.bet[s], P = pot();
+  const e = equity(G.hole[s], G.board, opps(s), G.fast ? 60 : 260);
+  const odds = toCall / (P + toCall || 1), [minTo, maxTo] = limits(s), bb = blinds()[1];
+  const sized = f => Math.max(minTo, Math.min(maxTo, G.cur + Math.round(P * f / 5) * 5));
+  const r = Math.random(), short = G.stack[s] <= bb * 8;
+  const strong = e > 0.62 - st.aggr * 0.12 + opps(s) * -0.04;
+  if (toCall === 0) {
+    if (strong && r < 0.55 + st.aggr * 0.4) return ['raise', short ? maxTo : sized(0.55 + st.aggr * 0.4)];
+    if (r < st.bluff) return ['raise', sized(0.5)];
+    return ['check'];
+  }
+  if (e > odds + st.tight) {
+    if (strong && r < st.aggr && minTo > G.cur && G.stack[s] > toCall) return ['raise', short ? maxTo : sized(0.8 + st.aggr)];
+    return ['call'];
+  }
+  if (r < st.bluff * 0.5 && toCall < bb * 3) return ['call'];
+  return ['fold'];
+}
+async function loop() {
+  const tok = G.token; const s = G.turn;
+  if (s < 0 || G.street === 'done' || G.over) return;
+  render();
+  if (s === 0) return;
+  await wait(650 + Math.random() * 400); if (tok !== G.token) return;
+  const [t, to] = aiAct(s);
+  act(s, t === 'check' && G.cur > G.bet[s] ? 'call' : t, to);
+}
+
+// ---------- you ----------
+function you(type, to) {
+  if (G.turn !== 0 || G.street === 'done' || G.over) return;
+  tmr.stop(); SH.Sound.unlock();
+  const toCall = G.cur - G.bet[0];
+  if (type === 'check' && toCall > 0) type = 'call';
+  if (type === 'raise') { const [mn, mx] = limits(0); to = Math.max(mn, Math.min(mx, to)); }
+  act(0, type, to);
+}
+
+// ---------- render ----------
+function showMsg(html) { const m = $('pk-msg'); m.innerHTML = html ? `<div class="glass" style="padding:12px 14px;text-align:center">${html}</div>` : ''; m.classList.toggle('hidden', !html); }
+function flash(t) { if (G.fast) return; const el = $('pk-flash'); el.textContent = t; el.classList.remove('show'); void el.offsetWidth; el.classList.add('show'); }
+const SEATPOS = { 2: [[50, 88], [50, 10]], 4: [[50, 88], [8, 48], [50, 10], [92, 48]], 6: [[50, 88], [9, 66], [16, 16], [50, 8], [84, 16], [91, 66]] };
+function render(dealing) {
+  if (!G.stack.length) return;
+  const pos = SEATPOS[G.n], showCards = s => s === 0 || (G.show && live(s)) || (G.show && RU.showAll && !G.out[s]) || (G.street === 'done' && RU.showAll && !G.out[s]);
+  $('pk-seats').innerHTML = [...Array(G.n).keys()].filter(s => s).map(s => {
+    const [x, y] = pos[s], on = G.turn === s, win = G.result && G.result.winners.includes(s);
+    const cards = G.out[s] ? '' : G.hole[s].map(c => C.html(showCards(s) ? c : null, { back: !showCards(s), cls: G.folded[s] ? 'dim' : '' })).join('');
+    return `<div class="pk-seat ${on ? 'on' : ''} ${G.folded[s] && !G.out[s] ? 'folded' : ''} ${G.out[s] ? 'busted' : ''} ${win ? 'won' : ''}" style="left:${x}%;top:${y}%">
+      <div class="pk-cards">${cards}</div>
+      <div class="seat-tag ${on ? 'on' : ''}"><b>${NAMES[s]}${G.dealer === s ? ' <span class="pk-btn">D</span>' : ''}</b><span>${G.out[s] ? 'Out' : fmt(G.stack[s])}${G.allin[s] && !G.out[s] ? ' · ALL IN' : G.folded[s] && !G.out[s] ? ' · folded' : ''}</span></div>
+      ${G.bet[s] ? `<div class="pk-bet">${fmt(G.bet[s])}</div>` : ''}</div>`;
+  }).join('');
+  $('pk-board').innerHTML = Array.from({ length: 5 }, (_, i) => G.board[i] ? C.html(G.board[i], { cls: dealing && i >= G.board.length - (G.street === 'flop' ? 3 : 1) ? 'dealt' : '' }) : '<div class="pcard pk-slot"></div>').join('');
+  $('pk-pot').innerHTML = `Pot ${fmt(pot())}<span class="muted"> · Blinds ${blinds().join('/')}</span>`;
+  // you
+  const mine = G.turn === 0 && G.street !== 'done' && !G.over, toCall = G.cur - G.bet[0];
+  $('pk-hand').innerHTML = G.out[0] ? '' : G.hole[0].map((c, i) => C.html(c, { cls: (G.folded[0] ? 'dim ' : '') + (dealing && G.street === 'pre' ? 'dealt' : ''), style: `--d:${i * 80}ms` })).join('');
+  const ev = !G.out[0] && G.hole[0].length ? evalHand(G.hole[0].concat(G.board)) : null;
+  $('pk-you').innerHTML = `<div class="seat-tag ${mine ? 'on' : ''}"><b>You${G.dealer === 0 ? ' <span class="pk-btn">D</span>' : ''}</b><span>${fmt(G.stack[0])} chips${G.bet[0] ? ' · in ' + fmt(G.bet[0]) : ''}${G.allin[0] ? ' · ALL IN' : ''}</span></div>${ev && !G.folded[0] ? `<span class="pill">${handName(ev)}</span>` : ''}`;
+  // coach
+  if (RU.coach && !G.out[0] && !G.folded[0] && G.street !== 'done' && G.hole[0].length) {
+    if (!G.eqCache) G.eqCache = { e: equity(G.hole[0], G.board, Math.max(1, opps(0)), G.fast ? 40 : 700) };
+    const e = G.eqCache.e, P = pot(), odds = toCall ? toCall / (P + toCall) : 0;
+    const verdict = !mine ? '' : toCall === 0 ? (e > 0.55 ? 'Strong — bet for value.' : 'Free card — checking is fine.') : e > odds + 0.05 ? `Price is right — you need ${(odds * 100).toFixed(0)}%, you have ~${(e * 100).toFixed(0)}%.` : `Too pricey — you need ${(odds * 100).toFixed(0)}% but have ~${(e * 100).toFixed(0)}%.`;
+    $('pk-coach').innerHTML = `<div class="between tiny"><span>Win chance vs ${opps(0)}</span><b>${(e * 100).toFixed(0)}%</b></div><div class="pk-eq"><i style="width:${(e * 100).toFixed(0)}%"></i></div><div class="tiny" style="color:var(--amber);margin-top:4px">${verdict}</div>`;
+    $('pk-coach').classList.remove('hidden');
+  } else $('pk-coach').classList.add('hidden');
+  // actions
+  const [mn, mx] = mine ? limits(0) : [0, 0], canRaise = mine && G.stack[0] > toCall && mx > G.cur;
+  $('pk-acts').classList.toggle('hidden', !mine);
+  if (mine) {
+    $('pk-call').textContent = toCall ? (toCall >= G.stack[0] ? `Call all in ${fmt(G.stack[0])}` : `Call ${fmt(toCall)}`) : 'Check';
+    const sl = $('pk-slider'); sl.min = mn; sl.max = mx; sl.step = Math.max(5, blinds()[0] / 2);
+    if (!G._slKey || G._slKey !== G.hands + G.street + G.cur) { G._slKey = G.hands + G.street + G.cur; sl.value = mn; }
+    $('pk-raise').disabled = !canRaise; sl.disabled = !canRaise;
+    document.querySelectorAll('#pk-acts [data-q]').forEach(b => { b.disabled = !canRaise; });
+    $('pk-raise').textContent = `${G.cur ? 'Raise to' : 'Bet'} ${fmt(+sl.value)}${+sl.value >= G.bet[0] + G.stack[0] ? ' (all in)' : ''}`;
+  }
+  $('pk-status').textContent = G.over ? '' : G.street === 'done' ? '' : mine ? (toCall ? `${fmt(toCall)} to call.` : 'Your action.') : G.turn > 0 ? `${NAMES[G.turn]} is thinking…` : '';
+  $('pk-lvl').textContent = `Hand ${G.hands} · Level ${G.level + 1} (${blinds().join('/')}) · next level in ${RU.speed - ((G.hands - 1) % RU.speed)} hands`;
+  $('pk-rb').textContent = McRules.label('poker'); $('pk-rb').className = 'rbadge r-' + McRules.mode('poker');
+  $('pk-rec').textContent = `W${G.stats.w} L${G.stats.l}`;
+  if (mine && RU.timer) { const key = G.hands + G.street + G.cur + '-' + G.bet[0]; if (G._tKey !== key) { G._tKey = key; tmr.start(RU.timer, $('pk-timer'), () => { G._tKey = null; SH.toast('Time! Check or fold', 'clock'); you(G.cur > G.bet[0] ? 'fold' : 'check'); }); } }
+  else { G._tKey = null; tmr.stop(); }
+}
+const root = $('view-poker');
+root.innerHTML = `
+<section class="col center" style="width:100%">
+  <div class="felt pk-felt" id="pk-felt">
+    <div id="pk-seats"></div>
+    <div class="pk-mid"><div class="pk-board" id="pk-board"></div><div class="pk-pot" id="pk-pot"></div></div>
+    <div class="cc-flash" id="pk-flash"></div>
+    <div class="felt-msg hidden" id="pk-msg"></div>
+  </div>
+  <div class="row" style="justify-content:center;gap:8px;flex-wrap:wrap;margin-top:6px;align-items:center"><div class="row" id="pk-you" style="gap:8px;align-items:center"></div><span class="ptimer hidden" id="pk-timer"></span></div>
+  <div class="fan pk-hand" id="pk-hand"></div>
+  <div class="glass card hidden" id="pk-coach" style="width:100%;max-width:520px;padding:10px 12px"></div>
+  <div class="glass card hidden pk-acts" id="pk-acts">
+    <div class="row" style="gap:8px;flex-wrap:wrap;justify-content:center"><button class="btn btn-sec" id="pk-fold">Fold</button><button class="btn btn-lux" id="pk-call">Check</button><button class="btn btn-lux" id="pk-raise">Raise</button></div>
+    <input type="range" id="pk-slider" style="width:100%">
+    <div class="row" style="gap:6px;flex-wrap:wrap;justify-content:center"><button class="btn btn-sec" data-q="min">Min</button><button class="btn btn-sec" data-q="half">½ Pot</button><button class="btn btn-sec" data-q="pot">Pot</button><button class="btn btn-sec" data-q="all">All in</button></div>
+  </div>
+  <div class="tiny" id="pk-status" style="color:var(--amber);text-align:center;min-height:18px"></div>
+</section>
+<section class="col right">
+  <div class="glass card stack">
+    <div class="between"><h3 class="h3">McLearn Hold'em</h3><span class="row" style="gap:6px"><span class="rbadge" id="pk-rb">Standard</span><span class="pill" id="pk-rec"></span></span></div>
+    <div class="pill" id="pk-lvl" style="align-self:flex-start"></div>
+    <div class="tiny muted">Texas Hold'em sit-and-go with <b>practice chips</b> — no money, nothing to buy, just skill. Two cards are yours, five are shared. Make the best five-card hand or make everyone else fold. Blinds climb until one player holds every chip.</div>
+    <div class="tiny muted">Hands, best to worst: straight flush · four of a kind · full house · flush · straight · three of a kind · two pair · pair · high card.</div>
+    <div id="rules-poker"></div>
+    <button class="btn btn-lux" id="pk-new">New Tournament</button>
+    <div><span class="label">Table log</span><div class="moves" id="pk-log" style="margin-top:6px;height:140px;font-family:var(--sans)"></div></div>
+  </div>
+</section>`;
+$('pk-fold').onclick = () => you('fold');
+$('pk-call').onclick = () => you('check');
+$('pk-raise').onclick = () => you('raise', +$('pk-slider').value);
+$('pk-slider').oninput = () => { const v = +$('pk-slider').value; $('pk-raise').textContent = `${G.cur ? 'Raise to' : 'Bet'} ${fmt(v)}${v >= G.bet[0] + G.stack[0] ? ' (all in)' : ''}`; };
+document.querySelectorAll('#pk-acts [data-q]').forEach(b => b.onclick = () => {
+  const [mn, mx] = limits(0), P = pot() + (G.cur - G.bet[0]), q = b.dataset.q;
+  const v = q === 'min' ? mn : q === 'all' ? mx : Math.round((G.cur + P * (q === 'half' ? 0.5 : 1)) / 5) * 5;
+  $('pk-slider').value = Math.max(mn, Math.min(mx, v)); $('pk-slider').oninput();
+});
+$('pk-new').onclick = newGame;
+McRules.mount('poker', $('rules-poker'));
+McRules.onChange('poker', () => { if (!G.stack.length || G.over || G.hands <= 1) newGame(); else SH.toast('New rules apply from your next tournament'); });
+SH.games.poker = { onShow() { if (!G.stack.length) newGame(); else render(); }, _G: G, _newGame: newGame, _you: you, _evalHand: evalHand, _equity: equity, _handName: handName, _limits: limits };
+})();
+
+</script>
+<script>
+// McLearn Tonk — the fast rummy game. Spread, hit, drop, or Tonk out.
+(function () {
+'use strict';
+const SH = window.McShared, $ = id => document.getElementById(id), LS = SH.LS, C = SH.cards;
+McRules.register('tonk', {
+  title: 'Tonk',
+  proNote: 'Pro: match to 20 points, hit lock of 2 turns, no tips, and a 20-second turn clock.',
+  schema: [
+    { key: 'players', label: 'Players at the table', type: 'select', options: [[2, '2 (you + 1)'], [3, '3 (you + 2)'], [4, '4 (you + 3)']] },
+    { key: 'target', label: 'Match to', type: 'select', options: [[5, '5 points'], [10, '10 points'], [20, '20 points']] },
+    { key: 'dealt', label: 'Dealt 49 or 50 wins', help: 'A starting hand worth 49 or 50 is an instant Tonk', type: 'bool' },
+    { key: 'hitLock', label: 'Hit lock', help: 'After someone hits your spread, you cannot drop for this many turns', type: 'select', options: [[0, 'None'], [1, '1 turn'], [2, '2 turns']] },
+    { key: 'outDouble', label: 'Going out pays double', help: 'Play every card (Tonk out) and each player pays 2', type: 'bool' },
+    { key: 'caught', label: 'Caught drop penalty', help: 'What a dropper pays when someone has an equal or lower hand', type: 'select', options: [[2, 'Pays double'], [1, 'Pays single']] },
+    { key: 'tips', label: 'Coach tips', type: 'bool' },
+    { key: 'timer', label: 'Turn clock', type: 'select', options: [[0, 'Off'], [20, '20 seconds'], [40, '40 seconds']] }
+  ],
+  presets: { standard: { players: 3, target: 10, dealt: true, hitLock: 1, outDouble: true, caught: 2, tips: true, timer: 0 }, pro: { target: 20, hitLock: 2, tips: false, timer: 20 } }
+});
+let RU = McRules.get('tonk');
+const tmr = McRules.timer();
+const NAMES = ['You', 'Big Lou', 'Sister Jo', 'Slim'];
+const G = { n: 3, hands: [], spreads: [], stock: [], pile: [], turn: 0, phase: 'idle', token: 0, log: [], sel: [], score: [0, 0, 0, 0], lock: [0, 0, 0, 0], dealer: -1, stats: LS.get('tk-stats', { w: 0, l: 0 }), over: false, fast: false, drew: false };
+const wait = ms => G.fast ? Promise.resolve() : new Promise(r => setTimeout(r, ms));
+const val = c => c.r === 14 ? 1 : c.r > 10 ? 10 : c.r;
+const ord = c => c.r === 14 ? 1 : c.r; // aces are low in runs
+const total = h => h.reduce((a, c) => a + val(c), 0);
+const vs = (s, a, b) => s ? b : a;
+const top = () => G.pile[G.pile.length - 1];
+function log(t) { G.log.push(t); const el = $('tk-log'); if (el) { el.innerHTML = G.log.slice(-70).map(x => `<div class="tiny" style="color:var(--wg-400)">${x}</div>`).join(''); el.scrollTop = 1e9; } }
+function sortHand(h) { h.sort((a, b) => a.s.localeCompare(b.s) || ord(a) - ord(b)); }
+// ---------- melds ----------
+function isSet(cs) { return cs.length >= 3 && cs.length <= 4 && cs.every(c => c.r === cs[0].r); }
+function isRun(cs) {
+  if (cs.length < 3 || !cs.every(c => c.s === cs[0].s)) return false;
+  const o = cs.map(ord).sort((a, b) => a - b);
+  return o.every((x, i) => !i || x === o[i - 1] + 1);
+}
+const isMeld = cs => isSet(cs) || isRun(cs);
+function fits(card, sp) {
+  if (sp.kind === 'set') return sp.cards.length < 4 && card.r === sp.cards[0].r;
+  const o = sp.cards.map(ord).sort((a, b) => a - b);
+  return card.s === sp.cards[0].s && (ord(card) === o[0] - 1 || ord(card) === o[o.length - 1] + 1);
+}
+function allMelds(h) { // every 3+ card set or run inside a hand (hands are small, so brute force is fine)
+  const out = [], n = h.length;
+  for (let m = 1; m < (1 << n); m++) {
+    const cs = []; for (let i = 0; i < n; i++) if (m & (1 << i)) cs.push(h[i]);
+    if (cs.length >= 3 && isMeld(cs)) out.push({ mask: m, cards: cs });
+  }
+  return out;
+}
+function bestMelds(h) { // disjoint melds that remove the most points
+  const ms = allMelds(h); let best = { v: 0, list: [] };
+  (function go(i, used, list, v) {
+    if (v > best.v) best = { v, list: list.slice() };
+    for (let k = i; k < ms.length; k++) if (!(ms[k].mask & used)) { list.push(ms[k]); go(k + 1, used | ms[k].mask, list, v + total(ms[k].cards)); list.pop(); }
+  })(0, 0, [], 0);
+  return best.list.map(m => m.cards);
+}
+// ---------- actions ----------
+function drawStock(s) {
+  if (!G.stock.length) return null;
+  const c = G.stock.pop(); G.hands[s].push(c); sortHand(G.hands[s]); G.drew = c; SH.Sound.play('tick');
+  log(`${NAMES[s]} ${vs(s, 'draw', 'draws')} from the deck.`); return c;
+}
+function takePile(s) { const c = G.pile.pop(); G.hands[s].push(c); sortHand(G.hands[s]); G.drew = c; SH.Sound.play('move'); log(`${NAMES[s]} ${vs(s, 'take', 'takes')} ${C.name(c)} off the pile.`); return c; }
+function spread(s, cards) {
+  const h = G.hands[s]; for (const c of cards) h.splice(h.indexOf(c), 1);
+  const kind = isSet(cards) ? 'set' : 'run'; if (kind === 'run') cards.sort((a, b) => ord(a) - ord(b));
+  G.spreads.push({ owner: s, kind, cards }); SH.Sound.play('capture');
+  log(`${NAMES[s]} ${vs(s, 'spread', 'spreads')} ${cards.map(C.name).join(' ')}.`);
+  return !h.length;
+}
+function hit(s, card, sp) {
+  const h = G.hands[s]; h.splice(h.indexOf(card), 1); sp.cards.push(card); if (sp.kind === 'run') sp.cards.sort((a, b) => ord(a) - ord(b));
+  SH.Sound.play('move');
+  if (sp.owner !== s && RU.hitLock) { G.lock[sp.owner] = RU.hitLock; log(`${NAMES[s]} ${vs(s, 'hit', 'hits')} ${sp.owner ? NAMES[sp.owner] + "'s" : 'your'} spread with ${C.name(card)} — ${sp.owner ? NAMES[sp.owner] + ' is' : 'you are'} locked from dropping.`); flash('Hit!'); }
+  else log(`${NAMES[s]} ${vs(s, 'hit', 'hits')} a spread with ${C.name(card)}.`);
+  return !h.length;
+}
+function discard(s, card) {
+  const h = G.hands[s]; h.splice(h.indexOf(card), 1); G.pile.push(card); G.drew = false; SH.Sound.play('move');
+  log(`${NAMES[s]} ${vs(s, 'discard', 'discards')} ${C.name(card)}.`);
+  if (!h.length) return endHand(s, 'out');
+  if (!G.stock.length) return endHand(null, 'stock');
+  nextTurn();
+}
+function nextTurn() {
+  if (G.lock[G.turn] > 0) G.lock[G.turn]--; // a lock wears off after the locked player finishes a turn
+  G.turn = (G.turn + 1) % G.n; G.phase = 'start'; G.drew = false; G.sel = [];
+  render(); loop();
+}
+// ---------- AI ----------
+function aiWantsPile(s) {
+  const t = top(); if (!t) return false;
+  const h = G.hands[s];
+  if (G.spreads.some(sp => fits(t, sp))) return true;
+  // take it if it finishes a meld, or it is a low card that will replace a high one
+  if (allMelds([...h, t]).some(m => m.cards.includes(t))) return true;
+  return val(t) <= 2 && Math.max(...h.map(val)) >= 9;
+}
+function aiDiscard(s) { // keep cards that pair or connect; throw the highest loose card
+  const h = G.hands[s];
+  const melded = new Set(bestMelds(h).flat());
+  const loose = h.filter(c => !melded.has(c));
+  const pool = loose.length ? loose : h;
+  const keep = c => h.some(o => o !== c && (o.r === c.r || (o.s === c.s && Math.abs(ord(o) - ord(c)) <= 2))) ? 4 : 0;
+  return pool.slice().sort((a, b) => (val(b) - keep(b)) - (val(a) - keep(a)))[0];
+}
+function dropLine(s) { // drop when the hand is low enough to probably be lowest
+  const t = total(G.hands[s]); return t <= (G.n === 2 ? 9 : G.n === 3 ? 7 : 5);
+}
+async function loop() {
+  const tok = G.token;
+  if (G.over || G.phase !== 'start' || G.turn === 0) { render(); return; }
+  await wait(700); if (tok !== G.token) return;
+  const s = G.turn;
+  if (!G.lock[s] && dropLine(s)) return drop(s);
+  if (aiWantsPile(s)) takePile(s); else if (!drawStock(s)) return endHand(null, 'stock');
+  render(); await wait(450); if (tok !== G.token) return;
+  for (const m of bestMelds(G.hands[s])) { if (spread(s, m)) return endHand(s, 'out'); render(); await wait(400); if (tok !== G.token) return; }
+  for (;;) {
+    const c = G.hands[s].find(x => G.spreads.some(sp => fits(x, sp))); if (!c) break;
+    if (hit(s, c, G.spreads.find(sp => fits(c, sp)))) return endHand(s, 'out');
+    render(); await wait(350); if (tok !== G.token) return;
+  }
+  await wait(300); if (tok !== G.token) return;
+  discard(s, aiDiscard(s));
+}
+function drop(s) {
+  G.phase = 'idle'; tmr.stop();
+  const tots = G.hands.slice(0, G.n).map(total), mine = tots[s];
+  log(`<b>${NAMES[s]} ${vs(s, 'drop', 'drops')}</b> with ${mine}. Hands: ${NAMES.slice(0, G.n).map((n, i) => `${n} ${tots[i]}`).join(' · ')}`);
+  flash(s ? `${NAMES[s]} drops!` : 'Drop!');
+  const low = Math.min(...tots.filter((_, i) => i !== s));
+  if (mine < low) return endHand(s, 'drop');
+  const catcher = tots.findIndex((t, i) => i !== s && t === low);
+  return endHand(catcher, 'caught', s);
+}
+function endHand(winner, how, dropper) {
+  G.phase = 'idle'; tmr.stop(); const tok = ++G.token;
+  let lines = [];
+  if (how === 'stock') { // deck ran out: lowest hand wins single
+    const tots = G.hands.slice(0, G.n).map(total), low = Math.min(...tots);
+    winner = tots.indexOf(low); how = 'low'; lines.push(`The deck ran out — lowest hand (${low}) wins.`);
+  }
+  let pay = 1;
+  if ((how === 'out' && RU.outDouble) || how === 'tonk') pay = 2;
+  if (how === 'caught') {
+    const p = RU.caught; G.score[dropper] -= p; G.score[winner] += p;
+    lines.push(`${NAMES[dropper]} ${vs(dropper, 'got', 'got')} caught! ${NAMES[winner]} ${vs(winner, 'collect', 'collects')} ${p} from the dropper.`);
+  } else {
+    for (let i = 0; i < G.n; i++) if (i !== winner) { G.score[i] -= pay; G.score[winner] += pay; }
+    lines.push(`${NAMES[winner]} ${vs(winner, 'win', 'wins')} the hand${how === 'out' ? ' by Tonking out' : how === 'tonk' ? ' — dealt a Tonk' : how === 'drop' ? ' on the drop' : ''}. Each player pays ${pay}.`);
+  }
+  for (const l of lines) log(l);
+  SH.Sound.play(winner === 0 ? 'good' : 'draw');
+  const champ = G.score.slice(0, G.n).findIndex(x => x >= RU.target);
+  if (champ >= 0) {
+    G.over = true; const you = champ === 0;
+    G.stats[you ? 'w' : 'l']++; LS.set('tk-stats', G.stats);
+    SH.Sound.play(you ? 'victory' : 'defeat');
+    showMsg(`<h4 class="serif" style="margin:0 0 4px;font-size:22px">${you ? 'You win the match!' : NAMES[champ] + ' wins the match'}</h4><div class="tiny muted">${lines.join('<br>')}<br>${scoreLine()}</div><button class="btn btn-lux" style="margin-top:10px" id="tk-again">New match</button>`);
+    $('tk-again').onclick = newGame;
+    if (SH.onResult) SH.onResult('tonk', you ? 'w' : 'l', { pro: !!RU.pro });
+  } else {
+    showMsg(`<div class="label">Hand over</div><div class="tiny" style="margin:6px 0">${lines.join('<br>')}<br>${scoreLine()} — first to ${RU.target}</div><button class="btn btn-lux" id="tk-next">Next hand</button>`);
+    $('tk-next').onclick = () => { if (tok === G.token) { showMsg(''); deal(); } };
+  }
+  G.reveal = true; render();
+}
+const scoreLine = () => NAMES.slice(0, G.n).map((n, i) => `${n} ${G.score[i]}`).join(' · ');
+function newGame() { RU = McRules.get('tonk'); G.n = RU.players; G.score = [0, 0, 0, 0]; G.over = false; G.log = []; G.dealer = -1; showMsg(''); deal(); }
+function deal() {
+  G.token++; tmr.stop(); G.reveal = false; G.dealer = (G.dealer + 1) % G.n; G.lock = [0, 0, 0, 0]; G.sel = []; G.drew = false;
+  G.stock = C.shuffle(C.deck()); G.hands = Array.from({ length: G.n }, () => []); G.spreads = [];
+  for (let k = 0; k < 5; k++) for (let s = 0; s < G.n; s++) G.hands[s].push(G.stock.pop());
+  G.hands.forEach(sortHand);
+  G.pile = [G.stock.pop()];
+  log(`<b>New hand</b> — ${NAMES[G.dealer]} deals.`);
+  SH.Sound.play('start');
+  if (RU.dealt) { const t = G.hands.findIndex(h => total(h) >= 49); if (t >= 0) { G.turn = t; render(true); log(`${NAMES[t]} ${vs(t, 'were', 'was')} dealt ${total(G.hands[t])} — TONK!`); flash('TONK!'); return endHand(t, 'tonk'); } }
+  G.turn = (G.dealer + 1) % G.n; G.phase = 'start'; render(true); loop();
+}
+// ---------- you ----------
+const mine = () => G.turn === 0 && !G.over && G.phase !== 'idle';
+function youDraw() { if (!mine() || G.phase !== 'start') return; SH.Sound.unlock(); tmr.stop(); if (!drawStock(0)) return endHand(null, 'stock'); G.phase = 'act'; render(); }
+function youTake() { if (!mine() || G.phase !== 'start' || !top()) return; SH.Sound.unlock(); tmr.stop(); takePile(0); G.phase = 'act'; render(); }
+function youDrop() { if (!mine() || G.phase !== 'start') return; if (G.lock[0]) { SH.toast(`You were hit — you can't drop for ${G.lock[0]} more turn${G.lock[0] > 1 ? 's' : ''}`, 'x'); return; } drop(0); }
+function youSpread() { if (!mine() || G.phase !== 'act') return; const cs = G.sel.slice(); if (!isMeld(cs)) { SH.toast('A spread is 3+ of a kind, or 3+ in a row of one suit', 'x'); return; } G.sel = []; if (spread(0, cs)) return endHand(0, 'out'); render(); }
+function youHit(i) {
+  if (!mine() || G.phase !== 'act') return;
+  if (G.sel.length !== 1) { SH.toast('Select one card, then tap the spread to hit', 'x'); return; }
+  const sp = G.spreads[i]; if (!fits(G.sel[0], sp)) { SH.toast(`${C.name(G.sel[0])} doesn't fit that spread`, 'x'); return; }
+  const c = G.sel[0]; G.sel = []; if (hit(0, c, sp)) return endHand(0, 'out'); render();
+}
+function youDiscard() { if (!mine() || G.phase !== 'act') return; if (G.sel.length !== 1) { SH.toast('Select exactly one card to discard', 'x'); return; } const c = G.sel[0]; G.sel = []; tmr.stop(); discard(0, c); }
+function autoTurn() { // clock ran out: play like the coach
+  if (G.phase === 'start') { if (!G.lock[0] && dropLine(0)) return drop(0); if (aiWantsPile(0)) takePile(0); else if (!drawStock(0)) return endHand(null, 'stock'); G.phase = 'act'; }
+  for (const m of bestMelds(G.hands[0])) if (spread(0, m)) return endHand(0, 'out');
+  for (const c of G.hands[0].slice()) { const sp = G.spreads.find(x => fits(c, x)); if (sp && hit(0, c, sp)) return endHand(0, 'out'); }
+  discard(0, aiDiscard(0));
+}
+function coachTip() {
+  if (!RU.tips || !mine()) return '';
+  if (G.phase === 'start') {
+    if (!G.lock[0] && dropLine(0)) return `Tip: your hand is only ${total(G.hands[0])} — a good time to Drop.`;
+    return aiWantsPile(0) ? `Tip: take the ${C.name(top())} — it helps a spread.` : 'Tip: the pile card doesn\'t help — draw from the deck.';
+  }
+  const m = bestMelds(G.hands[0]); if (m.length) return `Tip: you can spread ${m[0].map(C.name).join(' ')}.`;
+  const h = G.hands[0].find(c => G.spreads.some(sp => fits(c, sp))); if (h) return `Tip: hit a spread with ${C.name(h)}.`;
+  return `Tip: discard ${C.name(aiDiscard(0))}.`;
+}
+// ---------- render ----------
+function showMsg(html) { const m = $('tk-msg'); m.innerHTML = html ? `<div class="glass" style="padding:14px 16px;text-align:center">${html}</div>` : ''; m.classList.toggle('hidden', !html); }
+function flash(t) { if (G.fast) return; const el = $('tk-flash'); el.textContent = t; el.classList.remove('show'); void el.offsetWidth; el.classList.add('show'); }
+const SEAT_POS = { 2: { 1: 'n' }, 3: { 1: 'w', 2: 'e' }, 4: { 1: 'w', 2: 'n', 3: 'e' } };
+function seatHtml(s) {
+  const h = G.hands[s], on = G.turn === s && !G.over && G.phase !== 'idle';
+  const cards = G.reveal ? h.map((c, i) => C.html(c, { style: `margin-left:${i ? -26 : 0}px` })).join('') : h.map((_, i) => C.html(null, { back: true, style: `margin-left:${i ? -30 : 0}px` })).join('');
+  return `<div class="seat-tag ${on ? 'on' : ''}"><b>${NAMES[s]}</b><span>${h.length} cards${G.reveal ? ' · ' + total(h) + ' pts' : ''} · score ${G.score[s]}${G.lock[s] ? ' · 🔒' : ''}</span></div><div class="mini-hand">${cards}</div>`;
+}
+function render(dealing) {
+  if (!G.hands.length) return;
+  const pos = SEAT_POS[G.n];
+  for (const p of ['n', 'w', 'e']) { const s = Object.keys(pos).find(k => pos[k] === p); $('tk-seat-' + p).innerHTML = s ? seatHtml(+s) : ''; }
+  const act = mine() && G.phase === 'act', start = mine() && G.phase === 'start';
+  $('tk-center').innerHTML = `<div class="cc-stack"><div class="cc-draw ${start ? 'tk-live' : ''}" id="tk-stock" title="Draw from the deck">${C.html(null, { back: true })}<span class="pill">${G.stock.length}</span></div><div id="tk-pile" class="${start ? 'tk-live' : ''}" title="Take the top discard">${top() ? C.html(top()) : ''}</div></div>
+  <div class="tk-spreads">${G.spreads.map((sp, i) => `<div class="tk-spread ${act && G.sel.length === 1 && fits(G.sel[0], sp) ? 'fit' : ''}" data-sp="${i}" title="${sp.owner ? NAMES[sp.owner] : 'Your'} spread">${sp.cards.map(c => C.html(c)).join('')}<small>${sp.owner ? NAMES[sp.owner] : 'You'}</small></div>`).join('')}</div>`;
+  $('tk-stock').onclick = youDraw; $('tk-pile').onclick = youTake;
+  $('tk-hand').innerHTML = G.hands[0].map((c, i) => C.html(c, { cls: (act ? 'playable' : '') + (G.sel.includes(c) ? ' match' : '') + (G.drew === c ? ' drawn' : '') + (dealing ? ' dealt' : ''), attr: `data-i="${i}"`, style: `--d:${i * 40}ms` })).join('');
+  $('tk-you').innerHTML = `<div class="seat-tag ${mine() ? 'on' : ''}"><b>You</b><span>${G.hands[0].length} cards · ${total(G.hands[0])} pts · score ${G.score[0]}${G.lock[0] ? ' · 🔒 locked ' + G.lock[0] : ''}</span></div>`;
+  $('tk-btns').innerHTML = start ? `<button class="btn btn-lux" data-tk="draw">Draw</button><button class="btn btn-sec" data-tk="take" ${top() ? '' : 'disabled'}>Take discard</button><button class="btn btn-sec" data-tk="drop" ${G.lock[0] ? 'disabled' : ''}>Drop (${total(G.hands[0])})</button>`
+    : act ? `<button class="btn btn-sec" data-tk="spread" ${isMeld(G.sel) ? '' : 'disabled'}>Spread</button><button class="btn btn-lux" data-tk="discard" ${G.sel.length === 1 ? '' : 'disabled'}>Discard</button>` : '';
+  $('tk-tip').textContent = coachTip() || (act ? 'Select cards to spread, or one card to hit a spread or discard.' : !mine() && !G.over && G.phase !== 'idle' ? `${NAMES[G.turn]} is playing…` : '');
+  $('tk-rb').textContent = McRules.label('tonk'); $('tk-rb').className = 'rbadge r-' + McRules.mode('tonk');
+  $('tk-rec').textContent = `W${G.stats.w} L${G.stats.l}`;
+  if (mine() && RU.timer) { const key = G.phase + G.log.length; if (G._tKey !== key) { G._tKey = key; tmr.start(RU.timer, $('tk-timer'), () => { G._tKey = null; SH.toast('Time! Auto-play', 'clock'); autoTurn(); }); } }
+  else { G._tKey = null; tmr.stop(); }
+}
+const root = $('view-tonk');
+root.innerHTML = `
+<section class="col center" style="width:100%">
+  <div class="felt" id="tk-felt">
+    <div class="seat n" id="tk-seat-n"></div><div class="seat w" id="tk-seat-w"></div><div class="seat e" id="tk-seat-e"></div>
+    <div class="trick cc-center" id="tk-center"></div>
+    <div class="cc-flash" id="tk-flash"></div>
+    <div class="felt-msg hidden" id="tk-msg"></div>
+  </div>
+  <div class="row" style="justify-content:center;gap:8px;flex-wrap:wrap;margin-top:4px"><div id="tk-you"></div><span class="ptimer hidden" id="tk-timer"></span></div>
+  <div class="fan" id="tk-hand"></div>
+  <div class="row" id="tk-btns" style="justify-content:center;gap:8px;flex-wrap:wrap"></div>
+  <div class="tiny" id="tk-tip" style="color:var(--amber);text-align:center;min-height:18px;margin-top:4px"></div>
+</section>
+<section class="col right">
+  <div class="glass card stack">
+    <div class="between"><h3 class="h3">McLearn Tonk</h3><span class="row" style="gap:6px"><span class="rbadge" id="tk-rb">Standard</span><span class="pill" id="tk-rec"></span></span></div>
+    <div class="tiny muted">Five cards each. Face cards count 10, aces 1. On your turn: <b>Drop</b> if you think your hand is lowest — or draw, then spread 3+ of a kind or a 3+ run, hit any spread, and discard. Play every card to <b>Tonk out</b>. Get caught on a drop and you pay.</div>
+    <div id="rules-tonk"></div>
+    <button class="btn btn-lux" id="tk-new">New Match</button>
+    <div><span class="label">Table log</span><div class="moves" id="tk-log" style="margin-top:6px;height:120px;font-family:var(--sans)"></div></div>
+  </div>
+</section>`;
+$('tk-hand').addEventListener('click', e => { const el = e.target.closest('.pcard[data-i]'); if (!el || !mine() || G.phase !== 'act') return; SH.Sound.unlock(); const c = G.hands[0][+el.dataset.i]; const k = G.sel.indexOf(c); if (k >= 0) G.sel.splice(k, 1); else G.sel.push(c); render(); });
+$('tk-btns').addEventListener('click', e => { const b = e.target.closest('[data-tk]'); if (!b) return; SH.Sound.unlock(); ({ draw: youDraw, take: youTake, drop: youDrop, spread: youSpread, discard: youDiscard })[b.dataset.tk](); });
+$('tk-center').addEventListener('click', e => { const el = e.target.closest('[data-sp]'); if (el) youHit(+el.dataset.sp); });
+$('tk-new').onclick = newGame;
+McRules.mount('tonk', $('rules-tonk'));
+McRules.onChange('tonk', () => { if (!G.hands.length || G.over || G.score.every(x => !x)) newGame(); else SH.toast('New rules apply from your next match'); });
+SH.games.tonk = { onShow() { if (!G.hands.length) newGame(); else render(); }, _G: G, _newGame: newGame, _bestMelds: bestMelds, _isMeld: isMeld, _fits: fits, _autoTurn: autoTurn };
+})();
+
+</script>
+<script>
+// McLearn Go Fish — ask for ranks, fish from the pond, collect books.
+(function () {
+'use strict';
+const SH = window.McShared, $ = id => document.getElementById(id), LS = SH.LS, C = SH.cards;
+McRules.register('gofish', {
+  title: 'Go Fish',
+  proNote: 'Pro: sharp-memory opponents who remember every ask, no tips, and a 20-second turn clock.',
+  schema: [
+    { key: 'players', label: 'Players at the table', type: 'select', options: [[2, '2 (you + 1)'], [3, '3 (you + 2)'], [4, '4 (you + 3)']] },
+    { key: 'book', label: 'What makes a book', help: 'Pairs makes a fast game for little ones', type: 'select', options: [[4, 'All four of a rank'], [2, 'A pair (quick game)']] },
+    { key: 'lucky', label: 'Lucky catch', help: 'Fish up the exact card you asked for and you go again', type: 'bool' },
+    { key: 'emptyDraw', label: 'When your hand runs out', type: 'select', options: [[1, 'Draw 1 card'], [5, 'Draw 5 cards']] },
+    { key: 'memory', label: 'Opponent memory', type: 'select', options: [['easy', 'Forgetful (family)'], ['sharp', 'Sharp (remembers asks)']] },
+    { key: 'tips', label: 'Asking tips', type: 'bool' },
+    { key: 'timer', label: 'Turn clock', type: 'select', options: [[0, 'Off'], [20, '20 seconds'], [40, '40 seconds']] }
+  ],
+  presets: { standard: { players: 3, book: 4, lucky: true, emptyDraw: 1, memory: 'easy', tips: true, timer: 0 }, pro: { memory: 'sharp', tips: false, timer: 20 } }
+});
+let RU = McRules.get('gofish');
+const tmr = McRules.timer();
+const NAMES = ['You', 'Lil Man', 'Auntie Bee', 'Coach T'];
+const G = { n: 3, hands: [], books: [], stock: [], turn: 0, phase: 'idle', token: 0, log: [], known: [], pick: null, stats: LS.get('gf-stats', { w: 0, l: 0, d: 0 }), over: false, fast: false };
+const wait = ms => G.fast ? Promise.resolve() : new Promise(r => setTimeout(r, ms));
+const RNAME = { 11: 'Jack', 12: 'Queen', 13: 'King', 14: 'Ace' };
+const rn = r => RNAME[r] || String(r), plural = r => rn(r) + 's';
+const verb = (s, a, b) => s ? b : a;
+function log(t) { G.log.push(t); const el = $('gf-log'); if (el) { el.innerHTML = G.log.slice(-60).map(x => `<div class="tiny" style="color:var(--wg-400)">${x}</div>`).join(''); el.scrollTop = 1e9; } }
+const totalBooks = () => G.books.reduce((a, b) => a + b.length, 0);
+const maxBooks = () => 52 / RU.book;
+const others = s => Array.from({ length: G.n }, (_, i) => i).filter(i => i !== s && G.hands[i].length);
+function sortHand(h) { h.sort((a, b) => a.r - b.r || a.s.localeCompare(b.s)); }
+function checkBooks(s) {
+  const h = G.hands[s]; let made = false;
+  for (let r = 2; r <= 14; r++) {
+    while (h.filter(c => c.r === r).length >= RU.book) {
+      for (let k = 0; k < RU.book; k++) h.splice(h.findIndex(c => c.r === r), 1);
+      G.books[s].push(r); made = true; G.known[s].delete(r);
+      log(`<b>${NAMES[s]} ${verb(s, 'make', 'makes')} a book of ${plural(r)}!</b>`); flash(s ? `${NAMES[s]}: book!` : 'Book!');
+      SH.Sound.play(s ? 'draw' : 'good');
+    }
+  }
+  sortHand(h); return made;
+}
+function refill(s) {
+  if (G.hands[s].length || !G.stock.length) return;
+  const k = Math.min(RU.emptyDraw, G.stock.length);
+  for (let i = 0; i < k; i++) G.hands[s].push(G.stock.pop());
+  log(`${NAMES[s]} ${verb(s, 'are', 'is')} out of cards and ${verb(s, 'draw', 'draws')} ${k}.`);
+  checkBooks(s);
+}
+// ---------- AI ----------
+function recall() { return Math.random() < (RU.memory === 'sharp' ? 0.95 : 0.45); }
+function aiChoose(s, perfect) {
+  const h = G.hands[s], opp = others(s); if (!h.length || !opp.length) return null;
+  const ranks = [...new Set(h.map(c => c.r))];
+  const hits = [];
+  for (const o of opp) for (const r of ranks) if (G.known[o].has(r) && (perfect || recall())) hits.push({ o, r, n: h.filter(c => c.r === r).length });
+  if (hits.length) { hits.sort((a, b) => b.n - a.n); return { target: hits[0].o, rank: hits[0].r }; }
+  const cnt = r => h.filter(c => c.r === r).length;
+  const best = Math.max(...ranks.map(cnt));
+  const pool = ranks.filter(r => cnt(r) === best);
+  const rank = pool[Math.floor(Math.random() * pool.length)];
+  const sorted = opp.slice().sort((a, b) => G.hands[b].length - G.hands[a].length);
+  const target = Math.random() < 0.6 ? sorted[0] : opp[Math.floor(Math.random() * opp.length)];
+  return { target, rank };
+}
+// ---------- core turn ----------
+async function ask(s, target, rank) {
+  const tok = G.token;
+  G.phase = 'asking';
+  log(`${NAMES[s]} ${verb(s, 'ask', 'asks')} ${target ? NAMES[target] : 'you'} for ${plural(rank)}.`);
+  G.known[s].add(rank);
+  const th = G.hands[target], got = th.filter(c => c.r === rank);
+  render(); await wait(500); if (tok !== G.token) return;
+  if (got.length) {
+    G.hands[target] = th.filter(c => c.r !== rank); G.known[target].delete(rank);
+    G.hands[s].push(...got); sortHand(G.hands[s]);
+    log(`${target ? NAMES[target] + ' hands over' : 'You hand over'} ${got.length} ${got.length > 1 ? plural(rank) : rn(rank)}.`);
+    SH.Sound.play('capture'); flash(s ? `${NAMES[s]} gets ${got.length}!` : `You got ${got.length}!`);
+    checkBooks(s); refill(target);
+    if (endCheck()) return;
+    refill(s);
+    G.phase = 'turn'; render(); loop(); return;
+  }
+  flash('Go Fish!'); SH.Sound.play('tick');
+  if (!G.stock.length) { log('Go Fish — but the pond is empty.'); return nextTurn(); }
+  const c = G.stock.pop(); G.hands[s].push(c); sortHand(G.hands[s]);
+  log(`Go Fish! ${NAMES[s]} ${verb(s, 'draw', 'draws')}${s ? '' : ' ' + C.name(c)}.`);
+  checkBooks(s);
+  if (endCheck()) return;
+  if (c.r === rank && RU.lucky) { log(`${s ? NAMES[s] + ' fished' : 'You fished'} the ${rn(rank)} — lucky catch, go again!`); flash('Lucky catch!'); refill(s); G.phase = 'turn'; render(); loop(); return; }
+  nextTurn();
+}
+function nextTurn() {
+  if (endCheck()) return;
+  for (let k = 1; k <= G.n; k++) {
+    const s = (G.turn + k) % G.n;
+    refill(s);
+    if (G.hands[s].length) { G.turn = s; G.phase = 'turn'; render(); loop(); return; }
+  }
+  endGame();
+}
+function endCheck() { if (totalBooks() >= maxBooks() || G.hands.every(h => !h.length) && !G.stock.length) { endGame(); return true; } return false; }
+async function loop() {
+  const tok = G.token;
+  if (G.phase !== 'turn' || G.over) return;
+  if (!G.hands[G.turn].length) { refill(G.turn); if (!G.hands[G.turn].length) return nextTurn(); }
+  if (!others(G.turn).length) { // nobody to ask: fish if possible, else game over
+    if (!G.stock.length) return endGame();
+    const c = G.stock.pop(); G.hands[G.turn].push(c); checkBooks(G.turn); return endCheck() || nextTurn();
+  }
+  if (G.turn === 0) { render(); return; }
+  await wait(800); if (tok !== G.token) return;
+  const ch = aiChoose(G.turn); if (!ch) return nextTurn();
+  ask(G.turn, ch.target, ch.rank);
+}
+function endGame() {
+  if (G.over) return;
+  G.over = true; G.phase = 'idle'; tmr.stop();
+  const counts = G.books.map(b => b.length), best = Math.max(...counts), winners = counts.map((c, i) => c === best ? i : -1).filter(i => i >= 0);
+  const res = !winners.includes(0) ? 'l' : winners.length > 1 ? 'd' : 'w';
+  G.stats[res]++; LS.set('gf-stats', G.stats);
+  SH.Sound.play(res === 'w' ? 'victory' : res === 'd' ? 'draw' : 'defeat');
+  showMsg(`<h4 class="serif" style="margin:0 0 4px;font-size:22px">${res === 'w' ? 'You win!' : res === 'd' ? 'Tie for the most books!' : NAMES[winners[0]] + ' wins'}</h4><div class="tiny muted">${NAMES.slice(0, G.n).map((n, s) => `${n} ${counts[s]}`).join(' · ')} books</div><button class="btn btn-lux" style="margin-top:10px" id="gf-again">Play again</button>`);
+  $('gf-again').onclick = newGame;
+  if (SH.onResult) SH.onResult('gofish', res, { pro: !!RU.pro });
+  render();
+}
+function newGame() {
+  RU = McRules.get('gofish'); G.token++; G.n = RU.players; G.over = false; G.log = []; G.pick = null; showMsg(''); tmr.stop();
+  G.stock = C.shuffle(C.deck()); G.hands = Array.from({ length: G.n }, () => []); G.books = Array.from({ length: G.n }, () => []); G.known = Array.from({ length: G.n }, () => new Set());
+  const k = G.n <= 3 ? 7 : 5;
+  for (let i = 0; i < k; i++) for (let s = 0; s < G.n; s++) G.hands[s].push(G.stock.pop());
+  log(`<b>New game</b> — ${k} cards each. ${RU.book === 2 ? 'Make pairs!' : 'Collect all four of a rank to make a book.'}`);
+  for (let s = 0; s < G.n; s++) checkBooks(s);
+  G.turn = 0; G.phase = 'turn'; SH.Sound.play('start'); render(true); loop();
+}
+// ---------- you ----------
+function youPickRank(r) {
+  if (G.turn !== 0 || G.phase !== 'turn' || G.over) return;
+  SH.Sound.unlock();
+  const opp = others(0);
+  if (opp.length === 1) { tmr.stop(); G.pick = null; ask(0, opp[0], r); return; }
+  G.pick = r; render();
+}
+function youAsk(target) { if (G.turn !== 0 || G.phase !== 'turn' || G.pick == null || !G.hands[target].length) return; tmr.stop(); const r = G.pick; G.pick = null; ask(0, target, r); }
+// ---------- render ----------
+function showMsg(html) { const m = $('gf-msg'); m.innerHTML = html ? `<div class="glass" style="padding:14px 16px;text-align:center">${html}</div>` : ''; m.classList.toggle('hidden', !html); }
+function flash(t) { if (G.fast) return; const el = $('gf-flash'); el.textContent = t; el.classList.remove('show'); void el.offsetWidth; el.classList.add('show'); }
+const SEAT_POS = { 2: { 1: 'n' }, 3: { 1: 'w', 2: 'e' }, 4: { 1: 'w', 2: 'n', 3: 'e' } };
+const bookRow = s => G.books[s].map(r => `<div class="pp-pair">${C.html({ r, s: 's' })}${C.html({ r, s: 'h' })}</div>`).join('');
+function seatHtml(s) {
+  const n = G.hands[s].length, on = G.turn === s && !G.over;
+  const backs = Array.from({ length: Math.min(n, 9) }, (_, i) => C.html(null, { back: true, style: `margin-left:${i ? -30 : 0}px` })).join('');
+  const pickable = G.pick != null && n;
+  return `<div class="seat-tag ${on ? 'on' : ''} ${pickable ? 'gf-target' : ''}" ${pickable ? `data-ask="${s}" role="button" tabindex="0"` : ''}><b>${NAMES[s]}</b><span>${n} cards · ${G.books[s].length} book${G.books[s].length === 1 ? '' : 's'}</span>${pickable ? '<span style="color:var(--amber)">tap to ask</span>' : ''}</div><div class="mini-hand">${backs}</div><div class="pp-pairs gf-mini">${bookRow(s)}</div>`;
+}
+function render(dealing) {
+  if (!G.hands.length) return;
+  const pos = SEAT_POS[G.n];
+  for (const p of ['n', 'w', 'e']) { const s = Object.keys(pos).find(k => pos[k] === p); $('gf-seat-' + p).innerHTML = s ? seatHtml(+s) : ''; }
+  $('gf-center').innerHTML = `<div class="cc-stack"><div class="cc-draw" title="The pond">${G.stock.length ? C.html(null, { back: true }) : '<div class="pcard" style="opacity:.2"></div>'}<span class="pill">Pond ${G.stock.length}</span></div><div class="tiny muted" style="text-align:center">${totalBooks()}/${maxBooks()} books made</div></div>`;
+  const mine = G.turn === 0 && G.phase === 'turn' && !G.over;
+  const tip = RU.tips && mine ? aiChoose(0, true) : null;
+  $('gf-hand').innerHTML = G.hands[0].map((c, i) => C.html(c, { cls: (mine ? 'playable' : '') + (G.pick === c.r ? ' match' : '') + (tip && tip.rank === c.r && G.pick == null ? ' tip' : '') + (dealing ? ' dealt' : ''), attr: `data-i="${i}"`, style: `--d:${i * 40}ms` })).join('');
+  $('gf-books').innerHTML = bookRow(0) || '<span class="tiny muted">Your books land here.</span>';
+  $('gf-you').innerHTML = `<div class="seat-tag ${mine ? 'on' : ''}"><b>You</b><span>${G.hands[0].length} cards · ${G.books[0].length} books</span></div>`;
+  $('gf-tip').textContent = !mine ? (G.over ? '' : `${NAMES[G.turn]} is thinking…`) : G.pick != null ? `Asking for ${plural(G.pick)} — tap who to ask.` : tip ? `Tip: ask ${NAMES[tip.target]} for ${plural(tip.rank)}${G.known[tip.target].has(tip.rank) ? ' — they asked for one earlier!' : '.'}` : 'Tap a card to ask for that rank.';
+  $('gf-rb').textContent = McRules.label('gofish'); $('gf-rb').className = 'rbadge r-' + McRules.mode('gofish');
+  $('gf-rec').textContent = `W${G.stats.w} L${G.stats.l}${G.stats.d ? ' T' + G.stats.d : ''}`;
+  if (mine && RU.timer) { const key = 'k' + G.log.length; if (G._tKey !== key) { G._tKey = key; tmr.start(RU.timer, $('gf-timer'), () => { G._tKey = null; SH.toast('Time! Auto-ask', 'clock'); const t = aiChoose(0, true); if (t) { G.pick = null; ask(0, t.target, t.rank); } }); } }
+  else { G._tKey = null; tmr.stop(); }
+}
+const root = $('view-gofish');
+root.innerHTML = `
+<section class="col center" style="width:100%">
+  <div class="felt" id="gf-felt">
+    <div class="seat n" id="gf-seat-n"></div><div class="seat w" id="gf-seat-w"></div><div class="seat e" id="gf-seat-e"></div>
+    <div class="trick cc-center" id="gf-center"></div>
+    <div class="cc-flash" id="gf-flash"></div>
+    <div class="felt-msg hidden" id="gf-msg"></div>
+  </div>
+  <div class="row" style="justify-content:center;gap:8px;flex-wrap:wrap;margin-top:4px"><div id="gf-you"></div><span class="ptimer hidden" id="gf-timer"></span></div>
+  <div class="fan" id="gf-hand"></div>
+  <div class="tiny" id="gf-tip" style="color:var(--amber);text-align:center;min-height:18px"></div>
+  <div class="pp-pairs" id="gf-books"></div>
+</section>
+<section class="col right">
+  <div class="glass card stack">
+    <div class="between"><h3 class="h3">McLearn Go Fish</h3><span class="row" style="gap:6px"><span class="rbadge" id="gf-rb">Standard</span><span class="pill" id="gf-rec"></span></span></div>
+    <div class="tiny muted">Tap a card to ask for that rank, then tap who to ask. If they have any, they hand them all over and you go again. If not — Go Fish! Four of a kind makes a book. Most books when the pond runs dry wins.</div>
+    <div id="rules-gofish"></div>
+    <button class="btn btn-lux" id="gf-new">New Game</button>
+    <div><span class="label">Table log</span><div class="moves" id="gf-log" style="margin-top:6px;height:120px;font-family:var(--sans)"></div></div>
+  </div>
+</section>`;
+$('gf-hand').addEventListener('click', e => { const el = e.target.closest('.pcard[data-i]'); if (el) youPickRank(G.hands[0][+el.dataset.i].r); });
+$('gf-felt').addEventListener('click', e => { const el = e.target.closest('[data-ask]'); if (el) youAsk(+el.dataset.ask); });
+$('gf-new').onclick = newGame;
+McRules.mount('gofish', $('rules-gofish'));
+McRules.onChange('gofish', () => { if (!G.hands.length || G.over || totalBooks() === 0) newGame(); else SH.toast('New rules apply from your next game'); });
+SH.games.gofish = { onShow() { if (!G.hands.length) newGame(); else render(); }, _G: G, _newGame: newGame, _ask: ask, _aiChoose: aiChoose };
+})();
+
+</script>
+<script>
+// McLearn I Declare War — classic War, plus a Pro "Tactics" mode where you choose which card to fight with.
+(function () {
+'use strict';
+const SH = window.McShared, $ = id => document.getElementById(id), LS = SH.LS, C = SH.cards;
+McRules.register('war', {
+  title: 'I Declare War',
+  proNote: 'Pro: Tactics — hold 3 cards and choose your fighter each battle. 52 battles, most cards wins, 10-second clock.',
+  schema: [
+    { key: 'warCards', label: 'Cards face-down in a war', type: 'select', options: [[1, '1 card'], [3, '3 cards (I-DE-CLARE)']] },
+    { key: 'limit', label: 'Game length', help: 'With a battle limit, whoever holds the most cards at the end wins', type: 'select', options: [[0, 'Until someone has every card'], [26, '26 battles'], [52, '52 battles'], [100, '100 battles']] },
+    { key: 'tactics', label: 'Tactics hand', help: 'Hold 3 cards and choose which one to play each battle', type: 'bool' },
+    { key: 'peace', label: 'Peace (low card wins)', type: 'bool' },
+    { key: 'shuffleWins', label: 'Shuffle won cards', help: 'Keeps long games from looping forever', type: 'bool' },
+    { key: 'timer', label: 'Turn clock', type: 'select', options: [[0, 'Off'], [10, '10 seconds'], [20, '20 seconds']] }
+  ],
+  presets: { standard: { warCards: 3, limit: 0, tactics: false, peace: false, shuffleWins: true, timer: 0 }, pro: { tactics: true, limit: 52, timer: 10 } }
+});
+let RU = McRules.get('war');
+const tmr = McRules.timer();
+const CAP = 1500; // an untimed game always ends: after this many battles, most cards wins
+const G = { piles: [[], []], hands: [[], []], table: [], up: [null, null], down: [0, 0], battles: 0, wars: 0, won: [0, 0], phase: 'idle', token: 0, over: false, auto: 0, stats: LS.get('war-stats', { w: 0, l: 0, d: 0 }), fast: false, last: '' };
+const wait = ms => G.fast ? Promise.resolve() : new Promise(r => setTimeout(r, G.auto ? Math.min(ms, 120) : ms));
+const total = p => G.piles[p].length + G.hands[p].length;
+const beats = (a, b) => RU.peace ? a.r < b.r : a.r > b.r;
+function take(p) { // top card of pile (end of array)
+  return G.piles[p].pop();
+}
+function refillHand(p) { while (RU.tactics && G.hands[p].length < 3 && G.piles[p].length) G.hands[p].push(take(p)); G.hands[p].sort((a, b) => a.r - b.r); }
+function aiPick() { const h = G.hands[1]; const x = Math.random(); return x < 0.4 ? h[Math.floor(h.length / 2)] : x < 0.7 ? h[0] : h[h.length - 1]; }
+function bestPick() { // coach for the timer: play the median card
+  const h = G.hands[0]; return h[Math.floor(h.length / 2)];
+}
+async function battle(myCard) {
+  if (G.phase !== 'ready' || G.over) return;
+  const tok = G.token; tmr.stop(); G._tKey = null;
+  G.phase = 'fight'; G.table = []; G.down = [0, 0];
+  let a, b;
+  if (RU.tactics) {
+    a = myCard || bestPick(); b = aiPick();
+    G.hands[0].splice(G.hands[0].indexOf(a), 1); G.hands[1].splice(G.hands[1].indexOf(b), 1);
+  } else { a = take(0); b = take(1); }
+  G.battles++; G.up = [a, b]; G.table.push(a, b); SH.Sound.play('move'); render();
+  await wait(650); if (tok !== G.token) return;
+  while (a.r === b.r) {
+    G.wars++; flash('I DECLARE WAR!'); SH.Sound.play('check'); G.last = `War! Both played ${rk(a)}.`; render();
+    await wait(900); if (tok !== G.token) return;
+    const pull = p => { const out = []; while (out.length < RU.warCards + 1 && total(p)) { out.push(G.piles[p].length ? take(p) : G.hands[p].splice(0, 1)[0]); } return out; };
+    const pa = pull(0), pb = pull(1);
+    if (!pa.length || !pb.length) { // someone cannot fight the war: they lose what's on the table
+      const loser = !pa.length && !pb.length ? -1 : !pa.length ? 0 : 1;
+      G.table.push(...pa, ...pb);
+      if (loser === -1) return finish();
+      give(1 - loser); return finish(`${loser ? 'General Mac' : 'You'} ran out of cards in the war.`);
+    }
+    a = pa.pop(); b = pb.pop(); G.down[0] += pa.length; G.down[1] += pb.length;
+    G.table.push(...pa, ...pb, a, b); G.up = [a, b]; SH.Sound.play('capture'); render();
+    await wait(800); if (tok !== G.token) return;
+  }
+  const w = beats(a, b) ? 0 : 1;
+  G.last = `${w ? 'General Mac takes' : 'You take'} ${G.table.length} card${G.table.length > 1 ? 's' : ''} with ${rk(w ? b : a)}${RU.peace ? ' (low wins)' : ''}.`;
+  if (w === 0) SH.Sound.play(G.table.length > 2 ? 'good' : 'tick');
+  give(w); G.won[w]++;
+  await wait(G.table.length > 2 ? 900 : 450); if (tok !== G.token) return;
+  G.table = []; G.up = [null, null];
+  refillHand(0); refillHand(1);
+  if (!total(0) || !total(1) || (RU.limit && G.battles >= RU.limit) || G.battles >= CAP) return finish();
+  G.phase = 'ready'; render();
+  if (G.auto > 0) { G.auto--; await wait(G.fast ? 0 : 160); if (tok !== G.token) return; battle(); }
+}
+function give(w) {
+  const cards = G.table.slice(); if (RU.shuffleWins) C.shuffle(cards);
+  G.piles[w].unshift(...cards); // won cards go to the bottom
+  G.table = [];
+}
+const rk = c => C.name(c);
+function finish(note) {
+  G.over = true; G.phase = 'idle'; G.auto = 0; tmr.stop();
+  const t0 = total(0), t1 = total(1);
+  const res = t0 > t1 ? 'w' : t0 < t1 ? 'l' : 'd';
+  G.stats[res]++; LS.set('war-stats', G.stats);
+  SH.Sound.play(res === 'w' ? 'victory' : res === 'd' ? 'draw' : 'defeat');
+  showMsg(`<h4 class="serif" style="margin:0 0 4px;font-size:22px">${res === 'w' ? 'You win the war!' : res === 'd' ? 'A stalemate!' : 'General Mac wins'}</h4><div class="tiny muted">${note ? note + ' ' : ''}You ${t0} cards · General Mac ${t1} · ${G.battles} battles · ${G.wars} wars</div><button class="btn btn-lux" style="margin-top:10px" id="war-again">Play again</button>`);
+  $('war-again').onclick = newGame;
+  if (SH.onResult) SH.onResult('war', res, { pro: !!RU.pro });
+  render();
+}
+function newGame() {
+  RU = McRules.get('war'); G.token++; G.over = false; G.auto = 0; G.battles = 0; G.wars = 0; G.won = [0, 0]; G.last = ''; showMsg(''); tmr.stop();
+  const d = C.shuffle(C.deck()); G.piles = [d.slice(0, 26), d.slice(26)]; G.hands = [[], []]; G.table = []; G.up = [null, null];
+  refillHand(0); refillHand(1);
+  G.phase = 'ready'; SH.Sound.play('start'); render();
+}
+// ---------- render ----------
+function showMsg(html) { const m = $('war-msg'); m.innerHTML = html ? `<div class="glass" style="padding:14px 16px;text-align:center">${html}</div>` : ''; m.classList.toggle('hidden', !html); }
+function flash(t) { if (G.fast) return; const el = $('war-flash'); el.textContent = t; el.classList.remove('show'); void el.offsetWidth; el.classList.add('show'); }
+function pileHtml(p) { const n = G.piles[p].length; return `<div class="war-pile">${n ? C.html(null, { back: true }) : '<div class="pcard" style="opacity:.15"></div>'}<span class="pill">${n} in deck${RU.tactics ? ' · ' + G.hands[p].length + ' in hand' : ''}</span></div>`; }
+function render() {
+  $('war-cpu').innerHTML = `<div class="seat-tag ${G.phase === 'fight' ? 'on' : ''}"><b>General Mac</b><span>${total(1)} cards · ${G.won[1]} battles won</span></div>${pileHtml(1)}`;
+  $('war-me').innerHTML = `${pileHtml(0)}<div class="seat-tag ${G.phase === 'ready' ? 'on' : ''}"><b>You</b><span>${total(0)} cards · ${G.won[0]} battles won</span></div>`;
+  const down = n => n ? `<div class="war-down">${Array.from({ length: Math.min(n, 6) }, (_, i) => C.html(null, { back: true, style: `margin-left:${i ? -40 : 0}px` })).join('')}</div>` : '';
+  $('war-field').innerHTML = `<div class="war-side">${down(G.down[1])}${G.up[1] ? C.html(G.up[1], { cls: 'war-up' }) : '<div class="pcard war-ghost"></div>'}</div><div class="war-vs serif">VS</div><div class="war-side">${down(G.down[0])}${G.up[0] ? C.html(G.up[0], { cls: 'war-up' }) : '<div class="pcard war-ghost"></div>'}</div>`;
+  $('war-last').textContent = G.last || (RU.tactics ? 'Choose a card from your hand to send into battle.' : 'Tap Flip — high card takes both.');
+  const ready = G.phase === 'ready' && !G.over;
+  $('war-hand').innerHTML = RU.tactics ? G.hands[0].map((c, i) => C.html(c, { cls: ready ? 'playable' : 'dim', attr: `data-i="${i}"` })).join('') : '';
+  $('war-flip').classList.toggle('hidden', RU.tactics); $('war-flip').disabled = !ready;
+  $('war-auto').disabled = !ready; $('war-ff').disabled = !ready; $('war-ff').classList.toggle('hidden', RU.tactics);
+  const lim = RU.limit ? `Battle ${G.battles}/${RU.limit}` : `Battle ${G.battles}`;
+  $('war-count').textContent = `${lim} · ${G.wars} war${G.wars === 1 ? '' : 's'}`;
+  $('war-bar').style.width = (total(0) / 52 * 100).toFixed(1) + '%';
+  $('war-rb').textContent = McRules.label('war'); $('war-rb').className = 'rbadge r-' + McRules.mode('war');
+  $('war-rec').textContent = `W${G.stats.w} L${G.stats.l}${G.stats.d ? ' T' + G.stats.d : ''}`;
+  if (ready && RU.timer && !G.auto) { const key = 'b' + G.battles; if (G._tKey !== key) { G._tKey = key; tmr.start(RU.timer, $('war-timer'), () => { G._tKey = null; SH.toast('Time! Auto-battle', 'clock'); battle(); }); } }
+  else if (!ready) { G._tKey = null; tmr.stop(); }
+}
+const root = $('view-war');
+root.innerHTML = `
+<section class="col center" style="width:100%">
+  <div class="felt war-felt" id="war-felt">
+    <div class="war-row" id="war-cpu"></div>
+    <div class="war-field" id="war-field"></div>
+    <div class="war-row" id="war-me"></div>
+    <div class="cc-flash" id="war-flash"></div>
+    <div class="felt-msg hidden" id="war-msg"></div>
+  </div>
+  <div class="war-meter"><div id="war-bar"></div></div>
+  <div class="tiny" id="war-last" style="color:var(--amber);text-align:center;min-height:18px;margin-top:6px"></div>
+  <div class="fan" id="war-hand"></div>
+  <div class="row" style="justify-content:center;gap:8px;flex-wrap:wrap;margin-top:6px">
+    <button class="btn btn-lux" id="war-flip">Flip</button>
+    <button class="btn btn-sec" id="war-auto">Auto ×10</button>
+    <button class="btn btn-sec" id="war-ff">Fast-forward to the end</button>
+    <span class="ptimer hidden" id="war-timer"></span>
+  </div>
+</section>
+<section class="col right">
+  <div class="glass card stack">
+    <div class="between"><h3 class="h3">McLearn I Declare War</h3><span class="row" style="gap:6px"><span class="rbadge" id="war-rb">Standard</span><span class="pill" id="war-rec"></span></span></div>
+    <div class="tiny muted">You vs General Mac. Both flip a card — high card takes both. A tie means WAR: three cards face-down (I-DE-CLARE), then one face-up decides who takes the whole pile. Win every card to win the game. Turn on Tactics to choose your fighter.</div>
+    <div class="pill" id="war-count" style="align-self:flex-start"></div>
+    <div id="rules-war"></div>
+    <button class="btn btn-lux" id="war-new">New Game</button>
+  </div>
+</section>`;
+$('war-flip').onclick = () => { SH.Sound.unlock(); battle(); };
+$('war-auto').onclick = () => { SH.Sound.unlock(); G.auto = 9; battle(); };
+$('war-ff').onclick = () => { // resolve instantly, no animation
+  if (G.phase !== 'ready') return;
+  const f = G.fast; G.fast = true;
+  (async () => { while (!G.over && G.phase === 'ready') await battle(); G.fast = f; render(); })();
+};
+$('war-hand').addEventListener('click', e => { const el = e.target.closest('.pcard[data-i]'); if (!el || G.phase !== 'ready') return; SH.Sound.unlock(); battle(G.hands[0][+el.dataset.i]); });
+$('war-new').onclick = newGame;
+McRules.mount('war', $('rules-war'));
+McRules.onChange('war', () => { if (!G.battles || G.over) newGame(); else SH.toast('New rules apply from your next game'); });
+SH.games.war = { onShow() { if (!G.piles[0].length && !G.over) newGame(); else render(); }, _G: G, _battle: battle, _newGame: newGame };
+})();
+
+</script>
+<script>
+// McLearn Studio Showdown — rock-paper-scissors, McLearn style: Pen · Mic · Contract (+ Beat & Master in Full Studio).
+(function () {
+'use strict';
+const SH = window.McShared, $ = id => document.getElementById(id), LS = SH.LS;
+McRules.register('showdown', {
+  title: 'Studio Showdown',
+  proNote: 'Pro: Full Studio (5 signs) against The Label — it studies your habits. Best of 7, 5-second throw clock.',
+  schema: [
+    { key: 'signs', label: 'Signs in play', help: 'Full Studio adds the Beat and the Master — each sign beats two and loses to two', type: 'select', options: [[3, 'Classic: Pen · Mic · Contract'], [5, 'Full Studio: + Beat & Master']] },
+    { key: 'bestOf', label: 'Match', type: 'select', options: [[3, 'Best of 3'], [5, 'Best of 5'], [7, 'Best of 7'], [0, 'Streak — play until you lose']] },
+    { key: 'rival', label: 'Rival', type: 'select', options: [['intern', 'Intern Ike (random)'], ['anr', 'A&R Andre (reads your favorites)'], ['label', 'The Label (studies your patterns)']] },
+    { key: 'countdown', label: '“Write it · Sing it · Own it” countdown', type: 'bool' },
+    { key: 'lessons', label: 'Show the music-business lesson', type: 'bool' },
+    { key: 'timer', label: 'Throw clock', help: 'Run out and you throw at random', type: 'select', options: [[0, 'Off'], [5, '5 seconds'], [10, '10 seconds']] }
+  ],
+  presets: { standard: { signs: 3, bestOf: 3, rival: 'anr', countdown: true, lessons: true, timer: 0 }, pro: { signs: 5, bestOf: 7, rival: 'label', timer: 5 } }
+});
+let RU = McRules.get('showdown');
+const tmr = McRules.timer();
+// Cycle order matters: sign i beats i+1 and i+3 (mod 5). In 3-sign mode only the first three are used, i beats i+1 (mod 3).
+const SIGNS = [
+  { id: 'pen', name: 'Pen', icon: '✍️', role: 'The Writer' },
+  { id: 'contract', name: 'Contract', icon: '📜', role: 'The Business' },
+  { id: 'mic', name: 'Mic', icon: '🎤', role: 'The Artist' },
+  { id: 'beat', name: 'Beat', icon: '🥁', role: 'The Producer' },
+  { id: 'master', name: 'Master', icon: '💿', role: 'The Recording' }
+];
+const WHY = {
+  'pen>contract': 'Read it, rewrite it — the Pen owns the Contract.',
+  'contract>mic': 'The Contract signs the Mic.',
+  'mic>pen': 'The Mic takes the Pen’s words to the world.',
+  'pen>beat': 'Words give the Beat a reason to exist.',
+  'contract>master': 'Whoever holds the Contract owns the Master.',
+  'mic>beat': 'The Mic rides the Beat.',
+  'beat>master': 'No Beat, no Master — the Beat comes first.',
+  'beat>contract': 'A hot Beat rewrites the Contract.',
+  'master>pen': 'The Master is forever — the Pen can’t take it back.',
+  'master>mic': 'One great take on the Master outlives every live show.'
+};
+const LESSON = {
+  'pen>contract': 'McLearn lesson: songwriters earn royalties on every play — register your songs with a performing-rights group (PRO) like BMI.',
+  'contract>mic': 'McLearn lesson: never sign a deal you have not read. Get a lawyer for anything that touches your rights.',
+  'mic>pen': 'McLearn lesson: the writer and the performer are paid separately — know which checks are yours.',
+  'pen>beat': 'McLearn lesson: split sheets — write down who wrote what the day the song is made.',
+  'contract>master': 'McLearn lesson: the master recording is the most valuable thing you make. Own your masters.',
+  'mic>beat': 'McLearn lesson: lease vs. buy — know whether your beat license is exclusive.',
+  'beat>master': 'McLearn lesson: producers can earn points (a share) on the master — agree on it before release.',
+  'beat>contract': 'McLearn lesson: leverage comes from great work — build the catalog first, then negotiate.',
+  'master>pen': 'McLearn lesson: once a song is released and registered, the date on record protects you.',
+  'master>mic': 'McLearn lesson: a catalog keeps paying while you sleep — that is what ownership means.'
+};
+const RIVAL = { intern: 'Intern Ike', anr: 'A&R Andre', label: 'The Label' };
+const G = { score: [0, 0], round: 0, hist: [], phase: 'idle', streak: 0, best: LS.get('sd-best', 0), stats: LS.get('sd-stats', { w: 0, l: 0 }), token: 0, last: null, over: false, fast: false };
+const wait = ms => G.fast ? Promise.resolve() : new Promise(r => setTimeout(r, ms));
+const n = () => RU.signs;
+function beats(i, j) { if (i === j) return false; return n() === 3 ? (i + 1) % 3 === j : ((i + 1) % 5 === j || (i + 3) % 5 === j); }
+const counter = j => { for (let i = 0; i < n(); i++) if (beats(i, j)) return i; return 0; };
+function rivalThrow() {
+  const N = n(), h = G.hist.slice(-120).map(x => x.you).filter(x => x < N), rnd = () => Math.floor(Math.random() * N);
+  if (RU.rival === 'intern' || h.length < 2) return rnd();
+  if (RU.rival === 'anr') { // counters your most-thrown sign, with some noise
+    if (Math.random() < 0.3) return rnd();
+    const f = Array(N).fill(0); h.forEach(x => f[x]++); return counter(f.indexOf(Math.max(...f)));
+  }
+  // The Label: predicts your next throw from what you did after your last two throws (falls back to last one)
+  if (Math.random() < 0.15) return rnd();
+  const predict = k => { const key = h.slice(-k).join(','), f = Array(N).fill(0); let seen = 0;
+    for (let i = k; i < h.length; i++) if (h.slice(i - k, i).join(',') === key) { f[h[i]]++; seen++; }
+    return seen ? f.indexOf(Math.max(...f)) : -1; };
+  let p = predict(2); if (p < 0) p = predict(1); if (p < 0) { const f = Array(N).fill(0); h.forEach(x => f[x]++); p = f.indexOf(Math.max(...f)); }
+  return counter(p);
+}
+function newMatch() {
+  RU = McRules.get('showdown'); G.token++; tmr.stop(); G.score = [0, 0]; G.round = 0; if (G.histSigns !== RU.signs) { G.hist = []; G.histSigns = RU.signs; } G.streak = 0; G.over = false; G.last = null; G.phase = 'ready'; showMsg(''); SH.Sound.play('start'); render();
+}
+async function throwSign(i) {
+  if (G.phase !== 'ready' || G.over) return;
+  const tok = G.token; tmr.stop(); G._tKey = null; G.phase = 'count';
+  const r = rivalThrow(); // decided before your throw is revealed to it — no peeking
+  G.mine = i; render();
+  if (RU.countdown && !G.fast) {
+    for (const w of ['Write it…', 'Sing it…', 'Own it!']) { $('sd-count').textContent = w; $('sd-count').classList.remove('pop'); void $('sd-count').offsetWidth; $('sd-count').classList.add('pop'); SH.Sound.play('tick'); await wait(420); if (tok !== G.token) return; }
+  }
+  $('sd-count').textContent = '';
+  G.round++;
+  const res = i === r ? 'd' : beats(i, r) ? 'w' : 'l';
+  const key = res === 'w' ? `${SIGNS[i].id}>${SIGNS[r].id}` : res === 'l' ? `${SIGNS[r].id}>${SIGNS[i].id}` : null;
+  G.last = { you: i, them: r, res, key }; G.hist.push({ you: i, them: r, res });
+  if (res === 'w') { G.score[0]++; G.streak++; SH.Sound.play('good'); }
+  else if (res === 'l') { G.score[1]++; SH.Sound.play('bad'); }
+  else SH.Sound.play('draw');
+  G.phase = 'ready';
+  // match end?
+  if (RU.bestOf) {
+    const need = Math.ceil(RU.bestOf / 2);
+    if (G.score[0] >= need || G.score[1] >= need) return end(G.score[0] >= need ? 'w' : 'l');
+  } else if (res === 'l') return end(G.streak >= 3 ? 'w' : 'l');
+  render();
+}
+function end(res) {
+  G.over = true; G.phase = 'idle'; tmr.stop();
+  if (!RU.bestOf && G.streak > G.best) { G.best = G.streak; LS.set('sd-best', G.best); }
+  G.stats[res]++; LS.set('sd-stats', G.stats);
+  SH.Sound.play(res === 'w' ? 'victory' : 'defeat');
+  const head = RU.bestOf ? (res === 'w' ? 'You own it!' : `${RIVAL[RU.rival]} takes the match`) : `Streak: ${G.streak}`;
+  const sub = RU.bestOf ? `${G.score[0]}–${G.score[1]} in ${G.round} throws` : `${G.streak >= 3 ? 'A streak of 3+ counts as a win. ' : 'Reach a streak of 3 to count it as a win. '}Best ever: ${G.best}`;
+  showMsg(`<h4 class="serif" style="margin:0 0 4px;font-size:22px">${head}</h4><div class="tiny muted">${sub}</div><button class="btn btn-lux" style="margin-top:10px" id="sd-again">Run it back</button>`);
+  $('sd-again').onclick = newMatch;
+  if (SH.onResult) SH.onResult('showdown', res, { pro: !!RU.pro, vs: RIVAL[RU.rival] });
+  render();
+}
+// ---------- render ----------
+function showMsg(html) { const m = $('sd-msg'); m.innerHTML = html ? `<div class="glass" style="padding:14px 16px;text-align:center">${html}</div>` : ''; m.classList.toggle('hidden', !html); }
+const card = (i, cls) => `<div class="sd-card ${cls || ''}"><span class="sd-ic">${SIGNS[i].icon}</span><b>${SIGNS[i].name}</b><small>${SIGNS[i].role}</small></div>`;
+function render() {
+  const L = G.last, counting = G.phase === 'count';
+  $('sd-rival').innerHTML = `<div class="seat-tag"><b>${RIVAL[RU.rival]}</b><span>${G.score[1]} ${RU.bestOf ? 'won' : ''}</span></div>`;
+  $('sd-stage').innerHTML = counting ? `<div class="sd-card back"><span class="sd-ic">M</span></div><div class="sd-vs serif">VS</div><div class="sd-card back mine"><span class="sd-ic">${SIGNS[G.mine].icon}</span></div>`
+    : L ? `${card(L.them, L.res === 'l' ? 'win' : L.res === 'w' ? 'lose' : '')}<div class="sd-vs serif">${L.res === 'w' ? 'WIN' : L.res === 'l' ? 'LOSS' : 'DRAW'}</div>${card(L.you, L.res === 'w' ? 'win' : L.res === 'l' ? 'lose' : '')}`
+    : `<div class="sd-card back"><span class="sd-ic">M</span></div><div class="sd-vs serif">VS</div><div class="sd-card back"><span class="sd-ic">?</span></div>`;
+  $('sd-why').innerHTML = counting ? '' : L ? (L.key ? `<b>${WHY[L.key]}</b>${RU.lessons ? `<div class="tiny muted" style="margin-top:4px">${LESSON[L.key]}</div>` : ''}` : `<b>Same sign — run it again.</b>`) : 'Pick your sign. Write it · Sing it · Own it.';
+  const ready = G.phase === 'ready' && !G.over;
+  $('sd-pick').innerHTML = SIGNS.slice(0, n()).map((s, i) => `<button class="sd-btn" data-sd="${i}" ${ready ? '' : 'disabled'}><span>${s.icon}</span><b>${s.name}</b></button>`).join('');
+  const N = n(), rules = [];
+  for (let i = 0; i < N; i++) for (let j = 0; j < N; j++) if (beats(i, j)) rules.push(`${SIGNS[i].icon} ${SIGNS[i].name} beats ${SIGNS[j].name}`);
+  $('sd-chart').innerHTML = rules.map(r => `<div class="tiny">${r}</div>`).join('');
+  $('sd-you').innerHTML = `<div class="seat-tag ${ready ? 'on' : ''}"><b>You</b><span>${RU.bestOf ? G.score[0] + ' won' : 'Streak ' + G.streak}</span></div>`;
+  $('sd-status').textContent = RU.bestOf ? `Best of ${RU.bestOf} · Throw ${G.round + (ready ? 1 : 0)} · You ${G.score[0]} – ${G.score[1]} ${RIVAL[RU.rival]}` : `Streak mode · current ${G.streak} · best ${G.best}`;
+  $('sd-rb').textContent = McRules.label('showdown'); $('sd-rb').className = 'rbadge r-' + McRules.mode('showdown');
+  $('sd-rec').textContent = `W${G.stats.w} L${G.stats.l}`;
+  if (ready && RU.timer) { const key = 'r' + G.round; if (G._tKey !== key) { G._tKey = key; tmr.start(RU.timer, $('sd-timer'), () => { G._tKey = null; SH.toast('Time! Random throw', 'clock'); throwSign(Math.floor(Math.random() * n())); }); } }
+  else if (!ready) { G._tKey = null; tmr.stop(); }
+}
+const root = $('view-showdown');
+root.innerHTML = `
+<section class="col center" style="width:100%">
+  <div class="felt sd-felt" id="sd-felt">
+    <div class="sd-top" id="sd-rival"></div>
+    <div class="sd-stage" id="sd-stage"></div>
+    <div class="sd-countword serif" id="sd-count"></div>
+    <div class="sd-why" id="sd-why"></div>
+    <div class="felt-msg hidden" id="sd-msg"></div>
+  </div>
+  <div class="row" style="justify-content:center;gap:8px;margin-top:6px;align-items:center"><div id="sd-you"></div><span class="ptimer hidden" id="sd-timer"></span></div>
+  <div class="sd-pick" id="sd-pick"></div>
+  <div class="tiny" id="sd-status" style="color:var(--amber);text-align:center;min-height:18px"></div>
+</section>
+<section class="col right">
+  <div class="glass card stack">
+    <div class="between"><h3 class="h3">McLearn Studio Showdown</h3><span class="row" style="gap:6px"><span class="rbadge" id="sd-rb">Standard</span><span class="pill" id="sd-rec"></span></span></div>
+    <div class="tiny muted">Rock-paper-scissors, the McLearn Media way. Every throw is a piece of the music business — and every win teaches a real lesson about owning your work.</div>
+    <div class="glass" style="padding:10px" id="sd-chart"></div>
+    <div id="rules-showdown"></div>
+    <button class="btn btn-lux" id="sd-new">New Match</button>
+  </div>
+</section>`;
+$('sd-pick').addEventListener('click', e => { const b = e.target.closest('[data-sd]'); if (b) { SH.Sound.unlock(); throwSign(+b.dataset.sd); } });
+document.addEventListener('keydown', e => { if ($('view-showdown').classList.contains('hidden')) return; const k = +e.key; if (k >= 1 && k <= n()) throwSign(k - 1); });
+$('sd-new').onclick = newMatch;
+McRules.mount('showdown', $('rules-showdown'));
+McRules.onChange('showdown', () => { if (G.round === 0 || G.over) newMatch(); else SH.toast('New rules apply from your next match'); });
+SH.games.showdown = { onShow() { if (G.phase === 'idle' && !G.over) newMatch(); else render(); }, _G: G, _throw: throwSign, _beats: beats, _newMatch: newMatch };
+})();
+
+</script>
+<script>
 // McLearn Arena brand layer — Player Card (XP, levels, seasons, achievements), Victory Cards, McLearn Minute showcase, Event Mode.
 (function () {
 'use strict';
@@ -5472,6 +7474,13 @@ const ACH = [
   { id: 'clash', name: 'Last Card Legend', desc: 'Win a game of Color Clash', icon: '✦' },
   { id: 'pat', name: 'Pitty Pat Pro', desc: 'Win a game of Pitty Pat', icon: '🂫' },
   { id: 'mogul', name: 'Media Mogul', desc: 'Win a game of Mega Media Mogul', icon: '🏙' },
+  { id: 'domino', name: 'Bones Boss', desc: 'Win a game of Dominoes', icon: '🁫' },
+  { id: 'boston', name: 'Bid Whist Champ', desc: 'Win a game of Bid Whist', icon: '🃏' },
+  { id: 'holdem', name: 'Last Stack Standing', desc: "Win a Hold'em tournament", icon: '♦' },
+  { id: 'tonk', name: 'Tonk Out', desc: 'Win a Tonk match', icon: '♣' },
+  { id: 'fish', name: 'Big Catch', desc: 'Win a game of Go Fish', icon: '🐟' },
+  { id: 'general', name: 'General', desc: 'Win a game of War', icon: '⚔️' },
+  { id: 'owner', name: 'Own Your Masters', desc: 'Win a Studio Showdown match', icon: '🎤' },
   { id: 'procircuit', name: 'Pro Circuit', desc: 'Win in Pro mode in 3 different games', icon: '🥇' }
 ];
 function save() { LS.set('player', P); renderChip(); }
@@ -5493,7 +7502,7 @@ function addXP(n, silent) {
 }
 function floatXP(n) { const el = document.createElement('div'); el.className = 'xpfloat'; el.textContent = `+${n} XP`; document.body.appendChild(el); setTimeout(() => el.remove(), 1400); }
 
-const GAME_NAMES = { mogul: 'Mega Media Mogul', pittypat: 'Pitty Pat', colorclash: 'Color Clash', 'blackjack-tourney': 'Blackjack Tournament', chess: 'Chess', checkers: 'Checkers', spades: 'Spades', blackjack: 'Blackjack', parcheesi: 'Parcheesi', academy: 'Chess Academy' };
+const GAME_NAMES = { dominoes: 'Dominoes', bidwhist: 'Bid Whist', poker: "Hold'em", tonk: 'Tonk', gofish: 'Go Fish', war: 'I Declare War', showdown: 'Studio Showdown', mogul: 'Mega Media Mogul', pittypat: 'Pitty Pat', colorclash: 'Color Clash', 'blackjack-tourney': 'Blackjack Tournament', chess: 'Chess', checkers: 'Checkers', spades: 'Spades', blackjack: 'Blackjack', parcheesi: 'Parcheesi', academy: 'Chess Academy' };
 SH.onResult = function (game, res, extra) {
   extra = extra || {};
   const g = P.games[game] = P.games[game] || { w: 0, l: 0, d: 0 };
@@ -5514,12 +7523,13 @@ SH.onResult = function (game, res, extra) {
   if (game === 'colorclash' && res === 'w') unlock('clash');
   if (game === 'pittypat' && res === 'w') unlock('pat');
   if (game === 'mogul' && res === 'w') unlock('mogul');
+  if (res === 'w') { const m = { dominoes: 'domino', bidwhist: 'boston', poker: 'holdem', tonk: 'tonk', gofish: 'fish', war: 'general', showdown: 'owner' }[game]; if (m) unlock(m); }
   if (game === 'blackjack') {
     if (extra.bj) { unlock('natural'); queueCard({ kind: 'win', headline: 'BLACKJACK!', sub: 'A natural 21 at the McLearn Arena table', icon: '🂡' }); }
     const st = LS.get('bj', null); if (st && st.total >= 50 && st.good / st.total >= 0.95) unlock('strategist');
   }
   if (game === 'academy') { const pz = LS.get('puzzles', { solved: [] }); if (pz.solved.length >= 7) unlock('drills'); queueCard({ kind: 'win', headline: 'PUZZLE SOLVED', sub: extra.name || 'McLearn Academy drill', icon: '🎓' }); }
-  if (res === 'w' && big && game !== 'blackjack-tourney') queueCard({ kind: 'win', headline: game === 'chess' ? (extra.reason === 'checkmate' ? 'CHECKMATE' : 'VICTORY') : 'VICTORY', sub: `${extra.pro ? 'Pro · ' : ''}${GAME_NAMES[game]}${extra.vs ? ' vs ' + extra.vs : ''}`, icon: { chess: '♚', checkers: '⛀', spades: '♠', parcheesi: '⚄', colorclash: '✦', pittypat: '🂫', mogul: '🏙' }[game] || '🏆' });
+  if (res === 'w' && big && game !== 'blackjack-tourney') queueCard({ kind: 'win', headline: game === 'chess' ? (extra.reason === 'checkmate' ? 'CHECKMATE' : 'VICTORY') : 'VICTORY', sub: `${extra.pro ? 'Pro · ' : ''}${GAME_NAMES[game]}${extra.vs ? ' vs ' + extra.vs : ''}`, icon: { chess: '♚', checkers: '⛀', spades: '♠', parcheesi: '⚄', colorclash: '✦', pittypat: '🂫', mogul: '🏙', dominoes: '🁫', bidwhist: '🃏', poker: '♦', tonk: '♣', gofish: '🐟', war: '⚔️', showdown: '🎤' }[game] || '🏆' });
   if (game !== 'blackjack' || (P.games.blackjack.w + P.games.blackjack.l + P.games.blackjack.d) % 6 === 0) setTimeout(() => Minute.maybe(), 2600);
 };
 SH.onEvent = function (game, ev, data) {
@@ -5625,7 +7635,7 @@ function openPlayerCard() {
   const rec = k => { const g = P.games[k] || { w: 0, l: 0, d: 0 }; return `${g.w}W ${g.l}L${g.d ? ' ' + g.d + 'D' : ''}`; };
   $('pcm-body').innerHTML = `
     <div class="row" style="gap:14px;align-items:center"><div class="lvl big">${lv}</div><div><div class="serif" style="font-size:22px">${title(lv)}</div><div class="tiny muted">${P.xp.toLocaleString()} XP · ${(next - P.xp).toLocaleString()} to level ${lv + 1}</div><div class="tiny" style="color:var(--amber)">${P.season} season · ${P.sxp.toLocaleString()} XP this season · best streak ${P.bestStreak}</div></div></div>
-    <div class="grid3" style="margin-top:12px">${['chess', 'checkers', 'spades', 'blackjack', 'parcheesi', 'colorclash', 'pittypat', 'mogul'].map(k => `<div class="stat"><span>${GAME_NAMES[k]}</span><b style="font-size:12px">${rec(k)}</b></div>`).join('')}<div class="stat"><span>Chess Elo</span><b style="font-size:12px">${SH.profile.elo}</b></div></div>
+    <div class="grid3" style="margin-top:12px">${['chess', 'checkers', 'spades', 'blackjack', 'parcheesi', 'colorclash', 'pittypat', 'mogul', 'dominoes', 'bidwhist', 'poker', 'tonk', 'gofish', 'war', 'showdown'].map(k => `<div class="stat"><span>${GAME_NAMES[k]}</span><b style="font-size:12px">${rec(k)}</b></div>`).join('')}<div class="stat"><span>Chess Elo</span><b style="font-size:12px">${SH.profile.elo}</b></div></div>
     <div class="label" style="margin:14px 0 6px">Achievements · ${Object.keys(P.ach).length}/${ACH.length}</div>
     <div class="achgrid">${ACH.map(a => `<div class="ach ${P.ach[a.id] ? 'on' : ''}" title="${esc(a.desc)}"><span>${a.icon}</span><b>${esc(a.name)}</b><small>${esc(a.desc)}</small></div>`).join('')}</div>
     <div class="label" style="margin:16px 0 6px">Event Mode — big screen for churches, schools &amp; fundraisers</div>
@@ -5661,11 +7671,12 @@ SH.brand = { SHOWCASE, ACH, openPlayerCard, openCard, queueCard, Minute, enterEv
 (function () {
 'use strict';
 const SH = window.McShared, $ = id => document.getElementById(id), LS = SH.LS;
-const views = ['lobby', 'chess', 'spades', 'blackjack', 'parcheesi', 'checkers', 'colorclash', 'pittypat', 'mogul'].filter(v => document.getElementById('view-' + v));
+const views = ['lobby', 'chess', 'spades', 'blackjack', 'parcheesi', 'checkers', 'colorclash', 'pittypat', 'mogul', 'dominoes', 'bidwhist', 'poker', 'tonk', 'gofish', 'war', 'showdown'].filter(v => document.getElementById('view-' + v));
 let hero = null;
 function cards() {
   const p = SH.profile, ck = LS.get('ck-stats', { w: 0, l: 0, d: 0 }), pz = LS.get('puzzles', { solved: [] });
   const list = [
+    { v: 'dominoes', sym: '🁫', feat: true, title: 'Dominoes', sub: 'Featured · Draw, Block & All Fives with the spinner · partners', stat: `Games ${LS.get('dm-stats', { w: 0, l: 0 }).w}W ${LS.get('dm-stats', { w: 0, l: 0 }).l}L` },
     { v: 'chess', icon: 'K', title: 'Grandmaster Chess', sub: '3-D board · 5 AI tiers · drills · live rooms', stat: `Elo ${p.elo} · ${p.w}W ${p.l}L ${p.d}D · ${pz.solved.length}/7 drills` },
     { v: 'spades', sym: '♠', title: 'Spades', sub: 'You + AI partner · nil bids · bags · bid coach', stat: `Games ${LS.get('sp-stats', { w: 0, l: 0 }).w}W ${LS.get('sp-stats', { w: 0, l: 0 }).l}L` },
     { v: 'blackjack', sym: '♥', title: 'Blackjack (21) Academy', sub: 'Practice chips · strategy coach grades every play', stat: `Chips ${(LS.get('bj', { bank: 1000 }).bank).toLocaleString()}` },
@@ -5673,10 +7684,16 @@ function cards() {
     { v: 'checkers', icon: null, title: 'Checkers', sub: 'American rules · 3 AI levels · 3-D', stat: `Record ${ck.w}W ${ck.l}L ${ck.d}D` },
     { v: 'mogul', sym: '🏙', title: 'Mega Media Mogul', sub: 'Own the McLearn catalog · Remixes & Platinum Editions · auctions', stat: `Games ${LS.get('mg-stats', { w: 0, l: 0 }).w}W ${LS.get('mg-stats', { w: 0, l: 0 }).l}L` },
     { v: 'pittypat', sym: '🂫', title: 'Pitty Pat', sub: 'The Southern pairing game · out-of-turn Pat! house rule', stat: `Games ${LS.get('pp-stats', { w: 0, l: 0 }).w}W ${LS.get('pp-stats', { w: 0, l: 0 }).l}L` },
+    { v: 'bidwhist', sym: '🃏', title: 'Bid Whist', sub: 'Partners · kitty · Uptown, Downtown & No Trump · Boston', stat: `Games ${LS.get('bw-stats', { w: 0, l: 0 }).w}W ${LS.get('bw-stats', { w: 0, l: 0 }).l}L` },
+    { v: 'poker', sym: '♦', title: "Hold'em Poker", sub: 'Sit & Go with practice chips · live win-odds coach', stat: `Titles ${LS.get('pk-stats', { w: 0, l: 0 }).w} · ${LS.get('pk-stats', { w: 0, l: 0 }).l} busts` },
+    { v: 'tonk', sym: '♣', title: 'Tonk', sub: 'Spread, hit, drop or Tonk out · caught-drop penalties', stat: `Matches ${LS.get('tk-stats', { w: 0, l: 0 }).w}W ${LS.get('tk-stats', { w: 0, l: 0 }).l}L` },
+    { v: 'showdown', sym: '🎤', title: 'Studio Showdown', sub: 'Pen · Mic · Contract — McLearn rock-paper-scissors with music-business lessons', stat: `Matches ${LS.get('sd-stats', { w: 0, l: 0 }).w}W ${LS.get('sd-stats', { w: 0, l: 0 }).l}L` },
+    { v: 'gofish', sym: '🐟', title: 'Go Fish', sub: 'Family favorite · books of four or quick pairs', stat: `Games ${LS.get('gf-stats', { w: 0, l: 0 }).w}W ${LS.get('gf-stats', { w: 0, l: 0 }).l}L` },
+    { v: 'war', sym: '⚔️', title: 'I Declare War', sub: 'Classic War · Pro Tactics mode lets you pick your fighter', stat: `Games ${LS.get('war-stats', { w: 0, l: 0 }).w}W ${LS.get('war-stats', { w: 0, l: 0 }).l}L` },
     { v: 'colorclash', sym: '✦', title: 'Color Clash', sub: 'Match colors & symbols · Skip, Reverse, +2, Wilds · call "Last Card!"', stat: `Games ${LS.get('cc-stats', { w: 0, l: 0 }).w}W ${LS.get('cc-stats', { w: 0, l: 0 }).l}L` }
   ].filter(c => views.includes(c.v));
-  $('lobby-cards').innerHTML = list.map(c => `<button class="glass gcard" data-go="${c.v}">
-    <div class="between"><h4>${c.title}</h4>${c.sym ? `<span style="font-size:30px;line-height:1;color:${c.sym === '♥' ? '#ff8fa3' : '#f2c4cb'}">${c.sym}</span>` : c.icon ? `<svg class="pc w" viewBox="0 0 45 45" style="width:34px;height:34px"><use href="#pc-${c.icon}"/></svg>` : '<svg viewBox="0 0 24 24" style="width:30px;height:30px"><circle cx="12" cy="12" r="10" fill="#2a0a12" stroke="#dfa6af" stroke-width="2"/><circle cx="12" cy="12" r="6" fill="none" stroke="#dfa6af" stroke-width="1.5"/></svg>'}</div>
+  $('lobby-cards').innerHTML = list.map(c => `<button class="glass gcard ${c.feat ? 'feat' : ''}" data-go="${c.v}">${c.feat ? '<span class="feat-tag">★ Featured</span>' : ''}
+    <div class="between"><h4>${c.title}</h4>${c.sym ? `<span style="font-size:30px;line-height:1;color:${c.sym === '♥' || c.sym === '♦' ? '#ff8fa3' : '#f2c4cb'}">${c.sym}</span>` : c.icon ? `<svg class="pc w" viewBox="0 0 45 45" style="width:34px;height:34px"><use href="#pc-${c.icon}"/></svg>` : '<svg viewBox="0 0 24 24" style="width:30px;height:30px"><circle cx="12" cy="12" r="10" fill="#2a0a12" stroke="#dfa6af" stroke-width="2"/><circle cx="12" cy="12" r="6" fill="none" stroke="#dfa6af" stroke-width="1.5"/></svg>'}</div>
     <div class="tiny muted">${c.sub}</div><div class="pill" style="align-self:flex-start">${c.stat}</div></button>`).join('');
 }
 function go(v) {
