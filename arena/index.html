@@ -334,6 +334,35 @@ body.event .wrap,body.event .gwrap{grid-template-columns:minmax(0,1fr);max-width
 body.event .wrap>.col.left,body.event .wrap>.col.right,body.event .gwrap>.col.right{display:none}
 body.event .board-wrap{width:min(calc(100% - 40px),max(320px,calc(100vh - 360px)))!important}
 body.event .felt{max-width:min(1100px,100%)}
+.rules summary{display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;list-style:none;padding:4px 0}
+.rules summary::-webkit-details-marker{display:none}
+.rules summary::after{content:'▾';color:var(--rose-300);font-size:12px;margin-left:auto}
+.rules[open] summary::after{content:'▴'}
+.rbadge{font-family:var(--mono);font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;border:1px solid var(--line);background:var(--burg-900);color:var(--rose-300);white-space:nowrap}
+.rbadge.r-pro{background:linear-gradient(135deg,#e6b84a,#b07d18);color:#1e0007;border-color:#f4c86a}
+.rbadge.r-house{background:#14583c;color:#d8f5e6;border-color:#3fbf86}
+.rseg{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin:8px 0;padding:3px;border-radius:12px;background:var(--burg-950);border:1px solid var(--line)}
+.rseg button{border:0;background:none;color:var(--wg-400);font-weight:700;font-size:11.5px;padding:7px 4px;border-radius:9px}
+.rseg button.on{background:var(--rose-500);color:#fff}
+.rseg button[data-rmode=pro].on{background:linear-gradient(135deg,#e6b84a,#b07d18);color:#1e0007}
+.rseg button[data-rmode=house].on{background:#2f7d5b}
+.rlist{display:flex;flex-direction:column;gap:2px;margin:8px 0}
+.rrow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 2px;border-bottom:1px solid rgba(197,125,136,.12);font-size:12px}
+.rrow b{display:block;font-weight:600;color:var(--wg-300)}.rrow small{display:block;font-size:10.5px;color:var(--rose-300);line-height:1.35;margin-top:1px}
+.rrow.locked b::after{content:' · Pro';color:var(--amber);font-size:10px;font-family:var(--mono)}
+.rsel{width:auto;max-width:52%;padding:5px 8px}
+.rtoggle{position:relative;width:40px;height:22px;flex:none}
+.rtoggle input{opacity:0;width:0;height:0;position:absolute}
+.rtoggle span{position:absolute;inset:0;border-radius:999px;background:#3a1a22;border:1px solid var(--line);transition:.2s}
+.rtoggle span::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#bba;transition:.2s}
+.rtoggle input:checked+span{background:var(--rose-500)}.rtoggle input:checked+span::after{left:20px;background:#fff}
+.rtoggle input:focus-visible+span{outline:2px solid var(--rose-300)}
+.rcode{display:grid;grid-template-columns:auto 1fr auto;gap:6px;margin:6px 0}
+.rcode .btn{min-height:34px;padding:5px 10px;font-size:11px}.rcode .field{font-size:10.5px}
+.ptimer{font-family:var(--mono);font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--burg-900);border:1px solid var(--amber);color:var(--amber)}
+.ptimer.low{color:#ff8a8a;border-color:#ff8a8a;animation:pulse .6s infinite alternate}
+.pcard.joker .cc{display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
+.pcard.joker .jk{font-size:calc(var(--cw,64px) * .14);letter-spacing:.08em;margin-bottom:2px}
 </style>
 </head>
 <body>
@@ -400,7 +429,7 @@ body.event .felt{max-width:min(1100px,100%)}
     <div class="logo"><svg viewBox="0 0 45 45" class="pc w" style="width:34px;height:34px;filter:none"><use href="#pc-K"/></svg></div>
     <div>
       <div class="row"><h1 class="title">McLEARN ARENA</h1><span class="pill" style="color:var(--amber)">10X PRO</span></div>
-      <p class="sub">MCLEARN MEDIA PRODUCTION &bull; MS, USA &bull; <span style="color:var(--amber)">GAME HUB v4.2</span></p>
+      <p class="sub">MCLEARN MEDIA PRODUCTION &bull; MS, USA &bull; <span style="color:var(--amber)">GAME HUB v4.3</span></p>
     </div>
   </div>
   <div class="hstats">
@@ -496,6 +525,7 @@ body.event .felt{max-width:min(1100px,100%)}
       <div class="note" id="rated-note"></div>
     </div>
 
+    <div class="glass card" style="padding:10px 14px"><div class="between" style="margin-bottom:4px"><span class="tiny muted">Playing by</span><span class="rbadge" id="rules-badge">Standard</span></div><div id="rules-chess"></div></div>
     <div class="glass card stack">
       <div class="between"><span class="label">Game Metrics</span><span class="pill" id="metrics-who">You</span></div>
       <div class="grid2">
@@ -1708,6 +1738,93 @@ function McBoard3D(container, opts) {
 
 </script>
 <script>
+// McLearn Table Rules — Standard / Pro / House Rules for every game, with shareable rule codes.
+(function () {
+'use strict';
+const LS = {
+  get(k, d) { try { const v = localStorage.getItem('mcl-arena-' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('mcl-arena-' + k, JSON.stringify(v)); } catch (e) { /* storage unavailable */ } }
+};
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+const REG = {}, LISTENERS = {};
+const MODES = [['standard', 'Standard'], ['pro', 'Pro'], ['house', 'House Rules']];
+function state(id) { return LS.get('rules-' + id, { mode: 'standard', custom: null }); }
+function values(id) {
+  const r = REG[id], s = state(id);
+  const base = Object.assign({}, r.presets.standard);
+  if (s.mode === 'pro') return Object.assign(base, r.presets.pro, { pro: true });
+  if (s.mode === 'house') return Object.assign(base, s.custom || {}, { pro: false });
+  return Object.assign(base, { pro: false });
+}
+function label(id) { const m = state(id).mode; return m === 'pro' ? 'Pro' : m === 'house' ? 'House Rules' : 'Standard'; }
+function setMode(id, mode, custom) {
+  const s = state(id); s.mode = mode;
+  if (mode === 'house') s.custom = custom || s.custom || Object.assign({}, REG[id].presets.standard);
+  LS.set('rules-' + id, s); render(id); (LISTENERS[id] || []).forEach(f => f(values(id), s.mode));
+}
+function encode(id) { try { return 'MCR1-' + id + '-' + btoa(unescape(encodeURIComponent(JSON.stringify(values(id))))).replace(/=+$/, ''); } catch (e) { return ''; } }
+function decode(id, code) {
+  const m = /^MCR1-([a-z]+)-([A-Za-z0-9+/]+)$/.exec(code.trim());
+  if (!m) throw new Error('That is not a McLearn rules code');
+  if (m[1] !== id) throw new Error(`That code is for ${REG[m[1]] ? REG[m[1]].title : 'another game'}`);
+  const v = JSON.parse(decodeURIComponent(escape(atob(m[2])))), clean = {};
+  for (const o of REG[id].schema) if (o.key in v) {
+    const val = v[o.key];
+    if (o.type === 'bool' ? typeof val === 'boolean' : o.options.some(x => x[0] === val)) clean[o.key] = val;
+  }
+  return Object.assign({}, REG[id].presets.standard, clean);
+}
+const MOUNTS = {};
+function render(id) {
+  const el = MOUNTS[id]; if (!el) return;
+  const r = REG[id], s = state(id), v = values(id);
+  const ctl = o => o.type === 'bool'
+    ? `<label class="rtoggle"><input type="checkbox" data-rk="${o.key}" ${v[o.key] ? 'checked' : ''}><span></span></label>`
+    : `<select class="field rsel" data-rk="${o.key}">${o.options.map(([val, lab]) => `<option value="${esc(JSON.stringify(val))}" ${val === v[o.key] ? 'selected' : ''}>${esc(lab)}</option>`).join('')}</select>`;
+  el.innerHTML = `<details class="rules" ${LS.get('rules-open-' + id, false) ? 'open' : ''}>
+    <summary><span class="label">Table Rules</span><span class="rbadge r-${s.mode}">${label(id)}</span></summary>
+    <div class="rseg">${MODES.map(([m, l]) => `<button type="button" data-rmode="${m}" class="${s.mode === m ? 'on' : ''}">${l}</button>`).join('')}</div>
+    <div class="note">${s.mode === 'pro' ? esc(r.proNote) : s.mode === 'house' ? 'Your house rules — change anything below. Saved on this device.' : 'Official rules with the coach and hints on. Change any setting to start your own house rules.'}</div>
+    <div class="rlist">${r.schema.map(o => `<div class="rrow ${o.key in r.presets.pro && s.mode === 'pro' ? 'locked' : ''}"><div><b>${esc(o.label)}</b>${o.help ? `<small>${esc(o.help)}</small>` : ''}</div>${ctl(o)}</div>`).join('')}</div>
+    <div class="rcode"><button type="button" class="btn btn-sec" data-rcopy>Copy rules code</button><input class="field mono" data-rin placeholder="Paste a rules code" spellcheck="false"><button type="button" class="btn btn-sec" data-rload>Load</button></div>
+    <div class="note">Rule changes apply from the next game.</div>
+  </details>`;
+  const d = el.querySelector('details'); d.addEventListener('toggle', () => LS.set('rules-open-' + id, d.open));
+  el.querySelectorAll('[data-rmode]').forEach(b => b.onclick = () => setMode(id, b.dataset.rmode, values(id)));
+  el.querySelectorAll('[data-rk]').forEach(inp => inp.onchange = () => {
+    const cur = values(id); delete cur.pro;
+    cur[inp.dataset.rk] = inp.type === 'checkbox' ? inp.checked : JSON.parse(inp.value);
+    setMode(id, 'house', cur);
+  });
+  el.querySelector('[data-rcopy]').onclick = () => { const c = encode(id); const t = window.McShared && McShared.toast; navigator.clipboard.writeText(c).then(() => t && t('Rules code copied — share it with your table')).catch(() => { el.querySelector('[data-rin]').value = c; t && t('Select the code and copy it', 'x'); }); };
+  el.querySelector('[data-rload]').onclick = () => {
+    const t = window.McShared && McShared.toast;
+    try { setMode(id, 'house', decode(id, el.querySelector('[data-rin]').value)); t && t('House rules loaded'); } catch (e) { t && t(e.message, 'x'); }
+  };
+}
+window.McRules = {
+  register(id, def) { REG[id] = def; },
+  mount(id, el) { MOUNTS[id] = el; render(id); },
+  get: values, label, mode: id => state(id).mode,
+  onChange(id, f) { (LISTENERS[id] = LISTENERS[id] || []).push(f); },
+  _encode: encode, _decode: decode, _setMode: setMode,
+  timer() { // Pro-mode turn clock: start(seconds, element, onExpire) / stop()
+    let iv = null, end = 0, el = null, cb = null;
+    const api = {
+      start(sec, elem, onExpire) {
+        api.stop(); if (!sec) return; el = elem; cb = onExpire; end = performance.now() + sec * 1000;
+        const tick = () => { const left = Math.max(0, end - performance.now()); if (el) { el.textContent = 'Turn clock ' + Math.ceil(left / 1000) + 's'; el.classList.remove('hidden'); el.classList.toggle('low', left < 6000); } if (left <= 0) { api.stop(); if (cb) cb(); } };
+        tick(); iv = setInterval(tick, 200);
+      },
+      stop() { clearInterval(iv); iv = null; if (el) el.classList.add('hidden'); }
+    };
+    return api;
+  }
+};
+})();
+
+</script>
+<script>
 (function () {
 'use strict';
 const E = McLearnEngine();
@@ -1905,7 +2022,28 @@ const S = {
   lastDepth: null, startedAt: null, oppName: null, view3d: LS.get('3d', true), _reset3d: true
 };
 let B3 = null;
-const THEME_COLORS = { imperial: ['#dfbfb9', '#680d22', '#b76e79'], onyx: ['#d8d8d8', '#2b2b2b', '#8a8a8a'], wood: ['#e3c59a', '#8c532b', '#5a3418'], marble: ['#f4efea', '#c79ba2', '#b76e79'] };
+McRules.register('chess', {
+  title: 'Chess',
+  proNote: 'Pro: rated, touch-move, no hints, eval bar or take-backs, and a real clock (Unlimited becomes Rapid 10+0).',
+  schema: [
+    { key: 'hints', label: 'Hints, best-move arrow & eval bar', type: 'bool' },
+    { key: 'undo', label: 'Take-backs (Undo)', type: 'bool' },
+    { key: 'touch', label: 'Touch-move', help: 'Once you pick a piece that can move, you must move it', type: 'bool' },
+    { key: 'autoQueen', label: 'Auto-promote to queen', type: 'bool' },
+    { key: 'odds', label: 'Handicap vs the computer', help: 'The computer starts without this piece (casual games)', type: 'select', options: [['none', 'No handicap'], ['p', 'Pawn odds (f-pawn)'], ['n', 'Knight odds'], ['r', 'Rook odds'], ['q', 'Queen odds']] }
+  ],
+  presets: { standard: { hints: true, undo: true, touch: false, autoQueen: false, odds: 'none' }, pro: { hints: false, undo: false, touch: true, autoQueen: false, odds: 'none' } }
+});
+const R = () => McRules.get('chess');
+function oddsFen(engineColor, odds) {
+  if (!odds || odds === 'none') return null;
+  const rows = E.START_FEN.split(' ')[0].split('/').map(r => r.replace(/\d/g, d => '.'.repeat(+d)).split(''));
+  const rank = engineColor === 'b' ? 0 : 7, pawnRank = engineColor === 'b' ? 1 : 6;
+  if (odds === 'p') rows[pawnRank][5] = '.'; else rows[rank][{ n: 1, r: 0, q: 3 }[odds]] = '.';
+  const place = rows.map(r => r.join('').replace(/\.+/g, m => m.length)).join('/');
+  let castle = 'KQkq'; if (odds === 'r') castle = castle.replace(engineColor === 'b' ? 'q' : 'Q', '');
+  return `${place} w ${castle} - 0 1`;
+}const THEME_COLORS = { imperial: ['#dfbfb9', '#680d22', '#b76e79'], onyx: ['#d8d8d8', '#2b2b2b', '#8a8a8a'], wood: ['#e3c59a', '#8c532b', '#5a3418'], marble: ['#f4efea', '#c79ba2', '#b76e79'] };
 const themeColors = () => THEME_COLORS[S.theme] || THEME_COLORS.imperial;
 const isLive = () => S.view === null || S.view === S.moves.length;
 const viewIdx = () => (S.view === null ? S.moves.length : S.view);
@@ -1979,6 +2117,7 @@ function arrow(from, to, color, marker, width) {
 }
 function hintsAllowed() {
   if (S.rated || S.mode === 'online' || S.mode === 'puzzle' && !S.puzzle?.revealed) return false;
+  if (!R().hints && !S.result) return false;
   if (S.result) return true;
   if (S.mode === 'engine') return turnColor() === S.player;
   return true;
@@ -2000,7 +2139,7 @@ function renderArrows() {
 }
 
 // ============ EVAL BAR ============
-function evalAllowed() { return !(S.rated && !S.result) && !(S.mode === 'online' && !S.result) && !(S.mode === 'puzzle' && !S.puzzle?.done); }
+function evalAllowed() { return !(!R().hints && !S.result && S.mode !== 'local') && !(S.rated && !S.result) && !(S.mode === 'online' && !S.result) && !(S.mode === 'puzzle' && !S.puzzle?.done); }
 function fmtScore(scoreWhite) {
   if (Math.abs(scoreWhite) > 29000) { const m = Math.ceil((E.MATE - Math.abs(scoreWhite)) / 2); return (scoreWhite > 0 ? '+M' : '-M') + m; }
   const v = scoreWhite / 100; return (v > 0 ? '+' : '') + v.toFixed(1);
@@ -2192,8 +2331,14 @@ function newGame(opts) {
   if (opts.level) S.level = opts.level;
   if (opts.player) S.player = opts.player;
   else if (S.mode === 'engine') { const v = $('side-sel').value; S.player = v === 'r' ? (Math.random() < .5 ? 'w' : 'b') : v; }
-  S.rated = !!opts.rated;
+  const rules = R(); S.rules = rules;
+  if (S.mode === 'engine' && !opts.fen && !opts.tmatch && rules.odds !== 'none') {
+    const f = oddsFen(S.player === 'w' ? 'b' : 'w', rules.odds);
+    if (f) { S.startFen = f; S.custom = true; S.pos = new E.Position(f); S.fens = [S.pos.fen()]; }
+  }
+  S.rated = (!!opts.rated || (rules.pro && S.mode === 'engine')) && !S.custom;
   S.tc = opts.tc || parseTC($('tc-sel').value);
+  if (rules.pro && S.mode !== 'puzzle' && S.tc.base === 0) S.tc = { base: 600, inc: 0 };
   if (S.mode === 'puzzle') S.tc = { base: 0, inc: 0 };
   S.clock = { w: S.tc.base * 1000, b: S.tc.base * 1000 }; S.running = false;
   S.orientation = S.mode === 'puzzle' ? S.puzzle.color : (S.mode === 'engine' ? S.player : (S.mode === 'online' ? (Net.mySeat || 'w') : 'w'));
@@ -2210,15 +2355,17 @@ function parseTC(v) { const [b, i] = v.split('+').map(Number); return { base: b,
 function refreshAll() { renderBoard(); renderPlayers(); renderMoves(); renderMetrics(); renderStatus(); renderControls(); }
 
 function renderControls() {
-  const casualEngine = S.mode === 'engine' && !S.rated;
-  $('btn-undo').disabled = !(S.moves.length && (casualEngine || S.mode === 'local') && !S.result && isLive()) && !(S.mode === 'puzzle');
+  const casualEngine = S.mode === 'engine' && !S.rated && R().undo;
+  $('btn-undo').disabled = !(S.moves.length && (casualEngine || (S.mode === 'local' && R().undo)) && !S.result && isLive()) && !(S.mode === 'puzzle');
+  const rb = $('rules-badge'); if (rb) { rb.textContent = McRules.label('chess') + (S.custom && S.mode === 'engine' && R().odds !== 'none' ? ' · ' + { p: 'pawn', n: 'knight', r: 'rook', q: 'queen' }[R().odds] + ' odds' : ''); rb.className = 'rbadge r-' + McRules.mode('chess'); }
   $('btn-resign').disabled = !!S.result || S.mode === 'puzzle' || !S.moves.length && S.mode !== 'online';
   $('rated-chk').checked = S.rated;
   $('lvl').disabled = S.rated && !S.result && S.moves.length > 0 || !!S.tmatch;
   $('think-pill').classList.toggle('hidden', !S.thinking);
   $('depth-pill').textContent = S.lastDepth ? `Depth ${S.lastDepth}` : `Depth —`;
   const rn = $('rated-note');
-  if (S.rated) rn.textContent = S.result ? 'Rated game finished.' : `Rated vs ${LEVELS[S.level - 1].name} (${LEVELS[S.level - 1].rating}). Hints, eval bar and undo are locked.`;
+  if (S.rated && S.rules && S.rules.pro && !S.result) rn.textContent = `Pro game vs ${LEVELS[S.level - 1].name} — rated, touch-move, no hints or take-backs.`;
+  else if (S.rated) rn.textContent = S.result ? 'Rated game finished.' : `Rated vs ${LEVELS[S.level - 1].name} (${LEVELS[S.level - 1].rating}). Hints, eval bar and undo are locked.`;
   else if (S.mode === 'engine') rn.textContent = 'Casual game — hints and undo allowed; Elo unchanged. Tick "Rated game" and press New Game to play for rating.';
   else if (S.mode === 'local') rn.textContent = 'Pass & Play: two players share this device. Not rated.';
   else rn.textContent = '';
@@ -2329,7 +2476,7 @@ function endGame(result, reason) {
     sub += ` · Elo ${delta >= 0 ? '+' : ''}${delta} → ${prof.elo}`;
   }
   if (S.mode === 'online') Net.onLocalEnd(result, reason);
-  if (me && window.McShared && McShared.onResult) McShared.onResult('chess', !winner ? 'd' : winner === me ? 'w' : 'l', { level: S.mode === 'engine' ? S.level : 0, reason, vs: S.mode === 'engine' ? (S.oppName || LEVELS[S.level - 1].name) : 'a live opponent' });
+  if (me && window.McShared && McShared.onResult) McShared.onResult('chess', !winner ? 'd' : winner === me ? 'w' : 'l', { pro: !!(S.rules && S.rules.pro), level: S.mode === 'engine' ? S.level : 0, reason, vs: S.mode === 'engine' ? (S.oppName || LEVELS[S.level - 1].name) : 'a live opponent' });
   if (S.tmatch) Tourney.report(winner ? (winner === S.player ? 'you' : 'opp') : 'draw');
   const actions = [];
   if (S.mode === 'engine' || S.mode === 'local') actions.push(['Play again', () => newGame({ mode: S.mode, rated: $('rated-chk').checked }), true]);
@@ -2382,7 +2529,7 @@ function select(sq) { S.selected = sq; S.targets = sq ? legalFrom(sq) : []; rend
 function tryMoveTo(sq) {
   const opts = S.targets.filter(t => t.to === sq);
   if (!opts.length) return false;
-  if (opts[0].promo) { askPromotion(opts); return true; }
+  if (opts[0].promo) { if (R().autoQueen) { const q = opts.find(o => E.PROMO(o.m) === 5); applyMove((q || opts[0]).m, 'local'); return true; } askPromotion(opts); return true; }
   applyMove(opts[0].m, 'local');
   return true;
 }
@@ -2391,6 +2538,7 @@ function tapSquare(sq) { // shared by the 2D board and the 3D board; returns tru
   if (!canUserMove()) { if (!isLive()) toast('Viewing history — press ⏭ to return to the live game'); return false; }
   if (S.selected && S.selected !== sq && tryMoveTo(sq)) return false;
   const p = S.pos.pieceAt(sq);
+  if (R().touch && S.mode !== 'puzzle' && S.selected && S.selected !== sq && S.targets.length) { toast(`Touch-move: you must move the piece on ${S.selected}`, 'x'); return false; }
   if (p && p.color === turnColor()) { select(sq); return true; }
   select(null); return false;
 }
@@ -3175,6 +3323,11 @@ window.addEventListener('resize', () => { if (window.innerWidth > 1180) $('battl
 Net.init();
 Cloud.init();
 set3d(S.view3d);
+McRules.mount('chess', $('rules-chess'));
+McRules.onChange('chess', () => {
+  if ((S.mode === 'engine' || S.mode === 'local') && !S.moves.length) { newGame({ mode: S.mode, rated: $('rated-chk').checked, silent: true }); toast(`Chess rules: ${McRules.label('chess')}`); }
+  else { toast('New rules apply from your next game'); renderControls(); }
+});
 window.__arena = { S, E, Analysis, Tourney, applyMove, newGame, gotoPly, PUZZLES, loadPuzzle }; // for diagnostics
 })();
 
@@ -3189,6 +3342,20 @@ const N = 64, idx = (f, r) => r * 8 + f, F = i => i & 7, R = i => i >> 3;
 const name = i => 'abcdefgh'[F(i)] + (R(i) + 1);
 const DIRS = { d: [[1, 1], [-1, 1]], l: [[1, -1], [-1, -1]] }, ALL = [[1, 1], [-1, 1], [1, -1], [-1, -1]];
 const opp = c => (c === 'd' ? 'l' : 'd');
+McRules.register('checkers', {
+  title: 'Checkers',
+  proNote: 'Pro: tournament rules — forced jumps, 40-move draw, no hints or undo, and a 30-second turn clock.',
+  schema: [
+    { key: 'forced', label: 'Forced jumps', help: 'If a jump is available you must take it', type: 'bool' },
+    { key: 'backCapture', label: 'Regular pieces jump backward', help: 'International / Russian style', type: 'bool' },
+    { key: 'flying', label: 'Flying kings', help: 'Kings slide any distance along a diagonal', type: 'bool' },
+    { key: 'drawRule', label: '40-move draw rule', type: 'bool' },
+    { key: 'assist', label: 'Hints & undo', type: 'bool' },
+    { key: 'timer', label: 'Turn clock', type: 'select', options: [[0, 'Off'], [30, '30 seconds'], [60, '60 seconds']] }
+  ],
+  presets: { standard: { forced: true, backCapture: false, flying: false, drawRule: true, assist: true, timer: 0 }, pro: { forced: true, backCapture: false, flying: false, drawRule: true, assist: false, timer: 30 } }
+});
+let RU = McRules.get('checkers');
 
 function startBoard() {
   const b = new Array(N).fill(null);
@@ -3204,25 +3371,36 @@ function genMoves(b, side) {
     // jumps (DFS)
     const dfs = (at, path, taken, king) => {
       let extended = false;
-      for (const [df, dr] of (king ? ALL : DIRS[side])) {
-        const mf = F(at) + df, mr = R(at) + dr, tf = F(at) + 2 * df, tr = R(at) + 2 * dr;
-        if (!inB(tf, tr)) continue;
-        const mid = idx(mf, mr), to = idx(tf, tr), q = b[mid];
-        if (!q || q.c === side || taken.includes(mid) || (b[to] && to !== i)) continue;
-        const crowns = !king && (side === 'd' ? tr === 7 : tr === 0);
-        extended = true;
-        if (crowns) caps.push({ path: path.concat(to), taken: taken.concat(mid), crown: true });
-        else dfs(to, path.concat(to), taken.concat(mid), king);
+      const jumpDirs = king || RU.backCapture ? ALL : DIRS[side];
+      for (const [df, dr] of jumpDirs) {
+        let mf = F(at) + df, mr = R(at) + dr;
+        if (king && RU.flying) { while (inB(mf, mr) && (!b[idx(mf, mr)] || idx(mf, mr) === i) && !taken.includes(idx(mf, mr))) { mf += df; mr += dr; } }
+        if (!inB(mf, mr)) continue;
+        const mid = idx(mf, mr), q = b[mid];
+        if (!q || q.c === side || taken.includes(mid)) continue;
+        let tf = mf + df, tr = mr + dr;
+        const lands = [];
+        while (inB(tf, tr)) { const to = idx(tf, tr); if (b[to] && to !== i) break; if (taken.includes(to)) break; lands.push([tf, tr]); if (!(king && RU.flying)) break; tf += df; tr += dr; }
+        for (const [lf, lr] of lands) {
+          const to = idx(lf, lr), crowns = !king && (side === 'd' ? lr === 7 : lr === 0);
+          extended = true;
+          if (crowns) caps.push({ path: path.concat(to), taken: taken.concat(mid), crown: true });
+          else dfs(to, path.concat(to), taken.concat(mid), king);
+        }
       }
       if (!extended && taken.length) caps.push({ path, taken, crown: false });
     };
     dfs(i, [i], [], p.k);
     for (const [df, dr] of dirs) {
-      const tf = F(i) + df, tr = R(i) + dr; if (!inB(tf, tr)) continue; const to = idx(tf, tr);
-      if (!b[to]) steps.push({ path: [i, to], taken: [], crown: !p.k && (side === 'd' ? tr === 7 : tr === 0) });
+      let tf = F(i) + df, tr = R(i) + dr;
+      while (inB(tf, tr) && !b[idx(tf, tr)]) {
+        steps.push({ path: [i, idx(tf, tr)], taken: [], crown: !p.k && (side === 'd' ? tr === 7 : tr === 0) });
+        if (!(p.k && RU.flying)) break;
+        tf += df; tr += dr;
+      }
     }
   }
-  return caps.length ? caps : steps;
+  return caps.length ? (RU.forced ? caps : caps.concat(steps)) : steps;
 }
 function apply(b, m) {
   const nb = b.slice(); const from = m.path[0], to = m.path[m.path.length - 1], p = nb[from];
@@ -3281,6 +3459,7 @@ function search(b, side, opts) {
 }
 
 // ---------- UI ----------
+const ckTimer = McRules.timer();
 const LEVELS = [{ name: 'Easy', opts: { maxDepth: 2, noise: 60, timeMs: 200 } }, { name: 'Medium', opts: { maxDepth: 5, timeMs: 300 } }, { name: 'Hard', opts: { timeMs: 900 } }];
 const G = { b: startBoard(), turn: 'd', player: 'd', level: LS.get('ck-level', 2), hist: [], log: [], sel: null, targets: [], over: null, quiet: 0, last: null, thinking: false, token: 0, orient: 'd', view3d: LS.get('ck-3d', true), hint: null, stats: LS.get('ck-stats', { w: 0, l: 0, d: 0 }) };
 let B3 = null;
@@ -3292,13 +3471,14 @@ root.innerHTML = `
   <div class="glass player" id="ck-bot"></div>
   <div class="glass controls">
     <div class="row"><button class="btn btn-sec" id="ck-3d">3D</button><button class="btn btn-ghost" id="ck-view" title="Reset camera">⟲</button></div>
-    <div class="row"><span class="pill hidden" id="ck-think"><span class="thinking"><i></i><i></i><i></i></span>Thinking</span><button class="btn btn-lux" id="ck-hint">Hint</button></div>
+    <div class="row"><span class="ptimer hidden" id="ck-timer"></span><span class="pill hidden" id="ck-think"><span class="thinking"><i></i><i></i><i></i></span>Thinking</span><button class="btn btn-lux" id="ck-hint">Hint</button></div>
   </div>
 </section>
 <section class="col right">
   <div class="glass card stack">
     <div class="between"><h3 class="h3">McLearn Checkers</h3><span class="pill" id="ck-rec"></span></div>
-    <div class="tiny muted">American rules: captures are mandatory, keep jumping while you can, reaching the far row crowns a king and ends the turn. Dark moves first.</div>
+    <div id="rules-checkers"></div>
+    <div class="tiny muted" id="ck-rules-sum"></div>
     <div class="grid2">
       <div><span class="label">Difficulty</span><select class="field" id="ck-lvl" style="margin-top:4px"><option value="1">Easy</option><option value="2">Medium</option><option value="3">Hard</option></select></div>
       <div><span class="label">Your side</span><select class="field" id="ck-side" style="margin-top:4px"><option value="d">Dark (first)</option><option value="l">Light</option></select></div>
@@ -3340,13 +3520,17 @@ function render() {
   const label = c => (c === G.player ? 'You' : `AI · ${LEVELS[G.level - 1].name}`) + ` (${c === 'd' ? 'Dark' : 'Light'})`;
   const top = G.orient === 'd' ? 'l' : 'd', bot = opp(top);
   for (const [id, c] of [['ck-top', top], ['ck-bot', bot]]) $(id).innerHTML = `<div class="who"><span class="dot ${c === 'l' ? 'w' : 'b'}"></span><span>${label(c)}</span></div><span class="pill">${count(c)} pieces · ${G.b.filter(p => p && p.c === c && p.k).length} kings</span>${!G.over && G.turn === c ? '<span class="pill">to move</span>' : ''}`;
-  $('ck-status').textContent = G.over ? G.over : (G.turn === G.player ? (genMoves(G.b, G.turn)[0]?.taken.length ? 'You must capture!' : 'Your move.') : 'AI is thinking…');
+  $('ck-status').textContent = G.over ? G.over : (G.turn === G.player ? (RU.forced && genMoves(G.b, G.turn)[0]?.taken.length ? 'You must capture!' : 'Your move.') : 'AI is thinking…');
   $('ck-think').classList.toggle('hidden', !G.thinking);
   $('ck-rec').textContent = `W${G.stats.w} L${G.stats.l} D${G.stats.d}`;
   $('ck-log').innerHTML = G.log.length ? G.log.map((s, i) => `<span class="mv"><span class="n">${i % 2 ? '' : (i / 2 + 1) + '.'}</span>${s}</span>`).join('') : '<span class="tiny muted">No moves yet.</span>';
   $('ck-log').scrollTop = 1e9;
   $('ck-3d').textContent = G.view3d ? '2D board' : '3D board';
-  $('ck-undo').disabled = !G.hist.length || G.thinking;
+  $('ck-undo').disabled = !G.hist.length || G.thinking || !RU.assist;
+  $('ck-hint').classList.toggle('hidden', !RU.assist);
+  $('ck-rules-sum').innerHTML = `<span class="rbadge r-${McRules.mode('checkers')}">${McRules.label('checkers')}</span> ${RU.forced ? 'Forced jumps' : 'Jumps optional'} · ${RU.flying ? 'flying kings' : 'kings move one square'}${RU.backCapture ? ' · men jump backward' : ''} · crowning ends the move · Dark moves first.`;
+  if (!G.over && !G.thinking && G.turn === G.player && RU.timer) { if (!G._tOn) { G._tOn = true; ckTimer.start(RU.timer, $('ck-timer'), () => { G._tOn = false; const r = search(G.b, G.player, { timeMs: 200 }); if (r && r.move) { SH.toast('Time! Auto-move played', 'clock'); play(r.move); } }); } }
+  else { G._tOn = false; ckTimer.stop(); }
 }
 function notation(m) { const sep = m.taken.length ? 'x' : '-'; return m.path.map(name).join(sep) + (m.crown ? '♔' : ''); }
 function play(m) {
@@ -3356,7 +3540,7 @@ function play(m) {
   SH.Sound.play(m.taken.length ? 'capture' : 'move'); if (m.crown) SH.Sound.play('check');
   G.turn = opp(G.turn);
   if (!genMoves(G.b, G.turn).length) finish(G.turn === G.player ? 'l' : 'w', `${G.turn === G.player ? 'You have' : 'The AI has'} no moves left.`);
-  else if (G.quiet >= 80) finish('d', '40 moves each without a capture or a man move.');
+  else if (RU.drawRule && G.quiet >= 80) finish('d', '40 moves each without a capture or a man move.');
   render();
   if (!G.over && G.turn !== G.player) aiMove();
 }
@@ -3366,7 +3550,8 @@ function finish(res, why) {
   SH.Sound.play(res === 'w' ? 'victory' : res === 'l' ? 'defeat' : 'draw');
   $('ck-end-t').textContent = res === 'w' ? 'Victory!' : res === 'l' ? 'Defeat' : 'Draw'; $('ck-end-s').textContent = why;
   setTimeout(() => $('ck-end').classList.remove('hidden'), 400);
-  if (SH.onResult) SH.onResult('checkers', res);
+  ckTimer.stop();
+  if (SH.onResult) SH.onResult('checkers', res, { pro: !!RU.pro });
 }
 async function aiMove() {
   const token = G.token; G.thinking = true; render();
@@ -3390,6 +3575,7 @@ function tap(i) {
 }
 boardEl.addEventListener('pointerdown', e => { const s = e.target.closest('.sq'); if (s) tap(+s.dataset.i); });
 function newGame() {
+  RU = McRules.get('checkers'); G._tOn = false; ckTimer.stop();
   G.token++; G.b = startBoard(); G.turn = 'd'; G.player = $('ck-side').value; G.orient = G.player; G.hist = []; G.log = []; G.sel = null; G.targets = []; G.over = null; G.quiet = 0; G.last = null; G.thinking = false; G.hint = null; G.reset3d = true;
   $('ck-end').classList.add('hidden'); build(); render(); SH.Sound.play('start');
   if (G.turn !== G.player) aiMove();
@@ -3421,6 +3607,8 @@ $('ck-hint').onclick = () => {
   if (r && r.move) { G.hint = [r.move.path[0], r.move.path[r.move.path.length - 1]]; render(); SH.toast(`Try ${notation(r.move)}`); }
 };
 SH.games.checkers = { onShow() { syncTheme(); if (B3 && G.view3d) B3.redraw(); }, syncTheme, _G: G, _gen: genMoves, _apply: apply, _tap: tap, _search: search, _b3: () => B3 };
+McRules.mount('checkers', $('rules-checkers'));
+McRules.onChange('checkers', () => { if (!G.log.length) newGame(); else SH.toast('New rules apply from your next game'); });
 build(); newGame(); set3d(G.view3d);
 })();
 
@@ -3437,18 +3625,45 @@ SH.cards = {
   html(c, opts) {
     opts = opts || {};
     if (!c || opts.back) return `<div class="pcard back ${opts.cls || ''}" style="${opts.style || ''}"></div>`;
-    const red = c.s === 'h' || c.s === 'd';
-    return `<div class="pcard ${red ? 'red' : ''} ${opts.cls || ''}" style="${opts.style || ''}" ${opts.attr || ''}><span class="cr">${rk(c.r)}<br>${SYM[c.s]}</span><span class="cc">${SYM[c.s]}</span><span class="cr br">${rk(c.r)}<br>${SYM[c.s]}</span></div>`;
+    const ds = c.ds || c.s, red = c.joker ? c.joker === 'big' : ds === 'h' || ds === 'd';
+    const rt = c.joker ? (c.joker === 'big' ? 'BIG' : 'LIL') : c.label || rk(c.r), sy = c.joker ? '★' : SYM[ds];
+    return `<div class="pcard ${red ? 'red' : ''} ${c.joker ? 'joker' : ''} ${opts.cls || ''}" style="${opts.style || ''}" ${opts.attr || ''}><span class="cr">${rt}<br>${sy}</span><span class="cc">${c.joker ? '<span class="jk">JOKER</span>★' : sy}</span><span class="cr br">${rt}<br>${sy}</span></div>`;
   },
-  name: c => rk(c.r) + SYM[c.s],
+  name: c => (c.joker ? (c.joker === 'big' ? 'Big Joker' : 'Little Joker') : (c.label || rk(c.r)) + SYM[c.ds || c.s]),
   deck() { const d = []; for (const s of SUITS) for (let r = 2; r <= 14; r++) d.push({ s, r }); return d; },
   shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 };
 const C = SH.cards;
+McRules.register('spades', {
+  title: 'Spades',
+  proNote: 'Pro: tournament Spades to 500 — no bid or play coach and a 20-second turn clock.',
+  schema: [
+    { key: 'target', label: 'Play to', type: 'select', options: [[250, '250 points'], [300, '300 points'], [500, '500 points']] },
+    { key: 'jokers', label: 'Jokers & Deuces', help: 'Big Joker, Little Joker, then the 2s of diamonds and spades are the top trumps (2♣ and 2♥ come out)', type: 'bool' },
+    { key: 'deuceHigh', label: 'Higher deuce (with Jokers & Deuces)', type: 'select', options: [['d', '2♦ above 2♠'], ['s', '2♠ above 2♦']] },
+    { key: 'nil', label: 'Nil bids allowed', type: 'bool' },
+    { key: 'bags', label: 'Bags (overtricks) penalty', type: 'select', options: [['10', '10 bags = −100'], ['5', '5 bags = −50'], ['off', 'No bag penalty']] },
+    { key: 'minBid', label: 'Minimum team bid', help: 'If a team bids under this, it is raised to the minimum ("board")', type: 'select', options: [[0, 'None'], [4, '4 (board)'], [5, '5']] },
+    { key: 'lead', label: 'First lead of each hand', type: 'select', options: [['left', 'Player left of the dealer'], ['club2', 'Whoever holds the 2♣ leads it']] },
+    { key: 'coach', label: 'Bid & play coach', type: 'bool' },
+    { key: 'timer', label: 'Turn clock', type: 'select', options: [[0, 'Off'], [20, '20 seconds'], [30, '30 seconds']] }
+  ],
+  presets: { standard: { target: 500, jokers: false, deuceHigh: 'd', nil: true, bags: '10', minBid: 0, lead: 'left', coach: true, timer: 0 }, pro: { target: 500, coach: false, timer: 20 } }
+});
+let RU = McRules.get('spades');
+const spTimer = McRules.timer();
+function makeDeck() {
+  let d = C.deck();
+  if (!RU.jokers) return d;
+  d = d.filter(c => !(c.r === 2 && (c.s === 'c' || c.s === 'h' || c.s === 'd' || c.s === 's')));
+  const hi = RU.deuceHigh === 'd' ? 16 : 15, lo = hi === 16 ? 15 : 16;
+  d.push({ s: 's', r: 18, joker: 'big' }, { s: 's', r: 17, joker: 'little' }, { s: 's', r: hi, label: '2', ds: 'd' }, { s: 's', r: lo, label: '2' });
+  return d;
+}
 const SEATS = ['You', 'West', 'Partner', 'East']; // 0 S, 1 W, 2 N, 3 E — play goes clockwise 0→1→2→3
 const team = s => s % 2; // 0 = us (S/N), 1 = them (W/E)
 const G = {
-  target: LS.get('sp-target', 500), score: [0, 0], bags: [0, 0], dealer: 3, hands: [[], [], [], []], bids: [null, null, null, null], tricks: [0, 0, 0, 0],
+  target: 500, score: [0, 0], bags: [0, 0], dealer: 3, hands: [[], [], [], []], bids: [null, null, null, null], tricks: [0, 0, 0, 0],
   trick: [], leader: 0, turn: 0, phase: 'idle', broken: false, played: [], round: 0, token: 0, log: [], stats: LS.get('sp-stats', { w: 0, l: 0 }), coach: LS.get('sp-coach', true), over: null
 };
 const root = $('view-spades');
@@ -3459,6 +3674,7 @@ root.innerHTML = `
     <div class="trick" id="sp-trick"></div>
     <div class="felt-msg" id="sp-msg"></div>
   </div>
+  <div class="row" style="justify-content:center;min-height:6px"><span class="ptimer hidden" id="sp-timer"></span></div>
   <div class="hand" id="sp-hand"></div>
   <div class="glass card hidden" id="sp-bid" style="width:100%;max-width:680px">
     <div class="between"><span class="label">Your bid</span><span class="tiny" style="color:var(--amber)" id="sp-sugg"></span></div>
@@ -3473,9 +3689,10 @@ root.innerHTML = `
       <div class="stat"><span>Them (West + East)</span><b id="sp-them">0</b><span id="sp-themd" style="text-transform:none;letter-spacing:0"></span></div>
     </div>
     <div class="grid2">
-      <div><span class="label">Play to</span><select class="field" id="sp-target" style="margin-top:4px"><option value="300">300</option><option value="500">500</option></select></div>
-      <div style="display:flex;align-items:flex-end"><label class="check"><input type="checkbox" id="sp-coach">Bid &amp; play coach</label></div>
+      <div class="stat"><span>Playing to</span><b id="sp-tgt">500</b></div>
+      <div class="stat"><span>Rules</span><b><span class="rbadge" id="sp-rb">Standard</span></b></div>
     </div>
+    <div id="rules-spades"></div>
     <button class="btn btn-lux" id="sp-new">New Game</button>
     <div class="note">Rules: follow suit if you can · spades are trump and can't be led until broken · Nil = take zero tricks (+100 / −100) · every 10 overtricks ("bags") costs 100.</div>
     <div><span class="label">Table log</span><div class="moves" id="sp-log" style="margin-top:6px;height:120px;font-family:var(--sans)"></div></div>
@@ -3488,24 +3705,31 @@ function estimate(h) {
   let t = 0; const by = s => h.filter(c => c.s === s);
   for (const s of ['h', 'd', 'c']) {
     const cs = by(s), n = cs.length;
-    if (cs.some(c => c.r === 14)) t += n <= 5 ? 1 : 0.6;
-    if (cs.some(c => c.r === 13) && n >= 2) t += n <= 4 ? 0.8 : 0.4;
+    if (cs.some(c => c.r === 14)) t += (n <= 5 ? 1 : 0.6) * (RU.jokers ? 0.85 : 1);
+    if (cs.some(c => c.r === 13) && n >= 2) t += (n <= 4 ? 0.8 : 0.4) * (RU.jokers ? 0.7 : 1);
     if (cs.some(c => c.r === 12) && n >= 3 && n <= 4) t += 0.3;
   }
   const sp = by('s');
-  for (const c of sp) { if (c.r >= 13) t += 1; else if (c.r === 12 && sp.length >= 3) t += 0.8; else if (c.r === 11 && sp.length >= 4) t += 0.5; }
-  if (sp.length > 3) t += (sp.length - 3) * 0.9;
+  if (RU.jokers) { // 15 trumps: Big & Little Joker, two deuces, then A-K-Q… — honors are worth less below the top four
+    const n = sp.length;
+    for (const c of sp) { if (c.r >= 17) t += 1; else if (c.r === 16) t += n >= 2 ? 0.9 : 0.6; else if (c.r === 15) t += n >= 3 ? 0.75 : 0.4; else if (c.r === 14 && n >= 4) t += 0.55; else if (c.r === 13 && n >= 5) t += 0.4; }
+    if (n > 4) t += (n - 4) * 0.75;
+  } else {
+    for (const c of sp) { if (c.r >= 13) t += 1; else if (c.r === 12 && sp.length >= 3) t += 0.8; else if (c.r === 11 && sp.length >= 4) t += 0.5; }
+    if (sp.length > 3) t += (sp.length - 3) * 0.9;
+  }
   for (const s of ['h', 'd', 'c']) { const n = by(s).length; if (sp.length >= 2) { if (n === 0) t += 0.8; else if (n === 1) t += 0.4; } }
   return t;
 }
 function aiBid(seat) {
   const h = G.hands[seat], est = estimate(h);
   const sp = h.filter(c => c.s === 's'), high = h.filter(c => c.r >= 12).length;
-  if (est < 1 && sp.length <= 3 && !sp.some(c => c.r >= 10) && high <= 1) return 0;
+  if (RU.nil && est < 1 && sp.length <= 3 && !sp.some(c => c.r >= 10) && high <= 1) return 0;
   return Math.max(1, Math.round(est));
 }
 function legal(seat) {
   const h = G.hands[seat];
+  if (!G.trick.length && G.mustLead2c) { const two = h.filter(c => c.s === 'c' && c.r === 2); if (two.length) return two; }
   if (G.trick.length) { const led = G.trick[0].c.s, f = h.filter(c => c.s === led); return f.length ? f : h.slice(); }
   const non = h.filter(c => c.s !== 's');
   return G.broken || !non.length ? h.slice() : non;
@@ -3516,12 +3740,14 @@ function winning(trick) {
   return best;
 }
 function isMaster(c) { // no higher unplayed card of this suit outside own hand
-  for (let r = c.r + 1; r <= 14; r++) if (!G.played.some(p => p.s === c.s && p.r === r)) return false;
+  const top = c.s === 's' && RU.jokers ? 18 : 14;
+  for (let r = c.r + 1; r <= top; r++) if (!G.played.some(p => p.s === c.s && p.r === r)) return false;
   return true;
 }
 function aiPlay(seat) {
   const opts = legal(seat), low = a => a.slice().sort((x, y) => x.r - y.r)[0], high = a => a.slice().sort((x, y) => y.r - x.r)[0];
   const nonSp = a => a.filter(c => c.s !== 's');
+  if (!G.trick.length && G.mustLead2c && G.hands[seat].some(c => c.s === 'c' && c.r === 2)) return G.hands[seat].find(c => c.s === 'c' && c.r === 2);
   const nil = G.bids[seat] === 0, partner = (seat + 2) % 4, partnerNil = G.bids[partner] === 0;
   const tm = team(seat), teamBid = G.bids.filter((b, i) => team(i) === tm).reduce((a, b) => a + (b || 0), 0);
   const teamTricks = G.tricks.filter((_, i) => team(i) === tm).reduce((a, b) => a + b, 0), needMore = teamTricks < teamBid;
@@ -3556,7 +3782,7 @@ const wait = ms => new Promise(r => setTimeout(r, ms));
 function log(t) { G.log.push(t); $('sp-log').innerHTML = G.log.slice(-60).map(x => `<div class="tiny" style="color:var(--wg-400)">${x}</div>`).join(''); $('sp-log').scrollTop = 1e9; }
 async function newRound() {
   const tok = G.token; G.round++;
-  const d = C.shuffle(C.deck());
+  const d = C.shuffle(makeDeck());
   G.hands = [0, 1, 2, 3].map(i => sortHand(d.slice(i * 13, i * 13 + 13)));
   G.bids = [null, null, null, null]; G.tricks = [0, 0, 0, 0]; G.trick = []; G.played = []; G.broken = false;
   G.dealer = (G.dealer + 1) % 4; G.phase = 'bid';
@@ -3576,7 +3802,13 @@ async function continueBidding() {
     await wait(550); if (tok !== G.token) return;
     G.bids[s] = aiBid(s); log(`${SEATS[s]} bids ${G.bids[s] === 0 ? 'Nil' : G.bids[s]}.`); SH.Sound.play('move'); render();
   }
-  G.phase = 'play'; G.leader = (G.dealer + 1) % 4; G.turn = G.leader; render(); loop();
+  for (const t of [0, 1]) if (RU.minBid) {
+    const seats = [t, t + 2].filter(s => G.bids[s] !== 0), sum = seats.reduce((a, s) => a + G.bids[s], 0);
+    if (seats.length && sum < RU.minBid) { const s = seats.includes(t + 2) && t === 0 ? 2 : seats[seats.length - 1]; G.bids[s] += RU.minBid - sum; log(`Board rule: ${t ? 'Them' : 'Us'} raised to ${RU.minBid} (${SEATS[s]} now bids ${G.bids[s]}).`); }
+  }
+  G.mustLead2c = RU.lead === 'club2' && !RU.jokers;
+  G.leader = G.mustLead2c ? G.hands.findIndex(h => h.some(c => c.s === 'c' && c.r === 2)) : (G.dealer + 1) % 4;
+  G.phase = 'play'; G.turn = G.leader; render(); loop();
 }
 async function loop() {
   const tok = G.token;
@@ -3590,7 +3822,7 @@ async function loop() {
 function playCard(seat, card) {
   const h = G.hands[seat]; h.splice(h.findIndex(c => c.s === card.s && c.r === card.r), 1);
   if (card.s === 's' && !G.broken) { G.broken = true; if (G.trick.length) log('Spades are broken!'); }
-  G.trick.push({ seat, c: card }); G.played.push(card);
+  G.trick.push({ seat, c: card }); G.played.push(card); G.mustLead2c = false;
   SH.Sound.play(card.s === 's' && G.trick[0].c.s !== 's' ? 'capture' : 'move');
   if (G.trick.length === 4) { G.phase = 'collect'; render(); collect(); }
   else { G.turn = (seat + 1) % 4; render(); }
@@ -3612,17 +3844,19 @@ function scoreRound() {
     const bid = contractSeats.reduce((a, s) => a + G.bids[s], 0), took = contractSeats.reduce((a, s) => a + G.tricks[s], 0);
     for (const s of seats) if (G.bids[s] === 0) { if (G.tricks[s] === 0) { pts += 100; lines.push(`${SEATS[s]} made Nil (+100)`); if (s === 0 && SH.onEvent) SH.onEvent('spades', 'nil'); } else { pts -= 100; bags += G.tricks[s]; lines.push(`${SEATS[s]} broke Nil (−100)`); } }
     if (bid > 0) { if (took >= bid) { pts += bid * 10 + (took - bid); bags += took - bid; } else pts -= bid * 10; }
-    G.bags[t] += bags; if (G.bags[t] >= 10) { G.bags[t] -= 10; pts -= 100; lines.push(`${t ? 'Them' : 'Us'}: 10 bags (−100)`); }
+    G.bags[t] += bags;
+    const bagLimit = RU.bags === '5' ? 5 : RU.bags === '10' ? 10 : 0;
+    if (bagLimit && G.bags[t] >= bagLimit) { G.bags[t] -= bagLimit; pts -= bagLimit * 10; lines.push(`${t ? 'Them' : 'Us'}: ${bagLimit} bags (−${bagLimit * 10})`); }
     G.score[t] += pts;
     lines.push(`${t ? 'Them' : 'Us'}: bid ${bid}, took ${took + seats.filter(s => G.bids[s] === 0).reduce((a, s) => a + G.tricks[s], 0)} → ${pts >= 0 ? '+' : ''}${pts}`);
   }
   for (const l of lines) log(l);
   G.phase = 'idle';
   const [u, th] = G.score;
-  if (u >= G.target || th >= G.target || u <= -200 || th <= -200) {
-    const weWin = (u >= G.target || th <= -200) && !(th >= G.target && th > u) ? (u > th || th <= -200) : false;
+  if ((Math.max(u, th) >= G.target || Math.min(u, th) <= -200) && u !== th) {
+    const weWin = u > th;
     G.over = weWin ? 'win' : 'loss'; G.stats[weWin ? 'w' : 'l']++; LS.set('sp-stats', G.stats);
-    SH.Sound.play(weWin ? 'victory' : 'defeat'); if (SH.onResult) SH.onResult('spades', weWin ? 'w' : 'l');
+    SH.Sound.play(weWin ? 'victory' : 'defeat'); spTimer.stop(); if (SH.onResult) SH.onResult('spades', weWin ? 'w' : 'l', { pro: !!RU.pro });
     showMsg(`<h4 class="serif" style="margin:0 0 4px;font-size:22px">${weWin ? 'You win!' : 'They win'}</h4><div class="tiny muted">Final: Us ${u} — Them ${th}</div><button class="btn btn-lux" style="margin-top:10px" id="sp-again">New Game</button>`);
     $('sp-again').onclick = newGame;
   } else {
@@ -3633,7 +3867,8 @@ function scoreRound() {
 }
 function showMsg(html) { const m = $('sp-msg'); m.innerHTML = html ? `<div class="glass" style="padding:14px 16px;text-align:center">${html}</div>` : ''; m.classList.toggle('hidden', !html); }
 function newGame() {
-  G.token++; G.score = [0, 0]; G.bags = [0, 0]; G.round = 0; G.over = null; G.log = []; G.target = +$('sp-target').value; LS.set('sp-target', G.target);
+  RU = McRules.get('spades'); G.coach = RU.coach; spTimer.stop();
+  G.token++; G.score = [0, 0]; G.bags = [0, 0]; G.round = 0; G.over = null; G.log = []; G.target = RU.target;
   showMsg(''); newRound();
 }
 
@@ -3658,25 +3893,35 @@ function render(dealing) {
   $('sp-usd').textContent = `bags ${G.bags[0]} · this round ${G.tricks[0] + G.tricks[2]}/${usBid}`;
   $('sp-themd').textContent = `bags ${G.bags[1]} · this round ${G.tricks[1] + G.tricks[3]}/${thBid}`;
   $('sp-rec').textContent = `W${G.stats.w} L${G.stats.l}`;
+  $('sp-tgt').textContent = G.target; $('sp-rb').textContent = McRules.label('spades'); $('sp-rb').className = 'rbadge r-' + McRules.mode('spades');
+  const myTurn = (G.phase === 'play' && G.turn === 0) || G.phase === 'yourbid';
+  if (RU.timer && myTurn && !G.over) { if (G._tKey !== G.phase + G.played.length) { G._tKey = G.phase + G.played.length; spTimer.start(RU.timer, $('sp-timer'), autoAct); } }
+  else { G._tKey = null; spTimer.stop(); }
   const bidOn = G.phase === 'yourbid';
   $('sp-bid').classList.toggle('hidden', !bidOn);
   if (bidOn) {
-    const sug = aiBid(0);
+    const sug = Math.max(RU.nil ? 0 : 1, aiBid(0));
     $('sp-sugg').textContent = G.coach ? `Coach suggests: ${sug === 0 ? 'Nil' : sug} (partner ${G.bids[2] === null ? 'has not bid' : 'bid ' + (G.bids[2] || 'Nil')})` : '';
-    $('sp-bidbtns').innerHTML = Array.from({ length: 14 }, (_, n) => `<button class="btn ${G.coach && n === sug ? 'btn-lux' : 'btn-sec'}" data-bid="${n}">${n === 0 ? 'Nil' : n}</button>`).join('');
+    $('sp-bidbtns').innerHTML = Array.from({ length: 14 }, (_, n) => n === 0 && !RU.nil ? '' : `<button class="btn ${G.coach && n === sug ? 'btn-lux' : 'btn-sec'}" data-bid="${n}">${n === 0 ? 'Nil' : n}</button>`).join('');
   }
+}
+function autoAct() {
+  G._tKey = null;
+  if (G.phase === 'yourbid') { G.bids[0] = Math.max(RU.nil ? 0 : 1, aiBid(0)); log(`Time! You auto-bid ${G.bids[0] === 0 ? 'Nil' : G.bids[0]}.`); G.phase = 'bid'; render(); continueBidding(); }
+  else if (G.phase === 'play' && G.turn === 0) { SH.toast('Time! Card auto-played', 'clock'); playCard(0, aiPlay(0)); if (G.phase === 'play') loop(); }
 }
 $('sp-hand').addEventListener('click', e => {
   const el = e.target.closest('.pcard[data-i]'); if (!el || G.phase !== 'play' || G.turn !== 0) return;
   SH.Sound.unlock();
   const c = G.hands[0][+el.dataset.i]; if (!legal(0).some(p => p.s === c.s && p.r === c.r)) { SH.toast(G.trick.length ? 'You must follow suit' : 'Spades are not broken yet', 'x'); return; }
+  spTimer.stop(); G._tKey = null;
   playCard(0, c); if (G.phase === 'play') loop();
 });
-$('sp-bidbtns').addEventListener('click', e => { const b = e.target.closest('[data-bid]'); if (!b || G.phase !== 'yourbid') return; SH.Sound.unlock(); G.bids[0] = +b.dataset.bid; log(`You bid ${G.bids[0] === 0 ? 'Nil' : G.bids[0]}.`); G.phase = 'bid'; render(); continueBidding(); });
+$('sp-bidbtns').addEventListener('click', e => { const b = e.target.closest('[data-bid]'); if (!b || G.phase !== 'yourbid') return; SH.Sound.unlock(); spTimer.stop(); G._tKey = null; G.bids[0] = +b.dataset.bid; log(`You bid ${G.bids[0] === 0 ? 'Nil' : G.bids[0]}.`); G.phase = 'bid'; render(); continueBidding(); });
 $('sp-new').onclick = newGame;
-$('sp-target').value = G.target;
-$('sp-coach').checked = G.coach; $('sp-coach').onchange = e => { G.coach = e.target.checked; LS.set('sp-coach', G.coach); render(); };
-SH.games.spades = { onShow() { if (!G.round) newGame(); }, _G: G, _aiPlay: aiPlay, _legal: legal, _playCard: playCard, _winning: winning };
+McRules.mount('spades', $('rules-spades'));
+McRules.onChange('spades', () => { if (!G.round || G.over || (G.round === 1 && !G.played.length)) newGame(); else SH.toast('New rules apply from your next game'); });
+SH.games.spades = { onShow() { if (!G.round) newGame(); }, _G: G, _aiBid: aiBid, _makeDeck: makeDeck, _sortHand: sortHand, _setRU: v => { RU = v; }, _aiPlay: aiPlay, _legal: legal, _playCard: playCard, _winning: winning };
 showMsg('');
 })();
 
@@ -3688,6 +3933,25 @@ showMsg('');
 const SH = window.McShared, $ = id => document.getElementById(id), LS = SH.LS, C = SH.cards;
 const START = 1000;
 const st = LS.get('bj', { bank: START, hands: 0, won: 0, lost: 0, push: 0, bj: 0, best: 0, good: 0, total: 0, refills: 0 });
+McRules.register('blackjack', {
+  title: 'Blackjack',
+  proNote: 'Pro: a 25-hand tournament — everyone starts with 1,000 chips, no coach and no refills. Finish with your best stack.',
+  schema: [
+    { key: 'session', label: 'Session', type: 'select', options: [['free', 'Free practice'], ['tourney', '25-hand tournament']] },
+    { key: 'decks', label: 'Decks in the shoe', type: 'select', options: [[1, '1 deck'], [2, '2 decks'], [6, '6 decks'], [8, '8 decks']] },
+    { key: 'h17', label: 'Dealer hits soft 17', type: 'bool' },
+    { key: 'payout', label: 'Blackjack pays', type: 'select', options: [['3:2', '3 to 2'], ['6:5', '6 to 5']] },
+    { key: 'doubleOn', label: 'Double down on', type: 'select', options: [['any', 'Any first two cards'], ['9-11', 'Hard 9, 10 or 11 only']] },
+    { key: 'das', label: 'Double after a split', type: 'bool' },
+    { key: 'maxHands', label: 'Split up to', type: 'select', options: [[2, '2 hands'], [3, '3 hands'], [4, '4 hands']] },
+    { key: 'surrender', label: 'Surrender (give up half your bet)', type: 'bool' },
+    { key: 'coach', label: 'Strategy coach', type: 'bool' }
+  ],
+  presets: { standard: { session: 'free', decks: 6, h17: false, payout: '3:2', doubleOn: 'any', das: true, maxHands: 4, surrender: false, coach: true }, pro: { session: 'tourney', coach: false } }
+});
+let RU = McRules.get('blackjack');
+const T = { bank: START, hand: 0, of: 25, on: false, best: LS.get('bj-tbest', 0) };
+const A = () => (T.on ? T : st);
 const G = { shoe: [], dealer: [], hands: [], active: 0, bet: LS.get('bj-bet', 25), phase: 'bet', token: 0, coach: LS.get('bj-coach', true), msg: '' };
 const root = $('view-blackjack');
 root.innerHTML = `
@@ -3705,24 +3969,24 @@ root.innerHTML = `
     </div>
     <div class="row hidden" id="bj-actbar" style="flex-wrap:wrap;justify-content:center">
       <button class="btn btn-lux" data-act="hit">Hit</button><button class="btn btn-lux" data-act="stand">Stand</button>
-      <button class="btn btn-sec" data-act="double">Double</button><button class="btn btn-sec" data-act="split">Split</button>
+      <button class="btn btn-sec" data-act="double">Double</button><button class="btn btn-sec" data-act="split">Split</button><button class="btn btn-sec hidden" data-act="surrender">Surrender</button>
     </div>
   </div>
   <div class="tiny" id="bj-tip" style="color:var(--amber);min-height:18px;text-align:center"></div>
 </section>
 <section class="col right">
   <div class="glass card stack">
-    <div class="between"><h3 class="h3">McLearn Blackjack</h3><span class="pill">Practice chips</span></div>
+    <div class="between"><h3 class="h3">McLearn Blackjack</h3><span class="rbadge" id="bj-rb">Standard</span></div>
     <div class="grid2"><div class="stat"><span>Chips</span><b id="bj-bank"></b></div><div class="stat"><span>Strategy score</span><b id="bj-acc"></b></div></div>
     <div class="grid3"><div class="stat"><span>Won</span><b id="bj-w"></b></div><div class="stat"><span>Lost</span><b id="bj-l"></b></div><div class="stat"><span>Push</span><b id="bj-p"></b></div></div>
-    <label class="check"><input type="checkbox" id="bj-coach">Strategy coach (shows the mathematically best play)</label>
+    <div id="rules-blackjack"></div>
     <button class="btn btn-sec" id="bj-refill">Free refill to 1,000 chips</button>
-    <div class="note">Practice chips are free, can't be bought or cashed out, and have no value — this is a skills trainer, not gambling. Rules: 6 decks · dealer stands on all 17s · blackjack pays 3:2 · double on any two cards, including after a split · split up to 4 hands · split aces get one card each.</div>
+    <div class="note">Practice chips are free, can't be bought or cashed out, and have no value — this is a skills trainer, not gambling. Standard rules: 6 decks · dealer stands on all 17s · blackjack pays 3:2 · double on any two cards, including after a split · split up to 4 hands · split aces get one card each. Change any of these in Table Rules.</div>
   </div>
 </section>`;
 
 // ---------- cards ----------
-function newShoe() { let d = []; for (let i = 0; i < 6; i++) d = d.concat(C.deck()); G.shoe = C.shuffle(d); G.cut = Math.floor(G.shoe.length * 0.25); }
+function newShoe() { let d = []; for (let i = 0; i < RU.decks; i++) d = d.concat(C.deck()); G.shoe = C.shuffle(d); G.cut = Math.floor(G.shoe.length * 0.25); }
 function draw() { if (G.shoe.length <= 0) newShoe(); return G.shoe.pop(); }
 const val = c => (c.r === 14 ? 11 : c.r > 10 ? 10 : c.r);
 function total(cards) { let t = 0, aces = 0; for (const c of cards) { t += val(c); if (c.r === 14) aces++; } while (t > 21 && aces) { t -= 10; aces--; } return { t, soft: aces > 0 }; }
@@ -3731,8 +3995,13 @@ const isBJ = cards => cards.length === 2 && total(cards).t === 21;
 // ---------- basic strategy (6D, S17, DAS, no surrender) ----------
 function strategy(h, up) {
   const d = up.r === 14 ? 11 : val(up), cards = h.cards, { t, soft } = total(cards);
-  const two = cards.length === 2, canDouble = two && G.bank() >= h.bet, canSplit = two && val(cards[0]) === val(cards[1]) && G.hands.length < 4 && G.bank() >= h.bet && !h.splitAces;
+  const two = cards.length === 2, canDouble = canDbl(h), canSplit = canSpl(h);
   const D = (alt) => (canDouble ? 'double' : alt);
+  if (canSur(h) && !soft) {
+    if (t === 16 && d >= 9 && !(cards[0].r === 8 && cards[1].r === 8)) return 'surrender';
+    if (t === 15 && (d === 10 || (RU.h17 && d === 11))) return 'surrender';
+    if (RU.h17 && t === 17 && d === 11) return 'surrender';
+  }
   if (canSplit) {
     const p = val(cards[0]);
     if (p === 11 || p === 8) return 'split';
@@ -3742,8 +4011,9 @@ function strategy(h, up) {
     if (p === 4 && (d === 5 || d === 6)) return 'split';
   }
   if (soft && t <= 21) {
+    if (t === 19 && RU.h17 && d === 6) return D('stand');
     if (t >= 19) return 'stand';
-    if (t === 18) return d >= 3 && d <= 6 ? D('stand') : d <= 8 ? 'stand' : 'hit';
+    if (t === 18) return (d >= 3 && d <= 6) || (RU.h17 && d === 2) ? D('stand') : d <= 8 ? 'stand' : 'hit';
     if (t === 17) return d >= 3 && d <= 6 ? D('hit') : 'hit';
     if (t >= 15) return d >= 4 && d <= 6 ? D('hit') : 'hit';
     return d >= 5 && d <= 6 ? D('hit') : 'hit';
@@ -3751,12 +4021,15 @@ function strategy(h, up) {
   if (t >= 17) return 'stand';
   if (t >= 13) return d <= 6 ? 'stand' : 'hit';
   if (t === 12) return d >= 4 && d <= 6 ? 'stand' : 'hit';
-  if (t === 11) return d <= 10 ? D('hit') : 'hit';
+  if (t === 11) return d <= 10 || RU.h17 ? D('hit') : 'hit';
   if (t === 10) return d <= 9 ? D('hit') : 'hit';
   if (t === 9) return d >= 3 && d <= 6 ? D('hit') : 'hit';
   return 'hit';
 }
-G.bank = () => st.bank;
+G.bank = () => A().bank;
+function canDbl(h) { const tt = total(h.cards); return h.cards.length === 2 && A().bank >= h.bet && (RU.das || !h.fromSplit) && (RU.doubleOn === 'any' || (!tt.soft && tt.t >= 9 && tt.t <= 11)); }
+function canSpl(h) { return h.cards.length === 2 && val(h.cards[0]) === val(h.cards[1]) && G.hands.length < RU.maxHands && A().bank >= h.bet && !h.splitAces; }
+function canSur(h) { return RU.surrender && G.hands.length === 1 && h.cards.length === 2 && !h.fromSplit; }
 
 // ---------- flow ----------
 const wait = ms => new Promise(r => setTimeout(r, ms));
@@ -3764,11 +4037,11 @@ function save() { LS.set('bj', st); }
 async function deal() {
   if (G.phase !== 'bet') return;
   if (G.bet < 5) { SH.toast('Place a bet first', 'x'); return; }
-  if (G.bet > st.bank) { SH.toast('Not enough chips — lower the bet or take a free refill', 'x'); return; }
+  if (G.bet > A().bank) { SH.toast(T.on ? 'Not enough chips for that bet' : 'Not enough chips — lower the bet or take a free refill', 'x'); return; }
   SH.Sound.unlock();
   if (!G.shoe.length || G.shoe.length < G.cut) { newShoe(); SH.toast('New shoe shuffled'); }
   const tok = ++G.token;
-  st.bank -= G.bet; LS.set('bj-bet', G.bet);
+  A().bank -= G.bet; LS.set('bj-bet', G.bet); if (T.on) T.hand++;
   G.hands = [{ cards: [], bet: G.bet, done: false }]; G.dealer = []; G.active = 0; G.phase = 'deal'; msg('');
   for (const who of ['p', 'd', 'p', 'd']) { (who === 'p' ? G.hands[0].cards : G.dealer).push(draw()); SH.Sound.play('move'); render(); await wait(260); if (tok !== G.token) return; }
   const up = G.dealer[0];
@@ -3786,15 +4059,17 @@ async function act(a) {
   if (G.phase !== 'play') return;
   const h = G.hands[G.active]; if (!h) return;
   const two = h.cards.length === 2;
-  if (a === 'double' && !(two && st.bank >= h.bet)) return SH.toast('Double is only allowed on your first two cards with enough chips', 'x');
-  if (a === 'split' && !(two && val(h.cards[0]) === val(h.cards[1]) && G.hands.length < 4 && st.bank >= h.bet && !h.splitAces)) return SH.toast('You can split only a pair (up to 4 hands)', 'x');
+  if (a === 'double' && !canDbl(h)) return SH.toast(RU.doubleOn === '9-11' ? 'House rules: double only on hard 9, 10 or 11' : 'Double is only allowed on your first two cards with enough chips', 'x');
+  if (a === 'split' && !canSpl(h)) return SH.toast(`You can split only a pair (up to ${RU.maxHands} hands)`, 'x');
+  if (a === 'surrender' && !canSur(h)) return;
   grade(a);
   if (a === 'hit') { h.cards.push(draw()); SH.Sound.play('move'); if (total(h.cards).t >= 21) h.done = true; }
   else if (a === 'stand') h.done = true;
-  else if (a === 'double') { st.bank -= h.bet; h.bet *= 2; h.doubled = true; h.cards.push(draw()); SH.Sound.play('move'); h.done = true; }
+  else if (a === 'surrender') { h.surrendered = true; h.done = true; SH.Sound.play('bad'); }
+  else if (a === 'double') { A().bank -= h.bet; h.bet *= 2; h.doubled = true; h.cards.push(draw()); SH.Sound.play('move'); h.done = true; }
   else if (a === 'split') {
-    st.bank -= h.bet; const aces = h.cards[0].r === 14;
-    const nh = { cards: [h.cards.pop()], bet: h.bet, done: false, splitAces: aces };
+    A().bank -= h.bet; const aces = h.cards[0].r === 14;
+    const nh = { cards: [h.cards.pop()], bet: h.bet, done: false, splitAces: aces, fromSplit: true }; h.fromSplit = true;
     h.splitAces = aces; h.cards.push(draw()); nh.cards.push(draw());
     G.hands.splice(G.active + 1, 0, nh);
     if (aces) { h.done = true; nh.done = true; }
@@ -3806,27 +4081,37 @@ async function act(a) {
 }
 async function finish() {
   const tok = G.token; G.phase = 'dealer'; render();
-  const live = G.hands.some(h => total(h.cards).t <= 21) && !(G.hands.length === 1 && isBJ(G.hands[0].cards));
+  const live = G.hands.some(h => total(h.cards).t <= 21 && !h.surrendered) && !(G.hands.length === 1 && isBJ(G.hands[0].cards));
   await wait(450); if (tok !== G.token) return;
-  if (live) while (total(G.dealer).t < 17) { G.dealer.push(draw()); SH.Sound.play('move'); render(); await wait(450); if (tok !== G.token) return; }
+  const dealerHits = () => { const d = total(G.dealer); return d.t < 17 || (RU.h17 && d.t === 17 && d.soft); };
+  if (live) while (dealerHits()) { G.dealer.push(draw()); SH.Sound.play('move'); render(); await wait(450); if (tok !== G.token) return; }
   const dt = total(G.dealer).t, dBJ = isBJ(G.dealer), lines = []; let net = 0;
   for (const h of G.hands) {
     const pt = total(h.cards).t, pBJ = isBJ(h.cards) && G.hands.length === 1;
     let pay = 0, res;
-    if (pBJ && !dBJ) { pay = h.bet + Math.floor(h.bet * 1.5); res = 'Blackjack! 3:2'; st.bj++; st.won++; }
+    if (h.surrendered) { pay = Math.floor(h.bet / 2); res = 'Surrendered'; st.lost++; }
+    else if (pBJ && !dBJ) { pay = h.bet + Math.floor(h.bet * (RU.payout === '6:5' ? 1.2 : 1.5)); res = 'Blackjack! ' + RU.payout; st.bj++; st.won++; }
     else if (pt > 21) { res = 'Bust'; st.lost++; }
     else if (dBJ && !pBJ) { res = 'Dealer blackjack'; st.lost++; }
     else if (dt > 21 || pt > dt) { pay = h.bet * 2; res = dt > 21 ? 'Dealer busts — win' : 'Win'; st.won++; }
     else if (pt === dt) { pay = h.bet; res = 'Push'; st.push++; }
     else { res = 'Lose'; st.lost++; }
-    st.bank += pay; net += pay - h.bet; lines.push(`${res} (${pt})`);
+    A().bank += pay; net += pay - h.bet; lines.push(`${res} (${pt})`);
   }
   st.hands++; st.best = Math.max(st.best, net); save();
   G.phase = 'over';
   SH.Sound.play(net > 0 ? 'victory' : net < 0 ? 'bad' : 'draw');
   msg(`<div class="label">${net > 0 ? 'You win ' + net : net < 0 ? 'You lose ' + (-net) : 'Push'}</div><div class="tiny" style="margin:6px 0">${lines.join(' · ')} · Dealer ${dt > 21 ? 'busts (' + dt + ')' : dt}</div><button class="btn btn-lux" id="bj-again">Next hand</button>`);
   $('bj-again').onclick = () => { G.phase = 'bet'; msg(''); render(); };
-  if (SH.onResult) SH.onResult('blackjack', net > 0 ? 'w' : net < 0 ? 'l' : 'd', { net, bj: lines.some(l => l.startsWith('Blackjack')) });
+  if (SH.onResult) SH.onResult('blackjack', net > 0 ? 'w' : net < 0 ? 'l' : 'd', { net, bj: lines.some(l => l.startsWith('Blackjack')), pro: false });
+  if (T.on && (T.hand >= T.of || T.bank < 5)) {
+    const fin = T.bank, best = fin > T.best; if (best) { T.best = fin; LS.set('bj-tbest', fin); }
+    T.on = false;
+    msg(`<h4 class="serif" style="margin:0 0 4px;font-size:22px">Tournament complete</h4><div class="tiny" style="margin:6px 0">Final stack <b>${fin.toLocaleString()}</b> from 1,000 · ${best ? 'New personal best!' : 'Personal best ' + T.best.toLocaleString()}</div><button class="btn btn-lux" id="bj-tnew">New tournament</button>`);
+    $('bj-tnew').onclick = () => { startSession(); msg(''); render(); };
+    if (SH.onResult) SH.onResult('blackjack-tourney', fin > 1000 ? 'w' : 'l', { pro: true, final: fin });
+    if (best && SH.brand) SH.brand.queueCard({ kind: 'win', headline: `${fin.toLocaleString()} CHIPS`, sub: 'New best in the McLearn Blackjack tournament', icon: '🂡' });
+  }
   render();
 }
 function msg(html) { $('bj-msg').innerHTML = html ? `<div class="glass" style="padding:12px 16px;text-align:center">${html}</div>` : ''; $('bj-msg').classList.toggle('hidden', !html); }
@@ -3842,23 +4127,32 @@ function render() {
   $('bj-betbar').classList.toggle('hidden', G.phase !== 'bet');
   $('bj-actbar').classList.toggle('hidden', G.phase !== 'play');
   $('bj-bet').textContent = G.bet;
-  $('bj-bank').textContent = st.bank.toLocaleString();
+  $('bj-bank').textContent = A().bank.toLocaleString() + (T.on ? ` · hand ${Math.min(T.hand + (G.phase === 'bet' ? 1 : 0), T.of)}/${T.of}` : '');
+  $('bj-rb').textContent = McRules.label('blackjack') + (T.on ? ' · Tournament' : ''); $('bj-rb').className = 'rbadge r-' + McRules.mode('blackjack');
   $('bj-acc').textContent = st.total ? Math.round(st.good / st.total * 100) + '%' : '—';
   $('bj-w').textContent = st.won; $('bj-l').textContent = st.lost; $('bj-p').textContent = st.push;
   const h = G.hands[G.active];
   if (G.phase === 'play' && h) {
     const best = strategy(h, G.dealer[0]);
     $('bj-tip').textContent = G.coach ? `Coach: ${best.toUpperCase()} — ${total(h.cards).soft ? 'soft' : 'hard'} ${total(h.cards).t} vs dealer ${C.name(G.dealer[0])}` : '';
-    root.querySelector('[data-act=double]').disabled = !(h.cards.length === 2 && st.bank >= h.bet);
-    root.querySelector('[data-act=split]').disabled = !(h.cards.length === 2 && val(h.cards[0]) === val(h.cards[1]) && G.hands.length < 4 && st.bank >= h.bet && !h.splitAces);
+    root.querySelector('[data-act=double]').disabled = !canDbl(h);
+    root.querySelector('[data-act=split]').disabled = !canSpl(h);
+    root.querySelector('[data-act=surrender]').classList.toggle('hidden', !canSur(h));
   } else $('bj-tip').textContent = G.phase === 'bet' ? 'Tap chips to build your bet, then Deal.' : '';
-  $('bj-refill').disabled = st.bank >= START;
+  $('bj-refill').disabled = T.on || st.bank >= START;
 }
-root.querySelector('#bj-betbar').addEventListener('click', e => { const c = e.target.closest('[data-chip]'); if (!c) return; SH.Sound.unlock(); G.bet = Math.min(st.bank, G.bet + +c.dataset.chip); SH.Sound.play('tick'); render(); });
+root.querySelector('#bj-betbar').addEventListener('click', e => { const c = e.target.closest('[data-chip]'); if (!c) return; SH.Sound.unlock(); G.bet = Math.min(A().bank, G.bet + +c.dataset.chip); SH.Sound.play('tick'); render(); });
 $('bj-clear').onclick = () => { G.bet = 0; render(); };
 $('bj-deal').onclick = deal;
 root.querySelector('#bj-actbar').addEventListener('click', e => { const b = e.target.closest('[data-act]'); if (b) act(b.dataset.act); });
-$('bj-coach').checked = G.coach; $('bj-coach').onchange = e => { G.coach = e.target.checked; LS.set('bj-coach', G.coach); render(); };
+function startSession() {
+  RU = McRules.get('blackjack'); G.coach = RU.coach; G.shoe = [];
+  T.on = RU.session === 'tourney'; T.bank = START; T.hand = 0;
+  if (T.on) SH.toast('Tournament: 25 hands, 1,000 chips — finish with the biggest stack');
+}
+McRules.mount('blackjack', $('rules-blackjack'));
+McRules.onChange('blackjack', () => { if (G.phase === 'bet' || G.phase === 'over') { startSession(); msg(''); G.phase = 'bet'; render(); } else SH.toast('New rules apply after this hand'); });
+startSession();
 $('bj-refill').onclick = () => { st.bank = START; st.refills++; save(); SH.toast('Practice chips refilled to 1,000'); render(); };
 SH.games.blackjack = { onShow() { render(); }, _strategy: strategy, _total: total, _G: G, _st: st, _act: act, _deal: deal };
 render();
@@ -3887,8 +4181,28 @@ const PLAYERS = [
   { arm: 1, name: 'Emerald', color: '#3fbf86', dark: '#14583c', style: 'balanced' },
   { arm: 2, name: 'Sapphire', color: '#4d8fe8', dark: '#173f7a', style: 'cautious' }
 ];
+McRules.register('parcheesi', {
+  title: 'Parcheesi',
+  proNote: 'Pro: official rules with a 20-second turn clock — roll and move fast.',
+  schema: [
+    { key: 'enter', label: 'Roll needed to enter a pawn', type: 'select', options: [['5', 'A 5 (classic)'], ['56', 'A 5 or a 6'], ['6', 'A 6 only']] },
+    { key: 'pawns', label: 'Pawns per player', help: '2 pawns makes a quick game', type: 'select', options: [[4, '4 pawns'], [2, '2 pawns (quick game)']] },
+    { key: 'capBonus', label: 'Capture bonus', type: 'select', options: [[20, '+20 spaces'], [10, '+10 spaces'], [0, 'No bonus']] },
+    { key: 'homeBonus', label: 'Home bonus', type: 'select', options: [[10, '+10 spaces'], [0, 'No bonus']] },
+    { key: 'blockades', label: 'Blockades', help: 'Two of your pawns together block everyone', type: 'bool' },
+    { key: 'safe', label: 'Safe squares', help: 'Starred squares protect pawns from capture', type: 'bool' },
+    { key: 'doubles', label: 'Doubles roll again', type: 'bool' },
+    { key: 'triple', label: 'Three doubles sends your lead pawn back', type: 'bool' },
+    { key: 'timer', label: 'Turn clock', type: 'select', options: [[0, 'Off'], [20, '20 seconds'], [30, '30 seconds']] }
+  ],
+  presets: { standard: { enter: '5', pawns: 4, capBonus: 20, homeBonus: 10, blockades: true, safe: true, doubles: true, triple: true, timer: 0 }, pro: { timer: 20 } }
+});
+let RU = McRules.get('parcheesi');
+const pcTimer = McRules.timer();
+const enters = n => (RU.enter === '5' ? n === 5 : RU.enter === '6' ? n === 6 : n === 5 || n === 6);
+const isSafe = ti => RU.safe && SAFE.has(ti);
 const G = { pawns: null, turn: 0, dice: [], used: [], bonus: [], doublesRun: 0, phase: 'roll', token: 0, sel: null, log: [], stats: LS.get('pc-stats', { w: 0, l: 0 }), over: false, speed: LS.get('pc-speed', 1) };
-function fresh() { const a = []; PLAYERS.forEach((_, p) => { for (let k = 0; k < 4; k++) a.push({ p, k, step: -1 }); }); return a; }
+function fresh() { const a = []; PLAYERS.forEach((_, p) => { for (let k = 0; k < RU.pawns; k++) a.push({ p, k, step: -1 }); }); return a; }
 const trackIdx = pw => (pw.step >= 0 && pw.step < 64 ? (START(PLAYERS[pw.p].arm) + pw.step) % 68 : null);
 function cellOf(pw) {
   const pl = PLAYERS[pw.p];
@@ -3898,14 +4212,14 @@ function cellOf(pw) {
   const off = [[-0.35, -0.35], [0.35, -0.35], [-0.35, 0.35], [0.35, 0.35]][pw.k]; return [9 + off[0], 9 + off[1]];
 }
 const occupants = ti => G.pawns.filter(q => trackIdx(q) === ti);
-function blockadeAt(ti) { const o = occupants(ti); return o.length >= 2 && o[0].p === o[1].p; }
+function blockadeAt(ti) { if (!RU.blockades) return false; const o = occupants(ti); return o.length >= 2 && o[0].p === o[1].p; }
 function homeOcc(p, step) { return G.pawns.filter(q => q.p === p && q.step === step); }
 function canMove(pw, n) {
   if (pw.step === 71) return null;
   if (pw.step < 0) {
-    if (n !== 5) return null;
+    if (!enters(n)) return null;
     const ti = START(PLAYERS[pw.p].arm), occ = occupants(ti);
-    if (occ.filter(q => q.p === pw.p).length >= 2) return null;
+    if (RU.blockades && occ.filter(q => q.p === pw.p).length >= 2) return null;
     if (occ.length >= 2 && occ.every(q => q.p !== pw.p)) return null;
     const enemy = occ.length === 1 && occ[0].p !== pw.p ? occ[0] : null;
     return { to: 0, capture: enemy };
@@ -3917,8 +4231,10 @@ function canMove(pw, n) {
   }
   if (to < 64) {
     const ti = (START(PLAYERS[pw.p].arm) + to) % 68, occ = occupants(ti).filter(q => q !== pw);
-    if (occ.length >= 2) return null;
-    if (occ.length === 1 && occ[0].p !== pw.p) { if (SAFE.has(ti)) return null; return { to, capture: occ[0] }; }
+    const foes = occ.filter(q => q.p !== pw.p);
+    if (RU.blockades && occ.length >= 2) return null;
+    if (foes.length >= 2) return null;
+    if (foes.length === 1) { if (isSafe(ti)) return null; return { to, capture: foes[0] }; }
   }
   return { to, capture: null };
 }
@@ -3926,7 +4242,7 @@ function options() {
   const out = [], pl = G.turn, avail = [];
   G.dice.forEach((d, i) => { if (!G.used[i]) avail.push({ n: d, src: 'd' + i }); });
   G.bonus.forEach((b, i) => avail.push({ n: b, src: 'b' + i }));
-  if (G.dice.length === 2 && !G.used[0] && !G.used[1] && G.dice[0] + G.dice[1] === 5) avail.push({ n: 5, src: 'sum' });
+  if (G.dice.length === 2 && !G.used[0] && !G.used[1] && RU.enter !== '6' && G.dice[0] + G.dice[1] === 5) avail.push({ n: 5, src: 'sum' });
   for (const pw of G.pawns.filter(q => q.p === pl)) for (const a of avail) {
     if (a.src === 'sum' && pw.step >= 0) continue;
     const m = canMove(pw, a.n); if (m) out.push({ pw, n: a.n, src: a.src, to: m.to, capture: m.capture });
@@ -3940,12 +4256,12 @@ async function doMove(o) {
   const tok = G.token;
   if (o.src === 'sum') { G.used[0] = G.used[1] = true; } else if (o.src[0] === 'd') G.used[+o.src[1]] = true; else G.bonus.splice(+o.src.slice(1), 1);
   const pw = o.pw, pl = PLAYERS[pw.p];
-  if (pw.step < 0) { pw.step = 0; SH.Sound.play('castle'); }
+  if (pw.step < 0) { pw.step = 0; SH.Sound.play('castle'); if (o.capture) { /* entering onto a rival captures it */ } }
   else { while (pw.step < o.to) { pw.step++; SH.Sound.play('tick'); render(); await wait(110); if (tok !== G.token) return; } }
-  if (o.capture) { o.capture.step = -1; G.bonus.push(20); SH.Sound.play('capture'); log(`${vb(pw.p, 'captures', 'capture')} ${PLAYERS[o.capture.p].human ? 'your' : PLAYERS[o.capture.p].name + "'s"} pawn! +20 bonus`); if (SH.onEvent) SH.onEvent('parcheesi', 'capture', { you: pw.p === 0 }); }
-  if (pw.step === 71) { G.bonus.push(10); SH.Sound.play('good'); log(`${vb(pw.p, 'brings', 'bring')} a pawn home! +10 bonus`); }
+  if (o.capture) { o.capture.step = -1; if (RU.capBonus) G.bonus.push(RU.capBonus); SH.Sound.play('capture'); log(`${vb(pw.p, 'captures', 'capture')} ${PLAYERS[o.capture.p].human ? 'your' : PLAYERS[o.capture.p].name + "'s"} pawn!${RU.capBonus ? ' +' + RU.capBonus + ' bonus' : ''}`); if (SH.onEvent) SH.onEvent('parcheesi', 'capture', { you: pw.p === 0 }); }
+  if (pw.step === 71) { if (RU.homeBonus) G.bonus.push(RU.homeBonus); SH.Sound.play('good'); log(`${vb(pw.p, 'brings', 'bring')} a pawn home!${RU.homeBonus ? ' +' + RU.homeBonus + ' bonus' : ''}`); }
   G.sel = null; render();
-  if (G.pawns.filter(q => q.p === pw.p && q.step === 71).length === 4) win(pw.p);
+  if (G.pawns.filter(q => q.p === pw.p && q.step === 71).length === RU.pawns) win(pw.p);
 }
 function win(p) {
   G.over = true; G.phase = 'over'; G.token++;
@@ -3953,7 +4269,8 @@ function win(p) {
   SH.Sound.play(you ? 'victory' : 'defeat'); log(`<b>${vb(p, 'wins', 'win')}!</b>`);
   $('pc-msg').innerHTML = `<div class="glass" style="padding:14px;text-align:center"><h4 class="serif" style="margin:0 0 6px;font-size:22px">${you ? 'You win!' : PLAYERS[p].name + ' wins'}</h4><button class="btn btn-lux" id="pc-again">Play again</button></div>`;
   $('pc-msg').classList.remove('hidden'); $('pc-again').onclick = newGame;
-  if (SH.onResult) SH.onResult('parcheesi', you ? 'w' : 'l');
+  pcTimer.stop();
+  if (SH.onResult) SH.onResult('parcheesi', you ? 'w' : 'l', { pro: !!RU.pro });
   render();
 }
 async function roll() {
@@ -3966,7 +4283,7 @@ async function roll() {
   const dbl = G.dice[0] === G.dice[1];
   G.doublesRun = dbl ? G.doublesRun + 1 : 0;
   log(`${vb(G.turn, 'rolls', 'roll')} ${G.dice[0]} + ${G.dice[1]}${dbl ? ' (doubles!)' : ''}`);
-  if (G.doublesRun === 3) {
+  if (RU.doubles && RU.triple && G.doublesRun === 3) {
     const lead = G.pawns.filter(q => q.p === G.turn && q.step >= 0 && q.step < 71).sort((a, b) => b.step - a.step)[0];
     if (lead) { lead.step = -1; log(`Third doubles — ${PLAYERS[G.turn].human ? 'your' : PLAYERS[G.turn].name + "'s"} lead pawn returns to the nest.`); SH.Sound.play('bad'); }
     endTurn(true); return;
@@ -3985,7 +4302,7 @@ async function next() {
 }
 function endTurn(forceNext) {
   if (G.over) return;
-  const again = !forceNext && G.dice.length === 2 && G.dice[0] === G.dice[1];
+  const again = RU.doubles && !forceNext && G.dice.length === 2 && G.dice[0] === G.dice[1];
   G.dice = []; G.used = []; G.bonus = [];
   if (!again) { G.turn = (G.turn + 1) % 4; G.doublesRun = 0; }
   if (forceNext) G.doublesRun = 0;
@@ -3994,7 +4311,7 @@ function endTurn(forceNext) {
 }
 function danger(p, step) {
   if (step < 0 || step >= 64) return 0;
-  const ti = (START(PLAYERS[p].arm) + step) % 68; if (SAFE.has(ti)) return 0;
+  const ti = (START(PLAYERS[p].arm) + step) % 68; if (isSafe(ti)) return 0;
   let n = 0; for (const q of G.pawns) { if (q.p === p || q.step < 0 || q.step >= 64) continue; const d = (ti - trackIdx(q) + 68) % 68; if (d >= 1 && d <= 12) n++; }
   return n;
 }
@@ -4006,7 +4323,7 @@ function aiPick(opts) {
     if (o.pw.step < 0) s += 35;
     if (o.to === 71) s += 45; else if (o.to >= 64) s += 15;
     const ti = o.to < 64 ? (START(PLAYERS[G.turn].arm) + o.to) % 68 : null;
-    if (ti !== null && SAFE.has(ti)) s += style === 'cautious' ? 20 : 10;
+    if (ti !== null && isSafe(ti)) s += style === 'cautious' ? 20 : 10;
     s -= danger(G.turn, o.to) * (style === 'cautious' ? 14 : style === 'aggressive' ? 5 : 9);
     s += danger(G.turn, o.pw.step) * 8;
     if (ti !== null && occupants(ti).some(q => q.p === G.turn && q !== o.pw)) s += 8;
@@ -4015,7 +4332,7 @@ function aiPick(opts) {
   }
   return best;
 }
-function newGame() { G.token++; G.pawns = fresh(); G.turn = 0; G.dice = []; G.used = []; G.bonus = []; G.doublesRun = 0; G.phase = 'roll'; G.over = false; G.log = []; G.sel = null; $('pc-msg').classList.add('hidden'); log('New game — roll to begin. You need a 5 to enter a pawn.'); render(); }
+function newGame() { RU = McRules.get('parcheesi'); pcTimer.stop(); G._tKey = null; G.token++; G.pawns = fresh(); G.turn = 0; G.dice = []; G.used = []; G.bonus = []; G.doublesRun = 0; G.phase = 'roll'; G.over = false; G.log = []; G.sel = null; $('pc-msg').classList.add('hidden'); log('New game — roll to begin. You need a 5 to enter a pawn.'); render(); }
 
 const root = $('view-parcheesi');
 root.innerHTML = `
@@ -4025,15 +4342,16 @@ root.innerHTML = `
     <div class="felt-msg hidden" id="pc-msg"></div>
     <div class="felt-msg hidden" id="pc-choose"></div>
   </div>
-  <div class="glass controls" style="justify-content:center"><div class="row" id="pc-dice"></div><button class="btn btn-lux" id="pc-roll">Roll dice</button></div>
+  <div class="glass controls" style="justify-content:center"><span class="ptimer hidden" id="pc-timer"></span><div class="row" id="pc-dice"></div><button class="btn btn-lux" id="pc-roll">Roll dice</button></div>
   <div class="tiny" id="pc-tip" style="color:var(--amber);text-align:center;min-height:18px"></div>
 </section>
 <section class="col right">
   <div class="glass card stack">
-    <div class="between"><h3 class="h3">McLearn Parcheesi</h3><span class="pill" id="pc-rec"></span></div>
+    <div class="between"><h3 class="h3">McLearn Parcheesi</h3><span class="row" style="gap:6px"><span class="rbadge" id="pc-rb">Standard</span><span class="pill" id="pc-rec"></span></span></div>
+    <div id="rules-parcheesi"></div>
     <div class="list" id="pc-players"></div>
     <div class="grid2"><button class="btn btn-lux" id="pc-new">New Game</button><select class="field" id="pc-speed"><option value="1">Normal speed</option><option value="2">Fast AI</option></select></div>
-    <div class="note">How to play: roll two dice and use each die on any pawn (or both on one). A pawn enters on a 5 — one die, or both dice adding to 5. Landing alone on a rival sends it back to its nest and earns a +20 bonus move. Starred squares are safe. Two of your pawns together form a blockade nobody can pass. Each pawn that reaches the center earns +10. Get all four home to win. Doubles roll again; three doubles in a row sends your lead pawn back.</div>
+    <div class="note">How to play: roll two dice and use each die on any pawn (or both on one). Standard rules: a pawn enters on a 5 — one die, or both dice adding to 5. Landing alone on a rival sends it back to its nest and earns a +20 bonus move. Starred squares are safe. Two of your pawns together form a blockade nobody can pass. Each pawn that reaches the center earns +10. Get all four home to win. Doubles roll again; three doubles in a row sends your lead pawn back. Change any of these in Table Rules.</div>
     <div><span class="label">Table log</span><div class="moves" id="pc-log" style="margin-top:6px;height:120px;font-family:var(--sans)"></div></div>
   </div>
 </section>`;
@@ -4072,8 +4390,12 @@ function render() {
   const myRoll = G.phase === 'roll' && PLAYERS[G.turn].human;
   $('pc-roll').disabled = !myRoll; $('pc-roll').textContent = myRoll ? 'Roll dice' : PLAYERS[G.turn].human ? 'Your move' : `${PLAYERS[G.turn].name}'s turn`;
   $('pc-tip').textContent = G.phase === 'move' && PLAYERS[G.turn].human ? (mine.length ? 'Tap a glowing pawn to move it.' : 'No legal moves — passing.') : '';
-  $('pc-players').innerHTML = PLAYERS.map((pl, i) => `<div class="item" style="${G.turn === i ? 'border-color:' + pl.color : ''}"><span style="display:flex;align-items:center;gap:8px"><span class="dot" style="background:${pl.color};border-color:${pl.dark}"></span>${pl.name}${pl.style ? ' <span class="muted tiny">· ' + pl.style + '</span>' : ''}</span><span class="mono tiny">${G.pawns.filter(q => q.p === i && q.step === 71).length}/4 home</span></div>`).join('');
+  $('pc-players').innerHTML = PLAYERS.map((pl, i) => `<div class="item" style="${G.turn === i ? 'border-color:' + pl.color : ''}"><span style="display:flex;align-items:center;gap:8px"><span class="dot" style="background:${pl.color};border-color:${pl.dark}"></span>${pl.name}${pl.style ? ' <span class="muted tiny">· ' + pl.style + '</span>' : ''}</span><span class="mono tiny">${G.pawns.filter(q => q.p === i && q.step === 71).length}/${RU.pawns} home</span></div>`).join('');
   $('pc-rec').textContent = `W${G.stats.w} L${G.stats.l}`;
+  $('pc-rb').textContent = McRules.label('parcheesi'); $('pc-rb').className = 'rbadge r-' + McRules.mode('parcheesi');
+  const humanTurn = PLAYERS[G.turn].human && (G.phase === 'roll' || G.phase === 'move') && !G.over;
+  if (RU.timer && humanTurn) { const key = G.phase + G.dice.join('') + G.used.join('') + G.bonus.length + G.pawns.map(q => q.step).join(','); if (G._tKey !== key) { G._tKey = key; pcTimer.start(RU.timer, $('pc-timer'), pcAuto); } }
+  else { G._tKey = null; pcTimer.stop(); }
   const ch = $('pc-choose');
   if (G.sel) {
     const opts = options().filter(o => o.pw === G.sel);
@@ -4093,6 +4415,13 @@ svg.addEventListener('click', async e => {
   if (opts.length === 1 || new Set(opts.map(o => o.n + ':' + o.src[0])).size === 1) { await doMove(opts[0]); if (!G.over) next(); }
   else { G.sel = pw; render(); }
 });
+async function pcAuto() {
+  G._tKey = null;
+  if (G.phase === 'roll' && PLAYERS[G.turn].human) { SH.toast('Time! Auto-roll', 'clock'); roll(); return; }
+  if (G.phase === 'move' && PLAYERS[G.turn].human) { const opts = options(); if (opts.length) { G.sel = null; SH.toast('Time! Auto-move', 'clock'); await doMove(aiPick(opts)); if (!G.over) next(); } }
+}
+McRules.mount('parcheesi', $('rules-parcheesi'));
+McRules.onChange('parcheesi', () => { if (!G.pawns || G.over || G.pawns.every(q => q.step < 0)) newGame(); else SH.toast('New rules apply from your next game'); });
 $('pc-roll').onclick = roll;
 $('pc-new').onclick = newGame;
 $('pc-speed').value = G.speed; $('pc-speed').onchange = e => { G.speed = +e.target.value; LS.set('pc-speed', G.speed); };
@@ -4141,7 +4470,8 @@ const ACH = [
   { id: 'strategist', name: 'Strategist', desc: '95%+ blackjack strategy over 50 decisions', icon: '🧠' },
   { id: 'pcwin', name: 'Home Run', desc: 'Win a game of Parcheesi', icon: '🏠' },
   { id: 'hunter', name: 'Headhunter', desc: 'Capture 10 Parcheesi pawns', icon: '🎯' },
-  { id: 'streak', name: 'On Fire', desc: 'Win 3 games in a row', icon: '🔥' }
+  { id: 'streak', name: 'On Fire', desc: 'Win 3 games in a row', icon: '🔥' },
+  { id: 'procircuit', name: 'Pro Circuit', desc: 'Win in Pro mode in 3 different games', icon: '🥇' }
 ];
 function save() { LS.set('player', P); renderChip(); }
 function unlock(id) {
@@ -4162,7 +4492,7 @@ function addXP(n, silent) {
 }
 function floatXP(n) { const el = document.createElement('div'); el.className = 'xpfloat'; el.textContent = `+${n} XP`; document.body.appendChild(el); setTimeout(() => el.remove(), 1400); }
 
-const GAME_NAMES = { chess: 'Chess', checkers: 'Checkers', spades: 'Spades', blackjack: 'Blackjack', parcheesi: 'Parcheesi', academy: 'Chess Academy' };
+const GAME_NAMES = { 'blackjack-tourney': 'Blackjack Tournament', chess: 'Chess', checkers: 'Checkers', spades: 'Spades', blackjack: 'Blackjack', parcheesi: 'Parcheesi', academy: 'Chess Academy' };
 SH.onResult = function (game, res, extra) {
   extra = extra || {};
   const g = P.games[game] = P.games[game] || { w: 0, l: 0, d: 0 };
@@ -4170,7 +4500,9 @@ SH.onResult = function (game, res, extra) {
   if (game !== 'academy') P.played[game] = true;
   if (res === 'w') { P.streak++; P.bestStreak = Math.max(P.bestStreak, P.streak); } else if (res === 'l') P.streak = 0;
   const big = game !== 'blackjack' && game !== 'academy';
-  addXP(game === 'blackjack' ? (res === 'w' ? 6 : 2) : game === 'academy' ? 30 : res === 'w' ? 60 : res === 'd' ? 25 : 12);
+  const base = game === 'blackjack' ? (res === 'w' ? 6 : 2) : game === 'academy' ? 30 : res === 'w' ? 60 : res === 'd' ? 25 : 12;
+  addXP(extra.pro ? Math.round(base * 1.5) : base);
+  if (extra.pro && res === 'w') { P.proWins = P.proWins || {}; P.proWins[game.replace('-tourney', '')] = true; save(); if (Object.keys(P.proWins).length >= 3) unlock('procircuit'); }
   if (res === 'w' && big) unlock('first');
   if (['chess', 'checkers', 'spades', 'blackjack', 'parcheesi'].every(k => P.played[k])) unlock('tour');
   if (P.streak >= 3 && big) unlock('streak');
@@ -4183,7 +4515,7 @@ SH.onResult = function (game, res, extra) {
     const st = LS.get('bj', null); if (st && st.total >= 50 && st.good / st.total >= 0.95) unlock('strategist');
   }
   if (game === 'academy') { const pz = LS.get('puzzles', { solved: [] }); if (pz.solved.length >= 7) unlock('drills'); queueCard({ kind: 'win', headline: 'PUZZLE SOLVED', sub: extra.name || 'McLearn Academy drill', icon: '🎓' }); }
-  if (res === 'w' && big) queueCard({ kind: 'win', headline: game === 'chess' ? (extra.reason === 'checkmate' ? 'CHECKMATE' : 'VICTORY') : 'VICTORY', sub: `${GAME_NAMES[game]}${extra.vs ? ' vs ' + extra.vs : ''}`, icon: { chess: '♚', checkers: '⛀', spades: '♠', parcheesi: '⚄' }[game] || '🏆' });
+  if (res === 'w' && big && game !== 'blackjack-tourney') queueCard({ kind: 'win', headline: game === 'chess' ? (extra.reason === 'checkmate' ? 'CHECKMATE' : 'VICTORY') : 'VICTORY', sub: `${extra.pro ? 'Pro · ' : ''}${GAME_NAMES[game]}${extra.vs ? ' vs ' + extra.vs : ''}`, icon: { chess: '♚', checkers: '⛀', spades: '♠', parcheesi: '⚄' }[game] || '🏆' });
   if (game !== 'blackjack' || (P.games.blackjack.w + P.games.blackjack.l + P.games.blackjack.d) % 6 === 0) setTimeout(() => Minute.maybe(), 2600);
 };
 SH.onEvent = function (game, ev, data) {
