@@ -363,6 +363,36 @@ body.event .felt{max-width:min(1100px,100%)}
 .ptimer.low{color:#ff8a8a;border-color:#ff8a8a;animation:pulse .6s infinite alternate}
 .pcard.joker .cc{display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1}
 .pcard.joker .jk{font-size:calc(var(--cw,64px) * .14);letter-spacing:.08em;margin-bottom:2px}
+.ccard{--cw:60px;width:var(--cw);aspect-ratio:5/7.4;border-radius:calc(var(--cw) * .14);background:var(--cc);border:calc(var(--cw) * .06) solid #fffdf8;position:relative;box-shadow:0 4px 10px rgba(0,0,0,.45);color:#fff;font-family:var(--serif);font-weight:900;flex:none;user-select:none;overflow:hidden}
+.ccard .cn{position:absolute;font-size:calc(var(--cw) * .2);line-height:1;text-shadow:0 1px 2px rgba(0,0,0,.4)}
+.ccard .cn.tl{top:5%;left:8%}.ccard .cn.br{bottom:5%;right:8%;transform:rotate(180deg)}
+.ccard .cb{position:absolute;left:50%;top:50%;width:52%;aspect-ratio:1;transform:translate(-50%,-50%) rotate(45deg);border-radius:18%;background:rgba(255,253,248,.95);display:grid;place-items:center;box-shadow:inset 0 0 0 2px rgba(0,0,0,.08)}
+.ccard .cb span{transform:rotate(-45deg);font-size:calc(var(--cw) * .3);color:#1e0007}
+.ccard.wild .cb{background:#1e0007}.ccard.wild .cb span{color:#fff}
+.ccard.back{background:repeating-linear-gradient(45deg,#4a0011 0 6px,#5c0a1d 6px 12px);border-color:#dfa6af;display:grid;place-items:center}
+.ccard.back span{font-family:var(--serif);font-weight:900;color:#dfa6af;font-size:calc(var(--cw) * .42)}
+.ccard.dealt{animation:deal .35s ease-out backwards;animation-delay:var(--d,0ms)}
+.cc-mini{--cw:30px}.cc-mini .ccard{--cw:30px}
+.cc-center{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.cc-stack{display:flex;align-items:center;gap:18px}.cc-stack .ccard{--cw:clamp(54px,9vw,76px)}
+.cc-draw{position:relative;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px}.cc-draw:hover .ccard{transform:translateY(-3px)}
+.pilecard{animation:fly .25s ease-out}
+.cc-color{display:flex;align-items:center;gap:8px;padding:5px 12px;border-radius:999px;background:rgba(18,0,4,.75);border:2px solid var(--cc);font-size:11px}
+.cc-color b{color:var(--cc);font-family:var(--serif)}.cc-color span{color:var(--rose-300);font-family:var(--mono);font-size:10px}
+.cc-hand{display:flex;justify-content:center;flex-wrap:nowrap;padding:16px 4px 4px;max-width:100%;overflow-x:auto}
+.cc-hand .ccard{--cw:clamp(46px,7vw,64px);margin-left:calc(var(--cw) * -0.35);transition:transform .15s}
+.cc-hand .ccard:first-child{margin-left:0}
+.cc-hand .ccard.playable{cursor:pointer}.cc-hand .ccard.playable:hover{transform:translateY(-14px)}
+.cc-hand .ccard.dim{filter:brightness(.5)}
+.cc-hand .ccard.tip{box-shadow:0 0 0 3px var(--amber),0 6px 14px rgba(0,0,0,.5)}
+#cc-last.on{background:linear-gradient(135deg,#e6b84a,#b07d18);color:#1e0007}
+.cc-flash{position:absolute;left:50%;top:38%;transform:translate(-50%,-50%) scale(.6);font-family:var(--serif);font-weight:900;font-size:clamp(22px,4vw,40px);color:var(--amber);text-shadow:0 0 20px rgba(244,200,106,.7);opacity:0;pointer-events:none;z-index:25;white-space:nowrap}
+.cc-flash.show{animation:ccflash 1.4s ease-out}
+@keyframes ccflash{0%{opacity:0;transform:translate(-50%,-50%) scale(.6)}20%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-70%) scale(1)}}
+.pp-take .pcard{box-shadow:0 0 0 3px var(--amber),0 0 22px rgba(244,200,106,.6);cursor:pointer;animation:pulse 1s infinite alternate}
+.fan .pcard.match{box-shadow:0 0 0 3px var(--amber)}.fan .pcard.drawn{transform:translateY(-10px)}
+.pp-pairs{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:6px;--cw:40px}
+.pp-pair{display:flex}.pp-pair .pcard+.pcard{margin-left:-24px}
 </style>
 </head>
 <body>
@@ -429,7 +459,7 @@ body.event .felt{max-width:min(1100px,100%)}
     <div class="logo"><svg viewBox="0 0 45 45" class="pc w" style="width:34px;height:34px;filter:none"><use href="#pc-K"/></svg></div>
     <div>
       <div class="row"><h1 class="title">McLEARN ARENA</h1><span class="pill" style="color:var(--amber)">10X PRO</span></div>
-      <p class="sub">MCLEARN MEDIA PRODUCTION &bull; MS, USA &bull; <span style="color:var(--amber)">GAME HUB v4.3</span></p>
+      <p class="sub">MCLEARN MEDIA PRODUCTION &bull; MS, USA &bull; <span style="color:var(--amber)">GAME HUB v4.5</span></p>
     </div>
   </div>
   <div class="hstats">
@@ -454,6 +484,8 @@ body.event .felt{max-width:min(1100px,100%)}
   <button data-view="spades"><span style="font-size:16px;line-height:1">♠</span>Spades</button>
   <button data-view="blackjack"><span style="font-size:15px;line-height:1;color:#ff8fa3">♥</span>Blackjack</button>
   <button data-view="parcheesi"><svg viewBox="0 0 24 24" style="width:16px;height:16px"><rect x="3" y="3" width="18" height="18" rx="4" fill="#fbf4ea"/><circle cx="8" cy="8" r="2" fill="#32000c"/><circle cx="16" cy="16" r="2" fill="#32000c"/><circle cx="12" cy="12" r="2" fill="#32000c"/></svg>Parcheesi</button>
+  <button data-view="colorclash"><svg viewBox="0 0 24 24" style="width:16px;height:16px"><rect x="4" y="2" width="12" height="17" rx="2.5" fill="#d9466b"/><rect x="8" y="5" width="12" height="17" rx="2.5" fill="#3f7fd9" stroke="#1e0007"/></svg>Color Clash</button>
+  <button data-view="pittypat"><span style="font-size:14px;line-height:1">🂫</span>Pitty Pat</button>
   <button data-view="checkers"><svg viewBox="0 0 24 24" style="width:16px;height:16px"><circle cx="12" cy="12" r="9" fill="#2a0a12" stroke="#dfa6af" stroke-width="2"/><circle cx="12" cy="12" r="5" fill="none" stroke="#dfa6af" stroke-width="1.5"/></svg>Checkers</button>
 </nav>
 <section class="view lobby hidden" id="view-lobby">
@@ -473,6 +505,8 @@ body.event .felt{max-width:min(1100px,100%)}
 <main class="gwrap hidden" id="view-spades"></main>
 <main class="gwrap hidden" id="view-blackjack"></main>
 <main class="gwrap hidden" id="view-parcheesi"></main>
+<main class="gwrap hidden" id="view-colorclash"></main>
+<main class="gwrap hidden" id="view-pittypat"></main>
 <main class="wrap view" id="view-chess">
   <!-- LEFT -->
   <section class="col left">
@@ -4430,6 +4464,482 @@ SH.games.parcheesi = { onShow() { if (!G.pawns) newGame(); else render(); }, _G:
 
 </script>
 <script>
+// McLearn Color Clash — the classic color-and-number matching card game (shedding family).
+// Original McLearn name, colors and card art. Call "Last Card!" when you're down to one.
+(function () {
+'use strict';
+const SH = window.McShared, $ = id => document.getElementById(id), LS = SH.LS;
+const COLORS = { r: { name: 'Rose', hex: '#d9466b' }, g: { name: 'Gold', hex: '#e2a92b' }, e: { name: 'Emerald', hex: '#2fa572' }, s: { name: 'Sapphire', hex: '#3f7fd9' } };
+const CK = ['r', 'g', 'e', 's'];
+McRules.register('colorclash', {
+  title: 'Color Clash',
+  proNote: 'Pro: official rules, points to 500, no play tips, and a 15-second turn clock.',
+  schema: [
+    { key: 'players', label: 'Players at the table', type: 'select', options: [[2, '2 (you + 1)'], [3, '3 (you + 2)'], [4, '4 (you + 3)']] },
+    { key: 'scoring', label: 'Game length', type: 'select', options: [['round', 'Single round — first to empty wins'], [500, 'Points to 500'], [250, 'Points to 250']] },
+    { key: 'stack', label: 'Stacking +2 and +4', help: 'Answer a +2 with a +2 (or a +4 with a +4) to pass the total along', type: 'bool' },
+    { key: 'drawUntil', label: 'Draw until you can play', help: 'Off = draw one card', type: 'bool' },
+    { key: 'forcePlay', label: 'Must play a drawn card if it fits', type: 'bool' },
+    { key: 'sevenZero', label: '7-0 rule', help: 'Play a 7: swap hands with anyone. Play a 0: all hands pass in the direction of play', type: 'bool' },
+    { key: 'wild4Rule', label: 'Wild +4 only without a matching color', type: 'bool' },
+    { key: 'lastCard', label: '"Last Card!" penalty (draw 2 if caught)', type: 'bool' },
+    { key: 'tips', label: 'Play tips', type: 'bool' },
+    { key: 'timer', label: 'Turn clock', type: 'select', options: [[0, 'Off'], [15, '15 seconds'], [30, '30 seconds']] }
+  ],
+  presets: {
+    standard: { players: 4, scoring: 'round', stack: false, drawUntil: false, forcePlay: false, sevenZero: false, wild4Rule: true, lastCard: true, tips: true, timer: 0 },
+    pro: { players: 4, scoring: 500, stack: false, drawUntil: false, forcePlay: false, sevenZero: false, wild4Rule: true, lastCard: true, tips: false, timer: 15 }
+  }
+});
+let RU = McRules.get('colorclash');
+const ccTimer = McRules.timer();
+const NAMES = ['You', 'Jade', 'Marcus', 'Bree'];
+const G = { hands: [], draw: [], pile: [], color: 'r', turn: 0, dir: 1, pending: 0, pendingType: null, phase: 'idle', token: 0, scores: [0, 0, 0, 0], round: 0, n: 4, saidLast: false, drewThisTurn: false, log: [], stats: LS.get('cc-stats', { w: 0, l: 0 }), over: false };
+
+// ---------- deck ----------
+let uid = 0;
+function deck() {
+  const d = [];
+  for (const c of CK) {
+    d.push({ id: ++uid, c, v: '0' });
+    for (let k = 0; k < 2; k++) { for (let n = 1; n <= 9; n++) d.push({ id: ++uid, c, v: String(n) }); for (const v of ['skip', 'rev', '+2']) d.push({ id: ++uid, c, v }); }
+  }
+  for (let k = 0; k < 4; k++) { d.push({ id: ++uid, c: 'w', v: 'wild' }); d.push({ id: ++uid, c: 'w', v: '+4' }); }
+  return SH.cards.shuffle(d);
+}
+const top = () => G.pile[G.pile.length - 1];
+const pts = c => (c.c === 'w' ? 50 : /\d/.test(c.v) ? +c.v : 20);
+const label = c => ({ skip: 'Skip', rev: 'Reverse', '+2': 'Draw Two', wild: 'Wild', '+4': 'Wild +4' })[c.v] || c.v;
+const cname = c => (c.c === 'w' ? label(c) : `${COLORS[c.c].name} ${label(c)}`);
+function drawCard() {
+  if (!G.draw.length) { const t = G.pile.pop(); G.draw = SH.cards.shuffle(G.pile.map(c => (c.c === 'w' || c.wildFrom ? Object.assign({}, c, { chosen: undefined }) : c))); G.pile = [t]; log('Discard pile reshuffled into the deck.'); }
+  return G.draw.pop();
+}
+function canPlay(card, seat) {
+  const t = top();
+  if (G.pending) { // only stacking answers are allowed while a draw penalty is pending
+    if (!RU.stack) return false;
+    return card.v === G.pendingType;
+  }
+  if (card.c === 'w') {
+    if (card.v === '+4' && RU.wild4Rule) return !G.hands[seat].some(x => x !== card && x.c === G.color);
+    return true;
+  }
+  return card.c === G.color || card.v === t.v;
+}
+const playable = seat => G.hands[seat].filter(c => canPlay(c, seat));
+const next = (from, steps) => { let s = from; for (let i = 0; i < (steps || 1); i++) s = (s + G.dir + G.n) % G.n; return s; };
+
+// ---------- AI ----------
+function bestColor(seat) {
+  const cnt = { r: 0, g: 0, e: 0, s: 0 }; for (const c of G.hands[seat]) if (c.c !== 'w') cnt[c.c] += 1 + (/\d/.test(c.v) ? 0 : 0.5);
+  return CK.slice().sort((a, b) => cnt[b] - cnt[a])[0];
+}
+function aiChoose(seat) {
+  const opts = playable(seat); if (!opts.length) return null;
+  const nx = next(seat), danger = G.hands[nx].length <= 2;
+  let best = null, bs = -1e9;
+  for (const c of opts) {
+    let s = 0;
+    if (c.c === 'w') s -= c.v === '+4' ? (danger ? -30 : 25) : 18; // keep wilds unless needed
+    else s += c.c === bestColor(seat) ? 6 : 0;
+    if (['skip', '+2'].includes(c.v)) s += danger ? 30 : 4;
+    if (c.v === 'rev') s += danger && G.n > 2 ? 20 : 2;
+    if (/\d/.test(c.v)) s += +c.v * 0.6; // dump high numbers
+    if (RU.sevenZero && c.v === '7') s += G.hands[seat].length > 3 ? 12 : -5;
+    s += Math.random() * 2;
+    if (s > bs) { bs = s; best = c; }
+  }
+  return best;
+}
+
+// ---------- flow ----------
+const wait = ms => new Promise(r => setTimeout(r, ms));
+function log(t) { G.log.push(t); $('cc-log').innerHTML = G.log.slice(-60).map(x => `<div class="tiny" style="color:var(--wg-400)">${x}</div>`).join(''); $('cc-log').scrollTop = 1e9; }
+function newGame() { RU = McRules.get('colorclash'); ccTimer.stop(); G.token++; G.n = RU.players; G.scores = [0, 0, 0, 0]; G.round = 0; G.over = false; G.log = []; showMsg(''); newRound(); }
+function newRound() {
+  G.token++; G.round++;
+  G.draw = deck(); G.hands = Array.from({ length: G.n }, () => []); for (let k = 0; k < 7; k++) for (let s = 0; s < G.n; s++) G.hands[s].push(G.draw.pop());
+  let first; do { first = G.draw.pop(); if (!/\d/.test(first.v) || first.c === 'w') G.draw.unshift(first); } while (!/\d/.test(first.v) || first.c === 'w');
+  G.pile = [first]; G.color = first.c; G.dir = 1; G.pending = 0; G.pendingType = null; G.turn = (G.round - 1) % G.n; G.saidLast = false; G.drewThisTurn = false; G.phase = 'play';
+  log(`<b>Round ${G.round}</b> — ${NAMES.slice(0, G.n).join(', ')}. First card: ${cname(first)}.`);
+  SH.Sound.play('start'); render(true); loop();
+}
+async function loop() {
+  const tok = G.token;
+  while (G.phase === 'play' && tok === G.token) {
+    if (G.turn === 0) { render(); return; }
+    await wait(700); if (tok !== G.token) return;
+    await aiTurn(G.turn); if (tok !== G.token) return;
+  }
+}
+async function aiTurn(seat) {
+  let c = aiChoose(seat);
+  if (!c) {
+    if (G.pending) { takePenalty(seat); return; }
+    let drawn = drawOne(seat);
+    if (RU.drawUntil) while (!canPlay(drawn, seat)) { drawn = drawOne(seat); if (G.hands[seat].length > 40) break; }
+    if (canPlay(drawn, seat)) { await wait(400); c = drawn; } else { advance(1); return; }
+  }
+  if (G.hands[seat].length === 2 && Math.random() < 0.12) G.forgot = seat; // AI sometimes forgets to call it
+  play(seat, c, c.c === 'w' ? bestColor(seat) : null);
+}
+function drawOne(seat) { const c = drawCard(); G.hands[seat].push(c); SH.Sound.play('tick'); return c; }
+function takePenalty(seat) {
+  for (let i = 0; i < G.pending; i++) drawOne(seat);
+  log(`${NAMES[seat]} ${seat === 0 ? 'draw' : 'draws'} ${G.pending}.`); SH.Sound.play('bad');
+  G.pending = 0; G.pendingType = null; advance(1);
+}
+function advance(steps) { G.turn = next(G.turn, steps); G.drewThisTurn = false; render(); }
+function play(seat, card, chosen) {
+  const h = G.hands[seat]; h.splice(h.findIndex(x => x.id === card.id), 1);
+  if (card.c === 'w') { card = Object.assign({}, card, { chosen }); G.color = chosen; } else G.color = card.c;
+  G.pile.push(card); SH.Sound.play(card.c === 'w' || !/\d/.test(card.v) ? 'capture' : 'move');
+  log(`${NAMES[seat]} ${seat === 0 ? 'play' : 'plays'} ${cname(card)}${card.c === 'w' ? ' → ' + COLORS[chosen].name : ''}.`);
+  // last-card call
+  if (h.length === 1) {
+    const called = seat === 0 ? G.saidLast : G.forgot !== seat;
+    if (called) { log(`${NAMES[seat]}: "Last Card!"`); flash(seat === 0 ? 'Last Card!' : `${NAMES[seat]}: Last Card!`); }
+    else if (RU.lastCard && (seat !== 0 || Math.random() < 0.75)) { drawOne(seat); drawOne(seat); log(`${NAMES[seat]} forgot to call "Last Card!" — caught, draws 2.`); flash(`${seat === 0 ? 'You were' : NAMES[seat] + ' was'} caught! +2`); }
+  }
+  G.saidLast = false; G.forgot = null;
+  if (!h.length) { endRound(seat); return; }
+  // effects
+  if (card.v === '+2' || card.v === '+4') { G.pending += card.v === '+2' ? 2 : 4; G.pendingType = card.v; G.turn = next(seat); G.drewThisTurn = false;
+    if (!RU.stack || !G.hands[G.turn].some(x => x.v === card.v)) { const victim = G.turn; if (!(RU.stack && victim === 0 && G.hands[0].some(x => x.v === card.v))) { takePenalty(victim); return; } }
+    render(); return; }
+  if (card.v === 'skip') { log(`${NAMES[next(seat)]} is skipped.`); advanceFrom(seat, 2); return; }
+  if (card.v === 'rev') { G.dir *= -1; log('Direction reversed.'); advanceFrom(seat, G.n === 2 ? 2 : 1); return; }
+  if (RU.sevenZero && card.v === '0') { const hs = G.hands.slice(); for (let s = 0; s < G.n; s++) G.hands[(s + G.dir + G.n) % G.n] = hs[s]; log('Zero! Every hand passes along.'); flash('Hands rotate!'); }
+  if (RU.sevenZero && card.v === '7') {
+    if (seat === 0) { G.phase = 'swap'; render(); return; }
+    const target = [...Array(G.n).keys()].filter(s => s !== seat).sort((a, b) => G.hands[a].length - G.hands[b].length)[0];
+    swapHands(seat, target);
+  }
+  advanceFrom(seat, 1);
+}
+function swapHands(a, b) { [G.hands[a], G.hands[b]] = [G.hands[b], G.hands[a]]; log(`${NAMES[a]} ${a === 0 ? 'swap' : 'swaps'} hands with ${NAMES[b]}.`); flash('Hands swapped!'); }
+function advanceFrom(seat, steps) { G.turn = next(seat, steps); G.drewThisTurn = false; render(); }
+function endRound(w) {
+  G.phase = 'idle'; ccTimer.stop();
+  const gained = G.hands.reduce((a, h, s) => a + (s === w ? 0 : h.reduce((x, c) => x + pts(c), 0)), 0);
+  G.scores[w] += gained;
+  log(`<b>${NAMES[w]} ${w === 0 ? 'go' : 'goes'} out!</b> +${gained} points.`);
+  const target = RU.scoring === 'round' ? 0 : RU.scoring;
+  const done = !target || G.scores[w] >= target;
+  if (done) {
+    const you = w === 0; G.over = true; G.stats[you ? 'w' : 'l']++; LS.set('cc-stats', G.stats);
+    SH.Sound.play(you ? 'victory' : 'defeat');
+    showMsg(`<h4 class="serif" style="margin:0 0 4px;font-size:22px">${you ? 'You win!' : NAMES[w] + ' wins'}</h4><div class="tiny muted">${target ? 'Final: ' + NAMES.slice(0, G.n).map((n, s) => `${n} ${G.scores[s]}`).join(' · ') : 'First to empty their hand'}</div><button class="btn btn-lux" style="margin-top:10px" id="cc-again">Play again</button>`);
+    $('cc-again').onclick = newGame;
+    if (SH.onResult) SH.onResult('colorclash', you ? 'w' : 'l', { pro: !!RU.pro });
+  } else {
+    SH.Sound.play(w === 0 ? 'good' : 'draw');
+    showMsg(`<div class="label">Round ${G.round}</div><div class="tiny" style="margin:6px 0">${NAMES[w]} went out (+${gained}). ${NAMES.slice(0, G.n).map((n, s) => `${n} ${G.scores[s]}`).join(' · ')} — first to ${target}.</div><button class="btn btn-lux" id="cc-next">Next round</button>`);
+    $('cc-next').onclick = () => { showMsg(''); newRound(); };
+  }
+  render();
+}
+function showMsg(html) { const m = $('cc-msg'); m.innerHTML = html ? `<div class="glass" style="padding:14px 16px;text-align:center">${html}</div>` : ''; m.classList.toggle('hidden', !html); }
+function flash(t) { const el = $('cc-flash'); el.textContent = t; el.classList.remove('show'); void el.offsetWidth; el.classList.add('show'); }
+
+// ---------- your actions ----------
+let pendingWild = null;
+function youPlay(card) {
+  if (G.turn !== 0 || G.phase !== 'play') return;
+  if (!canPlay(card, 0)) { SH.toast(G.pending ? `Draw the ${G.pending}${RU.stack ? ' or stack a matching ' + G.pendingType : ''}` : card.v === '+4' && RU.wild4Rule ? `Wild +4 only when you have no ${COLORS[G.color].name} cards` : `Match ${COLORS[G.color].name} or a ${label(top())}`, 'x'); return; }
+  ccTimer.stop();
+  if (card.c === 'w') { pendingWild = card; $('cc-pick').classList.remove('hidden'); return; }
+  play(0, card); afterYou();
+}
+function afterYou() { if (G.phase === 'play') loop(); }
+function youDraw() {
+  if (G.turn !== 0 || G.phase !== 'play') return;
+  ccTimer.stop(); SH.Sound.unlock();
+  if (G.pending) { takePenalty(0); loop(); return; }
+  if (G.drewThisTurn) { log('You pass.'); advance(1); loop(); return; }
+  let c = drawOne(0);
+  if (RU.drawUntil) while (!canPlay(c, 0) && G.hands[0].length < 40) c = drawOne(0);
+  G.drewThisTurn = true;
+  if (!canPlay(c, 0)) { log('You draw and pass.'); advance(1); loop(); return; }
+  if (RU.forcePlay) { SH.toast('Drawn card fits — it must be played'); if (c.c === 'w') { pendingWild = c; $('cc-pick').classList.remove('hidden'); return; } play(0, c); afterYou(); return; }
+  SH.toast('Your drawn card fits — play it or tap Pass'); render();
+}
+
+// ---------- render ----------
+const sym = v => ({ skip: '⊘', rev: '⇄', '+2': '+2', wild: '✦', '+4': '+4' })[v] || v;
+function cardHtml(c, opts) {
+  opts = opts || {};
+  if (opts.back) return `<div class="ccard back" style="${opts.style || ''}"><span>M</span></div>`;
+  const col = c.c === 'w' ? (c.chosen ? COLORS[c.chosen].hex : null) : COLORS[c.c].hex;
+  const bg = col ? col : 'conic-gradient(#d9466b 0 25%,#e2a92b 0 50%,#2fa572 0 75%,#3f7fd9 0)';
+  return `<div class="ccard ${c.c === 'w' ? 'wild' : ''} ${opts.cls || ''}" style="--cc:${bg};${opts.style || ''}" ${opts.attr || ''}><span class="cn tl">${sym(c.v)}</span><span class="cb"><span>${sym(c.v)}</span></span><span class="cn br">${sym(c.v)}</span></div>`;
+}
+function seatHtml(s) {
+  const n = G.hands[s] ? G.hands[s].length : 0, on = G.phase === 'play' && G.turn === s;
+  const backs = Array.from({ length: Math.min(n, 10) }, (_, i) => cardHtml(null, { back: true, style: `margin-left:${i ? -26 : 0}px` })).join('');
+  return `<div class="seat-tag ${on ? 'on' : ''}"><b>${NAMES[s]}</b><span>${n} card${n === 1 ? '' : 's'}${n === 1 ? ' · LAST CARD' : ''}${RU.scoring !== 'round' ? ' · ' + G.scores[s] + ' pts' : ''}</span></div><div class="mini-hand cc-mini">${backs}</div>`;
+}
+const SEAT_POS = { 2: { 1: 'n' }, 3: { 1: 'w', 2: 'e' }, 4: { 1: 'w', 2: 'n', 3: 'e' } };
+function render(dealing) {
+  if (!G.hands.length) return;
+  const pos = SEAT_POS[G.n];
+  for (const p of ['n', 'w', 'e']) { const el = $('cc-seat-' + p); const s = Object.keys(pos).find(k => pos[k] === p); el.innerHTML = s ? seatHtml(+s) : ''; }
+  const t = top();
+  $('cc-center').innerHTML = `<div class="cc-stack"><div class="cc-draw" id="cc-drawbtn" title="Draw">${cardHtml(null, { back: true })}<span class="pill">${G.draw.length}</span></div>${cardHtml(t, { cls: 'pilecard' })}</div>
+    <div class="cc-color" style="--cc:${COLORS[G.color].hex}"><b>${COLORS[G.color].name}</b><span>${G.dir === 1 ? '↻ clockwise' : '↺ counter-clockwise'}</span>${G.pending ? `<span class="pill" style="color:var(--amber)">+${G.pending} pending</span>` : ''}</div>`;
+  $('cc-drawbtn').onclick = youDraw;
+  const mine = G.turn === 0 && G.phase === 'play';
+  const ok = mine ? playable(0).map(c => c.id) : [];
+  const tip = RU.tips && mine && ok.length ? aiChoose(0) : null;
+  $('cc-hand').innerHTML = G.hands[0].map((c, i) => cardHtml(c, { cls: (ok.includes(c.id) ? 'playable' : mine ? 'dim' : '') + (tip && tip.id === c.id ? ' tip' : '') + (dealing ? ' dealt' : ''), attr: `data-id="${c.id}"`, style: `--d:${i * 40}ms` })).join('');
+  $('cc-you').innerHTML = `<div class="seat-tag ${mine ? 'on' : ''}"><b>You</b><span>${G.hands[0].length} cards${RU.scoring !== 'round' ? ' · ' + G.scores[0] + ' pts' : ''}${mine ? ' · your turn' : ''}</span></div>`;
+  const lastBtn = $('cc-last'); lastBtn.classList.toggle('hidden', !(mine && G.hands[0].length === 2 && ok.length)); lastBtn.classList.toggle('on', G.saidLast);
+  $('cc-pass').classList.toggle('hidden', !(mine && G.drewThisTurn));
+  $('cc-drawlabel').textContent = mine ? (G.pending ? `Take ${G.pending}` : G.drewThisTurn ? 'Pass' : 'Draw') : 'Draw';
+  $('cc-rb').textContent = McRules.label('colorclash'); $('cc-rb').className = 'rbadge r-' + McRules.mode('colorclash');
+  $('cc-rec').textContent = `W${G.stats.w} L${G.stats.l}`;
+  $('cc-swap').classList.toggle('hidden', G.phase !== 'swap');
+  if (G.phase === 'swap') $('cc-swapbtns').innerHTML = [...Array(G.n).keys()].filter(s => s).map(s => `<button class="btn btn-lux" data-swap="${s}">${NAMES[s]} (${G.hands[s].length})</button>`).join('');
+  $('cc-tip').textContent = mine ? (G.pending ? (RU.stack && ok.length ? `Stack a ${G.pendingType} to pass it on, or take ${G.pending}.` : `You must take ${G.pending} cards.`) : tip ? `Tip: play ${cname(tip)}` : ok.length ? '' : 'No match — draw a card.') : '';
+  if (mine && RU.timer) { const key = G.hands[0].length + ':' + G.pile.length + ':' + G.drewThisTurn + G.pending; if (G._tKey !== key) { G._tKey = key; ccTimer.start(RU.timer, $('cc-timer'), timeUp); } }
+  else { G._tKey = null; ccTimer.stop(); }
+}
+function timeUp() {
+  G._tKey = null; if (G.turn !== 0 || G.phase !== 'play') return;
+  SH.toast('Time! Auto-move', 'clock');
+  const c = aiChoose(0);
+  if (c) { G.saidLast = true; play(0, c, c.c === 'w' ? bestColor(0) : null); afterYou(); } else youDraw();
+}
+
+// ---------- markup ----------
+const root = $('view-colorclash');
+root.innerHTML = `
+<section class="col center" style="width:100%">
+  <div class="felt cc-felt" id="cc-felt">
+    <div class="seat n" id="cc-seat-n"></div><div class="seat w" id="cc-seat-w"></div><div class="seat e" id="cc-seat-e"></div>
+    <div class="trick cc-center" id="cc-center"></div>
+    <div class="cc-flash" id="cc-flash"></div>
+    <div class="felt-msg hidden" id="cc-msg"></div>
+    <div class="felt-msg hidden" id="cc-pick"><div class="glass" style="padding:14px;text-align:center"><div class="label" style="margin-bottom:8px">Choose the new color</div><div class="row" style="justify-content:center;flex-wrap:wrap">${CK.map(k => `<button class="btn" data-pick="${k}" style="background:${COLORS[k].hex};color:#fff;min-width:88px">${COLORS[k].name}</button>`).join('')}</div></div></div>
+    <div class="felt-msg hidden" id="cc-swap"><div class="glass" style="padding:14px;text-align:center"><div class="label" style="margin-bottom:8px">7 played — swap hands with…</div><div class="row" id="cc-swapbtns" style="justify-content:center;flex-wrap:wrap"></div></div></div>
+  </div>
+  <div class="row" style="justify-content:center;gap:8px;flex-wrap:wrap;margin-top:4px"><div id="cc-you"></div><span class="ptimer hidden" id="cc-timer"></span><button class="btn btn-lux hidden" id="cc-last">Last Card!</button><button class="btn btn-sec" id="cc-drawlabel">Draw</button><button class="btn btn-sec hidden" id="cc-pass">Pass</button></div>
+  <div class="cc-hand" id="cc-hand"></div>
+  <div class="tiny" id="cc-tip" style="color:var(--amber);text-align:center;min-height:18px"></div>
+</section>
+<section class="col right">
+  <div class="glass card stack">
+    <div class="between"><h3 class="h3">McLearn Color Clash</h3><span class="row" style="gap:6px"><span class="rbadge" id="cc-rb">Standard</span><span class="pill" id="cc-rec"></span></span></div>
+    <div class="tiny muted">Match the color or the symbol. Skip ⊘, Reverse ⇄ and Draw Two +2 shake things up; Wild ✦ and Wild +4 change the color. Down to one card? Tap <b>Last Card!</b> before you play — or get caught and draw 2. Empty your hand to win.</div>
+    <div id="rules-colorclash"></div>
+    <button class="btn btn-lux" id="cc-new">New Game</button>
+    <div><span class="label">Table log</span><div class="moves" id="cc-log" style="margin-top:6px;height:120px;font-family:var(--sans)"></div></div>
+    <div class="note">Color Clash is McLearn Media's own take on the classic color-matching card game family.</div>
+  </div>
+</section>`;
+$('cc-hand').addEventListener('click', e => { const el = e.target.closest('.ccard[data-id]'); if (!el) return; SH.Sound.unlock(); const c = G.hands[0].find(x => x.id === +el.dataset.id); if (c) youPlay(c); });
+$('cc-pick').addEventListener('click', e => { const b = e.target.closest('[data-pick]'); if (!b || !pendingWild) return; $('cc-pick').classList.add('hidden'); const c = pendingWild; pendingWild = null; play(0, c, b.dataset.pick); afterYou(); });
+$('cc-swap').addEventListener('click', e => { const b = e.target.closest('[data-swap]'); if (!b) return; swapHands(0, +b.dataset.swap); G.phase = 'play'; advanceFrom(0, 1); loop(); });
+$('cc-last').onclick = () => { G.saidLast = true; SH.Sound.play('check'); flash('Last Card!'); render(); };
+$('cc-drawlabel').onclick = youDraw;
+$('cc-pass').onclick = () => { if (G.turn === 0 && G.drewThisTurn) { log('You pass.'); advance(1); loop(); } };
+$('cc-new').onclick = newGame;
+McRules.mount('colorclash', $('rules-colorclash'));
+McRules.onChange('colorclash', () => { if (!G.hands.length || G.over || G.pile.length <= 1) newGame(); else SH.toast('New rules apply from your next game'); });
+SH.games.colorclash = { onShow() { if (!G.hands.length) newGame(); else render(); }, _G: G, _canPlay: canPlay, _aiChoose: aiChoose, _youPlay: youPlay, _youDraw: youDraw, _newGame: newGame, COLORS };
+})();
+
+</script>
+<script>
+// McLearn Pitty Pat — the Southern pairing card game. Pair every card in your hand to win.
+(function () {
+'use strict';
+const SH = window.McShared, $ = id => document.getElementById(id), LS = SH.LS, C = SH.cards;
+McRules.register('pittypat', {
+  title: 'Pitty Pat',
+  proNote: 'Pro: best of five games, no tips, and a 15-second turn clock.',
+  schema: [
+    { key: 'players', label: 'Players at the table', type: 'select', options: [[2, '2 (you + 1)'], [3, '3 (you + 2)'], [4, '4 (you + 3)']] },
+    { key: 'deal', label: 'Cards dealt', help: '5 cards = make 3 pairs to win; 7 cards = make 4 pairs', type: 'select', options: [[5, '5 cards'], [7, '7 cards']] },
+    { key: 'outOfTurn', label: 'Out-of-turn "Pat!"', help: 'Anyone holding a match can grab a fresh discard and play continues from them', type: 'bool' },
+    { key: 'keepDrawn', label: 'May keep the drawn card', help: 'Off = a drawn card that does not pair must be thrown right back', type: 'bool' },
+    { key: 'match', label: 'Match length', type: 'select', options: [[1, 'Single game'], [3, 'First to 3 wins'], [5, 'First to 5 wins']] },
+    { key: 'tips', label: 'Discard tips', type: 'bool' },
+    { key: 'timer', label: 'Turn clock', type: 'select', options: [[0, 'Off'], [15, '15 seconds'], [30, '30 seconds']] }
+  ],
+  presets: { standard: { players: 4, deal: 5, outOfTurn: false, keepDrawn: true, match: 1, tips: true, timer: 0 }, pro: { match: 5, tips: false, timer: 15 } }
+});
+let RU = McRules.get('pittypat');
+const ppTimer = McRules.timer();
+const NAMES = ['You', 'Miss Pearl', 'Deacon', 'Cousin Ray'];
+const G = { hands: [], pairs: [], stock: [], pile: [], turn: 0, phase: 'idle', n: 4, wins: [0, 0, 0, 0], token: 0, log: [], drawn: null, stats: LS.get('pp-stats', { w: 0, l: 0 }), over: false, patWindow: false };
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const top = () => G.pile[G.pile.length - 1];
+const rankName = r => ({ 11: 'Jack', 12: 'Queen', 13: 'King', 14: 'Ace' })[r] || r;
+function log(t) { G.log.push(t); $('pp-log').innerHTML = G.log.slice(-60).map(x => `<div class="tiny" style="color:var(--wg-400)">${x}</div>`).join(''); $('pp-log').scrollTop = 1e9; }
+function drawStock() {
+  if (!G.stock.length) { const t = G.pile.pop(); G.stock = C.shuffle(G.pile); G.pile = [t]; log('Discards shuffled back into the deck.'); }
+  return G.stock.pop();
+}
+const hasRank = (seat, r) => G.hands[seat].some(c => c.r === r);
+function layPair(seat, card) {
+  const h = G.hands[seat], i = h.findIndex(c => c.r === card.r && c !== card);
+  const mate = h.splice(i, 1)[0];
+  const j = h.indexOf(card); if (j >= 0) h.splice(j, 1);
+  G.pairs[seat].push([mate, card]); SH.Sound.play('capture');
+  log(`${NAMES[seat]} ${seat ? 'pairs' : 'pair'} ${rankName(card.r)}s — Pitty Pat!`); flash(seat ? `${NAMES[seat]}: Pitty Pat!` : 'Pitty Pat!');
+  if (!h.length) { win(seat); return true; }
+  return false;
+}
+function seenCount(r) { return G.pile.filter(c => c.r === r).length + G.pairs.flat(2).filter(c => c.r === r).length; }
+function chooseDiscard(seat) { // throw the card least likely to pair: most copies already out of play
+  const h = G.hands[seat];
+  return h.slice().sort((a, b) => seenCount(b.r) - seenCount(a.r) || b.r - a.r)[0];
+}
+function discard(seat, card) {
+  const h = G.hands[seat]; h.splice(h.indexOf(card), 1); G.pile.push(card); G.drawn = null;
+  SH.Sound.play('move'); log(`${NAMES[seat]} ${seat ? 'throws' : 'throw'} ${C.name(card)}.`);
+  G.phase = 'between'; render();
+  afterDiscard(seat);
+}
+async function afterDiscard(seat) {
+  const tok = G.token, card = top();
+  if (RU.outOfTurn) { // anyone with a match may grab it, nearest seat first; you get a short window
+    for (let k = 1; k < G.n; k++) {
+      const s = (seat + k) % G.n;
+      if (!hasRank(s, card.r)) continue;
+      if (s === 0) { G.patWindow = true; render(); await wait(1800); if (tok !== G.token) return; G.patWindow = false; if (G.phase !== 'between') return; continue; }
+      if (Math.random() < 0.75) { await wait(450); if (tok !== G.token) return; G.pile.pop(); G.hands[s].push(card); log(`${NAMES[s]} grabs it out of turn!`); G.turn = s; if (layPair(s, card)) return; G.phase = 'discard'; render(); if (s !== 0) { await wait(500); if (tok !== G.token) return; discard(s, chooseDiscard(s)); } return; }
+    }
+  }
+  G.turn = (seat + 1) % G.n; G.phase = 'start'; render(); loop();
+}
+async function loop() {
+  const tok = G.token;
+  if (G.phase !== 'start' || G.turn === 0) { render(); return; }
+  await wait(650); if (tok !== G.token) return;
+  const s = G.turn;
+  if (hasRank(s, top().r)) { const c = G.pile.pop(); G.hands[s].push(c); log(`${NAMES[s]} takes ${C.name(c)}.`); if (layPair(s, c)) return; }
+  else {
+    const c = drawStock(); G.hands[s].push(c); log(`${NAMES[s]} draws.`); SH.Sound.play('tick');
+    if (G.hands[s].filter(x => x.r === c.r).length >= 2) { await wait(350); if (tok !== G.token) return; if (layPair(s, c)) return; }
+    else if (!RU.keepDrawn) { await wait(350); if (tok !== G.token) return; discard(s, c); return; }
+  }
+  await wait(400); if (tok !== G.token) return;
+  discard(s, chooseDiscard(s));
+}
+function win(seat) {
+  G.phase = 'idle'; ppTimer.stop(); G.wins[seat]++;
+  const target = RU.match, done = G.wins[seat] >= target;
+  log(`<b>${NAMES[seat]} ${seat ? 'pairs' : 'pair'} out!</b>`);
+  if (done) {
+    const you = seat === 0; G.over = true; G.stats[you ? 'w' : 'l']++; LS.set('pp-stats', G.stats);
+    SH.Sound.play(you ? 'victory' : 'defeat');
+    showMsg(`<h4 class="serif" style="margin:0 0 4px;font-size:22px">${you ? 'You win!' : NAMES[seat] + ' wins'}</h4><div class="tiny muted">${target > 1 ? NAMES.slice(0, G.n).map((n, s) => `${n} ${G.wins[s]}`).join(' · ') : 'First to pair every card'}</div><button class="btn btn-lux" style="margin-top:10px" id="pp-again">Play again</button>`);
+    $('pp-again').onclick = newGame;
+    if (SH.onResult) SH.onResult('pittypat', you ? 'w' : 'l', { pro: !!RU.pro });
+  } else {
+    SH.Sound.play(seat === 0 ? 'good' : 'draw');
+    showMsg(`<div class="label">Game ${G.wins.reduce((a, b) => a + b, 0)}</div><div class="tiny" style="margin:6px 0">${NAMES[seat]} paired out. ${NAMES.slice(0, G.n).map((n, s) => `${n} ${G.wins[s]}`).join(' · ')} — first to ${target}.</div><button class="btn btn-lux" id="pp-next">Next game</button>`);
+    $('pp-next').onclick = () => { showMsg(''); deal(); };
+  }
+  render();
+}
+function newGame() { RU = McRules.get('pittypat'); G.token++; G.n = RU.players; G.wins = [0, 0, 0, 0]; G.over = false; G.log = []; G.dealer = -1; showMsg(''); deal(); }
+function deal() {
+  G.token++; G.dealer = ((G.dealer == null ? -1 : G.dealer) + 1) % G.n;
+  G.stock = C.shuffle(C.deck()); G.hands = Array.from({ length: G.n }, () => []); G.pairs = Array.from({ length: G.n }, () => []);
+  for (let k = 0; k < RU.deal; k++) for (let s = 0; s < G.n; s++) G.hands[s].push(G.stock.pop());
+  // pairs dealt in hand are kept (you still need to draw into them) — sort for readability
+  G.pile = [G.stock.pop()]; G.drawn = null; G.turn = (G.dealer + 1) % G.n; G.phase = 'start';
+  log(`<b>New deal</b> — ${NAMES[G.dealer]} deals ${RU.deal} each. Up card: ${C.name(top())}.`);
+  SH.Sound.play('start'); render(true); loop();
+}
+
+// ---------- your turn ----------
+function youTake() {
+  if (!(G.turn === 0 && G.phase === 'start') && !G.patWindow) return;
+  const c = top(); if (!hasRank(0, c.r)) { SH.toast(`You need a ${rankName(c.r)} to take that card`, 'x'); return; }
+  ppTimer.stop(); SH.Sound.unlock();
+  if (G.patWindow) { G.patWindow = false; G.turn = 0; log('You grab it out of turn — Pat!'); }
+  G.pile.pop(); G.hands[0].push(c);
+  if (layPair(0, c)) return;
+  G.phase = 'discard'; render();
+}
+function youDraw() {
+  if (!(G.turn === 0 && G.phase === 'start')) return;
+  ppTimer.stop(); SH.Sound.unlock();
+  const c = drawStock(); G.hands[0].push(c); G.drawn = c; SH.Sound.play('tick');
+  if (G.hands[0].filter(x => x.r === c.r).length >= 2) { log(`You draw ${C.name(c)} — it pairs!`); if (layPair(0, c)) return; G.drawn = null; G.phase = 'discard'; render(); return; }
+  log(`You draw ${C.name(c)}.`);
+  if (!RU.keepDrawn) { SH.toast('No pair — it goes back on the pile'); discard(0, c); return; }
+  G.phase = 'discard'; render();
+}
+function youDiscard(card) { if (G.turn !== 0 || G.phase !== 'discard') return; ppTimer.stop(); discard(0, card); }
+
+// ---------- render ----------
+function showMsg(html) { const m = $('pp-msg'); m.innerHTML = html ? `<div class="glass" style="padding:14px 16px;text-align:center">${html}</div>` : ''; m.classList.toggle('hidden', !html); }
+function flash(t) { const el = $('pp-flash'); el.textContent = t; el.classList.remove('show'); void el.offsetWidth; el.classList.add('show'); }
+const SEAT_POS = { 2: { 1: 'n' }, 3: { 1: 'w', 2: 'e' }, 4: { 1: 'w', 2: 'n', 3: 'e' } };
+function seatHtml(s) {
+  const n = G.hands[s].length, on = G.turn === s && (G.phase === 'start' || G.phase === 'discard');
+  const backs = Array.from({ length: Math.min(n, 8) }, (_, i) => C.html(null, { back: true, style: `margin-left:${i ? -30 : 0}px` })).join('');
+  return `<div class="seat-tag ${on ? 'on' : ''}"><b>${NAMES[s]}</b><span>${n} cards · ${G.pairs[s].length} pair${G.pairs[s].length === 1 ? '' : 's'}${RU.match > 1 ? ' · ' + G.wins[s] + ' won' : ''}</span></div><div class="mini-hand">${backs}</div>`;
+}
+function render(dealing) {
+  if (!G.hands.length) return;
+  const pos = SEAT_POS[G.n];
+  for (const p of ['n', 'w', 'e']) { const s = Object.keys(pos).find(k => pos[k] === p); $('pp-seat-' + p).innerHTML = s ? seatHtml(+s) : ''; }
+  const t = top(), canTake = ((G.turn === 0 && G.phase === 'start') || G.patWindow) && hasRank(0, t.r);
+  $('pp-center').innerHTML = `<div class="cc-stack"><div class="cc-draw" id="pp-stock" title="Draw from the deck">${C.html(null, { back: true })}<span class="pill">${G.stock.length}</span></div><div id="pp-pile" class="${canTake ? 'pp-take' : ''}" title="${canTake ? 'Take it — you have a match!' : 'Discard pile'}">${C.html(t, { cls: 'pilecard' })}</div></div>`;
+  $('pp-stock').onclick = youDraw; $('pp-pile').onclick = youTake;
+  const mine = G.turn === 0 && G.phase === 'discard';
+  const tip = RU.tips && mine ? chooseDiscard(0) : null;
+  $('pp-hand').innerHTML = G.hands[0].map((c, i) => C.html(c, { cls: (mine ? 'playable' : '') + (tip === c ? ' tip' : '') + (G.drawn === c ? ' drawn' : '') + (dealing ? ' dealt' : '') + (G.turn === 0 && G.phase === 'start' && c.r === t.r ? ' match' : ''), attr: `data-i="${i}"`, style: `--d:${i * 40}ms` })).join('');
+  $('pp-pairs').innerHTML = G.pairs[0].map(p => `<div class="pp-pair">${p.map(c => C.html(c)).join('')}</div>`).join('') || '<span class="tiny muted">Your pairs land here.</span>';
+  $('pp-you').innerHTML = `<div class="seat-tag ${G.turn === 0 && G.phase !== 'idle' && G.phase !== 'between' ? 'on' : ''}"><b>You</b><span>${G.hands[0].length} cards · ${G.pairs[0].length}/${(RU.deal + 1) / 2} pairs${RU.match > 1 ? ' · ' + G.wins[0] + ' won' : ''}</span></div>`;
+  $('pp-patbtn').classList.toggle('hidden', !G.patWindow);
+  $('pp-tip').textContent = G.patWindow ? 'You have a match — tap PAT! to grab it out of turn!' : G.turn === 0 && G.phase === 'start' ? (canTake ? `You hold a ${rankName(t.r)} — tap the discard to pair it, or draw.` : 'No match on the pile — draw from the deck.') : mine ? (tip ? `Tip: throw ${C.name(tip)} (its mates are mostly gone).` : 'Choose a card to throw.') : '';
+  $('pp-rb').textContent = McRules.label('pittypat'); $('pp-rb').className = 'rbadge r-' + McRules.mode('pittypat');
+  $('pp-rec').textContent = `W${G.stats.w} L${G.stats.l}`;
+  const myTurn = G.turn === 0 && (G.phase === 'start' || G.phase === 'discard');
+  if (myTurn && RU.timer) { const key = G.phase + G.hands[0].length + G.pile.length; if (G._tKey !== key) { G._tKey = key; ppTimer.start(RU.timer, $('pp-timer'), () => { G._tKey = null; SH.toast('Time! Auto-move', 'clock'); if (G.phase === 'start') { if (hasRank(0, top().r)) youTake(); else youDraw(); } if (G.turn === 0 && G.phase === 'discard') youDiscard(chooseDiscard(0)); }); } }
+  else { G._tKey = null; ppTimer.stop(); }
+}
+const root = $('view-pittypat');
+root.innerHTML = `
+<section class="col center" style="width:100%">
+  <div class="felt" id="pp-felt">
+    <div class="seat n" id="pp-seat-n"></div><div class="seat w" id="pp-seat-w"></div><div class="seat e" id="pp-seat-e"></div>
+    <div class="trick cc-center" id="pp-center"></div>
+    <div class="cc-flash" id="pp-flash"></div>
+    <div class="felt-msg hidden" id="pp-msg"></div>
+  </div>
+  <div class="row" style="justify-content:center;gap:8px;flex-wrap:wrap;margin-top:4px"><div id="pp-you"></div><span class="ptimer hidden" id="pp-timer"></span><button class="btn btn-lux hidden" id="pp-patbtn">PAT!</button></div>
+  <div class="fan" id="pp-hand"></div>
+  <div class="tiny" id="pp-tip" style="color:var(--amber);text-align:center;min-height:18px"></div>
+  <div class="pp-pairs" id="pp-pairs"></div>
+</section>
+<section class="col right">
+  <div class="glass card stack">
+    <div class="between"><h3 class="h3">McLearn Pitty Pat</h3><span class="row" style="gap:6px"><span class="rbadge" id="pp-rb">Standard</span><span class="pill" id="pp-rec"></span></span></div>
+    <div class="tiny muted">The Southern pairing game. On your turn, take the top discard if it matches a card in your hand — or draw from the deck. Lay down every pair, then throw one card. Pair all your cards to win: with 5 cards that's 3 pairs.</div>
+    <div id="rules-pittypat"></div>
+    <button class="btn btn-lux" id="pp-new">New Game</button>
+    <div><span class="label">Table log</span><div class="moves" id="pp-log" style="margin-top:6px;height:120px;font-family:var(--sans)"></div></div>
+  </div>
+</section>`;
+$('pp-hand').addEventListener('click', e => { const el = e.target.closest('.pcard[data-i]'); if (!el) return; SH.Sound.unlock(); const c = G.hands[0][+el.dataset.i]; if (G.phase === 'discard' && G.turn === 0) youDiscard(c); else if (G.phase === 'start' && G.turn === 0 && c.r === top().r) youTake(); });
+$('pp-patbtn').onclick = youTake;
+$('pp-new').onclick = newGame;
+McRules.mount('pittypat', $('rules-pittypat'));
+McRules.onChange('pittypat', () => { if (!G.hands.length || G.over || G.pile.length <= 1) newGame(); else SH.toast('New rules apply from your next game'); });
+SH.games.pittypat = { onShow() { if (!G.hands.length) newGame(); else render(); }, _G: G, _newGame: newGame };
+})();
+
+</script>
+<script>
 // McLearn Arena brand layer — Player Card (XP, levels, seasons, achievements), Victory Cards, McLearn Minute showcase, Event Mode.
 (function () {
 'use strict';
@@ -4471,6 +4981,8 @@ const ACH = [
   { id: 'pcwin', name: 'Home Run', desc: 'Win a game of Parcheesi', icon: '🏠' },
   { id: 'hunter', name: 'Headhunter', desc: 'Capture 10 Parcheesi pawns', icon: '🎯' },
   { id: 'streak', name: 'On Fire', desc: 'Win 3 games in a row', icon: '🔥' },
+  { id: 'clash', name: 'Last Card Legend', desc: 'Win a game of Color Clash', icon: '✦' },
+  { id: 'pat', name: 'Pitty Pat Pro', desc: 'Win a game of Pitty Pat', icon: '🂫' },
   { id: 'procircuit', name: 'Pro Circuit', desc: 'Win in Pro mode in 3 different games', icon: '🥇' }
 ];
 function save() { LS.set('player', P); renderChip(); }
@@ -4492,7 +5004,7 @@ function addXP(n, silent) {
 }
 function floatXP(n) { const el = document.createElement('div'); el.className = 'xpfloat'; el.textContent = `+${n} XP`; document.body.appendChild(el); setTimeout(() => el.remove(), 1400); }
 
-const GAME_NAMES = { 'blackjack-tourney': 'Blackjack Tournament', chess: 'Chess', checkers: 'Checkers', spades: 'Spades', blackjack: 'Blackjack', parcheesi: 'Parcheesi', academy: 'Chess Academy' };
+const GAME_NAMES = { pittypat: 'Pitty Pat', colorclash: 'Color Clash', 'blackjack-tourney': 'Blackjack Tournament', chess: 'Chess', checkers: 'Checkers', spades: 'Spades', blackjack: 'Blackjack', parcheesi: 'Parcheesi', academy: 'Chess Academy' };
 SH.onResult = function (game, res, extra) {
   extra = extra || {};
   const g = P.games[game] = P.games[game] || { w: 0, l: 0, d: 0 };
@@ -4510,12 +5022,14 @@ SH.onResult = function (game, res, extra) {
   if (game === 'checkers' && res === 'w') unlock('kingme');
   if (game === 'spades' && res === 'w') unlock('spades');
   if (game === 'parcheesi' && res === 'w') unlock('pcwin');
+  if (game === 'colorclash' && res === 'w') unlock('clash');
+  if (game === 'pittypat' && res === 'w') unlock('pat');
   if (game === 'blackjack') {
     if (extra.bj) { unlock('natural'); queueCard({ kind: 'win', headline: 'BLACKJACK!', sub: 'A natural 21 at the McLearn Arena table', icon: '🂡' }); }
     const st = LS.get('bj', null); if (st && st.total >= 50 && st.good / st.total >= 0.95) unlock('strategist');
   }
   if (game === 'academy') { const pz = LS.get('puzzles', { solved: [] }); if (pz.solved.length >= 7) unlock('drills'); queueCard({ kind: 'win', headline: 'PUZZLE SOLVED', sub: extra.name || 'McLearn Academy drill', icon: '🎓' }); }
-  if (res === 'w' && big && game !== 'blackjack-tourney') queueCard({ kind: 'win', headline: game === 'chess' ? (extra.reason === 'checkmate' ? 'CHECKMATE' : 'VICTORY') : 'VICTORY', sub: `${extra.pro ? 'Pro · ' : ''}${GAME_NAMES[game]}${extra.vs ? ' vs ' + extra.vs : ''}`, icon: { chess: '♚', checkers: '⛀', spades: '♠', parcheesi: '⚄' }[game] || '🏆' });
+  if (res === 'w' && big && game !== 'blackjack-tourney') queueCard({ kind: 'win', headline: game === 'chess' ? (extra.reason === 'checkmate' ? 'CHECKMATE' : 'VICTORY') : 'VICTORY', sub: `${extra.pro ? 'Pro · ' : ''}${GAME_NAMES[game]}${extra.vs ? ' vs ' + extra.vs : ''}`, icon: { chess: '♚', checkers: '⛀', spades: '♠', parcheesi: '⚄', colorclash: '✦', pittypat: '🂫' }[game] || '🏆' });
   if (game !== 'blackjack' || (P.games.blackjack.w + P.games.blackjack.l + P.games.blackjack.d) % 6 === 0) setTimeout(() => Minute.maybe(), 2600);
 };
 SH.onEvent = function (game, ev, data) {
@@ -4621,7 +5135,7 @@ function openPlayerCard() {
   const rec = k => { const g = P.games[k] || { w: 0, l: 0, d: 0 }; return `${g.w}W ${g.l}L${g.d ? ' ' + g.d + 'D' : ''}`; };
   $('pcm-body').innerHTML = `
     <div class="row" style="gap:14px;align-items:center"><div class="lvl big">${lv}</div><div><div class="serif" style="font-size:22px">${title(lv)}</div><div class="tiny muted">${P.xp.toLocaleString()} XP · ${(next - P.xp).toLocaleString()} to level ${lv + 1}</div><div class="tiny" style="color:var(--amber)">${P.season} season · ${P.sxp.toLocaleString()} XP this season · best streak ${P.bestStreak}</div></div></div>
-    <div class="grid3" style="margin-top:12px">${['chess', 'checkers', 'spades', 'blackjack', 'parcheesi'].map(k => `<div class="stat"><span>${GAME_NAMES[k]}</span><b style="font-size:12px">${rec(k)}</b></div>`).join('')}<div class="stat"><span>Chess Elo</span><b style="font-size:12px">${SH.profile.elo}</b></div></div>
+    <div class="grid3" style="margin-top:12px">${['chess', 'checkers', 'spades', 'blackjack', 'parcheesi', 'colorclash', 'pittypat'].map(k => `<div class="stat"><span>${GAME_NAMES[k]}</span><b style="font-size:12px">${rec(k)}</b></div>`).join('')}<div class="stat"><span>Chess Elo</span><b style="font-size:12px">${SH.profile.elo}</b></div></div>
     <div class="label" style="margin:14px 0 6px">Achievements · ${Object.keys(P.ach).length}/${ACH.length}</div>
     <div class="achgrid">${ACH.map(a => `<div class="ach ${P.ach[a.id] ? 'on' : ''}" title="${esc(a.desc)}"><span>${a.icon}</span><b>${esc(a.name)}</b><small>${esc(a.desc)}</small></div>`).join('')}</div>
     <div class="label" style="margin:16px 0 6px">Event Mode — big screen for churches, schools &amp; fundraisers</div>
@@ -4657,17 +5171,19 @@ SH.brand = { SHOWCASE, ACH, openPlayerCard, openCard, queueCard, Minute, enterEv
 (function () {
 'use strict';
 const SH = window.McShared, $ = id => document.getElementById(id), LS = SH.LS;
-const views = ['lobby', 'chess', 'spades', 'blackjack', 'parcheesi', 'checkers'];
+const views = ['lobby', 'chess', 'spades', 'blackjack', 'parcheesi', 'checkers', 'colorclash', 'pittypat'].filter(v => document.getElementById('view-' + v));
 let hero = null;
 function cards() {
   const p = SH.profile, ck = LS.get('ck-stats', { w: 0, l: 0, d: 0 }), pz = LS.get('puzzles', { solved: [] });
   const list = [
     { v: 'chess', icon: 'K', title: 'Grandmaster Chess', sub: '3-D board · 5 AI tiers · drills · live rooms', stat: `Elo ${p.elo} · ${p.w}W ${p.l}L ${p.d}D · ${pz.solved.length}/7 drills` },
     { v: 'spades', sym: '♠', title: 'Spades', sub: 'You + AI partner · nil bids · bags · bid coach', stat: `Games ${LS.get('sp-stats', { w: 0, l: 0 }).w}W ${LS.get('sp-stats', { w: 0, l: 0 }).l}L` },
-    { v: 'blackjack', sym: '♥', title: 'Blackjack Academy', sub: 'Practice chips · strategy coach grades every play', stat: `Chips ${(LS.get('bj', { bank: 1000 }).bank).toLocaleString()}` },
+    { v: 'blackjack', sym: '♥', title: 'Blackjack (21) Academy', sub: 'Practice chips · strategy coach grades every play', stat: `Chips ${(LS.get('bj', { bank: 1000 }).bank).toLocaleString()}` },
     { v: 'parcheesi', sym: '⚄', title: 'Parcheesi', sub: '4 players · 3 AI personalities · blockades & captures', stat: `Games ${LS.get('pc-stats', { w: 0, l: 0 }).w}W ${LS.get('pc-stats', { w: 0, l: 0 }).l}L` },
-    { v: 'checkers', icon: null, title: 'Checkers', sub: 'American rules · 3 AI levels · 3-D', stat: `Record ${ck.w}W ${ck.l}L ${ck.d}D` }
-  ];
+    { v: 'checkers', icon: null, title: 'Checkers', sub: 'American rules · 3 AI levels · 3-D', stat: `Record ${ck.w}W ${ck.l}L ${ck.d}D` },
+    { v: 'pittypat', sym: '🂫', title: 'Pitty Pat', sub: 'The Southern pairing game · out-of-turn Pat! house rule', stat: `Games ${LS.get('pp-stats', { w: 0, l: 0 }).w}W ${LS.get('pp-stats', { w: 0, l: 0 }).l}L` },
+    { v: 'colorclash', sym: '✦', title: 'Color Clash', sub: 'Match colors & symbols · Skip, Reverse, +2, Wilds · call "Last Card!"', stat: `Games ${LS.get('cc-stats', { w: 0, l: 0 }).w}W ${LS.get('cc-stats', { w: 0, l: 0 }).l}L` }
+  ].filter(c => views.includes(c.v));
   $('lobby-cards').innerHTML = list.map(c => `<button class="glass gcard" data-go="${c.v}">
     <div class="between"><h4>${c.title}</h4>${c.sym ? `<span style="font-size:30px;line-height:1;color:${c.sym === '♥' ? '#ff8fa3' : '#f2c4cb'}">${c.sym}</span>` : c.icon ? `<svg class="pc w" viewBox="0 0 45 45" style="width:34px;height:34px"><use href="#pc-${c.icon}"/></svg>` : '<svg viewBox="0 0 24 24" style="width:30px;height:30px"><circle cx="12" cy="12" r="10" fill="#2a0a12" stroke="#dfa6af" stroke-width="2"/><circle cx="12" cy="12" r="6" fill="none" stroke="#dfa6af" stroke-width="1.5"/></svg>'}</div>
     <div class="tiny muted">${c.sub}</div><div class="pill" style="align-self:flex-start">${c.stat}</div></button>`).join('');
