@@ -17,11 +17,12 @@ page is a single self-contained HTML file.
 | `legal.html` | privacy notice, terms of use, accessibility statement |
 | `404.html` | not-found page |
 | `speakeasy/index.html` | Speakeasy — the talk app (AAC) for nonspeaking autistic kids and adults, served at `/speakeasy/` |
+| `arena/index.html` | McLearn Arena — the game hub (3-D chess, checkers, Spades, Blackjack trainer, Parcheesi), served at `/arena/` (also `/games` and `/chess`) |
 | `SPEAKEASY-UPDATE-GUIDE.md` | step-by-step: check a Speakeasy update is live and test it on a phone |
 | `og-image.png` | the preview image shown when a link is shared |
 | `*.mp3` | twelve 45-second excerpts |
 | `_headers` | security headers and cache rules |
-| `_redirects` | `/listen`, `/privacy`, `/terms` shortcuts; old `/speak-easy-2` links go to `/speakeasy/` |
+| `_redirects` | `/listen`, `/privacy`, `/terms` shortcuts; old `/speak-easy-2` links go to `/speakeasy/`; `/games` and `/chess` go to `/arena/` |
 
 ## Deploying
 
