@@ -6402,12 +6402,12 @@ SH.games.dominoes = { onShow() { if (!G.hands.length) newGame(); else render(); 
 
 </script>
 <script>
-// McLearn Bid Whist ("Bid Whiz") — partners, 54 cards with jokers, kitty, Uptown / Downtown / No Trump.
+// McLearn Bid Whist ("Biz Wiz") — partners, 54 cards with jokers, kitty, Uptown / Downtown / No Trump.
 (function () {
 'use strict';
 const SH = window.McShared, $ = id => document.getElementById(id), LS = SH.LS, C = SH.cards;
 McRules.register('bidwhist', {
-  title: 'Bid Whiz',
+  title: 'Biz Wiz',
   proNote: 'Pro: game to 11, no bid or play coach, and a 20-second turn clock.',
   schema: [
     { key: 'target', label: 'Play to', help: 'Lose by falling to minus the same number', type: 'select', options: [[7, '7 points'], [11, '11 points'], [21, '21 points']] },
@@ -6496,7 +6496,7 @@ function beatsBid(b, h, dealer) {
 }
 
 // ---------- flow ----------
-function newGame() { RU = McRules.get('bidwhist'); G.token++; tmr.stop(); G.score = [0, 0]; G.over = false; G.log = []; G.handNo = 0; G.dealer = 3; showMsg(''); log(`<b>New game</b> — Bid Whiz to ${RU.target}. You and Mama Jean vs Brother Earl and Big Hank.`); deal(); }
+function newGame() { RU = McRules.get('bidwhist'); G.token++; tmr.stop(); G.score = [0, 0]; G.over = false; G.log = []; G.handNo = 0; G.dealer = 3; showMsg(''); log(`<b>New game</b> — Biz Wiz to ${RU.target}. You and Mama Jean vs Brother Earl and Big Hank.`); deal(); }
 function deal() {
   G.token++; tmr.stop(); G.handNo++;
   G.dealer = (G.dealer + 1) % 4;
@@ -6745,7 +6745,7 @@ root.innerHTML = `
 </section>
 <section class="col right">
   <div class="glass card stack">
-    <div class="between"><h3 class="h3">McLearn Bid Whiz</h3><span class="row" style="gap:6px"><span class="rbadge" id="bw-rb">Standard</span><span class="pill" id="bw-rec"></span></span></div>
+    <div class="between"><h3 class="h3">McLearn Biz Wiz</h3><span class="row" style="gap:6px"><span class="rbadge" id="bw-rb">Standard</span><span class="pill" id="bw-rec"></span></span></div>
     <div class="grid2">
       <div class="stat"><span>Us (You + Mama Jean)</span><b id="bw-us">0</b></div>
       <div class="stat"><span>Them (Earl + Hank)</span><b id="bw-them">0</b></div>
@@ -8621,7 +8621,7 @@ const ACH = [
   { id: 'pat', name: 'Pitty Pat Pro', desc: 'Win a game of Pitty Pat', icon: '🂫' },
   { id: 'mogul', name: 'Media Mogul', desc: 'Win a game of Mega Media Mogul', icon: '🏙' },
   { id: 'domino', name: 'Bones Boss', desc: 'Win a game of Dominoes', icon: '🁫' },
-  { id: 'boston', name: 'Bid Whiz Champ', desc: 'Win a game of Bid Whiz', icon: '🃏' },
+  { id: 'boston', name: 'Biz Wiz Champ', desc: 'Win a game of Biz Wiz', icon: '🃏' },
   { id: 'holdem', name: 'Last Stack Standing', desc: "Win a Hold'em tournament", icon: '♦' },
   { id: 'tonk', name: 'Tonk Out', desc: 'Win a Tonk match', icon: '♣' },
   { id: 'fish', name: 'Big Catch', desc: 'Win a game of Go Fish', icon: '🐟' },
@@ -8651,7 +8651,7 @@ function addXP(n, silent) {
 }
 function floatXP(n) { const el = document.createElement('div'); el.className = 'xpfloat'; el.textContent = `+${n} XP`; document.body.appendChild(el); setTimeout(() => el.remove(), 1400); }
 
-const GAME_NAMES = { keno: 'Keno', bingo: 'Bingo', pluck: 'Pluck', dominoes: 'Dominoes', bidwhist: 'Bid Whiz', poker: "Hold'em", tonk: 'Tonk', gofish: 'Go Fish', war: 'I Declare War', showdown: 'Studio Showdown', mogul: 'Mega Media Mogul', pittypat: 'Pitty Pat', colorclash: 'Color Clash', 'blackjack-tourney': 'Blackjack Tournament', chess: 'Chess', checkers: 'Checkers', spades: 'Spades', blackjack: '21 · Blackjack', parcheesi: 'Parcheesi', academy: 'Chess Academy' };
+const GAME_NAMES = { keno: 'Keno', bingo: 'Bingo', pluck: 'Pluck', dominoes: 'Dominoes', bidwhist: 'Biz Wiz', poker: "Hold'em", tonk: 'Tonk', gofish: 'Go Fish', war: 'I Declare War', showdown: 'Studio Showdown', mogul: 'Mega Media Mogul', pittypat: 'Pitty Pat', colorclash: 'Color Clash', 'blackjack-tourney': 'Blackjack Tournament', chess: 'Chess', checkers: 'Checkers', spades: 'Spades', blackjack: '21 · Blackjack', parcheesi: 'Parcheesi', academy: 'Chess Academy' };
 SH.onResult = function (game, res, extra) {
   extra = extra || {};
   const g = P.games[game] = P.games[game] || { w: 0, l: 0, d: 0 };
@@ -8834,7 +8834,7 @@ const GAMES = [
   { v: 'bingo', title: 'McLearn Media Bingo', sub: 'Hall bingo with a live caller, six patterns — and McLearn Catalog Bingo.', cats: ['orig'], icon: 'bingo', h1: '#3b0a2a', h2: '#e0457b', stat: () => rec('bg-stats'), keys: 'bingo 75 ball caller daub catalog hall party' },
   { v: 'chess', title: 'Grandmaster Chess', sub: 'Full 3-D board, five engine levels, drills and live rooms.', cats: ['board'], icon: 'chess', h1: '#3a0f1b', h2: '#9b2442', stat: () => `Elo ${SH.profile ? SH.profile.elo : 1200}`, keys: 'chess engine elo puzzles 3d' },
   { v: 'spades', title: 'Spades', sub: 'You and your partner vs the table. Nil bids, bags, bid coach.', cats: ['partner', 'cards'], icon: 'spades', h1: '#14141f', h2: '#3c3c62', stat: () => rec('sp-stats'), keys: 'spades jokers deuces nil bags' },
-  { v: 'bidwhist', title: 'Bid Whiz', sub: 'Uptown, Downtown or No Trump. Take the kitty, run a Boston.', cats: ['partner', 'cards'], icon: 'bidwhist', h1: '#1d1033', h2: '#6a34a0', stat: () => rec('bw-stats'), keys: 'bid whist whiz bidwhiz bizwiz biz wiz kitty uptown downtown boston partners' },
+  { v: 'bidwhist', title: 'Biz Wiz', sub: 'Uptown, Downtown or No Trump. Take the kitty, run a Boston.', cats: ['partner', 'cards'], icon: 'bidwhist', h1: '#1d1033', h2: '#6a34a0', stat: () => rec('bw-stats'), keys: 'bid whist whiz bidwhiz bizwiz biz wiz kitty uptown downtown boston partners' },
   { v: 'mogul', title: 'Mega Media Mogul', sub: 'Own the McLearn catalog. Remixes, Platinum Editions, auctions.', cats: ['orig', 'board'], icon: 'mogul', h1: '#3a2a08', h2: '#c08a1c', stat: () => rec('mg-stats'), keys: 'monopoly property mogul trade auction' },
   { v: 'showdown', title: 'Studio Showdown', sub: 'Pen · Mic · Contract. Rock-paper-scissors that teaches the music business.', cats: ['orig'], icon: 'showdown', h1: '#2b0a33', h2: '#b8306e', stat: () => rec('sd-stats'), keys: 'rock paper scissors rps pen mic contract' },
   { v: 'colorclash', title: 'Color Clash', sub: 'Match colors and symbols. Skip, Reverse, +2, Wilds — call “Last Card!”', cats: ['orig', 'cards'], icon: 'colorclash', h1: '#2a1350', h2: '#d9466b', stat: () => rec('cc-stats'), keys: 'uno color clash wild draw' },
@@ -8942,7 +8942,7 @@ const SLIDES = [
   { v: 'dominoes', kicker: '★ Featured game', title: 'Dominoes,<br>Mississippi style.', line: 'Draw, Block and All Fives with the spinner. Slam your bones with a partner — every five-count scores on the spot.', bg: 'radial-gradient(circle at 78% 45%,#5a3418 0%,#2a120a 45%,#140004 80%)' },
   { v: 'bingo', kicker: 'New · McLearn Original', title: 'McLearn Media<br>Bingo.', line: 'A live caller, a glass ball machine and a hall full of players racing you to BINGO. Play classic 75-ball — or McLearn Catalog Bingo.', bg: 'radial-gradient(circle at 75% 45%,#6a1240 0%,#2a0716 50%,#120004 85%)' },
   { v: 'chess', kicker: 'Grandmaster Chess', title: 'Chess in<br>full 3-D.', line: 'Five engine levels up to God Mode, puzzle drills, live rooms with friends — and a coach that explains every move.', bg: 'radial-gradient(circle at 75% 45%,#6b1630 0%,#2a0009 50%,#120004 85%)', art3d: true },
-  { v: 'bidwhist', kicker: 'Partner tables', title: 'Bid Whiz<br>with Mama Jean.', line: 'Take the kitty, call trump, and run a Boston. Uptown, Downtown or No Trump — the way we play it at home.', bg: 'radial-gradient(circle at 75% 45%,#3b1a63 0%,#1a0a2c 50%,#120004 85%)' },
+  { v: 'bidwhist', kicker: 'Partner tables', title: 'Biz Wiz<br>with Mama Jean.', line: 'Take the kitty, call trump, and run a Boston. Uptown, Downtown or No Trump — the way we play it at home.', bg: 'radial-gradient(circle at 75% 45%,#3b1a63 0%,#1a0a2c 50%,#120004 85%)' },
   { v: 'mogul', kicker: 'McLearn Original', title: 'Mega Media<br>Mogul.', line: 'Buy the McLearn catalog — songs, books, apps and studios. Drop Remixes, go Platinum, and own everything.', bg: 'radial-gradient(circle at 75% 45%,#5e4310 0%,#2a1a04 50%,#120004 85%)' },
   { v: 'showdown', kicker: 'McLearn Original', title: 'Studio<br>Showdown.', line: 'Pen beats Contract. Contract beats Mic. Mic beats Pen. Rock-paper-scissors that teaches you to own your work.', bg: 'radial-gradient(circle at 75% 45%,#5c1240 0%,#2a0720 50%,#120004 85%)' }
 ].filter(s => byV[s.v]);
