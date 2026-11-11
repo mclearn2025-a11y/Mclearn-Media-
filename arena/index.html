@@ -1158,6 +1158,17 @@ body.event .gwrap .felt{transform:none}
 .qz-big{font-family:var(--serif);font-weight:900;font-size:72px;line-height:1;background:var(--goldg);-webkit-background-clip:text;background-clip:text;color:transparent}.qz-big small{font-size:30px}
 .qz-earn{margin-top:6px;font-family:var(--serif);font-size:22px;color:#ffe6a8}
 .qz-grid{font-size:22px;letter-spacing:3px;margin-top:10px}
+.skip-link{position:fixed;left:12px;top:-60px;z-index:2000;padding:10px 16px;border-radius:10px;background:var(--amber);color:#1e0007;font-weight:800;text-decoration:none;transition:top .15s}.skip-link:focus{top:12px}
+[data-kb]:focus-visible{outline:3px solid var(--amber)!important;outline-offset:3px;z-index:5}
+body.calm *,body.calm *::before,body.calm *::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+body.calm{--tx:0deg!important;--ty:0deg!important}body.calm .gtile,body.calm [style*="--tx"]{transform:none!important}
+body.calm .bkfloat,body.calm .xpfloat,body.calm .fx-canvas,body.calm .celebrate{display:none!important}
+body.focus #chat-fab,body.focus #chat-panel,body.focus #vc-bubble,body.focus .bkfloat,body.focus .xpfloat,body.focus .fx-banner,body.focus #mood-row,body.focus .spot{display:none!important}
+.cf-box{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.mood{margin:18px 0 6px}.mood-chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.mood-chip{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:rgba(30,0,7,.6);color:inherit;text-align:left;transition:transform .15s,border-color .2s}
+.mood-chip:hover{transform:translateY(-2px);border-color:var(--rose-400)}.mood-chip.on{border-color:var(--amber);background:rgba(90,40,5,.5)}.mood-chip span{font-size:22px}.mood-chip b{font-size:14px}.mood-chip small{font-size:11.5px;color:var(--rose-300)}
+.mood-out{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 #qz-race{display:flex;flex-direction:column;gap:6px;margin:10px 0 2px;padding:10px 12px;border-radius:14px;background:rgba(0,0,0,.28);border:1px solid var(--line)}
 .rc-lane{display:grid;grid-template-columns:110px 1fr 32px;align-items:center;gap:10px}.rc-name{font-size:12px;font-weight:800;color:var(--wg-400);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rc-lane.ghost .rc-name{color:#9fb8ff}
 .rc-track{position:relative;height:34px;border-radius:20px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 10%,rgba(255,255,255,.02) 10% 20%);border:1px dashed rgba(255,255,255,.12)}
@@ -2872,8 +2883,12 @@ class EngineWorker {
     try {
       this.url = this.url || URL.createObjectURL(new Blob([WORKER_SRC], { type: 'text/javascript' }));
       this.w = new Worker(this.url);
-      this.w.onmessage = e => { const r = this.pending.get(e.data.id); if (r) { this.pending.delete(e.data.id); r(e.data); } };
-      this.w.onerror = () => { this.ok = false; };
+      this.w.onmessage = e => { const r = this.pending.get(e.data.id); if (r) { this.pending.delete(e.data.id); r.res(e.data); } };
+      this.w.onerror = () => { // worker crashed: finish every waiting job on the main thread so the game never hangs
+        this.ok = false; try { this.w.terminate(); } catch (e) { /* already gone */ }
+        const p = this.pending; this.pending = new Map();
+        for (const [id, j] of p) setTimeout(() => j.res(syncSearch(j.payload, id)), 0);
+      };
       this.ok = true;
     } catch (e) { this.ok = false; }
   }
@@ -2881,7 +2896,7 @@ class EngineWorker {
     return new Promise(res => {
       const id = ++jobSeq;
       if (!this.ok) { setTimeout(() => res(syncSearch(payload, id)), 15); return; }
-      this.pending.set(id, res);
+      this.pending.set(id, { res, payload });
       this.w.postMessage(Object.assign({}, payload, { id }));
     });
   }
@@ -2889,7 +2904,7 @@ class EngineWorker {
     if (!this.ok) return;
     this.w.terminate();
     const p = this.pending; this.pending = new Map();
-    for (const r of p.values()) r({ ok: false, cancelled: true });
+    for (const r of p.values()) r.res({ ok: false, cancelled: true });
     this.spawn();
   }
 }
@@ -3124,7 +3139,7 @@ function materialDiff() {
   return d;
 }
 function playerLabel(c) {
-  if (S.mode === 'engine') return c === S.player ? 'You' : `${S.oppName || LEVELS[S.level - 1].name} (AI ${LEVELS[S.level - 1].rating})`;
+  if (S.mode === 'engine') return c === S.player ? 'You' : `${S.oppName || LEVELS[S.level - 1].name} (AI ≈${LEVELS[S.level - 1].rating})`;
   if (S.mode === 'puzzle') return c === S.puzzle?.color ? 'You' : 'Defender';
   if (S.mode === 'online') { if (Net.mySeat === c) return 'You'; return Net.seatName(c); }
   return colorName(c);
@@ -8514,7 +8529,11 @@ const wait = ms => G.fast || RU.speed === 'instant' ? Promise.resolve() : new Pr
 // odds: chance of catching k of n spots when 20 of 80 are drawn
 const comb = (n, k) => { if (k < 0 || k > n) return 0; let r = 1; for (let i = 1; i <= k; i++) r = r * (n - k + i) / i; return r; };
 const pCatch = (n, k) => comb(20, k) * comb(60, n - k) / comb(80, n);
-const rtp = n => { let e = 0; const t = PAY[RU.table][n] || {}; for (let k = 0; k <= n; k++) e += pCatch(n, k) * (t[k] || 0); return e; };
+// exact long-run return for this table, Gold Ball setting and bet (matches settlement, rounding included).
+// The gold ball is the 20th of 20 drawn, so given k catches it is one of yours with probability k/20.
+const rtp = (n, bet) => { const t = PAY[RU.table][n] || {}; bet = bet || 1; let e = 0;
+  for (let k = 0; k <= n; k++) { const m = t[k] || 0; if (!m) continue; const g = RU.gold ? k / 20 : 0; e += pCatch(n, k) * ((1 - g) * Math.round(bet * m) + g * Math.round(bet * m * 2)); }
+  return e / bet; };
 function quickPick(n) { const all = Array.from({ length: 80 }, (_, i) => i + 1); SH.cards.shuffle(all); G.picks = all.slice(0, n || Math.max(G.picks.length, 6)).sort((a, b) => a - b); G.drawn = []; G.last = null; render(); }
 function toggle(n) {
   if (G.phase !== 'pick') return;
@@ -8572,7 +8591,7 @@ function render() {
   const picks = new Set(G.picks), drawn = new Set(G.drawn), goldN = RU.gold && G.drawn.length === 20 ? G.drawn[19] : null;
   $('kn-board').innerHTML = Array.from({ length: 80 }, (_, i) => { const n = i + 1, p = picks.has(n), d = drawn.has(n); return `<button class="kcell ${p ? 'pick' : ''} ${d ? 'drawn' : ''} ${p && d ? 'hit' : ''} ${n === goldN ? 'goldc' : ''}" data-n="${n}" aria-pressed="${p}">${n}</button>`; }).join('');
   const n = G.picks.length, t = PAY[RU.table][n] || {};
-  $('kn-pay').innerHTML = n ? `<div class="between"><span class="label">Pays for ${n} spot${n > 1 ? 's' : ''}</span><span class="tiny muted">× your bet</span></div>${Object.keys(t).sort((a, b) => b - a).map(k => `<div class="kpay ${G.last && G.last.catches === +k && G.last.n === n ? 'on' : ''}"><span>Catch ${k}</span><b>${t[k].toLocaleString()}×</b>${RU.coach ? `<small>${(pCatch(n, +k) * 100) < 0.01 ? '1 in ' + Math.round(1 / pCatch(n, +k)).toLocaleString() : (pCatch(n, +k) * 100).toFixed(2) + '%'}</small>` : ''}</div>`).join('')}${RU.coach ? `<div class="tiny muted" style="margin-top:6px">Over time this table returns <b style="color:#ffe6a8">${(rtp(n) * 100).toFixed(1)}%</b> of what you put in${RU.gold ? ' (a little more with the Gold Ball)' : ''}. That gap is why casinos win — here it's practice credits only.</div>` : ''}` : '<div class="tiny muted">Pick 1 to 10 numbers on the board to see what they pay.</div>';
+  $('kn-pay').innerHTML = n ? `<div class="between"><span class="label">Pays for ${n} spot${n > 1 ? 's' : ''}</span><span class="tiny muted">× your bet</span></div>${Object.keys(t).sort((a, b) => b - a).map(k => `<div class="kpay ${G.last && G.last.catches === +k && G.last.n === n ? 'on' : ''}"><span>Catch ${k}</span><b>${t[k].toLocaleString()}×</b>${RU.coach ? `<small>${(pCatch(n, +k) * 100) < 0.01 ? '1 in ' + Math.round(1 / pCatch(n, +k)).toLocaleString() : (pCatch(n, +k) * 100).toFixed(2) + '%'}</small>` : ''}</div>`).join('')}${RU.coach ? `<div class="tiny muted" style="margin-top:6px">Over time this table returns <b style="color:#ffe6a8">${(rtp(n, G.bet) * 100).toFixed(1)}%</b> of what you put in${RU.gold ? ', Gold Ball included' : ''} — that’s a long-run average, not a prediction for your next few games. ${rtp(n, G.bet) < 1 ? 'That gap is why casinos win' : 'This table is generous on purpose'} — here it's practice credits only.</div>` : ''}` : '<div class="tiny muted">Pick 1 to 10 numbers on the board to see what they pay.</div>';
   const L = G.last;
   $('kn-ball').innerHTML = G.drawn.length ? `<span class="kball ${picks.has(G.drawn[G.drawn.length - 1]) ? 'hit' : ''} ${goldN ? 'gold' : ''}"><b>${G.drawn[G.drawn.length - 1]}</b></span>` : `<span class="kball idle"><b>K</b></span>`;
   $('kn-count').textContent = G.drawn.length ? `${G.drawn.length} / 20 drawn · ${G.picks.filter(x => drawn.has(x)).length} caught` : `${n} spot${n === 1 ? '' : 's'} picked`;
@@ -10067,7 +10086,7 @@ const xpFor = lv => (lv - 1) * (lv - 1) * 60;
 const title = lv => TITLES[Math.min(TITLES.length - 1, Math.floor((lv - 1) / 3))];
 const ACH = [
   { id: 'first', name: 'First Victory', desc: 'Win a game of anything', icon: '🏁' },
-  { id: 'tour', name: 'Tour of the Arena', desc: 'Play all five games', icon: '🧭' },
+  { id: 'tour', name: 'Tour of the Arena', desc: 'Play all five founding games: Chess, Checkers, Spades, 21 and Parcheesi', icon: '🧭' },
   { id: 'mate', name: 'Checkmate Artist', desc: 'Win a chess game', icon: '♚' },
   { id: 'giant', name: 'Giant Slayer', desc: 'Beat the Grandmaster or God Mode engine', icon: '⚔️' },
   { id: 'champ', name: 'Arena Champion', desc: 'Win the chess championship bracket', icon: '🏆' },
@@ -10653,7 +10672,7 @@ function renderBoard() {
   else { const mine = Cloud.doc(); rows = [{ name: ME.name || 'You', av: ME.av, v: mine[lbField] || 0, me: true }]; }
   rows.sort((a, b) => b.v - a.v);
   $('lb-list').innerHTML = rows.map((r, i) => `<div class="lb-row ${r.me ? 'me' : ''} ${i < 3 ? 'top' + (i + 1) : ''}"><span class="lb-rank">${i < 3 ? ['🥇', '🥈', '🥉'][i] : i + 1}</span>${r.me ? myFaceLB() : avatarSVG(r.av, 40)}<b>${esc(clean(r.name, 20))}${r.me ? ' <small>(you)</small>' : ''}</b><span class="lb-val">${fmt(r.v)} <small>${label}</small></span></div>`).join('');
-  $('lb-note').innerHTML = Cloud.ok ? `Live leaderboard · ${rows.length} player${rows.length === 1 ? '' : 's'}${Cloud.can === false ? ' · you have view-only access, so your scores aren’t posted' : ''}` : 'Showing this device only. Live leaderboards with friends run in the shared McLearn Arena app; public leaderboards on the website are coming with McLearn accounts.';
+  $('lb-note').innerHTML = Cloud.ok ? `Live leaderboard · ${rows.length} player${rows.length === 1 ? '' : 's'} · scores are self-reported practice records, not verified competition${Cloud.can === false ? ' · you have view-only access, so your scores aren’t posted' : ''}` : 'Showing this device only. Live leaderboards with friends run in the shared McLearn Arena app; public leaderboards on the website are coming with McLearn accounts.';
   $('lb-tabs').querySelectorAll('[data-f]').forEach(b => b.onclick = () => { lbField = b.dataset.f; Cloud.watch(lbField); renderBoard(); });
   $('lb-game').onchange = e => { if (e.target.value) { lbField = e.target.value; Cloud.watch(lbField); renderBoard(); } };
 }
@@ -11057,6 +11076,87 @@ SH.voice = { speak, stop, listen, match, partyAsk, partySay, supported: { speak:
 SH.speak = speak;
 })();
 
+// McLearn Comfort — Calm mode, Focus mode, keyboard play, skip link, and an "in the mood for…" table finder
+(function () {
+'use strict';
+const SH = window.McShared; if (!SH) return;
+const $ = id => document.getElementById(id), LS = SH.LS;
+const C = LS.get('comfort', { calm: matchMedia('(prefers-reduced-motion: reduce)').matches, focus: false });
+const apply = () => { document.body.classList.toggle('calm', !!C.calm); document.body.classList.toggle('focus', !!C.focus); };
+const save = () => { LS.set('comfort', C); apply(); paint(); };
+apply();
+
+// Calm mode quiets the big effects too, not just CSS
+const wrap = name => { const f = SH[name]; if (typeof f !== 'function' || f._calm) return; const g = function () { if (C.calm) return; return f.apply(this, arguments); }; g._calm = true; SH[name] = g; };
+const wrapAll = () => { wrap('celebrate'); wrap('haptic'); };
+wrapAll(); document.addEventListener('DOMContentLoaded', wrapAll); setTimeout(wrapAll, 1500);
+
+// ---- keyboard play: every clickable card, tile, pawn and seat can be reached with Tab and played with Enter/Space ----
+const SEL = '.pcard.playable,.ccard.playable,.dom.playable,.dom.ghost,.pawn.can,.seat-tag.gf-target,.tk-spread,.dm-yard.live,.rl-hot,.gcard,.mg-tile,.check';
+function label(el) { return el.getAttribute('aria-label') || el.getAttribute('title') || (el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 40) || 'Play this'; }
+function enable(root) {
+  (root.querySelectorAll ? root : document).querySelectorAll(SEL).forEach(el => {
+    if (el.tagName === 'BUTTON' || el.dataset.kb) return; el.dataset.kb = '1';
+    if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+    if (!el.getAttribute('role')) el.setAttribute('role', 'button');
+    if (!el.getAttribute('aria-label')) el.setAttribute('aria-label', label(el));
+  });
+}
+let queued = false;
+new MutationObserver(() => { if (queued) return; queued = true; requestAnimationFrame(() => { queued = false; enable(document); }); }).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+document.addEventListener('keydown', e => {
+  if ((e.key === 'Enter' || e.key === ' ') && e.target && e.target.dataset && e.target.dataset.kb && e.target.matches(SEL)) {
+    e.preventDefault();
+    const r = e.target.getBoundingClientRect(), o = { bubbles: true, cancelable: true, clientX: r.left + r.width / 2, clientY: r.top + r.height / 2 };
+    if (window.PointerEvent) ['pointerdown', 'pointerup'].forEach(t => e.target.dispatchEvent(new PointerEvent(t, o)));
+    e.target.click();
+  }
+});
+
+// ---- skip link ----
+const skip = document.createElement('a'); skip.href = '#'; skip.className = 'skip-link'; skip.textContent = 'Skip to the game';
+skip.onclick = e => { e.preventDefault(); const m = Array.from(document.querySelectorAll('main')).find(x => !x.classList.contains('hidden')); if (m) { m.setAttribute('tabindex', '-1'); m.focus(); } };
+document.body.prepend(skip);
+
+// ---- Comfort controls (in My McLearn ID and on a keyboard shortcut) ----
+function paint() { document.querySelectorAll('[data-comfort]').forEach(b => { const k = b.dataset.comfort; b.classList.toggle('on', !!C[k]); b.setAttribute('aria-pressed', !!C[k]); }); }
+function controls() {
+  return `<div class="cf-box"><span class="label">Comfort</span><div class="chiprow">
+    <button class="chipbtn" data-comfort="calm" title="Turns off motion, tilt, confetti and vibration">🌙 Calm mode</button>
+    <button class="chipbtn" data-comfort="focus" title="Hides chat and extras so only the table shows">🎯 Focus mode</button></div>
+    <div class="tiny muted">Calm stops animation, tilt, confetti and vibration (3-D chess boards still turn when you drag them). Focus hides chat and extras — switch it off to bring them back. Shortcut: Alt+C / Alt+F.</div></div>`;
+}
+document.addEventListener('click', e => { const b = e.target.closest('[data-comfort]'); if (!b) return; const k = b.dataset.comfort; C[k] = !C[k]; save(); SH.toast && SH.toast(`${k === 'calm' ? 'Calm' : 'Focus'} mode ${C[k] ? 'on' : 'off'}`); });
+document.addEventListener('keydown', e => { if (!e.altKey) return; const k = e.key.toLowerCase(); if (k === 'c' || k === 'f') { e.preventDefault(); const n = k === 'c' ? 'calm' : 'focus'; C[n] = !C[n]; save(); SH.toast && SH.toast(`${n === 'calm' ? 'Calm' : 'Focus'} mode ${C[n] ? 'on' : 'off'}`); } });
+const meBody = $('me-body');
+if (meBody) new MutationObserver(() => { if (!meBody.querySelector('.cf-box') && meBody.children.length) { meBody.insertAdjacentHTML('beforeend', controls()); paint(); } }).observe(meBody, { childList: true });
+
+// ---- "What are you in the mood for?" — a plain, rules-based table finder ----
+const MOODS = [
+  ['🧠', 'Think it through', 'Strategy and planning', ['chess', 'checkers', 'dominoes', 'poker']],
+  ['🤝', 'Play with a partner', 'Team up and read your partner', ['spades', 'bidwhist', 'dominoes']],
+  ['🏡', 'Family game night', 'Familiar, easy to explain', ['gofish', 'war', 'parcheesi', 'bingo', 'colorclash']],
+  ['⚡', 'Quick break', 'A few minutes, fast fun', ['showdown', 'war', 'blackjack', 'keno']],
+  ['🎓', 'Learn something', 'Trivia, Party Mode and coaching', ['challenges']],
+  ['✨', 'McLearn originals', 'Only at the McLearn Arena', ['mogul', 'showdown', 'bingo']],
+];
+function finder() {
+  const cont = $('cont-row'); if (!cont || $('mood-row')) return;
+  const d = document.createElement('section'); d.id = 'mood-row'; d.className = 'mood';
+  d.innerHTML = `<div class="sec-h"><h3>What are you in the mood for?</h3><span>We’ll suggest a table — you choose</span></div><div class="mood-chips">${MOODS.map((m, i) => `<button class="mood-chip" data-mood="${i}"><span>${m[0]}</span><b>${m[1]}</b><small>${m[2]}</small></button>`).join('')}</div><div class="mood-out" id="mood-out" aria-live="polite"></div>`;
+  cont.after(d);
+  d.addEventListener('click', e => {
+    const b = e.target.closest('[data-mood]'); if (!b) return;
+    d.querySelectorAll('.mood-chip').forEach(x => x.classList.toggle('on', x === b));
+    const cat = { challenges: 'Challenge Center' }; (SH.catalog || []).forEach(g => { cat[g.v] = g.title; });
+    const m = MOODS[+b.dataset.mood], opts = m[3].filter(v => cat[v]);
+    $('mood-out').innerHTML = opts.map(v => `<button class="btn-glass" data-go="${v}">${cat[v]} ▸</button>`).join('');
+  });
+}
+finder(); document.addEventListener('DOMContentLoaded', finder);
+SH.comfort = { get: () => C, set(k, v) { C[k] = !!v; save(); } };
+})();
+
 </script>
 <script>
 /*SOCIAL*/
@@ -11073,7 +11173,7 @@ const CATS = [
   ['partner', 'Partner Tables', 'Bring a partner — the Southern way'],
   ['board', 'Board & Strategy', 'Think three moves ahead'],
   ['cards', 'Card Table Classics', 'Quick hands, big talk'],
-  ['casino', 'Practice Casino', 'Practice chips only — pure skill, no money']
+  ['casino', 'Practice Casino', 'Practice chips only — games of chance with strategy, never real money']
 ];
 const GAMES = [
   { v: 'dominoes', title: 'Dominoes', sub: 'Draw, Block & All Fives with the spinner. Partners welcome.', cats: ['board', 'partner'], icon: 'dominoes', h1: '#3d2412', h2: '#9a5a26', feat: true, stat: () => rec('dm-stats'), keys: 'bones domino fives muggins spinner' },
@@ -11242,7 +11342,7 @@ function renderShelves() {
 }
 function renderContinue() {
   const r = LS.get('recent', []).filter(v => byV[v]).slice(0, 6);
-  $('cont-row').innerHTML = r.length ? `<div class="sec-h"><h3>Continue playing</h3><span>Jump back in</span></div><div class="cont">${r.map(v => `<button data-go="${v}">${icon(byV[v], 36)}<span>${byV[v].title}<small>${byV[v].stat()}</small></span></button>`).join('')}</div>` : '';
+  $('cont-row').innerHTML = r.length ? `<div class="sec-h"><h3>Recently played</h3><span>Reopen a table</span></div><div class="cont">${r.map(v => `<button data-go="${v}">${icon(byV[v], 36)}<span>${byV[v].title}<small>${byV[v].stat()}</small></span></button>`).join('')}</div>` : '';
 }
 $('lob-q').addEventListener('input', renderShelves);
 $('lob-chips').addEventListener('click', e => { const b = e.target.closest('[data-cat]'); if (!b) return; cat = b.dataset.cat; renderShelves(); });
