@@ -1158,6 +1158,19 @@ body.event .gwrap .felt{transform:none}
 .qz-big{font-family:var(--serif);font-weight:900;font-size:72px;line-height:1;background:var(--goldg);-webkit-background-clip:text;background-clip:text;color:transparent}.qz-big small{font-size:30px}
 .qz-earn{margin-top:6px;font-family:var(--serif);font-size:22px;color:#ffe6a8}
 .qz-grid{font-size:22px;letter-spacing:3px;margin-top:10px}
+.gb-howto{display:inline-flex;align-items:center;gap:6px}.ht-q{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--amber);color:#1e0007;font:900 13px var(--sans)}
+.gb-howto.pulse .ht-q{animation:micPulse 1.4s infinite}
+.ht-card{max-width:760px;width:min(760px,94vw);max-height:90vh;display:flex;flex-direction:column;padding:0!important;overflow:hidden}
+.ht-head{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}.ht-head h3{flex:1;margin:0;font-size:20px}
+.ht-body{overflow:auto;padding:16px 20px 8px;line-height:1.55;font-size:14.5px}.ht-body h4{margin:18px 0 6px;color:var(--amber);font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.ht-goal{font-size:15.5px;padding:12px 14px;border-radius:12px;background:rgba(244,200,106,.08);border:1px solid rgba(244,200,106,.3)}
+.ht-list{margin:0;padding-left:20px}.ht-list li{margin:5px 0}.ht-opts{display:block;font-size:12px;color:var(--rose-300)}
+.ht-modes{display:grid;gap:8px}.ht-modes>div{display:grid;grid-template-columns:110px 1fr;gap:10px;padding:8px 12px;border-radius:10px;background:rgba(0,0,0,.25)}.ht-modes b{color:#fff}
+.ht-foot{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;padding:12px 16px;border-top:1px solid var(--line)}.ht-foot:empty{display:none}
+.ht-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:10px}
+.ht-tile{display:flex;align-items:center;gap:10px;padding:10px;border-radius:12px;border:1px solid var(--line);background:rgba(30,0,7,.6);color:inherit;text-align:left;font-weight:700;font-size:13px}.ht-tile:hover{border-color:var(--amber)}
+.ht-all{margin:14px 0 4px}.ht-emo{font-size:26px;width:34px;text-align:center}.ht-link{margin-bottom:10px;font-size:12.5px}
+@media (max-width:640px){.gb-howto span:not(.ht-q){display:none}.ht-modes>div{grid-template-columns:1fr}.ht-body{padding:14px}}
 .skip-link{position:fixed;left:12px;top:-60px;z-index:2000;padding:10px 16px;border-radius:10px;background:var(--amber);color:#1e0007;font-weight:800;text-decoration:none;transition:top .15s}.skip-link:focus{top:12px}
 [data-kb]:focus-visible{outline:3px solid var(--amber)!important;outline-offset:3px;z-index:5}
 body.calm *,body.calm *::before,body.calm *::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
@@ -2748,7 +2761,7 @@ window.McRules = {
   mount(id, el) { MOUNTS[id] = el; render(id); },
   get: values, label, mode: id => state(id).mode,
   onChange(id, f) { (LISTENERS[id] = LISTENERS[id] || []).push(f); },
-  _encode: encode, _decode: decode, _setMode: setMode,
+  _encode: encode, _decode: decode, _setMode: setMode, _def: id => REG[id],
   timer() { // Pro-mode turn clock: start(seconds, element, onExpire) / stop()
     let iv = null, end = 0, el = null, cb = null;
     const api = {
@@ -11156,6 +11169,249 @@ function finder() {
 }
 finder(); document.addEventListener('DOMContentLoaded', finder);
 SH.comfort = { get: () => C, set(k, v) { C[k] = !!v; save(); } };
+})();
+
+// McLearn How to Play — a full guide for every game and every mode (Standard · Pro · House Rules)
+(function () {
+'use strict';
+const SH = window.McShared; if (!SH) return;
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+// goal · how a turn works · scoring & winning · play modes (beyond the rule settings) · controls · tips
+const G = {
+chess: {
+  goal: 'Checkmate the other king — attack it so it has no safe square to escape to.',
+  turn: ['White moves first; you take turns moving one piece.', 'Tap a piece to see its legal moves (dots), then tap where it goes. On a computer you can also drag.', 'Pawns move forward one square (two on their first move) and capture diagonally. Knights jump in an L. Bishops go diagonally, rooks straight, the queen both ways, the king one square.', 'Special moves: castling (king two squares toward a rook that hasn’t moved), en passant, and promotion when a pawn reaches the last row.'],
+  win: ['Checkmate wins. Stalemate (no legal move but not in check), repeating a position three times, the 50-move rule, or not enough pieces to mate are draws.', 'You can resign or offer a draw.'],
+  modes: [['vs Engine', 'Pick one of five levels: Novice, Club Player, Candidate Master, Grandmaster, Quantum God Mode (ratings shown are estimates, not FIDE).'], ['Pass & Play', 'Two people share one device and take turns.'], ['Puzzles', 'Solve tactics: find the winning line. Hints and Reveal are there if you get stuck.'], ['Championship', 'A bracket tournament against computer personalities — win your way to the title.'], ['Live match', 'In the shared McLearn Arena app, Host a match and send the invite; your friend taps Join.'], ['Rated games (Pro)', 'Counts toward your McLearn rating — no hints, no take-backs, touch-move and a real clock.']],
+  keys: ['Undo, Flip Board and the 3-D camera button sit under the board.', 'Coach Intel, Threat Check and Strategic Plan explain the position in plain words; the speaker button reads them aloud.', 'Copy or load positions with FEN/PGN at the bottom of the panel.'],
+  tips: ['Control the center early, get your knights and bishops out, and castle.', 'Before every move ask: what is my opponent threatening?'],
+},
+checkers: {
+  goal: 'Capture all of your opponent’s pieces or leave them with no move.',
+  turn: ['Pieces move one square diagonally forward onto dark squares.', 'Jump over an enemy piece next to you into the empty square behind it to capture it. Keep jumping in the same turn if you can.', 'Reach the far row and your piece is crowned a king — kings move backward too.'],
+  win: ['Win when your opponent has no pieces or no legal move. With the 40-move rule on, 40 moves with no capture is a draw.'],
+  keys: ['Tap a piece, then tap where it goes. Hints & undo are in Standard mode.'],
+  tips: ['Keep your back row home as long as you can — it stops enemy kings.', 'Trade pieces when you are ahead.'],
+},
+spades: {
+  goal: 'With your partner (sitting across), bid how many tricks you’ll take and make it. First team to the target wins.',
+  turn: ['Each player gets 13 cards. Everyone bids a number of tricks; your team’s bids are added together.', 'The first player leads a card. Everyone must follow the suit led if they can. If you can’t, you may play any card — including a spade.', 'Highest spade wins the trick; if no spade was played, the highest card of the suit led wins. The winner leads next.', 'Spades can’t be led until a spade has been played (“broken”), unless you hold only spades.'],
+  win: ['Make your bid: 10 points per trick bid, plus 1 per extra trick (a “bag”). Miss it: lose 10 per trick bid.', 'Too many bags costs points (default: 10 bags = −100).', 'Nil: bid zero tricks for +100; take a trick and lose 100.'],
+  keys: ['Tap a highlighted card to play it; with a keyboard, Tab to a card and press Enter.'],
+  tips: ['Count the spades that have been played.', 'Help your partner’s Nil by taking tricks they might be forced to win.'],
+},
+bidwhist: {
+  goal: 'Biz Wiz is our name for Bid Whist. With your partner, win the bid and take at least the books you promised. Reach the target score; drop to minus the target and you lose.',
+  turn: ['54 cards (with Big and Little Jokers). Each player gets 12; 6 go to the kitty.', 'Bid how many books over six you’ll take, and say Uptown (high cards win), Downtown (low cards win) or No Trump. A bid of 3 means 9 books.', 'The winner takes the kitty, discards 6 (the kitty counts as your first book), and names trump.', 'Follow suit if you can; otherwise trump or throw off. Highest trump — or best card of the suit led — wins the book.'],
+  win: ['Make your bid and score the books over six. Fall short and you lose that many points.', 'No Trump can count double. Taking all 13 books (a Boston) can win the game outright.'],
+  keys: ['Bid buttons appear in the middle of the table. Tap cards to discard and to play.'],
+  tips: ['Bid on your long suit and your jokers.', 'Downtown hands want aces and low cards — the ace counts low.'],
+},
+dominoes: {
+  goal: 'Be the first to play all your dominoes (bones) and score points; first to the target wins.',
+  turn: ['Match one end of a bone to an open end of the line. Doubles sit crossways.', 'Can’t play? Draw game: pull from the boneyard until you can. Block game: you knock (pass).', 'All Fives: the first double is the spinner and can be played on all four sides. Every time the open ends add up to a multiple of 5, you score that many points.'],
+  win: ['Domino (play your last bone) to score the pips left in everyone else’s hands, rounded to fives.', 'If the game is blocked, the lowest hand wins it.'],
+  keys: ['Tap a glowing bone, then tap the glowing end you want. Partners play as one team with the player across.'],
+  tips: ['Play your heavy bones early so you aren’t caught with them.', 'Sharp opponents count bones — so should you.'],
+},
+poker: {
+  goal: 'Texas Hold’em, sit-and-go style: win everyone’s chips. Last player with chips wins.',
+  turn: ['You get two private cards. Five shared cards come in three steps: the flop (3), the turn (1) and the river (1).', 'Four betting rounds — before the flop and after each step. On your turn: Fold, Check (if no bet), Call, or Raise.', 'Small and big blinds post forced bets each hand, and they rise as the game goes on.'],
+  win: ['Make the best five-card hand from your two cards plus the five on the table: high card, pair, two pair, three of a kind, straight, flush, full house, four of a kind, straight flush, royal flush.', 'Or make everyone else fold. Side pots handle players who are all-in.'],
+  keys: ['F = fold, C = check/call, R = raise (set the size with the slider).'],
+  tips: ['Play fewer hands, but play them firmly.', 'The odds coach shows your chance to win and whether the price is right to call.'],
+},
+tonk: {
+  goal: 'Get rid of cards by laying spreads, or drop (knock) with the lowest hand. Win the match by reaching the target first.',
+  turn: ['Draw from the deck or take the top discard.', 'Lay down a spread (three or four of a kind, or three-plus cards in a row of one suit), or hit (add cards to) any spread on the table.', 'Discard one card to end your turn.', 'Instead of drawing, you may drop — show your hand and claim the lowest total.'],
+  win: ['Tonk out by playing every card and everyone pays you (double if “Going out pays double” is on).', 'A dealt hand worth 49 or 50 can be an instant Tonk.', 'Drop with the lowest count to win; if someone ties or beats you, you are caught and pay.'],
+  keys: ['Select cards, then use the Spread / Hit / Discard / Drop buttons.'],
+  tips: ['Face cards count 10 — get rid of them first.', 'Watch the discards to know what others are collecting.'],
+},
+gofish: {
+  goal: 'Collect the most books — all four of a rank (or pairs in the quick game).',
+  turn: ['Ask any player for a rank you already hold: “Do you have any 7s?”', 'If they do, they hand over all of them and you go again. If not — Go Fish! Draw from the pond.', 'Fish up the exact card you asked for (Lucky catch) and you go again.'],
+  win: ['Lay down a book as soon as you complete it. When all the books are made, most books wins.'],
+  keys: ['Tap a card in your hand to pick the rank, then tap the player to ask.'],
+  tips: ['Remember who asked for what — they have that rank.'],
+},
+war: {
+  goal: 'Win all the cards — or the most cards when the battle limit runs out.',
+  turn: ['You and the computer each flip a card. Higher card takes both.', 'Tie? It’s War: “I-DE-CLARE-WAR” — three cards face down (or one), then flip again. The winner takes the whole pile.', 'Tactics hand (Pro): hold three cards and choose which one to fight with each battle.'],
+  win: ['Collect every card, or hold the most cards when the game length ends. Peace mode flips it: low card wins.'],
+  keys: ['Tap your deck (or a Tactics card) to play the next battle.'],
+  tips: ['In Tactics, spend low cards when you expect to lose and save aces for wars.'],
+},
+pittypat: {
+  goal: 'Be the first to turn your whole hand into pairs — 3 pairs with 5 cards, or 4 pairs with 7.',
+  turn: ['Take the top discard only if it pairs a card you hold — lay the pair down and discard.', 'Otherwise draw from the deck. Keep it (if allowed) and discard, or throw it back.', 'Out-of-turn “Pat!”: anyone holding a match can grab a fresh discard, and play continues from them.'],
+  win: ['First to pair every card wins the game. Match length sets how many games win the match.'],
+  keys: ['Tap the discard pile or the deck, then tap a card to throw.'],
+  tips: ['Throw cards that others just passed up — nobody needs them.'],
+},
+pluck: {
+  goal: 'A three-player trick game: make your book quota each hand and pluck cards from players who fall short. First to the target wins.',
+  turn: ['Quotas: the dealer needs 7 books, the player to the left 6, the right 4 (or 8 · 6 · 3).', 'The dealer names trump; the Big and Little Jokers ride on top of it.', 'Follow suit if you can; otherwise trump or throw off. Highest trump or best card of the suit led wins the book.', 'Next hand, anyone who went over their quota plucks one of the best cards from a player who came up short for each extra book, and gives a card back.'],
+  win: ['Score a point for each book over your quota. First to the target wins.'],
+  keys: ['Tap a highlighted card to play. During plucking, tap the card you want to take.'],
+  tips: ['Count the trumps and jokers that have been played.'],
+},
+bourre: {
+  goal: 'Booray (Bourré): win the most tricks to take the pot — and don’t get “boorayed” by taking none.',
+  turn: ['Everyone antes. You get five cards; the dealer’s last card sets trump.', 'Decide: stay in or pass. If you stay, trade in up to four cards.', 'Rules are strict: follow suit; if you can, you must beat the card on the table; if you can’t follow, you must trump; and if you hold the ace of trump and you lead, you must lead it.'],
+  win: ['Most tricks takes the pot (ties roll it over), or in Split mode each trick earns a fifth of the pot.', 'Stay in and take zero tricks and you’re boorayed — you match the pot (up to the cap).'],
+  keys: ['Stay / Pass buttons, then tap cards to trade and to play.'],
+  tips: ['Stay with two trump or a trump ace; pass weak hands — passing is free.'],
+},
+colorclash: {
+  goal: 'Play all your cards first (single round) or reach the point target over several rounds.',
+  turn: ['Match the top card by color, number or symbol.', 'Skip makes the next player lose a turn; Reverse changes direction; +2 makes the next player draw two.', 'Wild picks a color; Wild +4 picks a color and makes the next player draw four.', 'Can’t play? Draw (one card, or until you can, depending on the rules).'],
+  win: ['Empty your hand to win the round. In points games, you score the cards left in other hands.', 'Down to one card? Call “Last Card!” or draw two if you’re caught.'],
+  keys: ['Tap a glowing card to play it; tap the deck to draw.'],
+  tips: ['Save wilds for when you’re stuck, and change the color away from what the next player wants.'],
+},
+parcheesi: {
+  goal: 'Move all your pawns around the board and into your home first.',
+  turn: ['Roll two dice. Move one pawn by each die, or one pawn by the total.', 'Enter a pawn from start by rolling a 5 (or the number your rules set).', 'Land on an opponent’s pawn (off a safe square) to send it back to start and earn bonus spaces.', 'Two of your pawns together make a blockade nobody can pass.'],
+  win: ['First player with every pawn home wins. Getting a pawn home earns a bonus move.', 'Doubles roll again — but three doubles in a row sends your lead pawn back.'],
+  keys: ['Tap Roll, then tap a glowing pawn to move it.'],
+  tips: ['Keep pawns on safe squares when opponents are close behind.'],
+},
+mogul: {
+  goal: 'Mega Media Mogul is our music-business property game. Buy McLearn properties, collect royalties, and become the last mogul standing — or the richest when the rounds run out.',
+  turn: ['Roll and move around the board. Pass Royalty Day to get paid.', 'Land on an unowned property to buy it (or send it to auction). Land on someone else’s and pay them royalties.', 'Own a whole color set to add Remixes, then go Platinum, for bigger royalties.', 'Fan Mail and Big Break cards bring surprises. Miss the Deadline and you go to Writer’s Block.'],
+  win: ['Bankrupt everyone else, or in a Quick or Speed game, have the most money and property when the last round ends.'],
+  keys: ['Roll, Buy, Auction and Build buttons appear when they apply.'],
+  tips: ['Complete a color set before building anywhere.', 'Keep some cash — royalties can surprise you.'],
+},
+showdown: {
+  goal: 'Studio Showdown is McLearn’s rock-paper-scissors. Out-think your rival and win the match.',
+  turn: ['Pick your sign: ✍️ Pen beats 📜 Contract, 📜 Contract beats 🎤 Mic, 🎤 Mic beats ✍️ Pen.', 'Full Studio adds 🥁 Beat and 💿 Master — every sign beats two and loses to two.', 'Each win shows a quick music-business lesson about why.'],
+  win: ['Win the most throws in Best of 3, 5 or 7 — or play Streak until you lose.', 'Rivals: Intern Ike throws at random, A&R Andre reads your favorites, and The Label studies your patterns over time.'],
+  keys: ['Keys 1–3 (or 1–5) throw a sign.'],
+  tips: ['Against The Label, break your own habits.'],
+},
+bingo: {
+  goal: 'Complete the pattern on one of your cards before anyone else in the hall — then shout BINGO.',
+  turn: ['The caller draws balls (B 1–15, I 16–30, N 31–45, G 46–60, O 61–75). Tap the number on your card to daub it. The center is free.', 'Patterns: any line, four corners, postage stamp, the X, picture frame, blackout, or a 5-game Session.', 'McLearn Catalog Bingo swaps numbers for McLearn books, apps, places and music-business terms.'],
+  win: ['Press BINGO the moment your pattern is complete. Call it falsely and you get a warning — or sit out the game in Pro.'],
+  keys: ['Tap squares to daub; press the big BINGO button to claim.'],
+  tips: ['Play more cards only when you can keep up with the caller.'],
+},
+keno: {
+  goal: 'Pick up to 10 numbers from 80. Twenty balls are drawn; the more of yours they “catch,” the more you win. Practice credits only.',
+  turn: ['Choose your numbers (or Quick Pick) and your bet, then Play.', 'Gold Ball: the last ball drawn is gold — catch it and your win doubles.'],
+  win: ['The paytable shows what each number of catches pays for how many you picked. The odds coach shows the real chance of each catch and the long-run return.', '20-game challenge: start with 500 credits and finish with your best stack.'],
+  keys: ['Enter = play, Q = quick pick, A = auto-play five games.'],
+  tips: ['Keno is pure chance — no pick is luckier than another. Watch the coach’s return figure.'],
+},
+roulette: {
+  goal: 'Bet on where the ball will land. Practice chips only.',
+  turn: ['Choose a chip, then tap the layout: a single number, a split or corner between numbers, a street or six-line, or outside bets such as red/black, odd/even, low/high, dozens and columns.', 'Press Spin. Winning bets are paid; losing bets are cleared.'],
+  win: ['A straight number pays 35 to 1; red/black pays 1 to 1. The odds coach shows each bet’s true chance and the house edge.', 'European wheel has one zero (2.7% edge); American adds 00 (5.26%). La Partage returns half of even-money bets when 0 hits.', '20-spin challenge: finish with your best stack.'],
+  keys: ['Space = spin, Z = undo your last chip.'],
+  tips: ['Every bet on the same wheel has the same house edge — no system beats it.'],
+},
+blackjack: {
+  goal: '21 (Blackjack): beat the dealer by getting closer to 21 without going over.',
+  turn: ['Place your bet and Deal. You and the dealer get two cards; one dealer card is hidden.', 'Hit (take a card), Stand (stop), Double (double the bet and take one card), Split a pair into two hands, or Surrender half your bet (when allowed).', 'Number cards count face value, faces count 10, aces count 1 or 11.'],
+  win: ['Beat the dealer’s total, or win when the dealer busts. Blackjack (ace + 10 on the first two cards) pays 3 to 2 (or 6 to 5).', 'Tournament: 25 hands, 1,000 chips, best stack wins.'],
+  keys: ['H = hit, S = stand, D = double, P = split, R = surrender, Enter = deal.'],
+  tips: ['The strategy coach shows the mathematically best play for every hand.'],
+},
+challenges: {
+  goal: 'Answer questions to earn free McLearn Bucks and climb the leaderboards.',
+  turn: ['Pick a subject: Math Sprint, Bible, African American History, U.S. & World History, Sports, Songs & Music, Science, Geography, Word Power or McLearn Media.', '10 questions, 20 seconds each. Answer fast for bonus points; streaks earn more.', 'Math Sprint: answer as many as you can in 60 seconds — it gets harder as your streak grows.', 'Daily Challenge: the same five questions for everyone today, once a day.'],
+  win: ['Correct answers earn Bucks; perfect rounds and daily bonuses earn extra (up to a daily limit).', '🥊 Challenge a friend: send a link or code — they get your exact questions and see who won.', '👻 Ghost Race: open a friend’s link and race their recorded run live.', '🖼️ Score card: make a picture of your result for social media.'],
+  keys: ['Tap or press 1–4 to answer; Enter for the next question. 🔊 reads questions aloud; 🗣️ lets you answer by voice.'],
+  tips: ['McLearn Bucks are free practice currency — never bought, sold or cashed out.'],
+},
+party: {
+  goal: 'McLearn Party Mode is team trivia on one screen for youth nights, family reunions and classrooms.',
+  turn: ['Host a game, choose 2–6 teams, name them, pick subjects and questions per team.', 'Teams take turns. The team calls out its answer; the host taps it (or the team says it out loud with voice on).', 'Miss it? The next team gets a STEAL for half points.'],
+  win: ['Points: 100 / 200 / 300 by difficulty. The highest score at the end wins the podium.'],
+  keys: ['A–D or 1–4 to answer, Space for the next question, F for full screen. 🎙️ Host voice reads everything aloud.'],
+  tips: ['Put it on a TV or projector and turn on Host voice.'],
+},
+};
+// extra game ids that share a guide
+const ALIASES = {};
+
+function modesHTML(id) {
+  const def = window.McRules && McRules._def && McRules._def(id === 'chess' ? 'chess' : id);
+  if (!def) return '';
+  const opt = s => s.options ? ` <span class="ht-opts">${s.options.map(o => esc(o[1])).join(' · ')}</span>` : ' <span class="ht-opts">On / Off</span>';
+  return `<h4>Table modes</h4>
+    <div class="ht-modes"><div><b>Standard</b><span>The classic game with coaching and friendly defaults.</span></div>
+    <div><b>Pro</b><span>${esc(def.proNote ? def.proNote.replace(/^Pro:\s*/, '') : 'Tournament settings.')}</span></div>
+    <div><b>House Rules</b><span>Set every option below yourself. Share your rules with the rule code so friends can play the same way.</span></div></div>
+    <h4>Every House Rules option</h4><ul class="ht-list">${def.schema.map(s => `<li><b>${esc(s.label)}</b>${s.help ? ` — ${esc(s.help)}` : ''}${opt(s)}</li>`).join('')}</ul>`;
+}
+function title(id) { if (id === 'challenges') return 'Challenge Center'; if (id === 'party') return 'Party Mode'; const g = (SH.catalog || []).find(x => x.v === id); return g ? g.title : id; }
+function guideHTML(id) {
+  const g = G[id]; if (!g) return '<p>Guide coming soon.</p>';
+  const list = a => `<ul class="ht-list">${a.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`;
+  return `<p class="ht-goal"><b>Goal.</b> ${esc(g.goal)}</p>
+    <h4>How to play</h4><ol class="ht-list">${g.turn.map(x => `<li>${esc(x)}</li>`).join('')}</ol>
+    <h4>Scoring &amp; winning</h4>${list(g.win)}
+    ${g.modes ? `<h4>Ways to play</h4><ul class="ht-list">${g.modes.map(m => `<li><b>${esc(m[0])}</b> — ${esc(m[1])}</li>`).join('')}</ul>` : ''}
+    ${modesHTML(id)}
+    <h4>Controls</h4>${list(g.keys)}
+    <h4>Tips</h4>${list(g.tips)}
+    <p class="tiny muted">Everyone plays with practice chips and McLearn Bucks only — never real money. Calm and Focus modes are in My McLearn ID.</p>`;
+}
+
+function modal() {
+  let m = $('ht-modal'); if (m) return m;
+  m = document.createElement('div'); m.id = 'ht-modal'; m.className = 'modal hidden'; m.setAttribute('role', 'dialog'); m.setAttribute('aria-modal', 'true'); m.setAttribute('aria-labelledby', 'ht-title');
+  m.innerHTML = `<div class="mcard ht-card"><div class="ht-head"><button class="btn btn-ghost" id="ht-backlist" aria-label="All guides">☰ All games</button><h3 class="serif" id="ht-title"></h3><button class="btn btn-ghost" id="ht-x" aria-label="Close">✕</button></div><div class="ht-body" id="ht-body"></div><div class="ht-foot" id="ht-foot"></div></div>`;
+  document.body.appendChild(m);
+  m.addEventListener('click', e => { if (e.target === m || e.target.closest('#ht-x')) close(); if (e.target.closest('#ht-backlist')) index(); const b = e.target.closest('[data-ht]'); if (b) open(b.dataset.ht); const p = e.target.closest('[data-htplay]'); if (p) { close(); const v = p.dataset.htplay; if (v === 'party') { SH.go('challenges'); setTimeout(() => SH.party && SH.party.open(), 200); } else SH.go(v); } });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !m.classList.contains('hidden')) close(); });
+  return m;
+}
+let lastFocus = null;
+function show() { const m = modal(); lastFocus = document.activeElement; m.classList.remove('hidden'); setTimeout(() => $('ht-x').focus(), 30); }
+function close() { const m = $('ht-modal'); if (m) m.classList.add('hidden'); if (SH.voice) SH.voice.stop(); if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+function open(id) {
+  id = ALIASES[id] || id; modal();
+  $('ht-title').textContent = 'How to play · ' + title(id);
+  $('ht-body').innerHTML = guideHTML(id); $('ht-body').scrollTop = 0;
+  const here = document.body.querySelector('main:not(.hidden)'), inGame = here && here.id === 'view-' + id;
+  $('ht-foot').innerHTML = `${SH.voice && SH.voice.supported.speak ? '<button class="btn-glass" id="ht-read">🔊 Read it to me</button>' : ''}${inGame ? '<button class="btn-gold" id="ht-go">Got it — let’s play</button>' : `<button class="btn-gold" data-htplay="${id}">Play ${esc(title(id))} ▸</button>`}`;
+  if ($('ht-go')) $('ht-go').onclick = close;
+  if ($('ht-read')) $('ht-read').onclick = () => SH.voice.speak($('ht-body').innerText.replace(/\n+/g, '. '));
+  $('ht-backlist').classList.remove('hidden'); show();
+  try { const s = SH.LS.get('ht-seen', {}); s[id] = 1; SH.LS.set('ht-seen', s); } catch (e) { /* storage blocked */ }
+}
+function index() {
+  modal(); $('ht-title').textContent = 'How to play — every game';
+  const ids = (SH.catalog || []).map(g => g.v).filter(v => G[v]).concat(['challenges', 'party']);
+  $('ht-body').innerHTML = `<p class="muted">Pick a game for its full guide: the goal, how a turn works, scoring, every mode and option, controls and tips.</p><div class="ht-grid">${ids.map(v => `<button class="ht-tile" data-ht="${v}">${(() => { const g = (SH.catalog || []).find(x => x.v === v); return g && SH.gameIcon ? SH.gameIcon(g, 34) : `<span class="ht-emo">${v === 'party' ? '🎉' : '🎓'}</span>`; })()}<span>${esc(title(v))}</span></button>`).join('')}</div>`;
+  $('ht-foot').innerHTML = ''; $('ht-backlist').classList.add('hidden'); show();
+}
+
+// "How to play" button on every game bar; a gentle pulse the first time you open a game
+function addButtons() {
+  document.querySelectorAll('main[data-game] .gbar').forEach(bar => {
+    if (bar.querySelector('.gb-howto')) return; const v = bar.closest('main').dataset.game; if (!G[v]) return;
+    const b = document.createElement('button'); b.className = 'gb-btn gb-howto'; b.dataset.htopen = v; b.setAttribute('aria-label', 'How to play'); b.innerHTML = '<span class="ht-q">?</span><span>How to play</span>';
+    const info = bar.querySelector('.gb-info'); if (info) info.before(b); else bar.appendChild(b);
+  });
+  const seen = SH.LS.get('ht-seen', {});
+  document.querySelectorAll('.gb-howto').forEach(b => b.classList.toggle('pulse', !seen[b.dataset.htopen]));
+  const qt = document.querySelector('#ch-quiz .qz-top'); if (qt && !qt.querySelector('.gb-howto')) qt.insertAdjacentHTML('beforeend', '<button class="vc-btn gb-howto" data-htopen="challenges" aria-label="How to play">? How to play</button>');
+  const pt = document.querySelector('#party .pt-tools'); if (pt && !pt.querySelector('.gb-howto')) pt.insertAdjacentHTML('afterbegin', '<button class="btn btn-ghost gb-howto" data-htopen="party">? How to play</button>');
+  const ch = $('ch-hub'); if (ch && !$('ht-chlink')) { const a = document.createElement('button'); a.id = 'ht-chlink'; a.className = 'btn btn-ghost ht-link'; a.dataset.htopen = 'challenges'; a.textContent = '? How the Challenge Center works'; ch.prepend(a); }
+  const mood = $('mood-row') || $('cont-row'); if (mood && !$('ht-all')) { const a = document.createElement('button'); a.id = 'ht-all'; a.className = 'btn-glass ht-all'; a.innerHTML = '📖 How to play every game'; a.onclick = index; mood.after(a); }
+}
+document.addEventListener('click', e => { const b = e.target.closest('[data-htopen]'); if (b) { e.preventDefault(); e.stopPropagation(); open(b.dataset.htopen); } }, true);
+addButtons(); document.addEventListener('DOMContentLoaded', addButtons); setTimeout(addButtons, 800);
+new MutationObserver(() => { if (document.querySelector('#party .pt-tools:not(:has(.gb-howto))')) addButtons(); }).observe(document.body, { childList: true });
+
+SH.howto = { open, index, _G: G };
 })();
 
 </script>
