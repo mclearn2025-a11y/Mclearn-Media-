@@ -1343,7 +1343,7 @@ body.event #chat-dock{display:none}
 <header class="topbar glass" id="topbar">
   <button class="brand" data-go="lobby" aria-label="McLearn Arena — home">
     <span class="crest" aria-hidden="true"><svg viewBox="0 0 40 40"><defs><linearGradient id="crestG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe6a8"/><stop offset=".5" stop-color="#e6b84a"/><stop offset="1" stop-color="#9c6a14"/></linearGradient></defs><path d="M20 2l15 6v11c0 9.5-6.4 16.4-15 19-8.6-2.6-15-9.5-15-19V8z" fill="#2a0009" stroke="url(#crestG)" stroke-width="1.6"/><path d="M11 27V13l9 9 9-9v14" fill="none" stroke="url(#crestG)" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><circle cx="20" cy="9" r="1.6" fill="#f4c86a"/></svg></span>
-    <span class="wm"><b class="title">McLEARN ARENA</b><small class="sub">A McLearn Media game studio · <span id="ver-tag">v5.0</span></small></span>
+    <span class="wm"><b class="title">McLEARN ARENA</b><small class="sub">A McLearn Media game studio · <span id="ver-tag">v6.0</span></small></span>
   </button>
   <button class="tb-games" id="btn-games" aria-haspopup="dialog"><svg class="ic"><use href="#i-grid"/></svg><span>All Games</span><kbd>/</kbd></button>
   <div class="hstats">
@@ -2897,7 +2897,8 @@ class EngineWorker {
       const id = ++jobSeq;
       if (!this.ok) { setTimeout(() => res(syncSearch(payload, id)), 15); return; }
       this.pending.set(id, { res, payload });
-      this.w.postMessage(Object.assign({}, payload, { id }));
+      try { this.w.postMessage(Object.assign({}, payload, { id })); }
+      catch (e) { this.pending.delete(id); this.ok = false; setTimeout(() => res(syncSearch(payload, id)), 0); } // couldn't reach the worker: think on the main thread instead
     });
   }
   cancel() {
