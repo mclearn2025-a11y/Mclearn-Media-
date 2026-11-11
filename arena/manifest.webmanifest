@@ -1,7 +1,7 @@
 {
   "name": "McLearn Arena",
   "short_name": "McLearn Arena",
-  "description": "20 games, trivia challenges and McLearn Bucks from McLearn Media.",
+  "description": "21 games, trivia challenges and McLearn Bucks from McLearn Media.",
   "start_url": "/arena/",
   "scope": "/arena/",
   "display": "standalone",

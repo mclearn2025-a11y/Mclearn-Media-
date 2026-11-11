@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>McLearn Arena — 20 Games by McLearn Media</title>
-<meta name="description" content="Play 20 games free — Spades, Biz Wiz, Dominoes, Chess, Bingo and more — plus trivia challenges in Bible, African American history, sports and music. Earn McLearn Bucks and climb the leaderboards.">
+<title>McLearn Arena — 21 Games by McLearn Media</title>
+<meta name="description" content="Play 21 games free — Spades, Biz Wiz, Dominoes, Chess, Bingo and more — plus trivia challenges in Bible, African American history, sports and music. Earn McLearn Bucks and climb the leaderboards.">
 <meta name="theme-color" content="#1e0007">
 <link rel="manifest" href="/arena/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/arena/apple-touch-icon.png">
@@ -13,7 +13,7 @@
 <meta name="apple-mobile-web-app-title" content="McLearn Arena">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="McLearn Media">
-<meta property="og:title" content="McLearn Arena — 20 games by McLearn Media">
+<meta property="og:title" content="McLearn Arena — 21 games by McLearn Media">
 <meta property="og:description" content="Spades, Biz Wiz, Dominoes, Chess and more, plus trivia challenges. Free to play — earn McLearn Bucks and climb the leaderboards.">
 <meta property="og:image" content="/arena/og-arena.png">
 <meta property="og:image:width" content="1200">
@@ -1158,6 +1158,41 @@ body.event .gwrap .felt{transform:none}
 .qz-big{font-family:var(--serif);font-weight:900;font-size:72px;line-height:1;background:var(--goldg);-webkit-background-clip:text;background-clip:text;color:transparent}.qz-big small{font-size:30px}
 .qz-earn{margin-top:6px;font-family:var(--serif);font-size:22px;color:#ffe6a8}
 .qz-grid{font-size:22px;letter-spacing:3px;margin-top:10px}
+.pl-room{position:relative;width:100%;border-radius:22px;padding:14px 14px 10px;overflow:hidden;background:#0d0d10;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}
+.pl-room[data-room=pro]{background:radial-gradient(ellipse at 50% -10%,rgba(120,170,255,.28),transparent 55%),radial-gradient(ellipse at 50% 120%,#0a1430,#04060c)}
+.pl-room[data-room=hall]{background:radial-gradient(ellipse at 50% 0%,rgba(255,214,140,.32),transparent 58%),repeating-linear-gradient(90deg,#2a160c 0 46px,#24120a 46px 48px),#1c0e07}
+.pl-room[data-room=online]{background:linear-gradient(160deg,#1c2733,#0d141c)}
+.pl-room[data-room=southern]{background:radial-gradient(ellipse at 18% 0%,rgba(255,80,120,.25),transparent 45%),radial-gradient(ellipse at 85% 5%,rgba(80,200,255,.18),transparent 40%),repeating-linear-gradient(0deg,#3b1d14 0 18px,#2f160f 18px 20px),repeating-linear-gradient(90deg,transparent 0 38px,rgba(0,0,0,.25) 38px 40px)}
+.pl-room[data-room=southern]::before{content:'';position:absolute;left:0;right:0;top:6px;height:10px;background:radial-gradient(circle,#ffd98a 0 2.5px,transparent 3.5px) 0 0/34px 10px;filter:drop-shadow(0 0 4px #ffb84d);opacity:.85;pointer-events:none}
+.pl-room[data-room=southern]::after{content:'McLEARN’S · COLD DRINKS · GOOD MUSIC';position:absolute;right:16px;bottom:6px;font:700 10px var(--mono);letter-spacing:.2em;color:#ff7aa8;text-shadow:0 0 8px #ff3f7f;opacity:.75;pointer-events:none}
+.pl-room[data-room=hall]::before{content:'';position:absolute;left:50%;top:-30px;width:70%;height:120px;transform:translateX(-50%);background:radial-gradient(ellipse at 50% 0,rgba(255,220,150,.35),transparent 70%);pointer-events:none}
+.pl-hud{position:relative;display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin:4px 0 10px}
+.pl-p{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:14px;background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.08);transition:box-shadow .3s,border-color .3s;min-width:0}
+.pl-p.r{flex-direction:row-reverse;text-align:right}.pl-p.on{border-color:var(--amber);box-shadow:0 0 18px -4px var(--amber)}
+.pl-p b{font-size:13px;display:block}.pl-p small{font-size:11px;color:var(--rose-300)}.pl-p>div{min-width:0;flex:1}
+.pl-p .mav,.pl-p svg.av{width:34px;height:34px;flex:none}
+.pl-racks{font:900 24px var(--mono);color:var(--amber);min-width:24px;text-align:center}
+.pl-left{display:flex;gap:2px;flex-wrap:wrap;margin-top:2px}.pl-p.r .pl-left{justify-content:flex-end}
+.pl-mid{text-align:center}.pl-mid b{display:block;font:800 12px var(--mono);letter-spacing:.12em;color:var(--amber)}.pl-mid small{font-size:11px;color:var(--rose-300)}
+.pl-chip{display:inline-grid;place-items:center;width:17px;height:17px;border-radius:50%;background:var(--c);color:#fff;font:800 9px var(--sans);box-shadow:inset -2px -2px 3px rgba(0,0,0,.35)}
+.pl-chip.st{background:radial-gradient(circle,#fbf8f0 0 40%,var(--c) 41%);color:#111}
+.pl-stage{position:relative;display:flex;justify-content:center;touch-action:none}
+#pl-cv{display:block;border-radius:12px;box-shadow:0 30px 60px -18px rgba(0,0,0,.85),0 0 0 1px rgba(0,0,0,.6);touch-action:none;cursor:crosshair;max-width:100%}
+.pl-power{position:absolute;right:-6px;top:10%;height:80%;width:26px;border-radius:14px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.18);overflow:hidden;cursor:ns-resize;touch-action:none;display:none}
+.pl-room.mine .pl-power{display:block}
+.pl-power i{position:absolute;left:0;right:0;top:0;height:0;background:linear-gradient(180deg,#4ade80,#f4c86a 55%,#f87171)}
+.pl-power span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(90deg);font:800 9px var(--mono);letter-spacing:.3em;color:rgba(255,255,255,.75);pointer-events:none}
+.pl-tray{display:flex;gap:4px;justify-content:center;min-height:20px;margin-top:8px;flex-wrap:wrap}
+.pl-ctrl{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:10px}
+.pl-spin{position:relative;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#e8e2d6 60%,#bfb6a6);box-shadow:inset 0 -3px 6px rgba(0,0,0,.25);cursor:pointer;touch-action:none}
+.pl-spin i{position:absolute;left:50%;top:50%;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:#c8202a;box-shadow:0 0 0 2px rgba(255,255,255,.7);pointer-events:none}
+.pl-pw{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--rose-300)}.pl-pw input{width:120px}
+.pl-rooms{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.pl-room-btn{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:10px;border-radius:12px;border:1px solid var(--line);background:rgba(0,0,0,.25);color:inherit;text-align:left}
+.pl-room-btn i{width:100%;height:26px;border-radius:7px;background:linear-gradient(var(--c1),var(--c1)) padding-box,var(--c2);border:4px solid var(--c2);margin-bottom:4px}
+.pl-room-btn b{font-size:13px}.pl-room-btn small{font-size:10.5px;color:var(--rose-300);line-height:1.3}.pl-room-btn.on{border-color:var(--amber);box-shadow:0 0 0 1px var(--amber)}
+.pl-log{max-height:170px;overflow:auto;font-size:12px;margin-top:10px;display:flex;flex-direction:column;gap:4px}.pl-log .bad{color:var(--bad);font-weight:700}
+@media (max-width:640px){.pl-room{padding:8px 6px}.pl-hud{grid-template-columns:1fr 1fr}.pl-mid{grid-column:1/-1;order:-1}.pl-p .mav,.pl-p svg.av{display:none}.pl-power{right:2px;width:22px}.pl-pw input{width:90px}}
 .gb-howto{display:inline-flex;align-items:center;gap:6px}.ht-q{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--amber);color:#1e0007;font:900 13px var(--sans)}
 .gb-howto.pulse .ht-q{animation:micPulse 1.4s infinite}
 .ht-card{max-width:760px;width:min(760px,94vw);max-height:90vh;display:flex;flex-direction:column;padding:0!important;overflow:hidden}
@@ -1309,7 +1344,7 @@ body.event #chat-dock{display:none}
 <marker id="ah-gold" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto"><path d="M0 0L10 5L0 10z" fill="#f2c4cb"/></marker>
 <marker id="ah-threat" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ef4444"/></marker>
 <marker id="ah-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto"><path d="M0 0L10 5L0 10z" fill="#4ade80"/></marker>
-<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol><symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></symbol><symbol id="gi-chess" viewBox="0 0 24 24"><path d="M12 2.5v4M10 4.5h4"/><path d="M8 13a4 4 0 0 1 8 0l-1 5H9z"/><path d="M7 21h10M8.5 18h7"/><path d="M9.5 9.5h5"/></symbol><symbol id="gi-checkers" viewBox="0 0 24 24"><ellipse cx="12" cy="8" rx="7.5" ry="3.2"/><path d="M4.5 8v3.4c0 1.8 3.4 3.2 7.5 3.2s7.5-1.4 7.5-3.2V8"/><path d="M4.5 13v3.4c0 1.8 3.4 3.2 7.5 3.2s7.5-1.4 7.5-3.2V13"/><ellipse cx="12" cy="8" rx="3.5" ry="1.4"/></symbol><symbol id="gi-spades" viewBox="0 0 24 24"><path d="M12 2.5c3.2 4.2 7.5 6.4 7.5 10.6a4.2 4.2 0 0 1-6.8 3.3l.8 5.1h-3l.8-5.1a4.2 4.2 0 0 1-6.8-3.3c0-4.2 4.3-6.4 7.5-10.6z"/></symbol><symbol id="gi-blackjack" viewBox="0 0 24 24"><rect x="3" y="6" width="11" height="15" rx="2" transform="rotate(-10 8.5 13.5)"/><rect x="10" y="3" width="11" height="15" rx="2"/><path d="M13.5 8.2c.4-.8 1.3-1.2 2-1 1 .3 1.3 1.4.6 2.3l-2.6 3h3.2M18 7v6"/></symbol><symbol id="gi-parcheesi" viewBox="0 0 24 24"><path d="M9 2.5h6v6.5h6.5v6H15v6.5H9V15H2.5V9H9z"/><circle cx="12" cy="12" r="1.7" fill="currentColor"/><path d="M12 5v1.5M12 17.5V19M5 12h1.5M17.5 12H19"/></symbol><symbol id="gi-colorclash" viewBox="0 0 24 24"><rect x="4.5" y="2.5" width="15" height="19" rx="3"/><path d="M12 6.5l4.5 5.5L12 17.5 7.5 12z"/><path d="M12 9.5l2 2.5-2 2.5-2-2.5z" fill="currentColor"/></symbol><symbol id="gi-pittypat" viewBox="0 0 24 24"><rect x="2.5" y="6" width="9.5" height="14" rx="2"/><rect x="12" y="4" width="9.5" height="14" rx="2"/><path d="M7.2 11.5c-.9-1.4-2.6-.6-2 .8.4.9 2 2 2 2s1.6-1.1 2-2c.6-1.4-1.1-2.2-2 -.8zM16.7 9.5c-.9-1.4-2.6-.6-2 .8.4.9 2 2 2 2s1.6-1.1 2-2c.6-1.4-1.1-2.2-2-.8z"/></symbol><symbol id="gi-mogul" viewBox="0 0 24 24"><path d="M2.5 21.5h19"/><path d="M4.5 21.5V11h4.5v10.5M10 21.5V3.5h5.5v18M16.5 21.5V9l4-2v14.5"/><path d="M12 7h2.5M12 10h2.5M12 13h2.5M6 14h1.5M6 17h1.5M18 12h1M18 15h1"/></symbol><symbol id="gi-dominoes" viewBox="0 0 24 24"><rect x="6.5" y="1.5" width="11" height="21" rx="2.8"/><path d="M7.5 12h9"/><circle cx="12" cy="6.8" r="1.3" fill="currentColor"/><circle cx="9.6" cy="15" r="1.2" fill="currentColor"/><circle cx="14.4" cy="19" r="1.2" fill="currentColor"/><circle cx="12" cy="17" r="1.2" fill="currentColor"/></symbol><symbol id="gi-bidwhist" viewBox="0 0 24 24"><rect x="4.5" y="2.5" width="15" height="19" rx="3"/><path d="M12 6.5l1.5 3.2 3.4.4-2.6 2.3.8 3.4-3.1-1.8-3.1 1.8.8-3.4-2.6-2.3 3.4-.4z"/><path d="M7.5 19h9"/></symbol><symbol id="gi-poker" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5"/><path d="M12 2.5v3.3M12 18.2v3.3M2.5 12h3.3M18.2 12h3.3M5.3 5.3l2.3 2.3M16.4 16.4l2.3 2.3M5.3 18.7l2.3-2.3M16.4 7.6l2.3-2.3"/></symbol><symbol id="gi-tonk" viewBox="0 0 24 24"><rect x="2.5" y="7" width="8" height="12.5" rx="1.6" transform="rotate(-14 6.5 13)"/><rect x="8" y="4.5" width="8" height="12.5" rx="1.6"/><rect x="13.5" y="7" width="8" height="12.5" rx="1.6" transform="rotate(14 17.5 13)"/></symbol><symbol id="gi-gofish" viewBox="0 0 24 24"><path d="M2.5 12c3.2-5.2 9.6-6.2 13.6-2l5.4-3.3-1.7 5.3 1.7 5.3-5.4-3.3c-4 4.2-10.4 3.2-13.6-2z"/><circle cx="8" cy="11.2" r="1.1" fill="currentColor"/><path d="M11.5 9.5c.8 1.6.8 3.4 0 5"/></symbol><symbol id="gi-war" viewBox="0 0 24 24"><path d="M3 3l10.5 10.5M3 3h3.8l9.7 9.7M14 17l3-3M16 19l-2.5-2.5M17 14l2.5 2.5M19 19l2 2"/><path d="M21 3L10.5 13.5M21 3h-3.8l-9.7 9.7M10 17l-3-3M8 19l2.5-2.5M7 14l-2.5 2.5M5 19l-2 2"/></symbol><symbol id="gi-bourre" viewBox="0 0 24 24"><path d="M12 2.5c1.6 2.6 1.6 5.2 0 7.8-1.6-2.6-1.6-5.2 0-7.8z"/><path d="M12 10.3c-3-.6-6.2.4-7.8 3.2 2.9.9 5.7.2 7.8-3.2zM12 10.3c3-.6 6.2.4 7.8 3.2-2.9.9-5.7.2-7.8-3.2z"/><path d="M8 15.5h8M12 10.3v10M9 21h6"/></symbol><symbol id="gi-trophy" viewBox="0 0 24 24"><path d="M7 3.5h10v5a5 5 0 0 1-10 0z"/><path d="M7 5.5H3.5a3.5 3.5 0 0 0 3.8 3.9M17 5.5h3.5a3.5 3.5 0 0 1-3.8 3.9M12 13.5v3.5M8 21h8M9.5 17h5v4h-5z"/></symbol><symbol id="gi-roulette" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/><path d="M12 2.5V6M12 18v3.5M2.5 12H6M18 12h3.5M5.3 5.3l2.5 2.5M16.2 16.2l2.5 2.5M5.3 18.7l2.5-2.5M16.2 7.8l2.5-2.5"/><circle cx="16.6" cy="5.6" r="1.2" fill="currentColor"/></symbol><symbol id="gi-keno" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/><circle cx="6" cy="6" r="1.4" fill="currentColor"/><circle cx="18" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="18" r="1.4" fill="currentColor"/></symbol><symbol id="gi-bingo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5.2"/><path d="M10.6 9.8h1.9a1.1 1.1 0 0 1 0 2.2h-1.9zM10.6 12h2.2a1.1 1.1 0 0 1 0 2.2h-2.2zM10.6 9.8v4.4"/></symbol><symbol id="gi-showdown" viewBox="0 0 24 24"><rect x="9" y="2.5" width="6" height="11.5" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5v4M8.5 21.5h7"/><path d="M9 6.5h6M9 9h6"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol><symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></symbol><symbol id="gi-chess" viewBox="0 0 24 24"><path d="M12 2.5v4M10 4.5h4"/><path d="M8 13a4 4 0 0 1 8 0l-1 5H9z"/><path d="M7 21h10M8.5 18h7"/><path d="M9.5 9.5h5"/></symbol><symbol id="gi-checkers" viewBox="0 0 24 24"><ellipse cx="12" cy="8" rx="7.5" ry="3.2"/><path d="M4.5 8v3.4c0 1.8 3.4 3.2 7.5 3.2s7.5-1.4 7.5-3.2V8"/><path d="M4.5 13v3.4c0 1.8 3.4 3.2 7.5 3.2s7.5-1.4 7.5-3.2V13"/><ellipse cx="12" cy="8" rx="3.5" ry="1.4"/></symbol><symbol id="gi-spades" viewBox="0 0 24 24"><path d="M12 2.5c3.2 4.2 7.5 6.4 7.5 10.6a4.2 4.2 0 0 1-6.8 3.3l.8 5.1h-3l.8-5.1a4.2 4.2 0 0 1-6.8-3.3c0-4.2 4.3-6.4 7.5-10.6z"/></symbol><symbol id="gi-blackjack" viewBox="0 0 24 24"><rect x="3" y="6" width="11" height="15" rx="2" transform="rotate(-10 8.5 13.5)"/><rect x="10" y="3" width="11" height="15" rx="2"/><path d="M13.5 8.2c.4-.8 1.3-1.2 2-1 1 .3 1.3 1.4.6 2.3l-2.6 3h3.2M18 7v6"/></symbol><symbol id="gi-parcheesi" viewBox="0 0 24 24"><path d="M9 2.5h6v6.5h6.5v6H15v6.5H9V15H2.5V9H9z"/><circle cx="12" cy="12" r="1.7" fill="currentColor"/><path d="M12 5v1.5M12 17.5V19M5 12h1.5M17.5 12H19"/></symbol><symbol id="gi-colorclash" viewBox="0 0 24 24"><rect x="4.5" y="2.5" width="15" height="19" rx="3"/><path d="M12 6.5l4.5 5.5L12 17.5 7.5 12z"/><path d="M12 9.5l2 2.5-2 2.5-2-2.5z" fill="currentColor"/></symbol><symbol id="gi-pittypat" viewBox="0 0 24 24"><rect x="2.5" y="6" width="9.5" height="14" rx="2"/><rect x="12" y="4" width="9.5" height="14" rx="2"/><path d="M7.2 11.5c-.9-1.4-2.6-.6-2 .8.4.9 2 2 2 2s1.6-1.1 2-2c.6-1.4-1.1-2.2-2 -.8zM16.7 9.5c-.9-1.4-2.6-.6-2 .8.4.9 2 2 2 2s1.6-1.1 2-2c.6-1.4-1.1-2.2-2-.8z"/></symbol><symbol id="gi-mogul" viewBox="0 0 24 24"><path d="M2.5 21.5h19"/><path d="M4.5 21.5V11h4.5v10.5M10 21.5V3.5h5.5v18M16.5 21.5V9l4-2v14.5"/><path d="M12 7h2.5M12 10h2.5M12 13h2.5M6 14h1.5M6 17h1.5M18 12h1M18 15h1"/></symbol><symbol id="gi-dominoes" viewBox="0 0 24 24"><rect x="6.5" y="1.5" width="11" height="21" rx="2.8"/><path d="M7.5 12h9"/><circle cx="12" cy="6.8" r="1.3" fill="currentColor"/><circle cx="9.6" cy="15" r="1.2" fill="currentColor"/><circle cx="14.4" cy="19" r="1.2" fill="currentColor"/><circle cx="12" cy="17" r="1.2" fill="currentColor"/></symbol><symbol id="gi-bidwhist" viewBox="0 0 24 24"><rect x="4.5" y="2.5" width="15" height="19" rx="3"/><path d="M12 6.5l1.5 3.2 3.4.4-2.6 2.3.8 3.4-3.1-1.8-3.1 1.8.8-3.4-2.6-2.3 3.4-.4z"/><path d="M7.5 19h9"/></symbol><symbol id="gi-poker" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5"/><path d="M12 2.5v3.3M12 18.2v3.3M2.5 12h3.3M18.2 12h3.3M5.3 5.3l2.3 2.3M16.4 16.4l2.3 2.3M5.3 18.7l2.3-2.3M16.4 7.6l2.3-2.3"/></symbol><symbol id="gi-tonk" viewBox="0 0 24 24"><rect x="2.5" y="7" width="8" height="12.5" rx="1.6" transform="rotate(-14 6.5 13)"/><rect x="8" y="4.5" width="8" height="12.5" rx="1.6"/><rect x="13.5" y="7" width="8" height="12.5" rx="1.6" transform="rotate(14 17.5 13)"/></symbol><symbol id="gi-gofish" viewBox="0 0 24 24"><path d="M2.5 12c3.2-5.2 9.6-6.2 13.6-2l5.4-3.3-1.7 5.3 1.7 5.3-5.4-3.3c-4 4.2-10.4 3.2-13.6-2z"/><circle cx="8" cy="11.2" r="1.1" fill="currentColor"/><path d="M11.5 9.5c.8 1.6.8 3.4 0 5"/></symbol><symbol id="gi-pool" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="10.5" r="3.6"/><path d="M10.9 8.6c.7-.5 1.6-.5 2.2 0M11.6 10.4h.8M11.2 12.2h1.6"/></symbol><symbol id="gi-war" viewBox="0 0 24 24"><path d="M3 3l10.5 10.5M3 3h3.8l9.7 9.7M14 17l3-3M16 19l-2.5-2.5M17 14l2.5 2.5M19 19l2 2"/><path d="M21 3L10.5 13.5M21 3h-3.8l-9.7 9.7M10 17l-3-3M8 19l2.5-2.5M7 14l-2.5 2.5M5 19l-2 2"/></symbol><symbol id="gi-bourre" viewBox="0 0 24 24"><path d="M12 2.5c1.6 2.6 1.6 5.2 0 7.8-1.6-2.6-1.6-5.2 0-7.8z"/><path d="M12 10.3c-3-.6-6.2.4-7.8 3.2 2.9.9 5.7.2 7.8-3.2zM12 10.3c3-.6 6.2.4 7.8 3.2-2.9.9-5.7.2-7.8-3.2z"/><path d="M8 15.5h8M12 10.3v10M9 21h6"/></symbol><symbol id="gi-trophy" viewBox="0 0 24 24"><path d="M7 3.5h10v5a5 5 0 0 1-10 0z"/><path d="M7 5.5H3.5a3.5 3.5 0 0 0 3.8 3.9M17 5.5h3.5a3.5 3.5 0 0 1-3.8 3.9M12 13.5v3.5M8 21h8M9.5 17h5v4h-5z"/></symbol><symbol id="gi-roulette" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/><path d="M12 2.5V6M12 18v3.5M2.5 12H6M18 12h3.5M5.3 5.3l2.5 2.5M16.2 16.2l2.5 2.5M5.3 18.7l2.5-2.5M16.2 7.8l2.5-2.5"/><circle cx="16.6" cy="5.6" r="1.2" fill="currentColor"/></symbol><symbol id="gi-keno" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/><circle cx="6" cy="6" r="1.4" fill="currentColor"/><circle cx="18" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="18" r="1.4" fill="currentColor"/></symbol><symbol id="gi-bingo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5.2"/><path d="M10.6 9.8h1.9a1.1 1.1 0 0 1 0 2.2h-1.9zM10.6 12h2.2a1.1 1.1 0 0 1 0 2.2h-2.2zM10.6 9.8v4.4"/></symbol><symbol id="gi-showdown" viewBox="0 0 24 24"><rect x="9" y="2.5" width="6" height="11.5" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5v4M8.5 21.5h7"/><path d="M9 6.5h6M9 9h6"/></symbol>
 <symbol id="gi-pluck" viewBox="0 0 24 24"><path d="M19.5 3.5C12 4 6.5 9 5 17.5l-1 3"/><path d="M19.5 3.5c.5 6-3 11-9.5 13"/><path d="M8 13.5l3.5.5M10.5 10l3.2.8M13 7l2.8.6"/></symbol><symbol id="i-crown" viewBox="0 0 24 24"><path d="M3 18h18l1.2-11-5.7 4.2L12 4 7.5 11.2 1.8 7z"/><path d="M4 21h16"/></symbol>
 <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
 <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
@@ -1379,7 +1414,7 @@ body.event #chat-dock{display:none}
   </div>
   <div id="cont-row"></div>
   <div class="lob-tools">
-    <label class="lob-search"><svg class="ic"><use href="#i-search"/></svg><input id="lob-q" type="search" placeholder="Search 20 games…" autocomplete="off" aria-label="Search games"></label>
+    <label class="lob-search"><svg class="ic"><use href="#i-search"/></svg><input id="lob-q" type="search" placeholder="Search 21 games…" autocomplete="off" aria-label="Search games"></label>
     <div class="lob-chips" id="lob-chips" role="tablist" aria-label="Game categories"></div>
   </div>
   <div id="shelves"></div>
@@ -1398,6 +1433,7 @@ body.event #chat-dock{display:none}
 <main class="gwrap hidden" id="view-tonk"></main>
 <main class="gwrap hidden" id="view-gofish"></main>
 <main class="gwrap hidden" id="view-war"></main>
+<main class="gwrap hidden" id="view-pool"></main>
 <main class="gwrap hidden" id="view-showdown"></main>
 <main class="gwrap hidden" id="view-bingo"></main>
 <main class="gwrap hidden" id="view-keno"></main>
@@ -1642,7 +1678,7 @@ body.event #chat-dock{display:none}
     <button id="copy-email"><svg class="ic"><use href="#i-mail"/></svg>Mclearn2025@gmail.com</button>
     <a href="tel:+16018089559"><svg class="ic"><use href="#i-phone"/></svg>(601) 808-9559</a>
   </div>
-  <a class="sf-solo" href="./">▸ Play all 20 games in the McLearn Arena</a><div class="sf-note">All chips are practice chips — no real money, no purchases, no gambling. Opponent names are fictional. © McLearn Media LLC</div>
+  <a class="sf-solo" href="./">▸ Play all 21 games in the McLearn Arena</a><div class="sf-note">All chips are practice chips — no real money, no purchases, no gambling. Opponent names are fictional. © McLearn Media LLC</div>
 </footer>
 <div class="modal hidden" id="vip-modal">
   <div class="glass box" style="text-align:center;border-color:var(--rose-400)">
@@ -9440,6 +9476,594 @@ McRules.onChange('pluck', () => { if (!G.hands.length || G.over || (G.handNo <= 
 SH.games.pluck = { onShow() { if (!G.hands.length) newGame(); else render(); }, _G: G, _newGame: newGame, _youPlay: youPlay, _aiPlay: aiPlay, _setTrump: setTrump, _bestTrump: bestTrump, _youPluck: youPluck, _aiPluckCard: aiPluckCard };
 })();
 
+// McLearn Pool Room — real ball physics on four tables: Professional, Pool Room, Standard Online and Southern Style.
+// 8-Ball, 9-Ball, 10-Ball and Practice; computer opponents at four levels or Pass & Play.
+(function () {
+'use strict';
+const SH = window.McShared, $ = id => document.getElementById(id), LS = SH.LS;
+McRules.register('pool', {
+  title: 'Pool',
+  proNote: 'Pro: race to 5, call your pocket on the money ball, three fouls in a row loses the rack (9/10-Ball), short aiming guide and a 45-second shot clock.',
+  schema: [
+    { key: 'game', label: 'Game', help: '8-Ball: solids or stripes, then the 8. 9-Ball and 10-Ball: hit the lowest ball first; sink the money ball to win.', type: 'select', options: [['8ball', '8-Ball'], ['9ball', '9-Ball'], ['10ball', '10-Ball'], ['practice', 'Practice (free table)']] },
+    { key: 'opp', label: 'Opponent', type: 'select', options: [['rookie', 'Cousin Dre (rookie)'], ['hustler', 'Miss Loretta (hustler)'], ['shark', 'Uncle Ray (shark)'], ['pro', 'Deacon Earl (pro)'], ['pass', 'Pass & Play (2 people)']] },
+    { key: 'race', label: 'Race to', help: 'Racks needed to win the match', type: 'select', options: [[1, '1 rack'], [3, '3 racks'], [5, '5 racks'], [7, '7 racks']] },
+    { key: 'guide', label: 'Aiming guide', type: 'select', options: [['full', 'Full (shows where both balls go)'], ['short', 'Short'], ['off', 'Off']] },
+    { key: 'bih', label: 'Ball in hand after a foul', help: 'Bar rules put the cue ball behind the head string (the kitchen)', type: 'select', options: [['table', 'Anywhere on the table'], ['kitchen', 'Kitchen only (bar rules)']] },
+    { key: 'call', label: 'Call the money ball', help: 'Tap a pocket before shooting the 8 (8-Ball) or the 10 (10-Ball)', type: 'bool' },
+    { key: 'eightBreak', label: '8 on the break', type: 'select', options: [['win', 'Wins the rack'], ['spot', 'Gets spotted, keep shooting']] },
+    { key: 'breakRule', label: 'Who breaks', type: 'select', options: [['alt', 'Alternate'], ['winner', 'Winner breaks']] },
+    { key: 'threeFoul', label: 'Three fouls in a row loses (9/10-Ball)', type: 'bool' },
+    { key: 'timer', label: 'Shot clock', type: 'select', options: [[0, 'Off'], [45, '45 seconds'], [60, '60 seconds']] }
+  ],
+  presets: {
+    standard: { game: '8ball', opp: 'hustler', race: 3, guide: 'full', bih: 'table', call: false, eightBreak: 'win', breakRule: 'alt', threeFoul: false, timer: 0 },
+    pro: { race: 5, guide: 'short', call: true, eightBreak: 'spot', threeFoul: true, timer: 45 }
+  }
+});
+let RU = McRules.get('pool');
+const tmr = McRules.timer();
+
+// ---------- rooms ----------
+const ROOMS = {
+  pro:      { name: 'Professional', sub: 'Tournament arena · 9-ft table', W: 100, H: 50, CM: 2.98, SM: 2.63, cloth: ['#1d5fa8', '#123f74'], rail: ['#1b1b1f', '#050506'], cushion: '#174f8c', sight: '#e8e2d0', pocket: '#000', leather: '#2a2a2a', pr: 1.99, guideLen: 1 },
+  hall:     { name: 'Pool Room', sub: 'Classic hall · 8-ft mahogany', W: 88, H: 44, CM: 3.33, SM: 2.87, cloth: ['#1e7a43', '#0f4f2a'], rail: ['#6b2f15', '#3a160a'], cushion: '#186638', sight: '#f2e6c9', pocket: '#000', leather: '#3d2416', pr: 2.16, guideLen: 1 },
+  online:   { name: 'Standard Online', sub: 'Clean modern · 8-ft', W: 88, H: 44, CM: 3.51, SM: 2.98, cloth: ['#14808a', '#0b5560'], rail: ['#2c3540', '#151b22'], cushion: '#106d76', sight: '#bfe8ee', pocket: '#06090c', leather: '#222a33', pr: 2.28, guideLen: 1.6 },
+  southern: { name: 'Southern Style', sub: 'Saturday-night juke joint · 7-ft bar box', W: 78, H: 39, CM: 3.69, SM: 3.10, cloth: ['#8a1c2b', '#561019'], rail: ['#a8692e', '#5e3412'], cushion: '#741826', sight: '#fff0c8', pocket: '#000', leather: '#4a2a12', pr: 2.34, guideLen: 1 },
+};
+const R = 1.32, RAIL = 5.5, MAXV = 430;
+const COL = { 1: '#f2c12e', 2: '#1f4fbf', 3: '#d2232a', 4: '#5b2a86', 5: '#ea6a1c', 6: '#1b7a3d', 7: '#7a1f22', 8: '#111111' };
+const colorOf = n => n === 0 ? '#f7f3ea' : COL[n > 8 ? n - 8 : n];
+const OPP = { rookie: { name: 'Cousin Dre', noise: 2.4, sims: 2, lookahead: false }, hustler: { name: 'Miss Loretta', noise: 1.1, sims: 4, lookahead: false }, shark: { name: 'Uncle Ray', noise: .5, sims: 6, lookahead: true }, pro: { name: 'Deacon Earl', noise: .22, sims: 8, lookahead: true } };
+
+const G = {
+  room: LS.get('pool-room', 'hall'), balls: [], turn: 0, groups: [null, null], phase: 'idle', inHand: false, kitchen: false, isBreak: true,
+  called: null, fouls: [0, 0], racks: [0, 0], breaker: 0, aim: 0, power: .55, spin: { x: 0, y: 0 }, potted: [], over: false, token: 0,
+  stats: LS.get('pool-stats', { w: 0, l: 0, racks: 0, run: 0 }), fast: false, msg: '', shotNo: 0, lastPot: [],
+};
+let T = ROOMS[G.room];
+const players = () => [{ name: (SH.me && SH.me.get && SH.me.get().name) || 'You', ai: false }, RU.opp === 'pass' ? { name: 'Player 2', ai: false } : { name: OPP[RU.opp].name, ai: true }];
+let P = players();
+const moneyBall = () => RU.game === '8ball' ? 8 : RU.game === '9ball' ? 9 : RU.game === '10ball' ? 10 : -1;
+const live = () => G.balls.filter(b => !b.in);
+const cue = () => G.balls[0];
+const wait = ms => G.fast ? Promise.resolve() : new Promise(r => setTimeout(r, ms));
+const rnd = (a, b) => a + Math.random() * (b - a);
+const gauss = () => { let u = 0, v = 0; while (!u) u = Math.random(); while (!v) v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); };
+
+// ---------- geometry ----------
+function pockets(t) { t = t || T; const W = t.W, H = t.H, o = .55; return [[-o, -o], [W / 2, -1.05], [W + o, -o], [-o, H + o], [W / 2, H + 1.05], [W + o, H + o]]; }
+function pocketAim(i, t) { t = t || T; const W = t.W, H = t.H; return [[.9, .9], [W / 2, -.2], [W - .9, .9], [.9, H - .9], [W / 2, H + .2], [W - .9, H - .9]][i]; }
+function jaws(t) { t = t || T; const W = t.W, H = t.H, c = t.CM, s = t.SM; return [[0, c], [c, 0], [W - c, 0], [W, c], [0, H - c], [c, H], [W - c, H], [W, H - c], [W / 2 - s, 0], [W / 2 + s, 0], [W / 2 - s, H], [W / 2 + s, H]]; }
+
+// ---------- racking ----------
+function rack() {
+  const W = T.W, H = T.H, fx = W * .75, fy = H / 2, dx = R * Math.sqrt(3) + .02, dy = R + .01;
+  let order, shape;
+  if (RU.game === '9ball') { shape = [1, 2, 3, 2, 1]; const rest = shuffle([2, 3, 4, 5, 6, 7, 8]); order = [1, rest[0], rest[1], rest[2], 9, rest[3], rest[4], rest[5], rest[6]]; }
+  else if (RU.game === '10ball') { shape = [1, 2, 3, 4]; const rest = shuffle([2, 3, 4, 5, 6, 7, 8, 9]); order = [1, rest[0], rest[1], rest[2], 10, rest[3], rest[4], rest[5], rest[6], rest[7]]; }
+  else { shape = [1, 2, 3, 4, 5]; const solids = shuffle([1, 2, 3, 4, 5, 6, 7]), stripes = shuffle([9, 10, 11, 12, 13, 14, 15]); const s1 = solids.pop(), s2 = stripes.pop(); const rest = shuffle(solids.concat(stripes)); order = []; let k = 0; for (let row = 0; row < 5; row++) for (let j = 0; j <= row; j++) { if (row === 2 && j === 1) order.push(8); else if (row === 4 && j === 0) order.push(s1); else if (row === 4 && j === 4) order.push(s2); else order.push(rest[k++]); } }
+  const balls = [{ n: 0, x: W * .25, y: H / 2 + rnd(-3, 3), vx: 0, vy: 0, in: false, roll: 0, dir: 0 }];
+  let k = 0;
+  shape.forEach((cnt, row) => { for (let j = 0; j < cnt; j++) { const n = order[k++]; balls.push({ n, x: fx + row * dx, y: fy + (j - (cnt - 1) / 2) * 2 * dy, vx: 0, vy: 0, in: false, roll: 0, dir: 0 }); } });
+  if (RU.game === 'practice') { // a friendly spread to practice on
+    balls.length = 1; [1, 2, 3, 4, 5, 6, 7, 9, 10, 11].forEach((n, i) => balls.push({ n, x: rnd(W * .35, W - 4), y: rnd(4, H - 4), vx: 0, vy: 0, in: false, roll: 0, dir: 0 }));
+    spread(balls);
+  }
+  return balls;
+}
+function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function spread(balls) { for (let it = 0; it < 60; it++) for (let i = 1; i < balls.length; i++) for (let j = 0; j < balls.length; j++) { if (i === j) continue; const a = balls[i], b = balls[j], d = Math.hypot(a.x - b.x, a.y - b.y); if (d < 2 * R + .4) { a.x = Math.min(T.W - 3, Math.max(3, a.x + rnd(-3, 3))); a.y = Math.min(T.H - 3, Math.max(3, a.y + rnd(-3, 3))); } } }
+
+// ---------- physics ----------
+// one world step; returns nothing, records events into ev
+function step(balls, dt, ev, t, spin) {
+  const W = t.W, H = t.H, J = jaws(t), PK = pockets(t);
+  for (const b of balls) {
+    if (b.in) continue;
+    const sp = Math.hypot(b.vx, b.vy); if (!sp) continue;
+    const dec = Math.max(0, sp - (14 + .42 * sp) * dt), f = dec / sp; b.vx *= f; b.vy *= f;
+    if (dec < .35) { b.vx = b.vy = 0; continue; }
+    b.x += b.vx * dt; b.y += b.vy * dt; b.roll += dec * dt / R; b.dir = Math.atan2(b.vy, b.vx);
+  }
+  // ball-ball
+  for (let i = 0; i < balls.length; i++) {
+    const a = balls[i]; if (a.in) continue;
+    for (let j = i + 1; j < balls.length; j++) {
+      const b = balls[j]; if (b.in) continue;
+      const dx = b.x - a.x, dy = b.y - a.y, d2 = dx * dx + dy * dy; if (d2 >= 4 * R * R || d2 === 0) continue;
+      const d = Math.sqrt(d2), nx = dx / d, ny = dy / d, ov = 2 * R - d;
+      a.x -= nx * ov / 2; a.y -= ny * ov / 2; b.x += nx * ov / 2; b.y += ny * ov / 2;
+      const rv = (b.vx - a.vx) * nx + (b.vy - a.vy) * ny; if (rv > 0) continue;
+      const jimp = -(1.95) * rv / 2;
+      a.vx -= jimp * nx; a.vy -= jimp * ny; b.vx += jimp * nx; b.vy += jimp * ny;
+      if (ev) {
+        if ((a.n === 0 || b.n === 0) && ev.first == null) { ev.first = a.n === 0 ? b.n : a.n; ev.cueImpact = { speed: -rv }; if (spin && (spin.y || spin.x)) { const c = a.n === 0 ? a : b, s = -rv; c.vx += ev.shotDir[0] * spin.y * s * .42; c.vy += ev.shotDir[1] * spin.y * s * .42; } }
+        ev.clicks = (ev.clicks || 0) + 1; ev.hard = Math.max(ev.hard || 0, -rv);
+      }
+    }
+  }
+  // cushions, jaws, pockets
+  for (const b of balls) {
+    if (b.in) continue;
+    const inCorner = (b.x < t.CM || b.x > W - t.CM) && (b.y < t.CM || b.y > H - t.CM);
+    const inSide = Math.abs(b.x - W / 2) < t.SM && (b.y < R + .2 || b.y > H - R - .2);
+    const mouth = (b.x < t.CM || b.x > W - t.CM) ? (b.y < t.CM || b.y > H - t.CM) : false;
+    const cushion = (axis, lim, sign) => { // sign: -1 left/top, +1 right/bottom
+      const v = axis === 'x' ? b.vx : b.vy;
+      if (sign * v <= 0) return;
+      if (axis === 'x') { b.x = lim; b.vx = -b.vx * .74; if (ev && ev.cueSpin && b.n === 0) { b.vy += ev.cueSpin * Math.abs(b.vx) * .35; ev.cueSpin *= .5; } }
+      else { b.y = lim; b.vy = -b.vy * .74; if (ev && ev.cueSpin && b.n === 0) { b.vx -= ev.cueSpin * Math.abs(b.vy) * .35; ev.cueSpin *= .5; } }
+      if (ev && ev.first != null) ev.rail = true; if (ev) ev.rails = (ev.rails || 0) + 1;
+    };
+    if (!inCorner && !mouth) {
+      if (b.x < R) cushion('x', R, -1); else if (b.x > W - R) cushion('x', W - R, 1);
+      if (!inSide) { if (b.y < R) cushion('y', R, -1); else if (b.y > H - R) cushion('y', H - R, 1); }
+    }
+    for (const [jx, jy] of J) { // pocket jaws: the rounded cushion noses
+      const dx = b.x - jx, dy = b.y - jy, d = Math.hypot(dx, dy); if (d >= R || d === 0) continue;
+      const nx = dx / d, ny = dy / d; b.x = jx + nx * R; b.y = jy + ny * R; const vn = b.vx * nx + b.vy * ny; if (vn < 0) { b.vx -= 1.55 * vn * nx; b.vy -= 1.55 * vn * ny; if (ev && ev.first != null) ev.rail = true; }
+    }
+    for (let p = 0; p < PK.length; p++) {
+      const [px, py] = PK[p], d = Math.hypot(b.x - px, b.y - py);
+      const out = b.x < -R * 1.4 || b.x > W + R * 1.4 || b.y < -R * 1.4 || b.y > H + R * 1.4;
+      if (d < t.pr || (out && d < 4.5)) { b.in = true; b.vx = b.vy = 0; b.pocket = p; if (ev) ev.pots.push({ n: b.n, p }); break; }
+    }
+    if (!b.in && (b.x < -4 || b.x > W + 4 || b.y < -4 || b.y > H + 4)) { // safety net: never lose a ball off the table
+      let best = 0, bd = 1e9; PK.forEach(([px, py], i) => { const d = Math.hypot(b.x - px, b.y - py); if (d < bd) { bd = d; best = i; } });
+      b.in = true; b.vx = b.vy = 0; b.pocket = best; if (ev) ev.pots.push({ n: b.n, p: best });
+    }
+  }
+}
+const moving = balls => balls.some(b => !b.in && (b.vx || b.vy));
+function dtFor(balls) { let m = 0; for (const b of balls) if (!b.in) m = Math.max(m, Math.abs(b.vx), Math.abs(b.vy)); return Math.min(1 / 240, .35 / Math.max(1, m)); }
+function newEv(dir, spin) { return { first: null, rail: false, pots: [], shotDir: dir, cueSpin: spin ? spin.x : 0, rails: 0 }; }
+function strike(balls, ang, power, spin) { const c = balls[0], v = MAXV * Math.pow(power, 1.45) + 6; c.vx = Math.cos(ang) * v; c.vy = Math.sin(ang) * v; }
+function simulate(balls, ang, power, spin, t) { // run to rest without drawing (AI and tests)
+  const bs = balls.map(b => Object.assign({}, b)), ev = newEv([Math.cos(ang), Math.sin(ang)], spin);
+  strike(bs, ang, power, spin); let time = 0;
+  while (moving(bs) && time < 40) { const dt = dtFor(bs); step(bs, dt, ev, t || T, spin); time += dt; }
+  return { balls: bs, ev };
+}
+
+// ---------- rules ----------
+const isSolid = n => n >= 1 && n <= 7, isStripe = n => n >= 9 && n <= 15;
+function groupOf(n) { return isSolid(n) ? 'solids' : isStripe(n) ? 'stripes' : null; }
+function lowest() { const l = live().filter(b => b.n > 0).map(b => b.n); return l.length ? Math.min(...l) : null; }
+function myGroupLeft(p, balls) { const g = G.groups[p]; if (!g) return 7; return (balls || G.balls).filter(b => !b.in && groupOf(b.n) === g).length; }
+function legalTargets(p, balls) { // which balls the shooter may hit first
+  balls = balls || G.balls; const lv = balls.filter(b => !b.in && b.n > 0);
+  if (RU.game === 'practice') return lv.map(b => b.n);
+  if (RU.game !== '8ball') { const lo = Math.min(...lv.map(b => b.n)); return [lo]; }
+  const g = G.groups[p];
+  if (!g) return lv.filter(b => b.n !== 8).map(b => b.n);
+  const mine = lv.filter(b => groupOf(b.n) === g).map(b => b.n);
+  return mine.length ? mine : [8];
+}
+function judge(ev, shooter) { // returns { foul, reason, cont, win, lose, assign }
+  const pots = ev.pots.map(x => x.n), scratch = pots.includes(0), objPots = pots.filter(n => n > 0);
+  const out = { foul: false, reason: '', cont: false, win: false, lose: false, assign: null, spot: [] };
+  if (RU.game === 'practice') { out.cont = true; if (scratch) out.reason = 'Scratch — cue ball back in hand.'; return out; }
+  const targets = G._targetsAtShot;
+  if (ev.first == null) { out.foul = true; out.reason = 'No ball was hit.'; }
+  else if (!targets.includes(ev.first)) { out.foul = true; out.reason = RU.game === '8ball' ? `Wrong ball first (hit the ${ev.first}).` : `You must hit the ${targets[0]} first.`; }
+  else if (!objPots.length && !ev.rail && !G.isBreak) { out.foul = true; out.reason = 'No ball reached a rail after contact.'; }
+  if (scratch) { out.foul = true; out.reason = 'Scratch!'; }
+  const money = moneyBall();
+  if (RU.game === '8ball') {
+    if (pots.includes(8)) {
+      if (G.isBreak && !scratch) { if (RU.eightBreak === 'win') { out.win = true; out.reason = '8 on the break!'; return out; } out.spot.push(8); }
+      else if (G.isBreak) { out.spot.push(8); }
+      else {
+        const cleared = G._clearedAtShot;
+        const calledOk = !RU.call || G.called == null || ev.pots.find(x => x.n === 8).p === G.called;
+        if (cleared && !out.foul && calledOk) { out.win = true; out.reason = 'Sank the 8 — rack!'; }
+        else { out.lose = true; out.reason = out.foul ? 'The 8 went down on a foul.' : !cleared ? 'The 8 went down early.' : 'The 8 went in the wrong pocket.'; }
+        return out;
+      }
+    }
+    if (!G.groups[shooter] && !out.foul && !G.isBreak) {
+      const firstPot = objPots.find(n => n !== 8); if (firstPot) out.assign = groupOf(firstPot);
+    }
+    const g = out.assign || G.groups[shooter];
+    if (!out.foul) out.cont = G.isBreak ? objPots.some(n => n !== 8) : g ? objPots.some(n => groupOf(n) === g) : objPots.some(n => n !== 8);
+  } else {
+    if (pots.includes(money)) { if (out.foul) out.spot.push(money); else { const calledOk = RU.game !== '10ball' || !RU.call || G.called == null || ev.pots.find(x => x.n === money).p === G.called; if (G.isBreak && RU.game === '10ball') out.spot.push(money); else if (calledOk) { out.win = true; out.reason = `Sank the ${money}!`; return out; } else out.spot.push(money); } }
+    if (!out.foul) out.cont = objPots.some(n => n !== money) || out.spot.length > 0 && objPots.length > 1;
+  }
+  return out;
+}
+function respot(n) { // place a ball back on the foot spot (or just behind it)
+  const b = G.balls.find(x => x.n === n); if (!b) return; b.in = false; b.vx = b.vy = 0; b.y = T.H / 2;
+  for (let x = T.W * .75; x < T.W - R; x += .25) { if (G.balls.every(o => o === b || o.in || Math.hypot(o.x - x, o.y - b.y) > 2 * R + .05)) { b.x = x; return; } }
+  b.x = T.W * .75;
+}
+
+// ---------- canvas & drawing ----------
+const root = $('view-pool');
+root.innerHTML = `
+<section class="col center" style="width:100%">
+  <div class="pl-room" id="pl-room">
+    <div class="pl-hud"><div class="pl-p" id="pl-p0"></div><div class="pl-mid"><b id="pl-race">Race to 3</b><small id="pl-game">8-Ball</small></div><div class="pl-p r" id="pl-p1"></div></div>
+    <div class="pl-stage" id="pl-stage"><canvas id="pl-cv" aria-label="Pool table" role="img"></canvas>
+      <div class="pl-power" id="pl-power" aria-label="Shot power — drag down and let go to shoot" role="slider" aria-valuemin="0" aria-valuemax="100" tabindex="0"><i id="pl-pfill"></i><span>POWER</span></div>
+      <div class="felt-msg hidden" id="pl-msg"></div></div>
+    <div class="pl-tray" id="pl-tray"></div>
+  </div>
+  <div class="pl-ctrl">
+    <button class="btn btn-sec" id="pl-left" aria-label="Aim left">◀</button>
+    <button class="btn btn-sec" id="pl-right" aria-label="Aim right">▶</button>
+    <div class="pl-spin" id="pl-spin" title="Spin: drag the dot — top = follow, bottom = draw, sides = English" aria-label="Cue ball spin"><i id="pl-spot"></i></div>
+    <label class="pl-pw">Power <input type="range" id="pl-pwr" min="5" max="100" value="55"></label>
+    <button class="btn btn-lux" id="pl-shoot">Shoot</button>
+    <span class="ptimer hidden" id="pl-timer"></span>
+  </div>
+  <div class="tiny muted" id="pl-tip" style="text-align:center;margin-top:6px">Drag on the table to aim · drag the power bar down and let go to shoot · ←/→ aim, Shift for fine, ↑/↓ power, Space shoots.</div>
+</section>
+<section class="col right">
+  <div class="card"><h4 style="margin:0 0 8px">Choose your room</h4><div class="pl-rooms" id="pl-rooms"></div></div>
+  <div class="card" style="margin-top:10px"><div class="row" style="justify-content:space-between;align-items:center"><h4 style="margin:0">Table</h4><span class="tiny muted" id="pl-rec"></span></div>
+    <div class="row" style="gap:6px;flex-wrap:wrap;margin-top:8px"><button class="btn btn-lux" id="pl-new">New match</button><button class="btn btn-sec" id="pl-rerack">Re-rack</button></div>
+    <div class="pl-log" id="pl-log" aria-live="polite"></div></div>
+  <div class="card" style="margin-top:10px"><div id="rules-pool"></div></div>
+</section>`;
+const cv = $('pl-cv'), ctx = cv.getContext('2d');
+let S = 10, cssW = 0, cssH = 0, tableImg = null, dpr = 1;
+function layout() {
+  const st = $('pl-stage'); const w = Math.max(280, Math.min(st.clientWidth || 800, 1100));
+  const TW = T.W + RAIL * 2, TH = T.H + RAIL * 2; S = w / TW; cssW = w; cssH = TH * S;
+  dpr = Math.min(2, window.devicePixelRatio || 1); cv.width = Math.round(cssW * dpr); cv.height = Math.round(cssH * dpr); cv.style.width = cssW + 'px'; cv.style.height = cssH + 'px';
+  tableImg = paintTable(); draw();
+}
+const X = x => (x + RAIL) * S, Y = y => (y + RAIL) * S;
+function paintTable() {
+  const c = document.createElement('canvas'); c.width = cv.width; c.height = cv.height; const g = c.getContext('2d'); g.scale(dpr, dpr);
+  const W = T.W, H = T.H;
+  // frame / rails
+  const rg = g.createLinearGradient(0, 0, 0, cssH); rg.addColorStop(0, T.rail[0]); rg.addColorStop(.5, T.rail[1]); rg.addColorStop(1, T.rail[0]);
+  rr(g, 0, 0, cssW, cssH, 4 * S); g.fillStyle = rg; g.fill();
+  // wood grain
+  g.save(); rr(g, 0, 0, cssW, cssH, 4 * S); g.clip(); g.globalAlpha = .08; for (let i = 0; i < 60; i++) { g.strokeStyle = i % 2 ? '#000' : '#fff'; g.lineWidth = rnd(.5, 1.6); g.beginPath(); const y = rnd(0, cssH); g.moveTo(0, y); g.bezierCurveTo(cssW * .3, y + rnd(-6, 6), cssW * .7, y + rnd(-6, 6), cssW, y + rnd(-4, 4)); g.stroke(); } g.restore();
+  // inner bevel
+  g.strokeStyle = 'rgba(255,255,255,.12)'; g.lineWidth = 1.5; rr(g, S * 1.2, S * 1.2, cssW - S * 2.4, cssH - S * 2.4, 3 * S); g.stroke();
+  // cushion band + cloth
+  const cx0 = X(-1.4), cy0 = Y(-1.4), cw = (W + 2.8) * S, ch = (H + 2.8) * S;
+  g.fillStyle = T.cushion; g.fillRect(cx0, cy0, cw, ch);
+  const cg = g.createRadialGradient(X(W / 2), Y(H / 2), 10, X(W / 2), Y(H / 2), cw * .62); cg.addColorStop(0, T.cloth[0]); cg.addColorStop(1, T.cloth[1]);
+  g.fillStyle = cg; g.fillRect(X(0), Y(0), W * S, H * S);
+  // cushion noses as darker strips with highlight
+  g.fillStyle = 'rgba(0,0,0,.25)'; g.fillRect(X(-1.4), Y(-1.4), cw, 1.4 * S * .5);
+  // cloth nap texture
+  g.save(); g.beginPath(); g.rect(X(-1.4), Y(-1.4), cw, ch); g.clip(); g.globalAlpha = .05; for (let i = 0; i < 2600; i++) { g.fillStyle = Math.random() < .5 ? '#fff' : '#000'; g.fillRect(cx0 + Math.random() * cw, cy0 + Math.random() * ch, 1, 1); } g.restore();
+  // head string & spots
+  g.strokeStyle = 'rgba(255,255,255,.13)'; g.setLineDash([4, 5]); g.beginPath(); g.moveTo(X(W / 4), Y(0)); g.lineTo(X(W / 4), Y(H)); g.stroke(); g.setLineDash([]);
+  [[W * .75, H / 2], [W / 4, H / 2]].forEach(([x, y]) => { g.fillStyle = 'rgba(255,255,255,.35)'; g.beginPath(); g.arc(X(x), Y(y), Math.max(1.5, S * .28), 0, 7); g.fill(); });
+  // pockets: dark holes with leather drops and mouth cut-outs in the cushion
+  pockets().forEach(([px, py], i) => {
+    const side = i === 1 || i === 4, r = (side ? T.SM * .98 : T.CM * .83) * S;
+    g.fillStyle = T.leather; g.beginPath(); g.arc(X(px), Y(py), r * 1.32, 0, 7); g.fill();
+    const pg = g.createRadialGradient(X(px), Y(py), 1, X(px), Y(py), r); pg.addColorStop(0, '#000'); pg.addColorStop(.85, T.pocket); pg.addColorStop(1, '#222'); g.fillStyle = pg; g.beginPath(); g.arc(X(px), Y(py), r, 0, 7); g.fill();
+  });
+  // diamonds (sights)
+  g.fillStyle = T.sight; const dm = (x, y) => { g.save(); g.translate(x, y); g.rotate(Math.PI / 4); g.fillRect(-S * .32, -S * .32, S * .64, S * .64); g.restore(); };
+  for (let k = 1; k < 8; k++) { if (k === 4) continue; dm(X(W * k / 8), Y(-RAIL * .55)); dm(X(W * k / 8), Y(H + RAIL * .55)); }
+  for (let k = 1; k < 4; k++) { dm(X(-RAIL * .55), Y(H * k / 4)); dm(X(W + RAIL * .55), Y(H * k / 4)); }
+  // brand plate
+  g.fillStyle = 'rgba(244,200,106,.75)'; g.font = `700 ${Math.max(8, S * 1.5)}px Cinzel, Georgia, serif`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('McLEARN', X(W / 2), Y(H + RAIL * .55));
+  return c;
+}
+function rr(g, x, y, w, h, r) { g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r); g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath(); }
+function drawBall(b, scale) {
+  const x = X(b.x), y = Y(b.y), r = R * S * (scale || 1);
+  ctx.fillStyle = 'rgba(0,0,0,.35)'; ctx.beginPath(); ctx.ellipse(x + r * .28, y + r * .34, r * 1.02, r * .9, 0, 0, 7); ctx.fill();
+  ctx.save(); ctx.beginPath(); ctx.arc(x, y, r, 0, 7); ctx.clip();
+  const stripe = b.n >= 9, base = stripe || b.n === 0 ? '#f7f3ea' : colorOf(b.n);
+  ctx.fillStyle = base; ctx.fillRect(x - r, y - r, 2 * r, 2 * r);
+  const ox = Math.cos(b.dir) * Math.sin(b.roll) * r * .55, oy = Math.sin(b.dir) * Math.sin(b.roll) * r * .55, front = Math.cos(b.roll) > -.25;
+  if (stripe) { ctx.save(); ctx.translate(x + ox * .6, y + oy * .6); ctx.rotate(b.dir + Math.PI / 2); ctx.fillStyle = colorOf(b.n); ctx.fillRect(-r * 2, -r * .62, r * 4, r * 1.24); ctx.restore(); }
+  if (b.n > 0 && front) { ctx.fillStyle = '#fbf8f0'; ctx.beginPath(); ctx.arc(x + ox, y + oy, r * .48, 0, 7); ctx.fill(); ctx.fillStyle = '#111'; ctx.font = `800 ${Math.max(6, r * .62)}px "Plus Jakarta Sans", Arial, sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(b.n, x + ox, y + oy + r * .03); }
+  if (b.n === 0) { ctx.fillStyle = 'rgba(200,30,40,.6)'; ctx.beginPath(); ctx.arc(x + ox, y + oy, r * .14, 0, 7); ctx.fill(); }
+  const sh = ctx.createRadialGradient(x - r * .38, y - r * .42, r * .05, x, y, r * 1.05); sh.addColorStop(0, 'rgba(255,255,255,.75)'); sh.addColorStop(.25, 'rgba(255,255,255,.12)'); sh.addColorStop(.7, 'rgba(0,0,0,0)'); sh.addColorStop(1, 'rgba(0,0,0,.45)');
+  ctx.fillStyle = sh; ctx.fillRect(x - r, y - r, 2 * r, 2 * r); ctx.restore();
+}
+function ray(from, ang) { // first ball hit along the aim, or the cushion
+  const dx = Math.cos(ang), dy = Math.sin(ang); let best = 1e9, hit = null;
+  for (const b of live()) { if (b.n === 0) continue; const fx = b.x - from.x, fy = b.y - from.y, t = fx * dx + fy * dy; if (t <= 0) continue; const p2 = fx * fx + fy * fy - t * t, rr2 = 4 * R * R; if (p2 > rr2) continue; const tt = t - Math.sqrt(rr2 - p2); if (tt < best) { best = tt; hit = b; } }
+  const tx = dx > 0 ? (T.W - R - from.x) / dx : dx < 0 ? (R - from.x) / dx : 1e9, ty = dy > 0 ? (T.H - R - from.y) / dy : dy < 0 ? (R - from.y) / dy : 1e9, tc = Math.min(tx, ty);
+  if (tc < best) return { t: tc, ball: null };
+  return { t: best, ball: hit };
+}
+let anim = null, frameT = 0, pottedFx = [];
+function draw() {
+  if (!tableImg) return;
+  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height); ctx.drawImage(tableImg, 0, 0); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  // called pocket marker
+  if (G.called != null && G.phase === 'aim') { const [px, py] = pockets()[G.called]; ctx.strokeStyle = '#f4c86a'; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(X(px), Y(py), T.CM * S, 0, 7); ctx.stroke(); }
+  // kitchen highlight while placing
+  if (G.inHand && G.kitchen && G.phase === 'aim' && !P[G.turn].ai) { ctx.fillStyle = 'rgba(255,255,255,.05)'; ctx.fillRect(X(0), Y(0), T.W / 4 * S, T.H * S); }
+  for (const b of G.balls) if (!b.in) drawBall(b);
+  pottedFx = pottedFx.filter(f => { f.t += 1; const k = 1 - f.t / 14; if (k <= 0) return false; drawBall(Object.assign({}, f.b, { x: f.b.x + (f.px - f.b.x) * (1 - k), y: f.b.y + (f.py - f.b.y) * (1 - k) }), k); return true; });
+  if (G.phase === 'aim' && !P[G.turn].ai && !G.over) aimOverlay();
+  if (G.phase === 'aim' && P[G.turn].ai && G.aiAim != null) cueStick(G.aiAim, G.aiPow || .5);
+  if (pottedFx.length && !anim) requestAnimationFrame(draw);
+}
+function aimOverlay() {
+  const c = cue(), a = G.aim, dx = Math.cos(a), dy = Math.sin(a), h = ray(c, a);
+  const len = RU.guide === 'off' ? 0 : RU.guide === 'short' ? Math.min(h.t, 14) : h.t * T.guideLen;
+  if (len > 0) {
+    ctx.strokeStyle = 'rgba(255,255,255,.75)'; ctx.lineWidth = 1.4; ctx.setLineDash([6, 5]); ctx.beginPath(); ctx.moveTo(X(c.x), Y(c.y)); ctx.lineTo(X(c.x + dx * Math.min(len, h.t)), Y(c.y + dy * Math.min(len, h.t))); ctx.stroke(); ctx.setLineDash([]);
+    if (h.ball && (RU.guide === 'full' || h.t <= 14)) {
+      const gx = c.x + dx * h.t, gy = c.y + dy * h.t, ok = legalTargets(G.turn).includes(h.ball.n);
+      ctx.strokeStyle = ok ? 'rgba(255,255,255,.9)' : 'rgba(255,90,90,.95)'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(X(gx), Y(gy), R * S, 0, 7); ctx.stroke();
+      if (RU.guide === 'full') {
+        const nx = h.ball.x - gx, ny = h.ball.y - gy, nl = Math.hypot(nx, ny) || 1, ux = nx / nl, uy = ny / nl, cut = dx * ux + dy * uy, L = 6 + 12 * cut;
+        ctx.strokeStyle = ok ? 'rgba(255,255,255,.85)' : 'rgba(255,90,90,.85)'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(X(h.ball.x), Y(h.ball.y)); ctx.lineTo(X(h.ball.x + ux * L), Y(h.ball.y + uy * L)); ctx.stroke();
+        const tx = dx - ux * cut, ty = dy - uy * cut, tl = Math.hypot(tx, ty); if (tl > .05) { ctx.strokeStyle = 'rgba(180,220,255,.55)'; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(X(gx), Y(gy)); ctx.lineTo(X(gx + tx / tl * 6 * (1 - cut + .2)), Y(gy + ty / tl * 6 * (1 - cut + .2))); ctx.stroke(); }
+      }
+    }
+  }
+  if (G.inHand) { ctx.strokeStyle = 'rgba(244,200,106,.9)'; ctx.lineWidth = 2; ctx.setLineDash([3, 3]); ctx.beginPath(); ctx.arc(X(c.x), Y(c.y), R * S * 1.6, 0, 7); ctx.stroke(); ctx.setLineDash([]); }
+  cueStick(a, G.drag ? G.dragPow : G.power);
+}
+function cueStick(a, pw) {
+  const c = cue(), dx = Math.cos(a), dy = Math.sin(a), back = R * 1.6 + pw * 9, L = 58;
+  const x1 = X(c.x - dx * back), y1 = Y(c.y - dy * back), x2 = X(c.x - dx * (back + L)), y2 = Y(c.y - dy * (back + L));
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = 'rgba(0,0,0,.35)'; ctx.lineWidth = S * .9; ctx.beginPath(); ctx.moveTo(x1 + 6, y1 + 8); ctx.lineTo(x2 + 6, y2 + 8); ctx.stroke();
+  const g = ctx.createLinearGradient(x1, y1, x2, y2); g.addColorStop(0, '#f1f4f7'); g.addColorStop(.02, '#e9dcc0'); g.addColorStop(.55, '#d7b77c'); g.addColorStop(.62, '#2b1208'); g.addColorStop(.7, '#7a1f22'); g.addColorStop(.78, '#2b1208'); g.addColorStop(1, '#120603');
+  ctx.strokeStyle = g; ctx.lineWidth = S * .62; ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+  ctx.strokeStyle = '#3b6fb0'; ctx.lineWidth = S * .55; ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(X(c.x - dx * (back + .35)), Y(c.y - dy * (back + .35))); ctx.stroke(); ctx.lineCap = 'butt';
+}
+
+// ---------- running a shot ----------
+function play(ang, power, spin) {
+  return new Promise(resolve => {
+    const ev = newEv([Math.cos(ang), Math.sin(ang)], spin);
+    G._targetsAtShot = legalTargets(G.turn); G._clearedAtShot = RU.game === '8ball' && G.groups[G.turn] && myGroupLeft(G.turn) === 0;
+    strike(G.balls, ang, power, spin); G.phase = 'moving'; tmr.stop(); SH.Sound.play('move');
+    const done = () => { anim = null; draw(); resolve(ev); };
+    if (G.fast) { let time = 0; while (moving(G.balls) && time < 40) { const dt = dtFor(G.balls); step(G.balls, dt, ev, T, spin); time += dt; } return done(); }
+    let last = performance.now(), seen = 0, potSeen = 0;
+    const tick = now => {
+      let budget = Math.min(.05, (now - last) / 1000) * 1.35; last = now;
+      while (budget > 0 && moving(G.balls)) { const dt = Math.min(budget, dtFor(G.balls)); step(G.balls, dt, ev, T, spin); budget -= dt; }
+      if ((ev.clicks || 0) > seen) { seen = ev.clicks; if (!G.fast) SH.Sound.play(ev.hard > 120 ? 'capture' : 'move'); }
+      while (ev.pots.length > potSeen) { const pt = ev.pots[potSeen++], b = G.balls.find(x => x.n === pt.n), [px, py] = pockets()[pt.p]; pottedFx.push({ b: Object.assign({}, b, { in: false }), px, py, t: 0 }); SH.Sound.play(pt.n === 0 ? 'bad' : 'good'); SH.haptic && SH.haptic(12); }
+      draw();
+      if (moving(G.balls)) anim = requestAnimationFrame(tick); else setTimeout(done, 120);
+    };
+    anim = requestAnimationFrame(tick);
+  });
+}
+async function shoot(ang, power, spin) {
+  if (G.phase !== 'aim' || G.over) return;
+  if (G.needCall && G.called == null && !P[G.turn].ai) { flash('Call your pocket first — tap the pocket the money ball goes in.'); return; }
+  const shooter = G.turn, tok = G.token; G.shotNo++;
+  const ev = await play(ang, power, spin); if (tok !== G.token) return;
+  resolveShot(ev, shooter);
+}
+function resolveShot(ev, shooter) {
+  const r = judge(ev, shooter), opp = 1 - shooter, name = P[shooter].name;
+  ev.pots.forEach(x => { if (x.n > 0) G.potted.push({ n: x.n, by: shooter }); });
+  if (r.assign) { G.groups[shooter] = r.assign; G.groups[opp] = r.assign === 'solids' ? 'stripes' : 'solids'; log(`${name} ${shooter === 0 && !P[1].ai ? '' : ''}takes <b>${r.assign}</b>.`); }
+  r.spot.forEach(n => { respot(n); log(`The ${n} is spotted.`); });
+  G.called = null; const wasBreak = G.isBreak; G.isBreak = false;
+  if (r.win || r.lose) return endRack(r.win ? shooter : opp, r.reason);
+  if (RU.game === 'practice') { if (ev.pots.some(x => x.n === 0)) { G.inHand = true; G.kitchen = false; placeCue(); } else G.inHand = false; if (!live().some(b => b.n > 0)) { log('Table cleared! Racking again.'); setTimeout(() => newRack(), 900); return; } return nextTurn(shooter, ev.pots.filter(x => x.n > 0).length ? 'Nice shot.' : ''); }
+  if (r.foul) {
+    G.fouls[shooter]++;
+    if (RU.threeFoul && RU.game !== '8ball' && G.fouls[shooter] >= 3) return endRack(opp, `${name} fouled three times in a row.`);
+    if (ev.pots.some(x => x.n === 0) || true) { G.inHand = true; G.kitchen = RU.bih === 'kitchen'; placeCue(); }
+    log(`<span class="bad">Foul</span> — ${r.reason} Ball in hand for ${P[opp].name}.`); SH.Sound.play('bad');
+    return nextTurn(opp, `Foul: ${r.reason} Ball in hand.`);
+  }
+  G.fouls[shooter] = 0; G.inHand = false;
+  const sunk = ev.pots.filter(x => x.n > 0).map(x => x.n);
+  if (sunk.length) log(`${name} sinks ${sunk.map(n => `<span class="pl-chip" style="--c:${colorOf(n)}">${n}</span>`).join(' ')}${wasBreak ? ' on the break' : ''}.`);
+  if (r.cont) return nextTurn(shooter, '');
+  return nextTurn(opp, wasBreak && !sunk.length ? '' : '');
+}
+function placeCue() { // put the cue ball somewhere legal by default
+  const c = cue(); c.in = false; c.vx = c.vy = 0;
+  const xs = G.kitchen ? [T.W * .2, T.W * .15, T.W * .1] : [T.W * .25, T.W * .2, T.W * .5, T.W * .35];
+  for (const x of xs) for (const y of [T.H / 2, T.H * .35, T.H * .65, T.H * .25, T.H * .75]) if (validSpot(x, y)) { c.x = x; c.y = y; return; }
+}
+function validSpot(x, y) { if (x < R || x > T.W - R || y < R || y > T.H - R) return false; if (G.kitchen && x > T.W / 4) return false; return G.balls.every(b => b.n === 0 || b.in || Math.hypot(b.x - x, b.y - y) > 2 * R + .05); }
+function nextTurn(p, note) {
+  G.turn = p; G.phase = 'aim'; G.aiAim = null;
+  const money = moneyBall();
+  G.needCall = RU.call && ((RU.game === '8ball' && G.groups[p] && myGroupLeft(p) === 0) || (RU.game === '10ball' && lowest() === 10));
+  if (note) flash(note);
+  hud(); aimAtSomething(); draw();
+  if (P[p].ai) setTimeout(() => aiTurn(), G.fast ? 0 : 650);
+  else if (RU.timer && !G.fast) tmr.start(RU.timer, $('pl-timer'), () => { if (G.phase === 'aim' && !P[G.turn].ai) { log('<span class="bad">Shot clock!</span>'); G._targetsAtShot = legalTargets(G.turn); G.isBreak = false; resolveShot({ first: null, rail: false, pots: [] }, G.turn); } });
+  void money;
+}
+function aimAtSomething() { const c = cue(), t = legalTargets(G.turn).map(n => G.balls.find(b => b.n === n)).filter(b => b && !b.in)[0]; if (t) G.aim = Math.atan2(t.y - c.y, t.x - c.x); }
+function endRack(winner, why) {
+  G.phase = 'rackover'; tmr.stop(); G.racks[winner]++; log(`<b>${P[winner].name} wins the rack</b> — ${why}`);
+  const race = +RU.race;
+  if (RU.game !== 'practice' && G.racks[winner] >= race) return endMatch(winner);
+  flash(`${P[winner].name} wins the rack! ${why}`);
+  G.breaker = RU.breakRule === 'winner' ? winner : 1 - G.breaker;
+  hud(); setTimeout(() => { if (G.phase === 'rackover') newRack(); }, G.fast ? 0 : 2200);
+}
+function endMatch(winner) {
+  G.over = true; G.phase = 'over'; hud();
+  const youWin = winner === 0, vsAI = P[1].ai;
+  if (vsAI) { const res = youWin ? 'w' : 'l'; G.stats[res === 'w' ? 'w' : 'l']++; LS.set('pool-stats', G.stats); if (SH.onResult) SH.onResult('pool', res, { pro: McRules.mode('pool') === 'pro' }); }
+  flash(`${P[winner].name} wins the match ${G.racks[winner]}–${G.racks[1 - winner]}! ${youWin ? '🏆' : ''}`, true);
+  log(`<b>Match over.</b> ${P[winner].name} wins ${G.racks[winner]}–${G.racks[1 - winner]}.`);
+  if (youWin && !G.fast) SH.Sound.play('victory');
+}
+function newRack() {
+  G.token++; G.balls = rack(); G.groups = [null, null]; G.potted = []; G.called = null; G.fouls = [0, 0]; G.isBreak = RU.game !== 'practice';
+  G.inHand = true; G.kitchen = RU.game !== 'practice'; G.turn = G.breaker; G.phase = 'aim'; G.over = false; G.shotNo = 0;
+  hud(); aimAtSomething(); if (G.isBreak) G.aim = Math.atan2(T.H / 2 - cue().y, T.W * .75 - cue().x);
+  nextTurn(G.breaker, RU.game === 'practice' ? 'Practice — shoot anything.' : `${P[G.breaker].name} to break.`);
+}
+function newMatch() { RU = McRules.get('pool'); P = players(); G.racks = [0, 0]; G.breaker = 0; G.over = false; log('', true); newRack(); }
+
+// ---------- computer opponent ----------
+function lineClear(ax, ay, bx, by, balls, skip) {
+  const dx = bx - ax, dy = by - ay, L2 = dx * dx + dy * dy || 1;
+  for (const o of balls) { if (o.in || skip.includes(o.n)) continue; let t = ((o.x - ax) * dx + (o.y - ay) * dy) / L2; t = Math.max(0, Math.min(1, t)); if (Math.hypot(ax + dx * t - o.x, ay + dy * t - o.y) < 2 * R - .05) return false; }
+  return true;
+}
+function candidates(balls, p) {
+  const c = balls[0], out = [], tg = legalTargets(p, balls);
+  for (const n of tg) {
+    const b = balls.find(x => x.n === n); if (!b || b.in) continue;
+    pockets().forEach((_, pi) => {
+      const [ax, ay] = pocketAim(pi), dx = ax - b.x, dy = ay - b.y, d = Math.hypot(dx, dy), ux = dx / d, uy = dy / d;
+      const gx = b.x - ux * 2 * R, gy = b.y - uy * 2 * R, cx = gx - c.x, cy = gy - c.y, cd = Math.hypot(cx, cy); if (cd < .01) return;
+      const cut = Math.acos(Math.max(-1, Math.min(1, (cx * ux + cy * uy) / cd)));
+      if (cut > 1.35) return;
+      if ((pi === 1 || pi === 4) && Math.abs(uy) < .55) return; // side pockets need a steep angle
+      if (!lineClear(c.x, c.y, gx, gy, balls, [0, n]) || !lineClear(b.x, b.y, ax, ay, balls, [0, n])) return;
+      const score = d + cd * .35 + Math.pow(cut, 2) * 30;
+      const v = Math.sqrt(2 * 18 * (cd + d / Math.max(.25, Math.cos(cut)) ** 2)) + 30;
+      out.push({ n, pi, ang: Math.atan2(cy, cx), pow: Math.min(.95, Math.max(.16, Math.pow(v / MAXV, 1 / 1.45) * 1.08)), score });
+    });
+  }
+  return out.sort((a, b) => a.score - b.score);
+}
+function evalOutcome(sim, p, cand) { // how good is the table after this shot for player p
+  const { ev, balls } = sim, saved = { b: G.balls, g: G.groups.slice(), br: G.isBreak, t: G._targetsAtShot, cl: G._clearedAtShot };
+  G._targetsAtShot = legalTargets(p, G.balls); G._clearedAtShot = RU.game === '8ball' && G.groups[p] && myGroupLeft(p) === 0;
+  const r = judge(ev, p); G._targetsAtShot = saved.t; G._clearedAtShot = saved.cl;
+  if (r.win) return 1000; if (r.lose) return -1000; if (r.foul) return -300;
+  let s = r.cont ? 200 : -50; if (cand && ev.pots.some(x => x.n === cand.n)) s += 60;
+  return s;
+}
+async function aiTurn() {
+  if (G.phase !== 'aim' || !P[G.turn].ai || G.over) return;
+  const L = OPP[RU.opp] || OPP.hustler, p = G.turn, tok = G.token;
+  if (G.inHand) aiPlace(L);
+  let best = null;
+  if (G.isBreak) best = { ang: Math.atan2(T.H / 2 - cue().y, T.W * .75 - R * 2 - cue().x) + gauss() * .004, pow: .97, n: null, pi: null };
+  else {
+    const cs = candidates(G.balls, p).slice(0, L.sims + 2);
+    let bestS = -1e9;
+    for (const cd of cs) {
+      for (const pmul of [1, .82, 1.18].slice(0, L.lookahead ? 3 : 1)) {
+        const pw = Math.min(.97, cd.pow * pmul), sim = simulate(G.balls, cd.ang, pw, { x: 0, y: 0 }, T);
+        let s = evalOutcome(sim, p, cd) - cd.score * .5;
+        if (L.lookahead && s > 0 && s < 1000) { const save = G.balls; G.balls = sim.balls; if (cd && sim.ev.pots.some(x => x.n === cd.n)) { const nx = candidates(sim.balls, p).length; s += Math.min(nx, 4) * 25; } G.balls = save; }
+        if (s > bestS) { bestS = s; best = Object.assign({}, cd, { pow: pw }); }
+      }
+    }
+    if (!best || bestS < -200) { // safety: just make a legal hit
+      const tg = legalTargets(p).map(n => G.balls.find(b => b.n === n)).filter(b => b && !b.in), c = cue();
+      let pick = tg.find(b => lineClear(c.x, c.y, b.x, b.y, G.balls, [0, b.n])) || tg[0];
+      if (pick) best = { ang: Math.atan2(pick.y - c.y, pick.x - c.x), pow: .42, n: pick.n, pi: null };
+      else best = { ang: rnd(0, 6.28), pow: .4 };
+    }
+  }
+  if (G.needCall && best.pi != null) G.called = best.pi;
+  const noise = (L.noise * Math.PI / 180) * gauss();
+  G.aiAim = best.ang; G.aiPow = best.pow; if (!G.fast) { for (let k = 0; k < 18; k++) { G.aiPow = best.pow * (k / 18); draw(); await wait(30); if (tok !== G.token) return; } await wait(220); }
+  if (tok !== G.token || G.phase !== 'aim') return;
+  G.aiAim = null; shoot(best.ang + noise, Math.max(.12, best.pow * (1 + gauss() * L.noise * .015)), { x: 0, y: 0 });
+}
+function aiPlace(L) {
+  const c = cue(); let best = null, bs = 1e9;
+  for (let i = 0; i < 40; i++) {
+    const x = G.kitchen ? rnd(R + 1, T.W / 4 - .2) : rnd(R + 1, T.W - R - 1), y = rnd(R + 1, T.H - R - 1);
+    if (!validSpot(x, y)) continue; c.x = x; c.y = y; const cs = candidates(G.balls, G.turn); const s = cs.length ? cs[0].score : 500;
+    if (s < bs) { bs = s; best = [x, y]; }
+  }
+  if (best) { c.x = best[0]; c.y = best[1]; } else placeCue();
+  void L;
+}
+
+// ---------- HUD ----------
+function hud() {
+  const ballChip = n => `<span class="pl-chip ${n >= 9 ? 'st' : ''}" style="--c:${colorOf(n)}">${n}</span>`;
+  [0, 1].forEach(i => {
+    const g = G.groups[i], left = RU.game === '8ball' && g ? G.balls.filter(b => !b.in && groupOf(b.n) === g).map(b => b.n) : [];
+    $('pl-p' + i).innerHTML = `${SH.avatar ? SH.avatar(P[i].name) : ''}<div><b>${P[i].name}</b><small>${RU.game === '8ball' ? (g ? (g === 'solids' ? 'Solids' : 'Stripes') + ` · ${left.length} left` : 'Open table') : RU.game === 'practice' ? 'Practice' : `Hit the ${lowest() || '—'}`}</small><div class="pl-left">${left.map(ballChip).join('')}</div></div><span class="pl-racks">${G.racks[i]}</span>`;
+    $('pl-p' + i).classList.toggle('on', G.turn === i && !G.over);
+  });
+  $('pl-race').textContent = RU.game === 'practice' ? 'Practice' : `Race to ${RU.race}`;
+  $('pl-game').textContent = { '8ball': '8-Ball', '9ball': '9-Ball', '10ball': '10-Ball', practice: 'Free table' }[RU.game] + ' · ' + T.name;
+  $('pl-tray').innerHTML = G.potted.map(x => ballChip(x.n)).join('');
+  $('pl-rec').textContent = `Record ${G.stats.w}–${G.stats.l}`;
+  const yours = !P[G.turn].ai && G.phase === 'aim' && !G.over;
+  ['pl-shoot', 'pl-left', 'pl-right'].forEach(id => { $(id).disabled = !yours; });
+  $('pl-room').classList.toggle('mine', yours);
+  let tip = '';
+  if (yours && G.inHand) tip = G.kitchen ? 'Ball in hand — drag the cue ball anywhere behind the line (the kitchen).' : 'Ball in hand — drag the cue ball anywhere, then aim.';
+  else if (yours && G.needCall) tip = G.called == null ? 'Money ball: tap the pocket you’re calling, then shoot.' : 'Pocket called. Aim and shoot.';
+  else if (yours) tip = 'Drag on the table to aim · pull the power bar down and let go to shoot.';
+  else if (G.phase === 'aim' && P[G.turn].ai) tip = `${P[G.turn].name} is lining up a shot…`;
+  $('pl-tip').textContent = tip || ' ';
+  document.querySelectorAll('.pl-room-btn').forEach(b => b.classList.toggle('on', b.dataset.room === G.room));
+}
+function flash(t, stay) { const m = $('pl-msg'); m.textContent = t; m.classList.remove('hidden'); clearTimeout(flash.t); if (!stay) flash.t = setTimeout(() => m.classList.add('hidden'), G.fast ? 0 : 2000); }
+function log(h, reset) { const el = $('pl-log'); if (reset) { el.innerHTML = ''; return; } if (!h) return; el.insertAdjacentHTML('afterbegin', `<div>${h}</div>`); while (el.children.length > 30) el.lastChild.remove(); }
+function setRoom(k) {
+  if (!ROOMS[k]) return; const changed = k !== G.room; G.room = k; T = ROOMS[k]; LS.set('pool-room', k);
+  $('pl-room').dataset.room = k; layout();
+  if (changed && G.balls.length) { if (G.shotNo > 1 && !G.over && RU.game !== 'practice') SH.toast(`${T.name} — re-racking on the new table`); newRack(); } hud();
+}
+
+// ---------- input ----------
+function toTable(e) { const r = cv.getBoundingClientRect(); return { x: (e.clientX - r.left) / S - RAIL, y: (e.clientY - r.top) / S - RAIL }; }
+let dragMode = null;
+cv.addEventListener('pointerdown', e => {
+  if (G.phase !== 'aim' || P[G.turn].ai || G.over) return; SH.Sound.unlock && SH.Sound.unlock();
+  const p = toTable(e), c = cue();
+  if (G.needCall) { const pk = pockets().findIndex(([px, py]) => Math.hypot(px - p.x, py - p.y) < 4.2); if (pk >= 0) { G.called = pk; hud(); draw(); return; } }
+  if (G.inHand && Math.hypot(p.x - c.x, p.y - c.y) < R * 2.6) dragMode = 'place'; else dragMode = 'aim';
+  cv.setPointerCapture(e.pointerId); move(e);
+});
+function move(e) {
+  if (!dragMode) return; const p = toTable(e), c = cue();
+  if (dragMode === 'place') { const x = Math.max(R, Math.min((G.kitchen ? T.W / 4 : T.W - R), p.x)), y = Math.max(R, Math.min(T.H - R, p.y)); if (validSpot(x, y)) { c.x = x; c.y = y; } }
+  else if (Math.hypot(p.x - c.x, p.y - c.y) > .5) G.aim = Math.atan2(p.y - c.y, p.x - c.x);
+  draw();
+}
+cv.addEventListener('pointermove', move);
+cv.addEventListener('pointerup', () => { dragMode = null; });
+cv.addEventListener('pointercancel', () => { dragMode = null; });
+// power bar: drag down, release to shoot
+const pb = $('pl-power');
+function pbSet(e) { const r = pb.getBoundingClientRect(); G.dragPow = Math.max(0, Math.min(1, (e.clientY - r.top) / r.height)); $('pl-pfill').style.height = (G.dragPow * 100) + '%'; draw(); }
+pb.addEventListener('pointerdown', e => { if (G.phase !== 'aim' || P[G.turn].ai || G.over) return; G.drag = true; pb.setPointerCapture(e.pointerId); pbSet(e); });
+pb.addEventListener('pointermove', e => { if (G.drag) pbSet(e); });
+pb.addEventListener('pointerup', () => { if (!G.drag) return; G.drag = false; const pw = G.dragPow; $('pl-pfill').style.height = '0%'; if (pw > .04) { G.power = pw; $('pl-pwr').value = Math.round(pw * 100); shoot(G.aim, pw, Object.assign({}, G.spin)); } else draw(); });
+pb.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); shoot(G.aim, G.power, Object.assign({}, G.spin)); } });
+$('pl-pwr').oninput = e => { G.power = +e.target.value / 100; draw(); };
+$('pl-shoot').onclick = () => { SH.Sound.unlock && SH.Sound.unlock(); shoot(G.aim, G.power, Object.assign({}, G.spin)); };
+const nudge = d => { if (G.phase === 'aim' && !P[G.turn].ai) { G.aim += d; draw(); } };
+$('pl-left').onclick = () => nudge(-.004); $('pl-right').onclick = () => nudge(.004);
+const spinEl = $('pl-spin');
+function setSpin(e) { const r = spinEl.getBoundingClientRect(); let x = (e.clientX - r.left) / r.width * 2 - 1, y = (e.clientY - r.top) / r.height * 2 - 1; const m = Math.hypot(x, y); if (m > .8) { x *= .8 / m; y *= .8 / m; } G.spin = { x: +x.toFixed(2), y: +(-y).toFixed(2) }; $('pl-spot').style.left = (50 + x * 50) + '%'; $('pl-spot').style.top = (50 + y * 50) + '%'; }
+spinEl.addEventListener('pointerdown', e => { spinEl.setPointerCapture(e.pointerId); setSpin(e); spinEl.onpointermove = setSpin; });
+spinEl.addEventListener('pointerup', () => { spinEl.onpointermove = null; });
+spinEl.addEventListener('dblclick', () => { G.spin = { x: 0, y: 0 }; $('pl-spot').style.left = '50%'; $('pl-spot').style.top = '50%'; });
+document.addEventListener('keydown', e => {
+  if (root.classList.contains('hidden') || /INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName) || G.phase !== 'aim' || P[G.turn].ai) return;
+  const f = e.shiftKey ? .0015 : .02;
+  if (e.key === 'ArrowLeft') { e.preventDefault(); nudge(-f); } else if (e.key === 'ArrowRight') { e.preventDefault(); nudge(f); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); G.power = Math.min(1, G.power + .05); $('pl-pwr').value = Math.round(G.power * 100); draw(); }
+  else if (e.key === 'ArrowDown') { e.preventDefault(); G.power = Math.max(.05, G.power - .05); $('pl-pwr').value = Math.round(G.power * 100); draw(); }
+  else if (e.key === ' ' && document.activeElement !== pb) { e.preventDefault(); shoot(G.aim, G.power, Object.assign({}, G.spin)); }
+});
+$('pl-rooms').innerHTML = Object.entries(ROOMS).map(([k, r]) => `<button class="pl-room-btn" data-room="${k}" style="--c1:${r.cloth[0]};--c2:${r.rail[0]}"><i></i><b>${r.name}</b><small>${r.sub}</small></button>`).join('');
+$('pl-rooms').onclick = e => { const b = e.target.closest('[data-room]'); if (b) setRoom(b.dataset.room); };
+$('pl-new').onclick = newMatch;
+$('pl-rerack').onclick = () => { if (G.over || RU.game === 'practice' || G.shotNo <= 1 || confirm('Re-rack and replay this rack?')) newRack(); };
+window.addEventListener('resize', () => { if (!root.classList.contains('hidden')) layout(); });
+McRules.mount('pool', $('rules-pool'));
+McRules.onChange('pool', () => { const before = RU; RU = McRules.get('pool'); P = players(); if (before.game !== RU.game || before.opp !== RU.opp || !G.shotNo || G.over) newMatch(); else { hud(); draw(); SH.toast('New rules apply now'); } });
+SH.games.pool = {
+  onShow() { $('pl-room').dataset.room = G.room; if (matchMedia('(orientation: portrait) and (max-width: 700px)').matches && !LS.get('pool-rot', false)) { LS.set('pool-rot', true); setTimeout(() => SH.toast('Tip: turn your phone sideways for a bigger table'), 900); } requestAnimationFrame(() => { layout(); if (!G.balls.length) newMatch(); else { hud(); draw(); } }); },
+  _G: G, _shoot: shoot, _newMatch: newMatch, _setRoom: setRoom, _sim: simulate, _cands: candidates, _ai: aiTurn,
+};
+})();
+
 </script>
 <script>
 // McLearn Challenge Center question bank. Each item: [question, [4 options], correctIndex, why, difficulty 1-3]
@@ -9971,7 +10595,7 @@ const MORE2 = {
     ['McLearn Media’s portal for previewing its novels is called the…', ['McLearn Library', 'Reading Room', 'Book Vault', 'Story Hub'], 1, 'The McLearn Media Reading Room.', 2],
     ['“Grace Over the Grind” is a McLearn…', ['Video game', 'Faith-based study resource', 'Workout app', 'Cooking show'], 1, 'A faith-based study resource.', 2],
     ['“Faith, Your Way” is a McLearn platform for…', ['Sports stats', 'Spiritual motivation and community', 'Tax filing', 'Car repair'], 1, 'An interfaith motivation and community platform.', 2],
-    ['How many games are in the McLearn Arena?', ['12', '16', '20', '30'], 2, 'Twenty games and counting.', 1],
+    ['How many games are in the McLearn Arena?', ['12', '16', '21', '30'], 2, 'Twenty-one games and counting.', 1],
     ['In McLearn Arena’s Booray, a player who takes no tricks after playing is…', ['Safe', '“Booray’d” and pays the pot', 'The winner', 'Out of the game forever'], 1, 'Getting booray’d means matching the pot.', 2],
     ['McLearn Bucks can be…', ['Bought with real money', 'Cashed out', 'Earned free by playing and answering questions', 'Traded for gift cards'], 2, 'They’re free and play-only.', 1],
   ],
@@ -10149,7 +10773,7 @@ function addXP(n, silent) {
 }
 function floatXP(n) { const el = document.createElement('div'); el.className = 'xpfloat'; el.textContent = `+${n} XP`; document.body.appendChild(el); setTimeout(() => el.remove(), 1400); }
 
-const GAME_NAMES = { roulette: 'Roulette', bourre: 'Booray', keno: 'Keno', bingo: 'Bingo', pluck: 'Pluck', dominoes: 'Dominoes', bidwhist: 'Biz Wiz', poker: "Hold'em", tonk: 'Tonk', gofish: 'Go Fish', war: 'I Declare War', showdown: 'Studio Showdown', mogul: 'Mega Media Mogul', pittypat: 'Pitty Pat', colorclash: 'Color Clash', 'blackjack-tourney': 'Blackjack Tournament', chess: 'Chess', checkers: 'Checkers', spades: 'Spades', blackjack: '21 · Blackjack', parcheesi: 'Parcheesi', academy: 'Chess Academy' };
+const GAME_NAMES = { pool: 'Pool', roulette: 'Roulette', bourre: 'Booray', keno: 'Keno', bingo: 'Bingo', pluck: 'Pluck', dominoes: 'Dominoes', bidwhist: 'Biz Wiz', poker: "Hold'em", tonk: 'Tonk', gofish: 'Go Fish', war: 'I Declare War', showdown: 'Studio Showdown', mogul: 'Mega Media Mogul', pittypat: 'Pitty Pat', colorclash: 'Color Clash', 'blackjack-tourney': 'Blackjack Tournament', chess: 'Chess', checkers: 'Checkers', spades: 'Spades', blackjack: '21 · Blackjack', parcheesi: 'Parcheesi', academy: 'Chess Academy' };
 SH.onResult = function (game, res, extra) {
   extra = extra || {};
   const g = P.games[game] = P.games[game] || { w: 0, l: 0, d: 0 };
@@ -11147,10 +11771,10 @@ if (meBody) new MutationObserver(() => { if (!meBody.querySelector('.cf-box') &&
 
 // ---- "What are you in the mood for?" — a plain, rules-based table finder ----
 const MOODS = [
-  ['🧠', 'Think it through', 'Strategy and planning', ['chess', 'checkers', 'dominoes', 'poker']],
+  ['🧠', 'Think it through', 'Strategy and planning', ['chess', 'pool', 'checkers', 'dominoes', 'poker']],
   ['🤝', 'Play with a partner', 'Team up and read your partner', ['spades', 'bidwhist', 'dominoes']],
   ['🏡', 'Family game night', 'Familiar, easy to explain', ['gofish', 'war', 'parcheesi', 'bingo', 'colorclash']],
-  ['⚡', 'Quick break', 'A few minutes, fast fun', ['showdown', 'war', 'blackjack', 'keno']],
+  ['⚡', 'Quick break', 'A few minutes, fast fun', ['pool', 'showdown', 'war', 'blackjack']],
   ['🎓', 'Learn something', 'Trivia, Party Mode and coaching', ['challenges']],
   ['✨', 'McLearn originals', 'Only at the McLearn Arena', ['mogul', 'showdown', 'bingo']],
 ];
@@ -11207,7 +11831,7 @@ bidwhist: {
   turn: ['54 cards (with Big and Little Jokers). Each player gets 12; 6 go to the kitty.', 'Bid how many books over six you’ll take, and say Uptown (high cards win), Downtown (low cards win) or No Trump. A bid of 3 means 9 books.', 'The winner takes the kitty, discards 6 (the kitty counts as your first book), and names trump.', 'Follow suit if you can; otherwise trump or throw off. Highest trump — or best card of the suit led — wins the book.'],
   win: ['Make your bid and score the books over six. Fall short and you lose that many points.', 'No Trump can count double. Taking all 13 books (a Boston) can win the game outright.'],
   keys: ['Bid buttons appear in the middle of the table. Tap cards to discard and to play.'],
-  tips: ['Bid on your long suit and your jokers.', 'Downtown hands want aces and low cards — the ace counts low.'],
+  tips: ['Bid on your long suit and your jokers.', 'Downtown: the ace is still top, then the lowest cards win — bid Downtown with a hand full of low cards.'],
 },
 dominoes: {
   goal: 'Be the first to play all your dominoes (bones) and score points; first to the target wins.',
@@ -11320,6 +11944,14 @@ blackjack: {
   win: ['Beat the dealer’s total, or win when the dealer busts. Blackjack (ace + 10 on the first two cards) pays 3 to 2 (or 6 to 5).', 'Tournament: 25 hands, 1,000 chips, best stack wins.'],
   keys: ['H = hit, S = stand, D = double, P = split, R = surrender, Enter = deal.'],
   tips: ['The strategy coach shows the mathematically best play for every hand.'],
+},
+pool: {
+  goal: 'Sink your balls and then the money ball before your opponent. Choose your room: Professional (9-ft tournament table, tight pockets), Pool Room (classic 8-ft hall table), Standard Online (clean table with a long aiming guide) or Southern Style (7-ft juke-joint bar box with roomy pockets).',
+  turn: ['Drag anywhere on the table to aim — the cue points from the cue ball toward your finger. ◀ ▶ fine-tune.', 'Pull the POWER bar down and let go to shoot (or set the Power slider and press Shoot).', 'Tap the spin ball for English: top = follow, bottom = draw (backspin), sides = side spin off the rails. Double-tap to reset.', 'The guide shows the ghost ball, where the object ball goes, and where the cue ball heads. Red means that ball isn’t legal to hit first.', 'After a foul you get ball in hand: drag the cue ball where you want it (behind the line in bar rules).'],
+  win: ['8-Ball: break, then claim solids (1–7) or stripes (9–15) with your first legal pot. Clear your group, then sink the 8. Sinking the 8 early, or scratching on it, loses the rack.', '9-Ball: always hit the lowest-numbered ball first. Anything that drops counts. Sink the 9 legally — even on a combo — to win.', '10-Ball: the same, but the 10 is spotted if it drops on the break; in Pro you must call the 10’s pocket.', 'Practice: a free table to work on shots — rack again when it’s clear.', 'Fouls: scratching, hitting the wrong ball first, hitting nothing, or no ball reaching a rail after contact. Your opponent gets ball in hand.', 'Win the race (1, 3, 5 or 7 racks) to win the match.'],
+  modes: [['vs the computer', 'Cousin Dre (rookie), Miss Loretta (hustler), Uncle Ray (shark) and Deacon Earl (pro) — each one aims and plans further ahead.'], ['Pass & Play', 'Two people share one device and take turns.'], ['Bar rules', 'Set Ball in hand to “Kitchen only” and 8 on the break to “Wins the rack” — the way it’s played at the juke joint.']],
+  keys: ['←/→ aim (hold Shift for fine aim), ↑/↓ power, Space shoots.', 'On a phone, turn it sideways for a bigger table.'],
+  tips: ['Aim at the ghost ball, not the object ball.', 'Use draw (bottom spin) to stop the cue ball from following into a pocket.', 'Play position: think about where the cue ball stops for your next shot.'],
 },
 challenges: {
   goal: 'Answer questions to earn free McLearn Bucks and climb the leaderboards.',
@@ -11448,13 +12080,14 @@ const GAMES = [
   { v: 'checkers', title: 'Checkers', sub: 'American rules, flying kings, three AI levels — in 3-D.', cats: ['board'], icon: 'checkers', h1: '#1c1c28', h2: '#4a4a70', stat: () => { const s = LS.get('ck-stats', { w: 0, l: 0, d: 0 }); return `${s.w}W ${s.l}L ${s.d}D`; }, keys: 'checkers draughts kings' },
   { v: 'parcheesi', title: 'Parcheesi', sub: 'Four players, three AI personalities, blockades and captures.', cats: ['board'], icon: 'parcheesi', h1: '#3d2412', h2: '#a5652a', stat: () => rec('pc-stats'), keys: 'parcheesi ludo pachisi sorry dice' },
   { v: 'gofish', title: 'Go Fish', sub: 'The family favorite. Ask, fish, and make your books.', cats: ['cards'], icon: 'gofish', h1: '#052f45', h2: '#1aa0c8', stat: () => rec('gf-stats'), keys: 'go fish kids family' },
+  { v: 'pool', title: 'McLearn Pool Room', sub: 'Real ball physics on four tables — Professional, Pool Room, Standard Online and Southern Style. 8, 9 and 10-Ball.', cats: ['board'], icon: 'pool', h1: '#0d3b24', h2: '#1e7a43', stat: () => rec('pool-stats'), keys: 'pool billiards 8 ball eight ball 9 ball nine ball 10 ball cue table pool hall southern juke joint bar box' },
   { v: 'war', title: 'I Declare War', sub: 'Classic War — plus a Pro Tactics mode where you pick your fighter.', cats: ['cards'], icon: 'war', h1: '#3b0b0b', h2: '#a02020', stat: () => rec('war-stats'), keys: 'war i declare war' },
   { v: 'blackjack', title: '21 · Blackjack', sub: 'The card game 21 on a real casino table. Practice chips, and a coach that grades every decision.', cats: ['casino'], icon: 'blackjack', h1: '#0f3a26', h2: '#22845a', stat: () => `Chips ${(LS.get('bj', { bank: 1000 }).bank).toLocaleString()}`, keys: '21 twenty-one twenty one blackjack card game casino' },
   { v: 'roulette', title: 'McLearn Roulette', sub: 'European or American wheel, a full betting layout and an odds coach. Practice chips only.', cats: ['casino'], icon: 'roulette', h1: '#3a0612', h2: '#b3264a', stat: () => `Chips ${(LS.get('rl', { bank: 1000 }).bank).toLocaleString()}`, keys: 'roulette wheel red black casino spin zero' },
   { v: 'keno', title: 'McLearn Keno', sub: 'Pick up to 10 numbers, watch 20 balls drop. Gold Ball doubles it. Practice credits only.', cats: ['casino'], icon: 'keno', h1: '#0d1a3a', h2: '#2e5fd0', stat: () => `Credits ${(LS.get('kn', { bank: 500 }).bank).toLocaleString()}`, keys: 'keno lottery numbers 80 balls lounge casino' },
   { v: 'poker', title: "Hold'em Poker", sub: 'Sit & Go tournament with practice chips and a live win-odds coach.', cats: ['casino'], icon: 'poker', h1: '#052c2a', h2: '#13806e', stat: () => { const s = LS.get('pk-stats', { w: 0, l: 0 }); return `${s.w} titles`; }, keys: 'poker holdem texas chips' }
 ];
-const TAG = { dominoes: 'Slam the bones.', chess: 'Think like a grandmaster.', spades: 'Bid it. Make it. Bag it.', bidwhist: 'Uptown, Downtown — your call.', mogul: 'Own the whole catalog.', showdown: 'Write it. Sing it. Own it.', bingo: 'Daub it. Shout it. BINGO!', keno: 'Pick your spots. Watch them drop.', bourre: 'Take a trick or get boorayed.', roulette: 'Place your bets. Watch it spin.', colorclash: 'Match it or draw it.', tonk: 'Drop it like it’s low.', pittypat: 'Pair it up, Pitty Pat!', checkers: 'King me.', parcheesi: 'Race every pawn home.', gofish: 'Ask, fish, book it.', war: 'I — DE — CLARE — WAR!', blackjack: 'Get to 21 — beat the dealer.', poker: 'Last stack standing.' };
+const TAG = { pool: 'Rack ’em. Run the table.', dominoes: 'Slam the bones.', chess: 'Think like a grandmaster.', spades: 'Bid it. Make it. Bag it.', bidwhist: 'Uptown, Downtown — your call.', mogul: 'Own the whole catalog.', showdown: 'Write it. Sing it. Own it.', bingo: 'Daub it. Shout it. BINGO!', keno: 'Pick your spots. Watch them drop.', bourre: 'Take a trick or get boorayed.', roulette: 'Place your bets. Watch it spin.', colorclash: 'Match it or draw it.', tonk: 'Drop it like it’s low.', pittypat: 'Pair it up, Pitty Pat!', checkers: 'King me.', parcheesi: 'Race every pawn home.', gofish: 'Ask, fish, book it.', war: 'I — DE — CLARE — WAR!', blackjack: 'Get to 21 — beat the dealer.', poker: 'Last stack standing.' };
 const SOLO = (() => { try { return new URLSearchParams(location.search).get('solo') === '1'; } catch (e) { return false; } })();
 if (SOLO) document.body.classList.add('solo');
 const views = ['lobby', 'challenges', 'leaders'].concat(GAMES.map(g => g.v)).filter(v => document.getElementById('view-' + v));
