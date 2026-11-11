@@ -1160,7 +1160,7 @@ body.event .gwrap .felt{transform:none}
 .qz-grid{font-size:22px;letter-spacing:3px;margin-top:10px}
 .od-hud{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap}.od-hud b{font-size:16px;display:block}.od-hud small{font-size:12px;color:var(--rose-300)}.od-chips{display:flex;gap:6px;flex-wrap:wrap}
 .od-stage{position:relative;display:flex;justify-content:center;width:fit-content;max-width:100%;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 24px 50px -20px rgba(0,0,0,.8)}
-#od-cv{display:block;touch-action:none;cursor:crosshair;max-width:100%}
+#od-cv{position:relative;display:block;touch-action:none;cursor:crosshair;max-width:100%}#od-gl{position:absolute;left:0;top:0;display:block;pointer-events:none}
 .od-meter{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);width:min(60%,360px);height:16px;border-radius:10px;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.25);overflow:hidden}
 .od-meter i{position:absolute;inset:0 auto 0 0;width:0;background:linear-gradient(90deg,#4ade80,#7ee0a8);transition:width .08s}.od-meter i.yel{background:linear-gradient(90deg,#4ade80,#fbbf24)}.od-meter i.red{background:linear-gradient(90deg,#fbbf24,#f87171);animation:micPulse .5s infinite}
 .od-meter span{position:absolute;inset:0;display:grid;place-items:center;font:800 9px var(--mono);letter-spacing:.25em;color:#fff;text-shadow:0 1px 2px #000}
@@ -1168,8 +1168,8 @@ body.event .gwrap .felt{transform:none}
 .od-card canvas{width:220px;height:120px;border-radius:10px;background:radial-gradient(circle,#2a3a2a,#101810)}.od-card h3{margin:6px 0 0}.od-big{font:900 28px var(--serif);color:var(--amber)}
 .od-lodge{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:14px;background:linear-gradient(180deg,rgba(10,6,3,.55),rgba(10,6,3,.85));overflow:auto}.od-lodge.hidden{display:none}
 .od-lg{text-align:center;max-width:720px}.od-lg h2{margin:0 0 4px;font-size:clamp(22px,3.4vw,34px)}
-.od-places{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:10px}
-.od-pl{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:rgba(0,0,0,.45);color:inherit;text-align:left}.od-pl span{font-size:20px}.od-pl b{font-size:13px}.od-pl small{font-size:11px;color:var(--rose-300)}.od-pl.on{border-color:var(--amber);box-shadow:0 0 0 1px var(--amber)}
+.od-places{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:6px;margin-top:8px}.od-lg p{margin:2px 0}.od-lg .chiprow{margin:8px 0!important}.od-rank{margin:4px auto 0!important;padding:6px 12px!important}
+.od-pl{display:flex;flex-direction:column;align-items:flex-start;gap:1px;padding:8px;border-radius:12px;border:1px solid rgba(255,255,255,.18);background:rgba(0,0,0,.45);color:inherit;text-align:left}.od-pl span{font-size:18px}.od-pl b{font-size:12.5px}.od-pl small{font-size:10.5px;line-height:1.25;color:var(--rose-300)}.od-pl.on{border-color:var(--amber);box-shadow:0 0 0 1px var(--amber)}
 .od-go{font-size:16px!important;padding:12px 26px!important}
 .od-ctrl{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:10px}.od-ctrl .field{max-width:190px}.od-hold{touch-action:none;user-select:none;-webkit-user-select:none}.od-ctrl .on{outline:2px solid var(--amber)}
 .od-bag,.od-recs{display:flex;flex-direction:column;gap:5px;max-height:240px;overflow:auto}
@@ -10088,6 +10088,224 @@ SH.games.pool = {
 };
 })();
 
+// McLearn Outdoors 3-D — a small, dependency-free WebGL renderer for the outdoor scenes.
+// Flat-shaded low-poly art, animated water with sun glints, sky with sun and clouds, fog and time-of-day light.
+window.McOD3D = (function () {
+'use strict';
+// ---------- math ----------
+const V = { sub: (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]], add: (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]], mul: (a, s) => [a[0] * s, a[1] * s, a[2] * s], dot: (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2], cross: (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]], norm: a => { const l = Math.hypot(a[0], a[1], a[2]) || 1; return [a[0] / l, a[1] / l, a[2] / l]; } };
+function persp(fov, asp, n, f) { const t = 1 / Math.tan(fov / 2), nf = 1 / (n - f); return [t / asp, 0, 0, 0, 0, t, 0, 0, 0, 0, (f + n) * nf, -1, 0, 0, 2 * f * n * nf, 0]; }
+function lookAt(e, c, up) { const z = V.norm(V.sub(e, c)), x = V.norm(V.cross(up, z)), y = V.cross(z, x); return [x[0], y[0], z[0], 0, x[1], y[1], z[1], 0, x[2], y[2], z[2], 0, -V.dot(x, e), -V.dot(y, e), -V.dot(z, e), 1]; }
+function mm(a, b) { const o = new Array(16); for (let i = 0; i < 4; i++) for (let j = 0; j < 4; j++) { let s = 0; for (let k = 0; k < 4; k++) s += a[k * 4 + j] * b[i * 4 + k]; o[i * 4 + j] = s; } return o; }
+function model(p, yaw, pitch, roll, s) { // T * Ry * Rx * Rz * S
+  const cy = Math.cos(yaw || 0), sy = Math.sin(yaw || 0), cx = Math.cos(pitch || 0), sx = Math.sin(pitch || 0), cz = Math.cos(roll || 0), sz = Math.sin(roll || 0);
+  const r00 = cy * cz + sy * sx * sz, r01 = -cy * sz + sy * sx * cz, r02 = sy * cx, r10 = cx * sz, r11 = cx * cz, r12 = -sx, r20 = -sy * cz + cy * sx * sz, r21 = sy * sz + cy * sx * cz, r22 = cy * cx;
+  const S = s == null ? [1, 1, 1] : typeof s === 'number' ? [s, s, s] : s;
+  return [r00 * S[0], r10 * S[0], r20 * S[0], 0, r01 * S[1], r11 * S[1], r21 * S[1], 0, r02 * S[2], r12 * S[2], r22 * S[2], 0, p[0], p[1], p[2], 1];
+}
+function seeded(s) { let a = s >>> 0; return () => { a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function noise2(x, z) { return Math.sin(x * .05 + Math.sin(z * .031) * 2) * .5 + Math.sin(z * .043 + x * .021) * .35 + Math.sin(x * .13 + z * .11) * .15; }
+const hex = h => { const n = parseInt(h.slice(1), 16); return [(n >> 16 & 255) / 255, (n >> 8 & 255) / 255, (n & 255) / 255]; };
+const mix = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
+
+// ---------- geometry builder (flat-shaded triangles with vertex colours) ----------
+function Geo() { this.p = []; this.n = []; this.c = []; }
+Geo.prototype.tri = function (a, b, c, col, jit) {
+  const n = V.norm(V.cross(V.sub(b, a), V.sub(c, a))), k = jit ? 1 + (Math.random() - .5) * jit : 1, cc = [col[0] * k, col[1] * k, col[2] * k];
+  for (const v of [a, b, c]) { this.p.push(v[0], v[1], v[2]); this.n.push(n[0], n[1], n[2]); this.c.push(cc[0], cc[1], cc[2]); }
+};
+Geo.prototype.quad = function (a, b, c, d, col, jit) { this.tri(a, b, c, col, jit); this.tri(a, c, d, col, jit); };
+Geo.prototype.ellipsoid = function (cx, cy, cz, rx, ry, rz, col, seg, jit, colFn) {
+  seg = seg || 8; const st = seg, sl = Math.max(4, Math.round(seg * .6)), P = (i, j) => { const th = i / st * Math.PI * 2, ph = j / sl * Math.PI; return [cx + Math.cos(th) * Math.sin(ph) * rx, cy + Math.cos(ph) * ry, cz + Math.sin(th) * Math.sin(ph) * rz]; };
+  for (let i = 0; i < st; i++) for (let j = 0; j < sl; j++) { const a = P(i, j), b = P(i + 1, j), c = P(i + 1, j + 1), d = P(i, j + 1), cl = colFn ? colFn((a[1] - cy) / ry, (a[0] - cx) / rx) : col; if (j > 0) this.tri(a, c, b, cl, jit); if (j < sl - 1) this.tri(a, d, c, cl, jit); }
+};
+Geo.prototype.cyl = function (a, b, r1, r2, col, seg, jit) { // frustum from a to b
+  seg = seg || 6; const ax = V.norm(V.sub(b, a)), t = Math.abs(ax[1]) < .9 ? [0, 1, 0] : [1, 0, 0], u = V.norm(V.cross(ax, t)), w = V.cross(ax, u);
+  const ring = (c, r, i) => { const th = i / seg * Math.PI * 2; return V.add(c, V.add(V.mul(u, Math.cos(th) * r), V.mul(w, Math.sin(th) * r))); };
+  for (let i = 0; i < seg; i++) { const p1 = ring(a, r1, i), p2 = ring(a, r1, i + 1), p3 = ring(b, r2, i + 1), p4 = ring(b, r2, i); this.quad(p1, p2, p3, p4, col, jit); if (r2 < .001) continue; this.tri(b, p4, p3, col, jit); }
+};
+Geo.prototype.box = function (cx, cy, cz, sx, sy, sz, col, jit) {
+  const x0 = cx - sx / 2, x1 = cx + sx / 2, y0 = cy - sy / 2, y1 = cy + sy / 2, z0 = cz - sz / 2, z1 = cz + sz / 2;
+  this.quad([x0, y1, z0], [x0, y1, z1], [x1, y1, z1], [x1, y1, z0], col, jit); this.quad([x0, y0, z1], [x0, y0, z0], [x1, y0, z0], [x1, y0, z1], col, jit);
+  this.quad([x0, y0, z1], [x1, y0, z1], [x1, y1, z1], [x0, y1, z1], col, jit); this.quad([x1, y0, z0], [x0, y0, z0], [x0, y1, z0], [x1, y1, z0], col, jit);
+  this.quad([x1, y0, z1], [x1, y0, z0], [x1, y1, z0], [x1, y1, z1], col, jit); this.quad([x0, y0, z0], [x0, y0, z1], [x0, y1, z1], [x0, y1, z0], col, jit);
+};
+
+// ---------- shaders ----------
+const LIT_VS = `attribute vec3 aP;attribute vec3 aN;attribute vec3 aC;uniform mat4 uVP;uniform mat4 uM;varying vec3 vC;varying vec3 vN;varying vec3 vW;
+void main(){vec4 w=uM*vec4(aP,1.);vW=w.xyz;vN=normalize((uM*vec4(aN,0.)).xyz);vC=aC;gl_Position=uVP*w;}`;
+const LIT_FS = `#ifdef GL_FRAGMENT_PRECISION_HIGH\nprecision highp float;\n#else\nprecision mediump float;\n#endif\nvarying vec3 vC;varying vec3 vN;varying vec3 vW;uniform vec3 uSun;uniform vec3 uSunC;uniform vec3 uSky;uniform vec3 uGnd;uniform vec3 uFog;uniform vec3 uCam;uniform float uFogD;uniform float uA;uniform float uUnder;
+void main(){vec3 n=normalize(vN);if(dot(n,uCam-vW)<0.)n=-n;float l=max(dot(n,uSun),0.);vec3 hemi=mix(uGnd,uSky,n.y*.5+.5);vec3 col=vC*(hemi*.78+uSunC*l*.9);
+float d=length(uCam-vW);float f=1.-exp(-d*uFogD);if(uUnder>0.){col=mix(col,vec3(.05,.16,.15),clamp(-vW.y*.12+.25,0.,.85));}
+gl_FragColor=vec4(mix(col,uFog,clamp(f,0.,1.)),uA);}`;
+const WAT_VS = `attribute vec2 aG;uniform mat4 uVP;uniform float uT;uniform float uAmp;varying vec3 vW;varying vec3 vN;
+void main(){float x=aG.x,z=aG.y;float h=uAmp*(sin(x*.21+uT*1.3)*.5+sin(z*.17-uT*1.1)*.5+sin((x+z)*.37+uT*2.1)*.25);
+float dx=uAmp*(.21*cos(x*.21+uT*1.3)*.5+.37*cos((x+z)*.37+uT*2.1)*.25);float dz=uAmp*(.17*cos(z*.17-uT*1.1)*.5+.37*cos((x+z)*.37+uT*2.1)*.25);
+vW=vec3(x,h,z);vN=normalize(vec3(-dx,1.,-dz));gl_Position=uVP*vec4(vW,1.);}`;
+const WAT_FS = `#ifdef GL_FRAGMENT_PRECISION_HIGH\nprecision highp float;\n#else\nprecision mediump float;\n#endif\nvarying vec3 vW;varying vec3 vN;uniform vec3 uCam;uniform vec3 uSun;uniform vec3 uSunC;uniform vec3 uSky;uniform vec3 uDeep;uniform vec3 uFog;uniform float uFogD;uniform float uTf;
+void main(){vec3 n=normalize(vN+vec3(sin(vW.x*1.7+uTf*2.)*.04,0.,cos(vW.z*1.9-uTf*1.7)*.04));vec3 v=normalize(uCam-vW);float fr=pow(1.-max(dot(n,v),0.),3.);
+vec3 col=mix(uDeep,uSky*.9,.15+.75*fr);vec3 r=reflect(-uSun,n);float sp=pow(max(dot(r,v),0.),120.)*2.2+pow(max(dot(r,v),0.),12.)*.12;col+=uSunC*sp;
+float d=length(uCam-vW);float f=1.-exp(-d*uFogD);gl_FragColor=vec4(mix(col,uFog,clamp(f,0.,1.)),.86);}`;
+const SKY_VS = `attribute vec2 aQ;varying vec2 vQ;void main(){vQ=aQ;gl_Position=vec4(aQ,.9999,1.);}`;
+const SKY_FS = `#ifdef GL_FRAGMENT_PRECISION_HIGH\nprecision highp float;\n#else\nprecision mediump float;\n#endif\nvarying vec2 vQ;uniform vec3 uF;uniform vec3 uR;uniform vec3 uU;uniform float uTH;uniform float uAsp;uniform vec3 uSun;uniform vec3 uSunC;uniform vec3 uZen;uniform vec3 uHor;uniform float uCloud;uniform float uT;
+float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}float ns(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x),f.y);}
+float fbm(vec2 p){float s=0.,a=.5;for(int i=0;i<5;i++){s+=a*ns(p);p*=2.03;a*=.5;}return s;}
+void main(){vec3 d=normalize(uF+uR*vQ.x*uTH*uAsp+uU*vQ.y*uTH);float e=max(d.y,0.);vec3 col=mix(uHor,uZen,pow(e,.55));
+float sd=max(dot(d,uSun),0.);col+=uSunC*(pow(sd,700.)*4.+pow(sd,24.)*.35+pow(sd,4.)*.12);
+if(d.y>0.){vec2 cp=d.xz/(d.y+.12)*1.6+vec2(uT*.01,0.);float c=smoothstep(.5-uCloud*.25,.85,fbm(cp));vec3 cc=mix(vec3(1.),uSunC,.35)*(.85+.3*sd);col=mix(col,cc,c*.8*smoothstep(0.,.15,d.y));}
+gl_FragColor=vec4(col,1.);}`;
+
+function create(canvas) {
+  let gl = null;
+  try { gl = canvas.getContext('webgl', { antialias: true, alpha: false, preserveDrawingBuffer: true }) || canvas.getContext('experimental-webgl'); } catch (e) { gl = null; }
+  if (!gl) return { ok: false };
+  const prog = (vs, fs) => { const p = gl.createProgram(); for (const [t, s] of [[gl.VERTEX_SHADER, vs], [gl.FRAGMENT_SHADER, fs]]) { const sh = gl.createShader(t); gl.shaderSource(sh, s); gl.compileShader(sh); if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(sh)); gl.attachShader(p, sh); } gl.linkProgram(p); if (!gl.getProgramParameter(p, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p)); const u = {}; const n = gl.getProgramParameter(p, gl.ACTIVE_UNIFORMS); for (let i = 0; i < n; i++) { const a = gl.getActiveUniform(p, i); u[a.name] = gl.getUniformLocation(p, a.name); } return { p, u }; };
+  let LIT, WAT, SKY;
+  try { LIT = prog(LIT_VS, LIT_FS); WAT = prog(WAT_VS, WAT_FS); SKY = prog(SKY_VS, SKY_FS); } catch (e) { console.warn('OD3D shader', e); return { ok: false }; }
+  const mesh = g => { const b = (arr) => { const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(arr), gl.STATIC_DRAW); return buf; }; return { p: b(g.p), n: b(g.n), c: b(g.c), count: g.p.length / 3 }; };
+  const skyBuf = (() => { const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW); return b; })();
+  let water = null;
+  function waterGrid(size, n, cz) { const a = []; const s = size / n; for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) { const x0 = -size / 2 + i * s, z0 = cz - size / 2 + j * s, x1 = x0 + s, z1 = z0 + s; a.push(x0, z0, x1, z1, x1, z0, x0, z0, x0, z1, x1, z1); } const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(a), gl.STATIC_DRAW); return { b, count: a.length / 2 }; }
+
+  // ---------- models (cached) ----------
+  const cache = {};
+  function duckModel(sp, wing) {
+    const k = 'duck' + sp.id + (wing ? 'w' : ''); if (cache[k]) return cache[k]; const g = new Geo(), body = hex(sp.c[1]), head = hex(sp.c[0]), belly = hex(sp.c[2]);
+    if (wing) { g.tri([0, 0, -.05], [0, 0, .12], [.42, 0, .02], body); g.tri([0, 0, .12], [0, 0, -.05], [.42, 0, .02], body); g.tri([.42, 0, .02], [.42, 0, .1], [.55, 0, .05], belly); g.tri([.42, 0, .1], [.42, 0, .02], [.55, 0, .05], belly); }
+    else if (sp.protected) { g.ellipsoid(0, 0, 0, .14, .14, .38, body, 8, .08); g.cyl([0, .05, .3], [0, .5, .42], .04, .03, body, 5); g.ellipsoid(0, .52, .46, .06, .06, .1, head, 6); g.cyl([0, .52, .55], [0, .5, .8], .02, .002, hex('#d9a23a'), 4); g.cyl([0, -.1, -.1], [0, -.6, -.2], .015, .01, hex('#444444'), 4); }
+    else { g.ellipsoid(0, 0, 0, .15, .13, .3, body, 9, .06, (y) => y < -.3 ? belly : body); g.ellipsoid(0, .14, .28, .085, .085, .1, head, 7, .05); g.cyl([0, .12, .36], [0, .11, .48], .035, .015, hex('#d9a23a'), 5); g.cyl([0, .02, -.25], [0, .04, -.38], .07, .01, body, 5); }
+    return cache[k] = mesh(g);
+  }
+  function deerModel(sp, part) {
+    const k = 'deer' + sp.id + part; if (cache[k]) return cache[k]; const g = new Geo(), coat = hex(sp.pts ? '#7a5230' : '#8f6640'), light = hex('#d8c4a4'), dark = hex('#3a2616');
+    if (part === 'leg') { g.cyl([0, 0, 0], [0, -.42, 0], .045, .03, coat, 5, .05); g.cyl([0, -.42, 0], [0, -.8, .02], .028, .022, coat, 5, .05); g.box(0, -.81, .02, .05, .03, .07, dark); }
+    else {
+      g.ellipsoid(0, 0, 0, .24, .26, .62, coat, 10, .06, (y) => y < -.55 ? light : coat);
+      g.cyl([0, .12, .48], [0, .52, .78], .13, .08, coat, 7, .05); g.ellipsoid(0, .6, .86, .085, .09, .17, coat, 7, .05); g.ellipsoid(0, .57, 1.0, .05, .05, .06, dark, 5);
+      g.ellipsoid(.08, .72, .8, .03, .08, .02, coat, 5); g.ellipsoid(-.08, .72, .8, .03, .08, .02, coat, 5);
+      g.ellipsoid(0, .12, -.62, .05, .1, .04, light, 5); g.ellipsoid(0, .18, .62, .1, .12, .06, light, 6);
+      if (sp.pts) { const bone = hex('#efe4cc'), n = Math.max(1, Math.round(sp.pts / 2) - 1); for (const s of [1, -1]) { const base = [s * .05, .7, .82], mid = [s * .2, .86, .86], tip = [s * .14, .95, 1.06]; g.cyl(base, mid, .018, .015, bone, 4); g.cyl(mid, tip, .015, .008, bone, 4); for (let i = 0; i < n; i++) { const t = (i + 1) / (n + 1), p = i < n / 2 ? mix(base, mid, t * 2) : mix(mid, tip, t * 2 - 1); g.cyl(p, [p[0] * 1.05, p[1] + .13 + (i % 2) * .03, p[2] + .02], .012, .004, bone, 4); } } }
+    }
+    return cache[k] = mesh(g);
+  }
+  function fishModel(spk, col1, col2) {
+    const k = 'fish' + spk; if (cache[k]) return cache[k]; const g = new Geo(), a = hex(col1), b = hex(col2);
+    const tall = spk === 'bream' || spk === 'crappie' ? .2 : spk === 'flounder' ? .06 : .13, wide = spk === 'flounder' ? .2 : .07;
+    g.ellipsoid(0, 0, 0, wide, tall, .32, a, 10, .05, (y) => y < 0 ? b : a); g.tri([0, 0, -.28], [0, .16, -.46], [0, -.16, -.46], a); g.tri([0, 0, -.28], [0, -.16, -.46], [0, .16, -.46], a);
+    g.tri([0, tall * .9, .05], [0, tall * 1.6, -.08], [0, tall * .9, -.18], a); g.tri([0, tall * .9, -.18], [0, tall * 1.6, -.08], [0, tall * .9, .05], a);
+    return cache[k] = mesh(g);
+  }
+  function dogModel() { if (cache.dog) return cache.dog; const g = new Geo(), c = hex('#1a1410'); g.ellipsoid(0, 0, 0, .18, .12, .45, c, 8, .05); g.ellipsoid(0, .16, .42, .12, .12, .14, c, 7, .05); g.ellipsoid(0, .12, .58, .07, .06, .09, c, 6); g.ellipsoid(.1, .18, .38, .03, .09, .05, c, 5); g.ellipsoid(-.1, .18, .38, .03, .09, .05, c, 5); return cache.dog = mesh(g); }
+  function decoyModel(i) { const k = 'decoy' + (i % 3); if (cache[k]) return cache[k]; const g = new Geo(), b = hex(i % 3 ? '#2f4a30' : '#6b5134'), h = hex(i % 3 ? '#1f5a2a' : '#5a4228'); g.ellipsoid(0, .05, 0, .16, .09, .3, b, 8, .05); g.ellipsoid(0, .2, .22, .08, .08, .09, h, 6); g.cyl([0, .18, .3], [0, .17, .4], .03, .01, hex('#d9a23a'), 4); return cache[k] = mesh(g); }
+
+  // ---------- scenes ----------
+  let scene = null;
+  function treePine(g, x, y, z, h, R) { const trunk = hex('#4a3220'), green = mix(hex('#1f4a2a'), hex('#2f5f30'), R()); g.cyl([x, y, z], [x, y + h * .35, z], h * .035, h * .03, trunk, 5); for (let k = 0; k < 3; k++) { const b = y + h * (.22 + k * .22), r = h * (.32 - k * .08); g.cyl([x, b, z], [x, b + h * .42, z], r, 0, mix(green, [0, 0, 0], k * .05), 7, .12); } }
+  function treeRound(g, x, y, z, h, R) { const trunk = hex('#4a3220'), green = mix(hex('#2b5a2a'), hex('#4a7a34'), R()); g.cyl([x, y, z], [x, y + h * .45, z], h * .05, h * .035, trunk, 5); g.ellipsoid(x, y + h * .68, z, h * .3, h * .3, h * .3, green, 7, .15); g.ellipsoid(x + h * .14, y + h * .55, z + h * .05, h * .2, h * .18, h * .2, mix(green, [0, 0, 0], .1), 6, .15); }
+  function treeCypress(g, x, y, z, h, R, inWater) { const trunk = hex('#5a4630'), green = mix(hex('#3a5a2a'), hex('#5a6a30'), R()); g.cyl([x, y - (inWater ? 1 : 0), z], [x, y + h * .2, z], h * .1, h * .045, trunk, 6, .1); g.cyl([x, y + h * .2, z], [x, y + h * .75, z], h * .045, h * .025, trunk, 5); for (let k = 0; k < 3; k++) g.ellipsoid(x + (R() - .5) * h * .25, y + h * (.72 + k * .1), z + (R() - .5) * h * .2, h * (.22 - k * .04), h * .07, h * (.2 - k * .03), green, 6, .15); }
+  function deadTimber(g, x, z, h) { const c = hex('#5b5248'); g.cyl([x, -1, z], [x, h, z], .25, .1, c, 5, .1); g.cyl([x, h * .7, z], [x + 1.2, h * .95, z + .3], .08, .03, c, 4); }
+  function terrain(g, size, n, cz, hFn, colFn) {
+    const s = size / n, P = (i, j) => { const x = -size / 2 + i * s, z = cz - size / 2 + j * s; return [x, hFn(x, z), z]; };
+    for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) { const a = P(i, j), b = P(i + 1, j), c = P(i + 1, j + 1), d = P(i, j + 1); if (Math.max(a[1], b[1], c[1], d[1]) < -2.5) continue; const avg = (a[1] + b[1] + c[1] + d[1]) / 4; g.tri(a, d, c, colFn(avg, a[0], a[2]), .06); g.tri(a, c, b, colFn(avg, a[0], a[2]), .06); }
+  }
+  function build(kind) {
+    const R = seeded(kind.length * 131 + 7), g = new Geo(), props = {};
+    if (kind === 'lake' || kind === 'river' || kind === 'gulf') {
+      const lakeR = kind === 'river' ? [34, 210] : [150, 130], cz = kind === 'river' ? 120 : 120;
+      const hFn = (x, z) => { if (kind === 'gulf') { const side = Math.abs(x) - 70 - z * .1; return side < 0 ? -4 : Math.min(2.2, side * .08) + noise2(x, z) * .3; } const e = Math.hypot(x / lakeR[0], (z - cz) / lakeR[1]); return e < 1 ? -4 : Math.min(9, (e - 1) * 34) + noise2(x, z) * 2.2 - .3; };
+      const sand = hex(kind === 'gulf' ? '#d8c9a0' : '#7a6a48'), grass = hex(kind === 'river' ? '#4a5a2a' : '#4f6e30'), hill = hex('#3d5a28');
+      terrain(g, kind === 'gulf' ? 700 : 620, 70, cz, hFn, (h) => h < .6 ? sand : h < 4 ? grass : hill);
+      for (let i = 0; i < (kind === 'gulf' ? 0 : 420); i++) { const x = (R() - .5) * 600, z = cz + (R() - .5) * 600, h = hFn(x, z); if (h < 1 || z < 0) continue; const th = 7 + R() * 9; if (kind === 'river') treeCypress(g, x, h, z, th * 1.3, R); else if (R() < .45) treePine(g, x, h, z, th * 1.4, R); else treeRound(g, x, h, z, th, R); }
+      if (kind === 'river') for (let i = 0; i < 14; i++) { const z = 25 + R() * 160, x = (R() < .5 ? -1 : 1) * (lakeR[0] * (.6 + R() * .35)); treeCypress(g, x, 0, z, 10 + R() * 6, R, true); }
+      if (kind === 'lake') for (let i = 0; i < 9; i++) deadTimber(g, (R() - .5) * 140, 40 + R() * 120, 4 + R() * 6);
+      // dock / pier under the camera
+      const wood = hex('#6b4a2c'), post = hex('#4a3220');
+      if (kind === 'gulf') { for (let z = -6; z < 26; z += 2) g.box(0, 2.2, z, 3.2, .2, 1.8, wood, .15); for (let z = -6; z < 26; z += 6) { g.cyl([-1.5, -3, z], [-1.5, 2.1, z], .16, .16, post, 6); g.cyl([1.5, -3, z], [1.5, 2.1, z], .16, .16, post, 6); } g.box(1.5, 2.8, 10, .12, .9, 32, wood); g.box(-1.5, 2.8, 10, .12, .9, 32, wood); }
+      else { for (let z = -4; z < 4; z += 1.2) g.box(0, .9, z, 4, .16, 1.05, wood, .15); for (const x of [-1.8, 1.8]) for (const z of [-3.5, 3.4]) g.cyl([x, -2.5, z], [x, 1.1, z], .14, .14, post, 6); }
+      if (kind === 'gulf') { for (let i = 0; i < 2; i++) { const x = -60 + i * 150, z = 260 + i * 80; g.box(x, .7, z, 2, 1, 7, hex('#f2efe6')); g.tri([x, 1.2, z - 2], [x, 9, z], [x, 1.2, z + 2.6], hex('#ffffff')); } }
+      props.water = { size: kind === 'gulf' ? 1400 : 700, n: 110, cz: kind === 'gulf' ? 500 : 140, amp: kind === 'gulf' ? .22 : kind === 'river' ? .05 : .09, deep: kind === 'gulf' ? '#0d4a5a' : kind === 'river' ? '#3a3a1e' : '#1d4a42' };
+      props.cam = { eye: kind === 'gulf' ? [0, 4.6, 24] : [0, 2.9, -1], target: kind === 'gulf' ? [0, 1.4, 70] : [0, .4, 40], fov: 52 };
+    } else if (kind === 'marsh') {
+      const hFn = (x, z) => { const d = z - 150 - noise2(x, z) * 20; return d < 0 ? -3 : Math.min(6, d * .3) + noise2(x * 2, z) * 1.2; };
+      terrain(g, 700, 60, 200, hFn, (h) => h < 1 ? hex('#5a5a38') : hex('#3d5028'));
+      for (let i = 0; i < 260; i++) { const x = (R() - .5) * 650, z = 150 + R() * 300, h = hFn(x, z); if (h < .5) continue; treeCypress(g, x, h, z, 12 + R() * 8, R); }
+      for (let i = 0; i < 40; i++) { const x = (R() - .5) * 260, z = 20 + R() * 120; if (Math.abs(x) < 6 && z < 40) continue; if (R() < .5) treeCypress(g, x, 0, z, 9 + R() * 7, R, true); else deadTimber(g, x, z, 5 + R() * 8); }
+      // blind reeds in the foreground
+      const reed = hex('#8a7a44'); for (let i = 0; i < 90; i++) { const side = R() < .5 ? -1 : 1, x = side * (.6 + R() * 2.6), z = 1.2 + R() * 1.4, h = (Math.abs(x) > 1.6 ? .55 : .25) + R() * .45, lean = (R() - .5) * .25; g.tri([x - .05, -.2, z], [x + .05, -.2, z], [x + lean, h, z + .1], reed, .25); g.tri([x + .05, -.2, z], [x - .05, -.2, z], [x + lean, h, z + .1], reed, .25); }
+      props.water = { size: 800, n: 90, cz: 200, amp: .04, deep: '#304a48' };
+      props.cam = { eye: [0, 1.15, 0], target: [0, 4.2, 40], fov: 60 };
+      props.decoys = Array.from({ length: 9 }, (_, i) => [(-8 + i * 2.1) + (R() - .5), 9 + (i % 3) * 3 + R() * 2, R() * 6]);
+    } else { // woods: food plot ringed by pines
+      const hFn = (x, z) => noise2(x, z) * 1.6 + Math.max(0, Math.hypot(x * .8, z - 70) - 70) * .05;
+      terrain(g, 600, 70, 80, hFn, (h, x, z) => Math.hypot(x * .8, z - 70) < 62 ? mix(hex('#6f8a34'), hex('#8a9a3a'), (noise2(x * 3, z * 3) + 1) / 2) : hex('#3b4a22'));
+      for (let i = 0; i < 520; i++) { const x = (R() - .5) * 560, z = 80 + (R() - .5) * 560, dd = Math.hypot(x * .8, z - 70); if (dd < 64 || z < 4) continue; treePine(g, x, hFn(x, z), z, 14 + R() * 12, R); }
+      for (let i = 0; i < 6; i++) { treePine(g, -14 + (R() - .5) * 4, hFn(-14, 2), 2 + R() * 3, 18, R); }
+      props.cam = { eye: [0, 6.2, 0], target: [0, 1.0, 50], fov: 46 };
+    }
+    if (kind === 'woods') props.hFn = (x, z) => noise2(x, z) * 1.6 + Math.max(0, Math.hypot(x * .8, z - 70) - 70) * .05;
+    props.mesh = mesh(g); props.kind = kind;
+    if (props.water) water = waterGrid(props.water.size, props.water.n, props.water.cz);
+    return props;
+  }
+
+  // ---------- frame ----------
+  let VP = null, cam = null, W = 1, H = 1;
+  function setCamera(eye, target, fovDeg) {
+    W = canvas.width; H = canvas.height; const asp = W / H, fov = fovDeg * Math.PI / 180;
+    const f = V.norm(V.sub(target, eye)), r = V.norm(V.cross(f, [0, 1, 0])), u = V.cross(r, f);
+    cam = { eye, f, r, u, th: Math.tan(fov / 2), asp }; VP = mm(persp(fov, asp, .1, 1600), lookAt(eye, target, [0, 1, 0]));
+  }
+  function ray(sx, sy) { const x = (sx * 2 - 1) * cam.th * cam.asp, y = (1 - sy * 2) * cam.th; return V.norm(V.add(cam.f, V.add(V.mul(cam.r, x), V.mul(cam.u, y)))); }
+  function project(p) { const x = VP[0] * p[0] + VP[4] * p[1] + VP[8] * p[2] + VP[12], y = VP[1] * p[0] + VP[5] * p[1] + VP[9] * p[2] + VP[13], w = VP[3] * p[0] + VP[7] * p[1] + VP[11] * p[2] + VP[15]; if (w <= .01) return null; return { x: (x / w) * .5 + .5, y: 1 - ((y / w) * .5 + .5), w }; }
+  function light(env) { // time of day + weather → light rig
+    const k = env.tod, el = .06 + k * .7, az = -.6 + k * .5, sun = V.norm([Math.sin(az) * Math.cos(el), Math.sin(el), Math.cos(az) * Math.cos(el)]);
+    const wx = env.weather || 'clear', dim = wx === 'rain' ? .45 : wx === 'over' ? .65 : 1;
+    let sunC = mix(hex('#ff9a55'), hex('#fff1d6'), Math.min(1, k * 1.6)).map(v => v * 1.15 * dim);
+    let zen = mix(hex('#2b3a78'), hex('#3f7fd0'), Math.min(1, k * 1.5)), hor = mix(hex('#f0a070'), hex('#cfe2f0'), Math.min(1, k * 1.5));
+    if (wx !== 'clear') { const gr = hex(wx === 'rain' ? '#6a7380' : '#9aa3ad'); zen = mix(zen, gr, wx === 'rain' ? .85 : .65); hor = mix(hor, gr, wx === 'rain' ? .8 : .55); }
+    return { sun, sunC, zen, hor, sky: mix(zen, hor, .4), gnd: hex('#3a3a2a').map(v => v * dim), fog: hor, fogD: wx === 'rain' ? .009 : wx === 'over' ? .0055 : .0032, cloud: wx === 'clear' ? .25 : wx === 'over' ? .85 : 1 };
+  }
+  function drawMesh(m, M, L, alpha, under) {
+    const P = LIT; gl.useProgram(P.p);
+    gl.uniformMatrix4fv(P.u.uVP, false, VP); gl.uniformMatrix4fv(P.u.uM, false, M);
+    gl.uniform3fv(P.u.uSun, L.sun); gl.uniform3fv(P.u.uSunC, L.sunC); gl.uniform3fv(P.u.uSky, L.sky); gl.uniform3fv(P.u.uGnd, L.gnd); gl.uniform3fv(P.u.uFog, L.fog); gl.uniform3fv(P.u.uCam, cam.eye); gl.uniform1f(P.u.uFogD, L.fogD); gl.uniform1f(P.u.uA, alpha == null ? 1 : alpha); gl.uniform1f(P.u.uUnder, under ? 1 : 0);
+    const at = (name, buf) => { const loc = gl.getAttribLocation(P.p, name); gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 3, gl.FLOAT, false, 0, 0); };
+    at('aP', m.p); at('aN', m.n); at('aC', m.c); gl.drawArrays(gl.TRIANGLES, 0, m.count);
+  }
+  const I = model([0, 0, 0]);
+  function render(st) {
+    if (!scene || scene.kind !== st.kind) { for (const k in cache) delete cache[k]; scene = build(st.kind); }
+    const c = st.cam || scene.cam; setCamera(c.eye, c.target, c.fov);
+    const L = light(st.env); gl.viewport(0, 0, W, H); gl.clearColor(L.fog[0], L.fog[1], L.fog[2], 1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    // sky
+    gl.disable(gl.DEPTH_TEST); gl.useProgram(SKY.p); gl.bindBuffer(gl.ARRAY_BUFFER, skyBuf); const ql = gl.getAttribLocation(SKY.p, 'aQ'); gl.enableVertexAttribArray(ql); gl.vertexAttribPointer(ql, 2, gl.FLOAT, false, 0, 0);
+    gl.uniform3fv(SKY.u.uF, cam.f); gl.uniform3fv(SKY.u.uR, cam.r); gl.uniform3fv(SKY.u.uU, cam.u); gl.uniform1f(SKY.u.uTH, cam.th); gl.uniform1f(SKY.u.uAsp, cam.asp); gl.uniform3fv(SKY.u.uSun, L.sun); gl.uniform3fv(SKY.u.uSunC, L.sunC); gl.uniform3fv(SKY.u.uZen, L.zen); gl.uniform3fv(SKY.u.uHor, L.hor); gl.uniform1f(SKY.u.uCloud, L.cloud); gl.uniform1f(SKY.u.uT, st.t);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    gl.enable(gl.DEPTH_TEST);
+    drawMesh(scene.mesh, I, L);
+    // things under the water (seen through it)
+    for (const o of st.under || []) drawMesh(o.m, o.M, L, 1, true);
+    // water
+    if (scene.water) {
+      gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA); gl.useProgram(WAT.p); gl.bindBuffer(gl.ARRAY_BUFFER, water.b); const gl2 = gl.getAttribLocation(WAT.p, 'aG'); gl.enableVertexAttribArray(gl2); gl.vertexAttribPointer(gl2, 2, gl.FLOAT, false, 0, 0);
+      gl.uniformMatrix4fv(WAT.u.uVP, false, VP); gl.uniform1f(WAT.u.uT, st.t); gl.uniform1f(WAT.u.uTf, st.t); gl.uniform1f(WAT.u.uAmp, scene.water.amp * (st.env.weather === 'rain' ? 1.6 : 1)); gl.uniform3fv(WAT.u.uCam, cam.eye); gl.uniform3fv(WAT.u.uSun, L.sun); gl.uniform3fv(WAT.u.uSunC, L.sunC); gl.uniform3fv(WAT.u.uSky, L.hor); gl.uniform3fv(WAT.u.uDeep, hex(scene.water.deep)); gl.uniform3fv(WAT.u.uFog, L.fog); gl.uniform1f(WAT.u.uFogD, L.fogD);
+      gl.drawArrays(gl.TRIANGLES, 0, water.count); gl.disable(gl.BLEND);
+    }
+    // decoys, animals, props above water
+    if (scene.decoys) scene.decoys.forEach((d, i) => drawMesh(decoyModel(i), model([d[0], Math.sin(st.t * 1.4 + i) * .05, d[1]], d[2], 0, Math.sin(st.t * 1.1 + i) * .05, 1.6), L));
+    for (const o of st.objs || []) drawMesh(o.m, o.M, L);
+  }
+  return {
+    ok: true, render, ray, project, model, mm, duckModel, deerModel, fishModel, dogModel,
+    camFor: kind => { if (!scene || scene.kind !== kind) { for (const k in cache) delete cache[k]; scene = build(kind); } return scene.cam; },
+    heightAt: (x, z) => scene && scene.hFn ? scene.hFn(x, z) : 0,
+    groundAt: (sx, sy, y0) => { const d = ray(sx, sy); if (d[1] >= -1e-4) return null; const t = (y0 - cam.eye[1]) / d[1]; return V.add(cam.eye, V.mul(d, t)); },
+    setCamera, eye: () => cam.eye, V,
+  };
+}
+return { create };
+})();
+
 // McLearn Outdoors — Mississippi fishing, a Delta duck blind and a piney-woods deer stand.
 // Fair-chase, family-friendly: no gore, real lessons on safety, limits and knowing your target. Photo Safari swaps the gun for a camera.
 (function () {
@@ -10100,9 +10318,10 @@ McRules.register('outdoors', {
     { key: 'assist', label: 'Assists', help: 'Fishing: tension warnings and a wider hook-set window. Hunting: steadier aim and a range finder.', type: 'bool' },
     { key: 'trip', label: 'Trip length', type: 'select', options: [[3, '3 minutes'], [5, '5 minutes'], [8, '8 minutes']] },
     { key: 'limits', label: 'Game-rule limits & penalties', help: 'Over the limit, the wrong bird, an unsafe shot or a non-legal deer costs points — just like the real woods', type: 'bool' },
-    { key: 'sound', label: 'Nature sounds', type: 'bool' }
+    { key: 'sound', label: 'Nature sounds', type: 'bool' },
+    { key: 'gfx', label: 'Graphics', help: 'Auto uses 3-D and drops to classic 2-D art if your device struggles', type: 'select', options: [['auto', 'Auto'], ['3d', '3-D always'], ['2d', 'Classic 2-D']] }
   ],
-  presets: { standard: { assist: true, trip: 5, limits: true, sound: true }, pro: { assist: false, trip: 5, limits: true } }
+  presets: { standard: { assist: true, trip: 5, limits: true, sound: true, gfx: 'auto' }, pro: { assist: false, trip: 5, limits: true } }
 });
 let RU = McRules.get('outdoors');
 
@@ -10194,7 +10413,7 @@ const root = $('view-outdoors');
 root.innerHTML = `
 <section class="col center" style="width:100%">
   <div class="od-hud"><div><b id="od-place">—</b><small id="od-sub"></small></div><div class="od-chips"><span class="pill" id="od-clock">5:00</span><span class="pill gold" id="od-score">0 pts</span><span class="pill" id="od-ammo"></span></div></div>
-  <div class="od-stage" id="od-stage"><canvas id="od-cv" aria-label="Outdoor scene" role="img"></canvas>
+  <div class="od-stage" id="od-stage"><canvas id="od-gl" aria-hidden="true"></canvas><canvas id="od-cv" aria-label="Outdoor scene" role="img"></canvas>
     <div class="od-meter hidden" id="od-tension"><i id="od-tfill"></i><span>LINE TENSION</span></div>
     <div class="felt-msg hidden" id="od-msg"></div>
     <div class="od-card hidden" id="od-card"></div>
@@ -10211,12 +10430,17 @@ root.innerHTML = `
   <div class="card" style="margin-top:10px"><h4 style="margin:0 0 6px">Trophy wall</h4><div id="od-recs" class="od-recs"></div></div>
   <div class="card" style="margin-top:10px"><div id="rules-outdoors"></div></div>
 </section>`;
-const cv = $('od-cv'), mainCtx = cv.getContext('2d'); let ctx = mainCtx;
+const cv = $('od-cv'), glc = $('od-gl'), mainCtx = cv.getContext('2d'); let ctx = mainCtx;
+let D3 = { ok: false }, D3full = null, glScale = 1, slow = 0; try { if (window.McOD3D) D3full = McOD3D.create(glc); } catch (e) { D3full = null; }
+function gfxApply() { const want = (RU.gfx || 'auto') !== '2d' && !/[?&]flat=1/.test(location.search); D3 = want && D3full && D3full.ok && !gfxApply.failed ? D3full : { ok: false }; glc.style.display = D3.ok ? '' : 'none'; if (gfxApply.ready) bgKey = ''; }
+gfxApply(); gfxApply.ready = true;
+const KIND = { rez: 'lake', pearl: 'river', gulf: 'gulf', delta: 'marsh', pines: 'woods' };
 function withCtx(c2, fn) { const p = ctx; ctx = c2; try { fn(); } finally { ctx = p; } }
 let W = 900, H = 506, dpr = 1, bg = null, bgKey = '';
 function layout() {
   const w = Math.max(300, Math.min(($('od-stage').parentElement.clientWidth || 900), 1100)); W = w; H = Math.round(w * .5625);
   dpr = Math.min(2, window.devicePixelRatio || 1); cv.width = W * dpr; cv.height = H * dpr; cv.style.width = W + 'px'; cv.style.height = H + 'px'; bgKey = '';
+  if (D3.ok) { const gd = Math.min(dpr, 1.5) * glScale; glc.width = Math.round(W * gd); glc.height = Math.round(H * gd); glc.style.width = W + 'px'; glc.style.height = H + 'px'; }
 }
 // time of day 0..1 across the trip: dawn → morning → midday (fishing peaks early and late)
 const tod = () => clamp(G.t / G.trip, 0, 1);
@@ -10341,11 +10565,88 @@ function drawDeer(d) {
   }
   ctx.restore(); ctx.restore();
 }
+// ---------- 3-D path ----------
+const zOf = x => 6 + clamp((x - .16) / .82, 0, 1) * 70;
+let camBase = null;
+function surf(x) { if (!D3.ok) return { x, y: .42 }; const c = camBase; const p = D3.project([0, 0, c.eye[2] + zOf(x)]); return p ? { x: p.x, y: p.y } : { x, y: .42 }; }
+function worldAt(sx, sy, dist) { const r = D3.ray(sx, sy), e = camBase.eye; return [e[0] + r[0] * dist, e[1] + r[1] * dist, e[2] + r[2] * dist]; }
+function yawOf(a, b) { return Math.atan2(b[0] - a[0], b[2] - a[2]); }
+function deerWorld(d) { const r = D3.ray(d.x, .5), hl = Math.hypot(r[0], r[2]) || 1, dist = 13 + (1 - d.z) * 38, e = camBase.eye, x = e[0] + r[0] / hl * dist, z = e[2] + r[2] / hl * dist; return [x, D3.heightAt(x, z) + .84 * 1.25, z]; }
+function deerScr(d) {
+  const p = deerWorld(d), nxt = deerWorld(Object.assign({}, d, { x: d.x + (d.vx || .01) * .05 })), yaw = yawOf(p, nxt), M = D3.model(p, yaw, 0, 0, 1.25);
+  const at = v => { const w = [M[0] * v[0] + M[4] * v[1] + M[8] * v[2] + M[12], M[1] * v[0] + M[5] * v[1] + M[9] * v[2] + M[13], M[2] * v[0] + M[6] * v[1] + M[10] * v[2] + M[14]]; const q = D3.project(w); return q ? { x: q.x * W, y: q.y * H } : { x: -999, y: -999 }; };
+  const vit = at([0, -.03, .28]), vr = at([0, .15, .28]), head = at([0, .75, .95]), feet = at([0, -.84, 0]), back = at([0, 0, -.65]), front = at([0, 0, 1.0]);
+  const e = camBase.eye, dist = Math.hypot(p[0] - e[0], p[1] - e[1], p[2] - e[2]);
+  return { vx: vit.x, vy: vit.y, vrad: Math.max(3, Math.abs(vr.y - vit.y)), l: Math.min(back.x, front.x, head.x), r: Math.max(back.x, front.x, head.x), t: head.y, b: feet.y, dist, M, yaw };
+}
+function draw3D() {
+  const kind = KIND[G.place], tnow = performance.now() / 1000; camBase = D3.camFor(kind); D3.setCamera(camBase.eye, camBase.target, camBase.fov);
+  const st = { kind, t: tnow, env: { tod: G.phase === 'lodge' ? .25 : tod(), weather: G.phase === 'trip' && G.weather ? G.weather.id : 'clear' }, objs: [], under: [] }, a = act(), e = camBase.eye;
+  if (a === 'fish' && G.phase === 'trip') {
+    for (const f of G.fishes) { if (f.hooked) continue; f.lane = f.lane == null ? (Math.random() - .5) * 14 : f.lane; const sc = .45 + Math.cbrt(f.w) * .28; st.under.push({ m: D3.fishModel(f.sp, FISH[f.sp].color[0], FISH[f.sp].color[1]), M: D3.model([f.lane, -.7 - f.d * 5, e[2] + zOf(f.x)], f.vx < 0 ? Math.PI : 0, 0, Math.sin(f.wig) * .1, sc) }); }
+    const L = G.lureS;
+    if (L && G.fight) { const F = G.fight, z = e[2] + zOf(L.x), sc = (.45 + Math.cbrt(F.f.w) * .28) * (1.6 + zOf(L.x) / 40), fm = D3.fishModel(F.f.sp, FISH[F.f.sp].color[0], FISH[F.f.sp].color[1]);
+      if (F.jump) { const k = F.jump.t / .9; st.objs.push({ m: fm, M: D3.model([Math.sin(tnow * 3) * .5, Math.sin(k * Math.PI) * 2.6 - .2, z + (k - .5) * 2], Math.PI * .5, -(k - .5) * 2.4, Math.sin(tnow * 20) * .4, sc) }); }
+      else st.under.push({ m: fm, M: D3.model([Math.sin(tnow * 3) * .8, -.6 - L.d * 3, z], Math.PI + Math.sin(tnow * 5) * .6, 0, Math.sin(tnow * 13) * .3, sc) }); }
+  }
+  if (a === 'duck' && G.phase === 'trip') {
+    for (const d of G.ducks) { const dist = 9 / d.z, p = worldAt(d.x, d.y, dist), q = worldAt(d.x + (d.vx || .01) * .02, d.y + (d.vy || 0) * .02, dist), yaw = yawOf(p, q), M = D3.model(p, yaw, d.falling ? d.spin : 0, d.falling ? d.spin * .7 : 0, d.sp.protected ? 1.6 : 1.25);
+      st.objs.push({ m: D3.duckModel(d.sp), M });
+      if (!d.falling || true) { const fl = Math.sin(d.flap) * .9; for (const sgn of [1, -1]) st.objs.push({ m: D3.duckModel(d.sp, true), M: D3.mm(M, D3.model([sgn * .1, .08, 0], 0, 0, d.falling ? sgn * 1.2 : sgn * fl, [sgn, 1, 1])) }); } }
+    if (G.dog) { const g = D3.groundAt(G.dog.x, G.dog.y, 0); if (g) { const g2 = D3.groundAt(G.dog.x + (G.dog.dir || 1) * .01, G.dog.y, 0) || g; st.objs.push({ m: D3.dogModel(), M: D3.model([g[0], -.05 + Math.sin(tnow * 6) * .03, g[2]], yawOf(g, g2), 0, 0, 1.3) }); if (G.dog.carry) st.objs.push({ m: D3.duckModel(G.dog.sp), M: D3.model([g[0] + Math.sin(yawOf(g, g2)) * .8, .15, g[2] + Math.cos(yawOf(g, g2)) * .8], yawOf(g, g2) + 1.4, 0, .3, 1) }); } }
+  }
+  if (a === 'deer' && G.phase === 'trip') {
+    for (const d of G.deer) { const sc = deerScr(d), M = sc.M; st.objs.push({ m: D3.deerModel(d.sp, 'body'), M: d.graze ? D3.mm(M, D3.model([0, 0, 0], 0, .12, 0, 1)) : M });
+      const legs = [[.13, .53, 0], [-.13, .53, 2], [.13, -.5, 1], [-.13, -.5, 3]]; for (const [lx, lz, ph] of legs) { const sw = d.walk ? Math.sin(d.step + ph) * (d.spooked ? .6 : .35) : 0; st.objs.push({ m: D3.deerModel(d.sp, 'leg'), M: D3.mm(M, D3.model([lx, -.02, lz], 0, sw, 0, 1)) }); } }
+    if (G.scope) { const r = D3.ray(G.aim.x + swayX() / W, G.aim.y + swayY() / H); st.cam = { eye: e, target: [e[0] + r[0] * 50, e[1] + r[1] * 50, e[2] + r[2] * 50], fov: camBase.fov / GEAR().zoom }; }
+  }
+  D3.render(st);
+  if (st.cam) D3.setCamera(camBase.eye, camBase.target, camBase.fov); // overlays use the normal view
+  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  if (G.phase !== 'trip') return;
+  if (a === 'fish') fishOverlay3D(); else if (a === 'duck') { crosshair(false); } else deerOverlay3D();
+}
+function fishOverlay3D() {
+  const L = G.lureS, bend = G.fight ? clamp(G.fight.tension, 0, 1.2) : 0, baseX = W * .2, baseY = H * 1.04, tipX = W * (.44 - bend * .05), tipY = H * (.3 + bend * .14);
+  // rod (first person)
+  const rg = ctx.createLinearGradient(baseX, baseY, tipX, tipY); rg.addColorStop(0, '#2a1a10'); rg.addColorStop(.25, '#c9a24a'); rg.addColorStop(.3, '#1d1d22'); rg.addColorStop(1, '#3a3a44');
+  ctx.strokeStyle = rg; ctx.lineCap = 'round'; ctx.lineWidth = Math.max(3, W * .009); ctx.beginPath(); ctx.moveTo(baseX, baseY); ctx.quadraticCurveTo(W * (.33 - bend * .02), H * (.55 + bend * .05), tipX, tipY); ctx.stroke(); ctx.lineCap = 'butt';
+  ctx.fillStyle = '#1b1b1f'; ctx.beginPath(); ctx.ellipse(W * .26, H * .88, W * .025, H * .04, -.6, 0, 7); ctx.fill(); ctx.fillStyle = '#c9a24a'; ctx.beginPath(); ctx.arc(W * .26, H * .88, W * .01, 0, 7); ctx.fill();
+  if (G.cast) { const sp = surf(G.cast.to), k = G.cast.k, x = tipX + (sp.x * W - tipX) * k, y = tipY + (sp.y * H - tipY) * k - Math.sin(k * Math.PI) * H * .25; ctx.strokeStyle = 'rgba(255,255,255,.7)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(tipX, tipY); ctx.lineTo(x, y); ctx.stroke(); ctx.fillStyle = '#ffd34d'; ctx.beginPath(); ctx.arc(x, y, 3, 0, 7); ctx.fill(); }
+  if (L) {
+    const sp = surf(L.x), lx = sp.x * W, ly = sp.y * H;
+    ctx.strokeStyle = G.fight && G.fight.tension > .85 ? 'rgba(255,120,120,.95)' : 'rgba(255,255,255,.7)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(tipX, tipY); ctx.quadraticCurveTo((tipX + lx) / 2, Math.max(tipY, ly) + (G.fight ? -20 * G.fight.tension : 30), lx, ly); ctx.stroke();
+    if (!G.fight) { const r = Math.max(3, 9 - L.x * 5); ctx.strokeStyle = 'rgba(255,255,255,.6)'; ctx.beginPath(); ctx.ellipse(lx, ly, r + Math.sin(G.t * 4) * 1.5, r * .3, 0, 0, 7); ctx.stroke(); ctx.fillStyle = L.d < .03 ? '#ff5a3c' : 'rgba(255,90,60,.45)'; ctx.beginPath(); ctx.arc(lx, ly - 2, Math.max(2, r * .35), 0, 7); ctx.fill(); }
+    else if (G.fight.tension > .6) { ctx.strokeStyle = 'rgba(255,255,255,.5)'; for (let i = 0; i < 3; i++) { const rr = 4 + ((G.t * 30 + i * 8) % 22); ctx.beginPath(); ctx.ellipse(lx, ly, rr, rr * .3, 0, 0, 7); ctx.stroke(); } }
+    if (L.bite) { ctx.fillStyle = '#ffd34d'; ctx.font = `900 ${Math.round(H * .09)}px "Plus Jakarta Sans", Arial`; ctx.textAlign = 'center'; ctx.fillText('!', lx, ly - H * .04); }
+  }
+  fishFinder();
+}
+function deerOverlay3D() {
+  if (G.scope) {
+    const r = H * .38, cx = W / 2, cy = H / 2;
+    ctx.fillStyle = 'rgba(0,0,0,.94)'; ctx.beginPath(); ctx.rect(0, 0, W, H); ctx.moveTo(cx + r, cy); ctx.arc(cx, cy, r, 0, Math.PI * 2, true); ctx.fill('evenodd');
+    const vg = ctx.createRadialGradient(cx, cy, r * .75, cx, cy, r); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.65)'); ctx.fillStyle = vg; ctx.beginPath(); ctx.arc(cx, cy, r, 0, 7); ctx.fill();
+    ctx.strokeStyle = '#0c0c0c'; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(cx - r, cy); ctx.lineTo(cx + r, cy); ctx.moveTo(cx, cy - r); ctx.lineTo(cx, cy + r); ctx.stroke();
+    ctx.lineWidth = 5; ctx.beginPath(); ctx.moveTo(cx - r, cy); ctx.lineTo(cx - r * .22, cy); ctx.moveTo(cx + r * .22, cy); ctx.lineTo(cx + r, cy); ctx.moveTo(cx, cy + r * .22); ctx.lineTo(cx, cy + r); ctx.stroke();
+    ctx.strokeStyle = '#1a1a1a'; ctx.lineWidth = 8; ctx.beginPath(); ctx.arc(cx, cy, r, 0, 7); ctx.stroke();
+    if (RU.assist) { const d = targetUnder(); if (d) { const yd = Math.round(deerScr(d).dist * 1.094); ctx.fillStyle = 'rgba(0,0,0,.65)'; ctx.fillRect(cx - 95, cy + r - 42, 190, 30); ctx.fillStyle = d.sp.legal ? '#7ee0a8' : '#ffb0b0'; ctx.font = '700 12px "Plus Jakarta Sans", Arial'; ctx.textAlign = 'center'; ctx.fillText(`${yd} yds · ${d.sp.name}${d.sp.legal ? ' · legal' : ' · not legal'}`, cx, cy + r - 22); } }
+  } else crosshair(true);
+  // stand: shooting rail + orange safety strap
+  ctx.fillStyle = 'rgba(40,28,16,.96)'; ctx.fillRect(0, H * .93, W, H * .07); ctx.fillStyle = '#ff7a1a'; ctx.fillRect(W * .04, H * .94, W * .18, H * .018);
+  ctx.fillStyle = 'rgba(0,0,0,.45)'; ctx.fillRect(W - 128, 10, 118, 26); ctx.fillStyle = '#fff'; ctx.font = '700 12px "Plus Jakarta Sans", Arial'; ctx.textAlign = 'left'; ctx.fillText(`Wind ${G.wind > 0 ? '→' : '←'} ${Math.abs(G.wind || 0).toFixed(0)} mph`, W - 120, 28);
+  if (G.muzzle > 0) { ctx.fillStyle = `rgba(255,230,160,${G.muzzle * 6})`; ctx.fillRect(0, 0, W, H); }
+}
 function draw() {
+  if (D3.ok) { try { draw3D(); } catch (err) { console.warn('3-D off:', err); gfxApply.failed = true; gfxApply(); } if (D3.ok) { drawFx(); return; } }
   paintBg(); ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height); ctx.drawImage(bg, 0, 0); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   const a = act();
   if (a === 'fish') drawFishing(); else if (a === 'duck') drawDuckHunt(); else drawDeerStand();
   if (G.weather && G.weather.id === 'rain' && G.phase === 'trip') { ctx.strokeStyle = 'rgba(200,215,230,.35)'; ctx.lineWidth = 1; ctx.beginPath(); for (let i = 0; i < 90; i++) { const x = ((i * 97.13 + G.t * 380) % (W + 40)) - 20, y = ((i * 53.7 + G.t * 900) % H); ctx.moveTo(x, y); ctx.lineTo(x - 4, y + 12); } ctx.stroke(); if (a === 'fish') { ctx.strokeStyle = 'rgba(220,235,245,.35)'; for (let i = 0; i < 8; i++) { const x = (i * 131.7 + Math.floor(G.t * 3) * 71) % W, k = (G.t * 3) % 1; ctx.beginPath(); ctx.ellipse(x, HZ() + 4 + (i % 3) * 6, 2 + k * 10, .8 + k * 2, 0, 0, 7); ctx.stroke(); } } }
+  drawFx();
+}
+function drawFx() {
   G.parts = (G.parts || []).filter(p => { p.vy += 900 * (1 / 60); p.x += p.vx / 60; p.y += p.vy / 60; p.life -= 1 / 60; if (p.life <= 0) return false; ctx.globalAlpha = Math.min(1, p.life * 2); ctx.fillStyle = p.c || 'rgba(230,245,255,.9)'; ctx.beginPath(); ctx.arc(p.x * W / 1000, p.y * H / 1000, p.r || 1.8, 0, 7); ctx.fill(); ctx.globalAlpha = 1; return true; });
   G.fx = G.fx.filter(f => { f.t += 1 / 60; const k = f.t / f.life; if (k >= 1) return false; ctx.globalAlpha = 1 - k; ctx.fillStyle = f.c || '#fff'; ctx.font = `800 ${f.s || 16}px "Plus Jakarta Sans", Arial`; ctx.textAlign = 'center'; ctx.fillText(f.txt, f.x * W, f.y * H - k * 30); ctx.globalAlpha = 1; return true; });
 }
@@ -10388,7 +10689,7 @@ function fishFinder() {
 }
 function updateFishing(dt) {
   const L = G.lureS, dawnBoost = 1.25 - tod() * .5;
-  if (G.cast) { G.cast.k += dt * 1.4; if (G.cast.k >= 1) { G.lureS = { x: G.cast.to, d: 0, bite: null, biteT: 0 }; splash(G.cast.to, .42, 10); SFX.splash(.4); G.cast = null; } }
+  if (G.cast) { G.cast.k += dt * 1.4; if (G.cast.k >= 1) { G.lureS = { x: G.cast.to, d: 0, bite: null, biteT: 0 }; { const sp = surf(G.cast.to); splash(sp.x, sp.y, 10); } SFX.splash(.4); G.cast = null; } }
   if (L && !G.fight) {
     const lu = LURES[G.lure];
     if (G.reel) { L.x -= dt * .085 * GEAR().reel; L.d = clamp(L.d + (lu.dive - .02) * dt * 1.6, 0, .97); } else L.d = clamp(L.d + lu.sink * dt, 0, .97);
@@ -10419,8 +10720,8 @@ function setHook() {
 }
 function updateFight(dt) {
   const F = G.fight, L = G.lureS, sp = FISH[F.f.sp];
-  if (F.jump) { F.jump.t += dt; if (F.jump.t > .9) { splash(L.x, .42, 22, true); SFX.splash(1); if (F.jump.reeled && Math.random() < .55) { F.jump = null; return lose('It threw the hook on the jump! Stop reeling when a fish jumps — “bow” to it.'); } F.jump = null; } else if (G.reel) F.jump.reeled = true; return; }
-  if (['bass', 'trout', 'redfish'].includes(F.f.sp) && F.stamina > .5 && Math.random() < dt * .22) { F.jump = { t: 0, reeled: false }; splash(L.x, .42, 14, true); SFX.splash(.9); SH.haptic && SH.haptic([40, 30, 40]); setTip('JUMP! Stop reeling — let it fall back.'); }
+  if (F.jump) { F.jump.t += dt; if (F.jump.t > .9) { { const sp = surf(L.x); splash(sp.x, sp.y, 22, true); } SFX.splash(1); if (F.jump.reeled && Math.random() < .55) { F.jump = null; return lose('It threw the hook on the jump! Stop reeling when a fish jumps — “bow” to it.'); } F.jump = null; } else if (G.reel) F.jump.reeled = true; return; }
+  if (['bass', 'trout', 'redfish'].includes(F.f.sp) && F.stamina > .5 && Math.random() < dt * .22) { F.jump = { t: 0, reeled: false }; { const sp = surf(L.x); splash(sp.x, sp.y, 14, true); } SFX.splash(.9); SH.haptic && SH.haptic([40, 30, 40]); setTip('JUMP! Stop reeling — let it fall back.'); }
   F.surge -= dt; if (F.surge <= 0) { F.surge = rnd(.6, 2); F.pull = rnd(.15, .55) * sp.fight * (.6 + Math.min(1.2, F.f.w / 8)) * Math.max(.35, F.stamina / (1 + F.f.w * .07)); }
   const reelForce = G.reel ? .45 : 0, drag = .9;
   F.tension = clamp(F.tension + ((F.pull + reelForce) - F.tension) * dt * 3, 0, 1.4);
@@ -10442,7 +10743,7 @@ function landFish() {
   const len = Math.round(({ bass: 12.5, crappie: 11.8, bream: 9, catfish: 13, redfish: 14, trout: 15, flounder: 12.6 }[f.sp] || 12) * Math.cbrt(f.w) + rnd(-.6, .6)); const rec = G.recs[f.sp], pb = !rec || f.w > rec.w;
   if (pb) { G.recs[f.sp] = { w: f.w, len, place: PLACES[G.place].name }; LS.set('od-recs', G.recs); }
   const guide = LS.get('od-guide', {}), firstOf = !guide[f.sp]; guide[f.sp] = (guide[f.sp] || 0) + 1; LS.set('od-guide', guide); if (firstOf) setTimeout(() => SH.toast(`Field Guide: ${F.name} unlocked`), 600);
-  SFX.splash(.7); splash(.15, .42, 16); SH.haptic && SH.haptic([30, 40, 60]);
+  SFX.splash(.7); { const sp = surf(.17); splash(sp.x, sp.y, 16); } SH.haptic && SH.haptic([30, 40, 60]);
   showCard({ title: F.name, big: fmtW(f.w), small: `${len} in · ${PLACES[G.place].name}${pb ? ' · 🏆 Personal best!' : ''}`, draw: c => drawFishOn(c.getContext('2d'), f), art: () => drawFish(Object.assign({}, f, { wig: 0, w: Math.min(f.w, 8) }), 0, 0, 62, false),
     buttons: [['Keep it', () => { G.bag.push({ kind: 'fish', sp: f.sp, name: F.name, w: f.w, len, pts: Math.round(f.w * 10) }); recalc(); }], ['Release it 🌊', () => { G.score += 5; G.released = (G.released || 0) + 1; G.fx.push({ txt: '+5 conservation', x: .5, y: .4, t: 0, life: 1.4, c: '#7ee0a8' }); recalc(); }]] });
 }
@@ -10542,7 +10843,7 @@ function scopeView() {
 const swayAmp = () => (G.breath > 0 ? .25 : 1) * (RU.assist ? 6 : 11) * GEAR().steady;
 const swayX = () => Math.sin(G.t * 1.3) * swayAmp() + Math.sin(G.t * 3.1) * swayAmp() * .3;
 const swayY = () => Math.cos(G.t * 1.1) * swayAmp() * .8;
-function targetUnder() { const ax = G.aim.x * W + swayX(), ay = G.aim.y * H + swayY(); return G.deer.find(d => { const s = d.z * H * .22; return Math.abs(ax - d.x * W) < s * .45 && ay > d.y * H - s * .9 && ay < d.y * H; }); }
+function targetUnder() { const ax = G.aim.x * W + swayX(), ay = G.aim.y * H + swayY(); if (D3.ok && camBase) return G.deer.find(d => { const s = deerScr(d); return ax > s.l && ax < s.r && ay > s.t && ay < s.b; }); return G.deer.find(d => { const s = d.z * H * .22; return Math.abs(ax - d.x * W) < s * .45 && ay > d.y * H - s * .9 && ay < d.y * H; }); }
 function updateDeer(dt) {
   G.breath = Math.max(0, G.breath - dt); G.breathCd = Math.max(0, G.breathCd - dt);
   if (Math.random() < dt * .16 * (G.weather && G.weather.id === 'rain' ? 1.3 : 1) && G.deer.length < 3) spawnDeer();
@@ -10557,11 +10858,13 @@ function shootDeer() {
   if (G.mode !== 'photo' && G.shells <= 0) { flash('Out of rounds for this trip.'); return; }
   const ax = G.aim.x * W + swayX(), ay = G.aim.y * H + swayY(); if (G.mode !== 'photo') { G.shells--; SFX.boom(true); } else SFX.shutter(); G.muzzle = G.mode === 'photo' ? .03 : .1;
   const d = targetUnder();
-  if (G.mode === 'photo') { if (!d) { flash('Just trees in that shot.'); return; } const s = d.z * H * .22, cxd = d.x * W, cyd = d.y * H - s * .5, off = Math.hypot(ax - cxd, ay - cyd) / s; const pts = Math.round((d.sp.pts + 4) * d.z * Math.max(.2, 1 - off) * 4); G.bag.push({ kind: 'photo', sp: d.sp.id, name: `Photo: ${d.sp.name}`, pts }); G.fx.push({ txt: `📸 +${pts}`, x: d.x, y: d.y - .2, t: 0, life: 1.2, c: '#fff' }); recalc(); return; }
-  G.deer.forEach(o => { o.spooked = true; o.walk = true; o.vx = Math.sign(o.vx || 1) * .09; });
-  if (!d) { flash('Missed clean — the deer bolted. No harm done.'); return; }
-  const s = d.z * H * .22, vx = d.x * W + (d.vx < 0 ? -1 : 1) * s * .12, vy = d.y * H - s * .48; // vitals: just behind the front shoulder
-  const inV = Math.hypot((ax - vx) / (s * .13), (ay - vy) / (s * .1)) < 1, broadside = !d.walk || Math.abs(d.vx) < .07, range = 40 + (1 - d.z) * 160;
+  if (G.mode === 'photo') { if (!d) { flash('Just trees in that shot.'); return; } let s = d.z * H * .22, cxd = d.x * W, cyd = d.y * H - s * .5; if (D3.ok && camBase) { const q = deerScr(d); s = Math.max(20, q.b - q.t); cxd = (q.l + q.r) / 2; cyd = (q.t + q.b) / 2; } const off = Math.hypot(ax - cxd, ay - cyd) / s; const pts = Math.round((d.sp.pts + 4) * d.z * Math.max(.2, 1 - off) * 4); G.bag.push({ kind: 'photo', sp: d.sp.id, name: `Photo: ${d.sp.name}`, pts }); G.fx.push({ txt: `📸 +${pts}`, x: d.x, y: d.y - .2, t: 0, life: 1.2, c: '#fff' }); recalc(); return; }
+  const spook = () => G.deer.forEach(o => { o.spooked = true; o.walk = true; o.vx = Math.sign(o.vx || 1) * .09; });
+  if (!d) { spook(); flash('Missed clean — the deer bolted. No harm done.'); return; }
+  let inV, range; const broadside = !d.walk || Math.abs(d.vx) < .07;
+  if (D3.ok && camBase) { const sc = deerScr(d); inV = Math.hypot(ax - sc.vx, ay - sc.vy) < sc.vrad * 1.15; range = sc.dist * 1.094; }
+  else { const s = d.z * H * .22, vx = d.x * W + (d.vx < 0 ? -1 : 1) * s * .12, vy = d.y * H - s * .48; inV = Math.hypot((ax - vx) / (s * .13), (ay - vy) / (s * .1)) < 1; range = 40 + (1 - d.z) * 160; } // vitals: just behind the front shoulder
+  spook();
   if (!inV || !broadside || range > (RU.assist ? 220 : 180)) { flash(range > 180 ? 'Too far for an ethical shot — it ran off.' : 'Not a clean vital shot — missed, and it ran off. Wait for broadside.'); return; }
   if (RU.limits && !d.sp.legal) { penalty(40, `${d.sp.name} isn’t legal on this stand (game rule: bucks with 8+ points). Check before you squeeze.`); d.gone = true; return; }
   d.gone = true; const score = d.sp.pts * 10 + Math.round(d.z * 20);
@@ -10701,7 +11004,12 @@ function endTrip(manual) {
 let last = 0, running = false;
 function loop(now) {
   if (root.classList.contains('hidden')) { running = false; SFX.stopAmb(); return; }
-  const dt = Math.min(.05, (now - last) / 1000 || 0); last = now;
+  const real = Math.min(.25, (now - last) / 1000 || 0); last = now;
+  if (D3.ok && (RU.gfx || 'auto') === 'auto' && real > 0) { slow = slow * .95 + (real > .045 ? 1 : 0) * .05; if (slow > .8) { slow = 0; if (glScale > .6) { glScale = .6; layout(); } else { gfxApply.failed = true; gfxApply(); SH.toast('Switched to classic art for smoother play'); } } }
+  let rem = real; while (rem > 1e-4) { const dt = Math.min(.05, rem); rem -= dt; tickTrip(dt); }
+  draw(); requestAnimationFrame(loop);
+}
+function tickTrip(dt) {
   if (G.phase === 'trip' && !G.paused) {
     G.t += dt; G.muzzle = Math.max(0, (G.muzzle || 0) - dt);
     if (G.charge) { G.charge.t += dt; setTip(`Power ${Math.round(clamp(G.charge.t / 1.2, .15, 1) * 100)}% — let go to cast`); }
@@ -10711,7 +11019,6 @@ function loop(now) {
     if (Math.floor(G.t) !== Math.floor(G.t - dt)) { hud(); if (Math.floor(G.t) % 25 === 0) { G.tip = (G.tip + 1) % TIPS.length; $('od-safe').textContent = TIPS[G.tip]; } }
     if (G.t >= G.trip) endTrip(false);
   }
-  draw(); requestAnimationFrame(loop);
 }
 cv.addEventListener('pointermove', e => { const r = cv.getBoundingClientRect(); G.aim = { x: (e.clientX - r.left) / r.width, y: (e.clientY - r.top) / r.height }; });
 cv.addEventListener('pointerdown', e => {
@@ -10731,11 +11038,11 @@ document.addEventListener('keydown', e => {
 document.addEventListener('keyup', e => { if (root.classList.contains('hidden') || act() !== 'fish') return; if (e.key === ' ') { if (G.charge) { const p = clamp(G.charge.t / 1.2, .15, 1); G.charge = null; G.cast = { k: 0, to: .2 + p * .75 }; } G.reel = false; } });
 window.addEventListener('resize', () => { if (!root.classList.contains('hidden')) { layout(); draw(); } });
 McRules.mount('outdoors', $('rules-outdoors'));
-McRules.onChange('outdoors', () => { RU = McRules.get('outdoors'); if (G.phase === 'lodge') lodge(); });
+McRules.onChange('outdoors', () => { RU = McRules.get('outdoors'); gfxApply.failed = false; slow = 0; glScale = 1; gfxApply(); layout(); if (G.phase === 'lodge') lodge(); });
 $('od-safe').textContent = TIPS[0];
 SH.games.outdoors = {
   onShow() { if (matchMedia('(orientation: portrait) and (max-width: 700px)').matches && !LS.get('od-rot', false)) { LS.set('od-rot', true); setTimeout(() => SH.toast('Tip: turn your phone sideways for a bigger view'), 900); } requestAnimationFrame(() => { layout(); if (G.phase !== 'trip' && G.phase !== 'done') lodge(); if (!running) { running = true; last = performance.now(); requestAnimationFrame(loop); } }); },
-  _G: G, _start: startTrip, _end: endTrip, _setHook: setHook, _shootDuck: shootDuck, _shootDeer: shootDeer, _lodge: lodge,
+  _G: G, _deerScr: d => deerScr(d), _sway: () => [swayX(), swayY()], _start: startTrip, _end: endTrip, _setHook: setHook, _shootDuck: shootDuck, _shootDeer: shootDeer, _lodge: lodge,
 };
 })();
 
