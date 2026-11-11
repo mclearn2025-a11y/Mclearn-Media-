@@ -1,0 +1,20 @@
+{
+  "name": "McLearn Arena",
+  "short_name": "McLearn Arena",
+  "description": "20 games, trivia challenges and McLearn Bucks from McLearn Media.",
+  "start_url": "/arena/",
+  "scope": "/arena/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#120004",
+  "theme_color": "#1e0007",
+  "categories": ["games", "education", "entertainment"],
+  "icons": [
+    { "src": "/arena/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/arena/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Challenge Center", "url": "/arena/?game=challenges" },
+    { "name": "Leaderboards", "url": "/arena/?game=leaders" }
+  ]
+}

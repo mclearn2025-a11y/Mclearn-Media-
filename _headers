@@ -2,7 +2,7 @@
   X-Frame-Options: SAMEORIGIN
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: geolocation=(), microphone=(), camera=(), interest-cohort=()
+  Permissions-Policy: geolocation=(), microphone=(self), camera=(), interest-cohort=()
 
 /*.mp3
   Cache-Control: public, max-age=31536000, immutable
@@ -12,3 +12,11 @@
 
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
+
+/arena/sw.js
+  Cache-Control: no-cache
+  Service-Worker-Allowed: /arena/
+
+/arena/manifest.webmanifest
+  Content-Type: application/manifest+json
+  Cache-Control: public, max-age=3600

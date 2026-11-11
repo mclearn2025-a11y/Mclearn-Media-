@@ -3,7 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>McLearn Arena — 16 Games by McLearn Media</title>
+<title>McLearn Arena — 20 Games by McLearn Media</title>
+<meta name="description" content="Play 20 games free — Spades, Biz Wiz, Dominoes, Chess, Bingo and more — plus trivia challenges in Bible, African American history, sports and music. Earn McLearn Bucks and climb the leaderboards.">
+<meta name="theme-color" content="#1e0007">
+<link rel="manifest" href="/arena/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/arena/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/arena/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="McLearn Arena">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="McLearn Media">
+<meta property="og:title" content="McLearn Arena — 20 games by McLearn Media">
+<meta property="og:description" content="Spades, Biz Wiz, Dominoes, Chess and more, plus trivia challenges. Free to play — earn McLearn Bucks and climb the leaderboards.">
+<meta property="og:image" content="/arena/og-arena.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="/arena/og-arena.png">
+<script>if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)&&location.pathname.indexOf('/arena')===0)addEventListener('load',function(){navigator.serviceWorker.register('/arena/sw.js',{scope:'/arena/'}).catch(function(){})});</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -1140,7 +1157,67 @@ body.event .gwrap .felt{transform:none}
 .qz-end{text-align:center;display:flex;flex-direction:column;gap:6px;align-items:center}
 .qz-big{font-family:var(--serif);font-weight:900;font-size:72px;line-height:1;background:var(--goldg);-webkit-background-clip:text;background-clip:text;color:transparent}.qz-big small{font-size:30px}
 .qz-earn{margin-top:6px;font-family:var(--serif);font-size:22px;color:#ffe6a8}
-@media (max-width:640px){.qz-opts{grid-template-columns:1fr}.ch-wallet{grid-template-columns:1fr}.chw-side{align-items:flex-start;text-align:left}.ch-daily{flex-direction:column;align-items:flex-start}.ch-cats{grid-template-columns:1fr 1fr!important;gap:10px!important}.ch-cat{padding:14px 12px!important;min-height:0!important}.ch-cat small{display:none}.ch-cat b{font-size:15px!important}.ch-cat .pill{font-size:9.5px}#view-challenges .gb-btn span,#view-leaders .gb-btn span{display:inline!important;font-size:12px}#view-challenges .sec-h{flex-direction:column;align-items:flex-start;gap:2px}}
+.qz-grid{font-size:22px;letter-spacing:3px;margin-top:10px}
+#qz-race{display:flex;flex-direction:column;gap:6px;margin:10px 0 2px;padding:10px 12px;border-radius:14px;background:rgba(0,0,0,.28);border:1px solid var(--line)}
+.rc-lane{display:grid;grid-template-columns:110px 1fr 32px;align-items:center;gap:10px}.rc-name{font-size:12px;font-weight:800;color:var(--wg-400);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rc-lane.ghost .rc-name{color:#9fb8ff}
+.rc-track{position:relative;height:34px;border-radius:20px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 10%,rgba(255,255,255,.02) 10% 20%);border:1px dashed rgba(255,255,255,.12)}
+.rc-track::after{content:'🏁';position:absolute;right:4px;top:50%;transform:translateY(-50%);font-size:16px}
+.rc-run{position:absolute;top:2px;left:calc(var(--p) * (100% - 32px));transition:left .8s cubic-bezier(.2,1.3,.4,1);width:30px;height:30px;display:grid;place-items:center}
+.rc-run .mav,.rc-run img{width:30px;height:30px;border-radius:50%}.rc-lane.ghost .rc-run{opacity:.75;filter:drop-shadow(0 0 8px #6f8dff)}
+.dr-them.sm{width:28px;height:28px;font-size:13px}
+.rc-n{font:900 18px var(--mono);color:var(--amber);text-align:right}
+.rc-lock{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:11.5px;font-weight:800;padding:3px 10px;border-radius:20px;background:#22305a;color:#cfe0ff;white-space:nowrap;animation:dbIn .3s}.rc-lock.ok{background:#14492f;color:#bff5d6}.rc-lock.no{background:#5a1a22;color:#ffd0d6}
+.dr-t{grid-column:1/-1;text-align:center;font-size:11.5px;color:var(--rose-300)}
+.sc-img{width:100%;border-radius:14px;display:block;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+@media (max-width:640px){.rc-lane{grid-template-columns:70px 1fr 26px}}
+.vc-bar{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.vc-btn{border:1px solid var(--line);background:rgba(0,0,0,.3);color:var(--wg-400);border-radius:999px;padding:6px 12px;font-size:12px;font-weight:700;transition:all .2s}
+.vc-btn.on{background:linear-gradient(135deg,#f4c86a,#c08a1c);color:#1e0007;border-color:#f4c86a}
+.vc-mic{width:34px;height:34px;padding:0;display:grid;place-items:center;font-size:15px}
+.vc-mic.live{background:#d83a4a;border-color:#ff8090;color:#fff;animation:micPulse 1s infinite}
+@keyframes micPulse{0%{box-shadow:0 0 0 0 rgba(216,58,74,.7)}100%{box-shadow:0 0 0 14px rgba(216,58,74,0)}}
+.qz-top{flex-wrap:wrap;gap:8px}
+.pt-entry{display:flex;align-items:center;gap:16px;width:100%;text-align:left;padding:18px 20px;margin:12px 0;border-radius:18px;border-color:rgba(244,200,106,.4)!important;background:linear-gradient(110deg,rgba(80,10,30,.9),rgba(25,30,70,.85))!important;color:inherit;transition:transform .2s}
+.pt-entry:hover{transform:translateY(-2px)}.pt-entry>div{flex:1}.pt-entry b{display:block;font-size:20px}.pt-entry small{color:var(--rose-300);font-size:12.5px}.pt-e-ic{font-size:40px}.pt-entry .btn-gold{pointer-events:none;white-space:nowrap}
+body.party-on{overflow:hidden}
+#party{position:fixed;inset:0;z-index:900;display:flex;flex-direction:column;background:radial-gradient(circle at 50% 0%,#3a0613 0%,#120004 60%,#07000a 100%);color:#fff;overflow:auto}
+#party.hidden{display:none}
+.pt-top{display:flex;justify-content:space-between;align-items:center;padding:14px 22px}.pt-brand{display:flex;gap:10px;align-items:center;font-size:22px}.pt-brand b{font-size:22px;color:var(--amber)}.pt-tools{display:flex;gap:8px}
+#pt-body{flex:1;display:flex;align-items:center;justify-content:center;padding:10px 4vw 20px}
+.pt-setup{max-width:820px;width:100%;display:flex;flex-direction:column;gap:16px}.pt-setup h2{font-size:clamp(26px,4vw,42px);margin:0}.pt-row{display:flex;flex-direction:column;gap:8px}
+.pt-names{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}.pt-names label{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:12px;background:rgba(0,0,0,.3);border:2px solid var(--tc)}.pt-names i{width:14px;height:14px;border-radius:50%;background:var(--tc);flex:none}.pt-names input{flex:1;min-width:0;background:none;border:0;color:#fff;font-weight:700;font-size:15px;outline:none}
+.pt-go{font-size:18px!important;padding:16px!important}
+.pt-q{width:100%;max-width:1200px;display:flex;flex-direction:column;gap:18px}
+.pt-meta{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.pt-meta .pill{font-size:clamp(11px,1.2vw,16px);padding:5px 12px}.pt-turn{font:800 clamp(18px,2.4vw,28px) var(--sans);color:var(--tc);text-shadow:0 0 24px var(--tc)}
+.pt-q.steal .pt-turn{animation:ptPulse .8s infinite alternate}@keyframes ptPulse{to{opacity:.55}}
+.pt-timer{position:relative;height:14px;border-radius:10px;background:rgba(255,255,255,.08);overflow:visible}.pt-timer i{position:absolute;inset:0;border-radius:10px;background:linear-gradient(90deg,var(--tc),#fff3);transform-origin:left;transition:transform .1s linear}.pt-timer b{position:absolute;right:0;top:-34px;font:900 28px var(--mono);color:var(--tc)}
+.pt-text{font-size:clamp(26px,4.2vw,58px);line-height:1.15;margin:6px 0 4px}
+.pt-opts{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.pt-opt{display:flex;align-items:center;gap:16px;padding:clamp(14px,2vw,26px);border-radius:18px;border:2px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:#fff;font-size:clamp(17px,2.4vw,32px);font-weight:700;text-align:left;transition:transform .15s,background .2s,border-color .2s}
+.pt-opt:hover:not(:disabled){transform:translateY(-2px);border-color:var(--tc)}.pt-opt b{flex:none;width:1.8em;height:1.8em;border-radius:50%;display:grid;place-items:center;background:var(--tc);color:#120004;font-size:.8em}
+.pt-opt.right{background:rgba(47,174,116,.35);border-color:#4ade80}.pt-opt.wrong{background:rgba(220,60,70,.3);border-color:#f87171}.pt-opt:disabled{cursor:default}
+.pt-fb{padding:16px 20px;border-radius:16px;font-size:clamp(17px,2.2vw,28px);background:rgba(0,0,0,.35);border:1px solid var(--line)}.pt-fb.ok{border-color:#4ade80}.pt-fb small{display:block;font-size:.6em;color:var(--rose-300);margin-top:6px}
+#pt-fb{display:flex;flex-direction:column;gap:12px;align-items:flex-end}#pt-fb .pt-fb{align-self:stretch}#pt-next{font-size:18px!important;padding:14px 28px!important}
+.pt-score{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;padding:12px 16px 18px}
+.pt-team{min-width:130px;padding:10px 16px;border-radius:14px;background:rgba(0,0,0,.4);border:2px solid color-mix(in srgb,var(--tc) 45%,transparent);display:flex;flex-direction:column;align-items:center;transition:transform .25s}
+.pt-team b{font-size:13px;color:var(--tc)}.pt-team span{font:900 clamp(22px,3vw,38px) var(--mono)}.pt-team.up{transform:translateY(-6px);border-color:var(--tc);box-shadow:0 0 30px -6px var(--tc)}.pt-team.lead b::before{content:'👑 '}
+.pt-team span.bump{animation:ptBump .5s}@keyframes ptBump{40%{transform:scale(1.25)}}
+.pt-end{text-align:center;width:100%;max-width:900px}.pt-end h2{font-size:clamp(30px,5vw,60px);margin:6px 0 20px}
+.podium{display:grid;grid-template-columns:repeat(3,1fr);align-items:end;gap:12px;max-width:640px;margin:0 auto 12px}
+.pd{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;border-radius:16px 16px 6px 6px;padding:14px 8px;background:linear-gradient(180deg,color-mix(in srgb,var(--tc) 55%,#000),rgba(0,0,0,.5));border:2px solid var(--tc);animation:pdUp .7s cubic-bezier(.2,1.3,.4,1) both}
+.pd1{height:230px;animation-delay:.5s}.pd2{height:170px;animation-delay:.25s}.pd3{height:130px}.pd b{font-size:15px}.pd span{font:900 30px var(--mono)}.pd i{font:900 20px var(--serif);font-style:normal;color:var(--amber)}
+@keyframes pdUp{from{transform:translateY(40px);opacity:0}}
+@media (max-width:640px){.pt-opts{grid-template-columns:1fr}.pt-entry{flex-wrap:wrap}.pt-entry .btn-gold{width:100%;text-align:center}.pt-team{min-width:96px;padding:8px 10px}}
+.duel-res{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin:16px auto 0;width:min(380px,100%);font-family:var(--sans);padding:14px;border-radius:16px;background:rgba(0,0,0,.28);border:1px solid rgba(244,200,106,.35)}
+.dr-side{display:flex;flex-direction:column;align-items:center;gap:4px}.dr-side b{font:900 34px var(--serif);color:var(--amber)}.dr-side small{font-size:11px;color:var(--rose-300);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dr-them{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#2a5aa0,#13284d);font:800 20px var(--sans);border:2px solid rgba(255,255,255,.25)}
+.dr-vs{font:900 14px var(--mono);color:var(--rose-400);letter-spacing:.2em}.dr-v{grid-column:1/-1;text-align:center;font-size:20px;color:#fff}
+.duel-banner{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:18px;margin-bottom:12px;border-color:rgba(244,200,106,.55)!important;background:linear-gradient(120deg,rgba(120,20,40,.85),rgba(60,30,5,.85))!important;animation:dbIn .5s cubic-bezier(.2,1.4,.4,1)}
+.duel-banner .db-ic{font-size:34px}.duel-banner b{display:block;font-size:16px}.duel-banner small{color:var(--rose-300);font-size:12.5px}.duel-banner>div:nth-child(2){flex:1}
+@keyframes dbIn{from{transform:translateY(-10px) scale(.97);opacity:0}}
+.ch-code{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:0 0 12px;padding:10px 14px;border-radius:14px;border:1px dashed var(--line);font-size:12.5px;color:var(--rose-300)}
+.ch-code input{flex:1;min-width:150px;background:rgba(0,0,0,.3);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-family:var(--mono);font-size:12px;text-transform:uppercase;color:#fff}
+@media (max-width:640px){.qz-opts{grid-template-columns:1fr}.duel-banner{flex-wrap:wrap}.duel-banner>div:nth-child(2){min-width:180px}.ch-wallet{grid-template-columns:1fr}.chw-side{align-items:flex-start;text-align:left}.ch-daily{flex-direction:column;align-items:flex-start}.ch-cats{grid-template-columns:1fr 1fr!important;gap:10px!important}.ch-cat{padding:14px 12px!important;min-height:0!important}.ch-cat small{display:none}.ch-cat b{font-size:15px!important}.ch-cat .pill{font-size:9.5px}#view-challenges .gb-btn span,#view-leaders .gb-btn span{display:inline!important;font-size:12px}#view-challenges .sec-h{flex-direction:column;align-items:flex-start;gap:2px}}
 .me-top{display:flex;gap:16px;align-items:flex-start;margin-bottom:12px}
 .me-prev .mav{border-radius:50%;box-shadow:0 0 0 3px rgba(244,200,106,.7),0 12px 30px rgba(0,0,0,.6)}
 .me-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
@@ -1278,7 +1355,7 @@ body.event #chat-dock{display:none}
   </div>
   <div id="cont-row"></div>
   <div class="lob-tools">
-    <label class="lob-search"><svg class="ic"><use href="#i-search"/></svg><input id="lob-q" type="search" placeholder="Search 16 games…" autocomplete="off" aria-label="Search games"></label>
+    <label class="lob-search"><svg class="ic"><use href="#i-search"/></svg><input id="lob-q" type="search" placeholder="Search 20 games…" autocomplete="off" aria-label="Search games"></label>
     <div class="lob-chips" id="lob-chips" role="tablist" aria-label="Game categories"></div>
   </div>
   <div id="shelves"></div>
@@ -1541,7 +1618,7 @@ body.event #chat-dock{display:none}
     <button id="copy-email"><svg class="ic"><use href="#i-mail"/></svg>Mclearn2025@gmail.com</button>
     <a href="tel:+16018089559"><svg class="ic"><use href="#i-phone"/></svg>(601) 808-9559</a>
   </div>
-  <a class="sf-solo" href="./">▸ Play all 16 games in the McLearn Arena</a><div class="sf-note">All chips are practice chips — no real money, no purchases, no gambling. Opponent names are fictional. © McLearn Media LLC</div>
+  <a class="sf-solo" href="./">▸ Play all 20 games in the McLearn Arena</a><div class="sf-note">All chips are practice chips — no real money, no purchases, no gambling. Opponent names are fictional. © McLearn Media LLC</div>
 </footer>
 <div class="modal hidden" id="vip-modal">
   <div class="glass box" style="text-align:center;border-color:var(--rose-400)">
@@ -9522,6 +9599,88 @@ const Q = {
   ]
 };
 // endless math, harder as your streak grows
+// Round 1 expansion — more questions per category
+const MORE = {
+  bible: [
+    ['Who was the oldest man in the Bible, living 969 years?', ['Noah', 'Methuselah', 'Adam', 'Enoch'], 1, 'Methuselah (Genesis 5:27).', 2],
+    ['What did God give Moses on Mount Sinai?', ['A staff', 'The Ten Commandments', 'A crown', 'Manna'], 1, 'The tablets of the law (Exodus 20).', 1],
+    ['Which book comes right after the four Gospels?', ['Romans', 'Acts', 'Revelation', 'Hebrews'], 1, 'Acts of the Apostles.', 2],
+    ['Whose walls fell after the Israelites marched around them?', ['Babylon', 'Nineveh', 'Jericho', 'Rome'], 2, 'Jericho (Joshua 6).', 1],
+    ['Who was sold into slavery by his brothers?', ['Benjamin', 'Joseph', 'Reuben', 'Isaac'], 1, 'Joseph, who later ruled in Egypt (Genesis 37).', 1],
+    ['On which road was Saul (Paul) converted?', ['The road to Emmaus', 'The road to Damascus', 'The road to Jericho', 'The road to Bethany'], 1, 'Acts 9.', 2],
+  ],
+  aah: [
+    ['Which HBCU in Mississippi is the oldest public historically Black land-grant college in the U.S.?', ['Jackson State', 'Alcorn State', 'Tougaloo', 'Rust College'], 1, 'Alcorn State, founded 1871.', 2],
+    ['The 1964 “Freedom Summer” voter drive took place mainly in…', ['Georgia', 'Mississippi', 'Alabama', 'Louisiana'], 1, 'Volunteers registered Black voters across Mississippi.', 2],
+    ['The Tuskegee Airmen served in which war?', ['World War I', 'World War II', 'Korean War', 'Vietnam War'], 1, 'They flew in World War II.', 1],
+    ['Ida B. Wells, born in Holly Springs, Mississippi, is famous for exposing…', ['Voter fraud', 'Lynching', 'Child labor', 'Bank fraud'], 1, 'Her journalism documented lynching across the South.', 2],
+    ['Hiram Revels of Mississippi was the first Black person to serve in…', ['The U.S. House', 'The U.S. Senate', 'The Cabinet', 'The Supreme Court'], 1, 'He took his Senate seat in 1870.', 2],
+  ],
+  history: [
+    ['Which city was the first U.S. capital under the Constitution?', ['Philadelphia', 'Washington, D.C.', 'New York City', 'Boston'], 2, 'Washington took the oath in New York in 1789.', 3],
+    ['Lincoln’s Emancipation Proclamation took effect in…', ['1861', '1863', '1865', '1870'], 1, 'January 1, 1863.', 2],
+    ['Who was U.S. president for most of World War II?', ['Harry Truman', 'Franklin D. Roosevelt', 'Herbert Hoover', 'Dwight Eisenhower'], 1, 'FDR led until his death in April 1945.', 2],
+    ['Which amendment gave women the right to vote?', ['14th', '15th', '19th', '26th'], 2, 'The 19th Amendment, 1920.', 2],
+    ['The Great Wall was built mainly to protect which country?', ['Japan', 'China', 'Mongolia', 'Korea'], 1, 'China built it against northern raids.', 1],
+    ['Which ancient people built the pyramids at Giza?', ['Romans', 'Greeks', 'Egyptians', 'Persians'], 2, 'Ancient Egyptians, about 4,500 years ago.', 1],
+    ['The Siege of Vicksburg ended in 1863 on what date?', ['July 4', 'January 1', 'December 25', 'April 9'], 0, 'Vicksburg surrendered July 4, 1863.', 3],
+  ],
+  sports: [
+    ['Which Jackson State coach led the Tigers to SWAC titles in 2021 and 2022?', ['Deion Sanders', 'Eddie Robinson', 'T.C. Taylor', 'Doug Williams'], 0, 'Deion “Coach Prime” Sanders.', 2],
+    ['In tennis, a score of zero is called…', ['Nil', 'Love', 'Zero', 'Duck'], 1, 'Love.', 1],
+    ['Which sprinter won 100 m gold at three straight Olympics (2008–2016)?', ['Carl Lewis', 'Usain Bolt', 'Justin Gatlin', 'Maurice Greene'], 1, 'Usain Bolt of Jamaica.', 1],
+    ['The Super Bowl championship trophy is named for…', ['Vince Lombardi', 'George Halas', 'Pete Rozelle', 'Paul Brown'], 0, 'The Vince Lombardi Trophy.', 2],
+    ['How many points is a free throw worth?', ['1', '2', '3', '0.5'], 0, 'One point.', 1],
+  ],
+  music: [
+    ['A group of three notes played together is called a…', ['Scale', 'Chord', 'Riff', 'Loop'], 1, 'A three-note chord is a triad.', 1],
+    ['Which Jackson-based record label is famous for Southern soul and blues?', ['Motown', 'Malaco', 'Stax', 'Chess'], 1, 'Malaco Records, founded in Jackson in 1962.', 2],
+    ['Which Mississippi Delta town is home to the Delta Blues Museum?', ['Clarksdale', 'Tupelo', 'Biloxi', 'Hattiesburg'], 0, 'Clarksdale — a crossroads of Delta blues history.', 2],
+    ['B.B. King’s famous guitar was named…', ['Lucille', 'Betty', 'Sweet Sue', 'Lula'], 0, 'Lucille.', 1],
+    ['Gospel singer Mahalia Jackson was known as the…', ['Queen of Soul', 'Queen of Gospel', 'First Lady of Song', 'Empress of the Blues'], 1, 'She was called the Queen of Gospel.', 2],
+    ['“BPM” in music stands for…', ['Bars per measure', 'Beats per minute', 'Bass pitch mode', 'Beat pattern mix'], 1, 'Tempo is measured in beats per minute.', 1],
+    ['Who is known as the “Godfather of Soul”?', ['Ray Charles', 'James Brown', 'Otis Redding', 'Sam Cooke'], 1, 'James Brown.', 1],
+    ['A song’s “master” recording is…', ['The sheet music', 'The original final recording', 'The music video', 'The lyrics file'], 1, 'Owning your masters means owning the recording itself.', 2],
+  ],
+  science: [
+    ['Which planet is famous for its bright rings?', ['Mars', 'Saturn', 'Venus', 'Mercury'], 1, 'Saturn’s rings are ice and rock.', 1],
+    ['What is the chemical symbol for gold?', ['Go', 'Gd', 'Au', 'Ag'], 2, 'Au, from the Latin “aurum.” Ag is silver.', 2],
+    ['Your skin makes which vitamin in sunlight?', ['Vitamin A', 'Vitamin C', 'Vitamin D', 'Vitamin K'], 2, 'Vitamin D.', 2],
+    ['Sound travels faster through…', ['Air', 'Water', 'Outer space', 'A vacuum'], 1, 'Sound moves about four times faster in water than air — and not at all in a vacuum.', 3],
+    ['What do caterpillars turn into?', ['Beetles', 'Butterflies or moths', 'Spiders', 'Bees'], 1, 'Through metamorphosis.', 1],
+    ['What is the largest organ of the human body?', ['Liver', 'Skin', 'Brain', 'Lungs'], 1, 'The skin.', 2],
+    ['Which organ pumps blood through the body?', ['Lungs', 'Kidneys', 'Heart', 'Stomach'], 2, 'The heart.', 1],
+    ['Which part of the cell holds DNA?', ['Nucleus', 'Membrane', 'Ribosome', 'Cell wall'], 0, 'The nucleus.', 2],
+  ],
+  geo: [
+    ['What is the largest country in Africa by area?', ['Nigeria', 'Egypt', 'Algeria', 'Sudan'], 2, 'Algeria.', 3],
+    ['Mississippi’s nickname is the…', ['Peach State', 'Magnolia State', 'Pelican State', 'Volunteer State'], 1, 'The Magnolia State.', 1],
+    ['Which river forms Mississippi’s western border?', ['Pearl River', 'Mississippi River', 'Tennessee River', 'Big Black River'], 1, 'The Mississippi River.', 1],
+    ['Which continent is Nigeria in?', ['Asia', 'Africa', 'South America', 'Europe'], 1, 'West Africa.', 1],
+    ['The Ross Barnett Reservoir sits near which Mississippi city?', ['Brandon', 'Tupelo', 'Natchez', 'Columbus'], 0, 'The Rez borders Rankin and Madison counties near Brandon.', 2],
+    ['How many states are in the U.S.?', ['48', '50', '52', '51'], 1, 'Fifty.', 1],
+    ['What is the longest river in Africa?', ['Congo', 'Niger', 'Nile', 'Zambezi'], 2, 'The Nile.', 1],
+    ['Which Gulf borders Mississippi’s coast?', ['Gulf of California', 'Gulf of Mexico (Gulf of America)', 'Persian Gulf', 'Gulf of Alaska'], 1, 'The Gulf, along Biloxi and Gulfport.', 1],
+    ['What is the capital of Ghana?', ['Lagos', 'Accra', 'Nairobi', 'Dakar'], 1, 'Accra.', 2],
+  ],
+  words: [
+    ['What is a synonym for “happy”?', ['Glad', 'Angry', 'Tired', 'Quiet'], 0, 'Glad means happy.', 1],
+    ['Which word is a noun?', ['Run', 'Quickly', 'Church', 'Blue'], 2, 'A noun names a person, place or thing.', 1],
+    ['What is the opposite of “generous”?', ['Kind', 'Selfish', 'Brave', 'Honest'], 1, 'Selfish.', 1],
+    ['“Their,” “there” and “they’re” are examples of…', ['Synonyms', 'Homophones', 'Antonyms', 'Acronyms'], 1, 'They sound alike but mean different things.', 2],
+    ['What does “resilient” mean?', ['Easily broken', 'Able to bounce back', 'Very loud', 'Hard to see'], 1, 'Resilient people recover from hard times.', 2],
+    ['Which is spelled correctly?', ['Recieve', 'Receive', 'Receeve', 'Receve'], 1, 'I before E, except after C.', 1],
+    ['A word that means the same as “begin” is…', ['Finish', 'Start', 'Pause', 'Stay'], 1, 'Start.', 1],
+    ['“Ambitious” describes someone who…', ['Avoids work', 'Has big goals', 'Is always late', 'Talks too much'], 1, 'Ambitious people aim high.', 2],
+  ],
+  mclearn: [
+    ['McLearn Arena’s play money is called…', ['McLearn Coins', 'McLearn Bucks', 'Arena Points', 'MP Cash'], 1, 'McLearn Bucks — free, play-only.', 1],
+    ['McLearn Arena’s partner card game with Uptown and Downtown bids is…', ['Spades', 'Biz Wiz', 'Tonk', 'Booray'], 1, 'Biz Wiz (also called Bid Whist).', 1],
+    ['Communara was formerly called…', ['Speakeasy', 'Talkbox', 'VoiceUp', 'SayIt'], 0, 'Communara used to be Speakeasy.', 2],
+  ],
+};
+for (const k in MORE) Q[k].push(...MORE[k]);
+
 function mathQ(level) {
   const r = (a, b) => a + Math.floor(Math.random() * (b - a + 1)), L = Math.min(3, 1 + Math.floor(level / 3));
   const kinds = L === 1 ? ['add', 'sub', 'mul'] : L === 2 ? ['add', 'sub', 'mul', 'div', 'pct'] : ['mul', 'div', 'pct', 'alg', 'ord'];
@@ -9890,10 +10049,35 @@ function pick(cat, n) {
   const out = SH.cards.shuffle(fresh.slice()).slice(0, n); ST.seen[cat] = (ST.seen[cat] || []).concat(out.map(x => x.i)); LS.set('ch-stats', ST);
   return out.map(x => { const [q, o, c, w, d] = x.q; const idx = SH.cards.shuffle([0, 1, 2, 3]); return [q, idx.map(k => o[k]), idx.indexOf(c), w, d]; });
 }
-function startQuiz(cat, daily) {
-  const n = daily ? 5 : 10, cats = T.CATS.filter(c => c.id !== 'math');
-  const qs = daily ? Array.from({ length: n }, (_, i) => { const c = cats[(new Date().getDate() + i * 3) % cats.length].id; return Object.assign(pick(c, 1)[0], { cat: c }); }) : pick(cat, n);
-  QZ = { cat, daily, qs, i: 0, score: 0, streak: 0, best: 0, earned: 0, answered: false, timer: null, t0: 0, sprint: cat === 'math' && !daily, ends: 0 };
+// ---- seeded rounds: every round can be replayed exactly by a friend ----
+function rng(seed) { let a = seed >>> 0; return () => { a = a + 0x6D2B79F5 | 0; let t = Math.imul(a ^ a >>> 15, 1 | a); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+function seededIdx(cat, n, seed, L) { const R = rng(seed), bank = T.bank[cat]; L = Math.min(L || bank.length, bank.length); const idx = [...Array(L).keys()]; for (let i = L - 1; i > 0; i--) { const j = Math.floor(R() * (i + 1)); [idx[i], idx[j]] = [idx[j], idx[i]]; } return { idx: idx.slice(0, n), R }; }
+function seededPick(cat, n, seed, L) { const { idx, R } = seededIdx(cat, n, seed, L), bank = T.bank[cat]; return idx.map(i => { const [q, o, c, w, d] = bank[i]; const p = [0, 1, 2, 3]; for (let k = 3; k > 0; k--) { const j = Math.floor(R() * (k + 1)); [p[k], p[j]] = [p[j], p[k]]; } return [q, p.map(k => o[k]), p.indexOf(c), w, d]; }); }
+function freshSeed(cat, n) { // try a few seeds, keep the one with the most questions you haven't seen
+  const seen = new Set(ST.seen[cat] || []), L = T.bank[cat].length; if (seen.size > L - n) { ST.seen[cat] = []; seen.clear(); }
+  let best = null; for (let t = 0; t < 40; t++) { const sd = Math.floor(Math.random() * 2e9), { idx } = seededIdx(cat, n, sd, L), f = idx.filter(i => !seen.has(i)).length; if (!best || f > best.f) best = { sd, f, idx }; if (f === n) break; }
+  ST.seen[cat] = (ST.seen[cat] || []).concat(best.idx); LS.set('ch-stats', ST); return best.sd;
+}
+const DCATS = () => T.CATS.filter(c => c.id !== 'math').map(c => c.id);
+function dayKey(d) { d = d || new Date(); return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate(); }
+function dailyQs(key) { // the same five questions for everyone in the world today
+  const R = rng(key * 7 + 13), cats = DCATS().slice(); for (let i = cats.length - 1; i > 0; i--) { const j = Math.floor(R() * (i + 1)); [cats[i], cats[j]] = [cats[j], cats[i]]; }
+  return cats.slice(0, 5).map((c, i) => Object.assign(seededPick(c, 1, key * 31 + i * 7919, T.bank[c].length)[0], { cat: c }));
+}
+const CODE_RE = /^(daily-\d{8}|[a-z]+-[0-9a-z]+-[0-9a-z]+)(?:-(\d{1,2}))?$/;
+function makeCode(z) { return z.daily ? `daily-${z.dkey}-${z.score}` : `${z.cat}-${z.L.toString(36)}-${z.seed.toString(36)}-${z.score}`; }
+function parseCode(code) {
+  const m = String(code || '').trim().toLowerCase().match(CODE_RE); if (!m) return null; const parts = m[1].split('-'), score = m[2] != null ? +m[2] : null;
+  if (parts[0] === 'daily') return { daily: true, dkey: +parts[1], score };
+  if (!T.bank[parts[0]]) return null; return { cat: parts[0], L: parseInt(parts[1], 36), seed: parseInt(parts[2], 36), score };
+}
+function startQuiz(cat, daily, duel) {
+  const n = daily ? 5 : 10;
+  let qs, seed = 0, L = 0, dkey = 0;
+  if (daily) { dkey = duel && duel.dkey ? duel.dkey : dayKey(); qs = dailyQs(dkey); }
+  else if (cat !== 'math') { L = duel ? duel.L : T.bank[cat].length; seed = duel ? duel.seed : freshSeed(cat, n); qs = seededPick(cat, n, seed, L); }
+  else qs = [];
+  QZ = { cat, daily, qs, i: 0, score: 0, streak: 0, best: 0, earned: 0, answered: false, timer: null, t0: 0, sprint: cat === 'math' && !daily, ends: 0, seed, L, dkey, duel: duel || null, res: [], times: [], counts: daily && dkey === dayKey() && ST.daily !== today() };
   if (QZ.sprint) { QZ.qs = [T.mathQ(0)]; QZ.ends = Date.now() + 60000; }
   $('ch-quiz').classList.remove('hidden'); $('ch-hub').classList.add('hidden'); showQ();
 }
@@ -9902,6 +10086,7 @@ function showQ() {
   const c = T.CATS.find(x => x.id === (q.cat || QZ.cat)) || T.CATS[0], limit = QZ.sprint ? 0 : 20;
   $('qz-head').innerHTML = `<span class="qz-cat" style="--h:${c.hue}">${c.icon} ${QZ.daily ? 'Daily Challenge · ' + c.name : c.name}</span><span class="pill">${QZ.sprint ? '60-second sprint' : `${QZ.i + 1} / ${QZ.qs.length}`}</span><span class="pill">🔥 ${QZ.streak}</span><span class="pill gold">+${fmt(QZ.earned)} M$</span>`;
   $('qz-q').textContent = q[0];
+  raceQ();
   $('qz-opts').innerHTML = q[1].map((o, k) => `<button class="qz-opt" data-k="${k}"><b>${'ABCD'[k]}</b><span>${esc(o)}</span></button>`).join('');
   $('qz-fb').innerHTML = ''; $('qz-next').classList.add('hidden');
   QZ.t0 = Date.now();
@@ -9917,6 +10102,8 @@ function answer(k) {
   if (!QZ || QZ.answered) return; QZ.answered = true;
   const q = QZ.qs[QZ.i], ok = k === q[2];
   if (!QZ.sprint) clearInterval(QZ.timer);
+  QZ.res.push(ok ? 1 : 0); QZ.times.push(Math.min(20000, Date.now() - QZ.t0));
+  raceAnswer(ok);
   document.querySelectorAll('#qz-opts .qz-opt').forEach((b, j) => { b.disabled = true; b.classList.toggle('right', j === q[2]); b.classList.toggle('wrong', j === k && !ok); });
   let gain = 0;
   if (ok) { QZ.score++; QZ.streak++; QZ.best = Math.max(QZ.best, QZ.streak); gain = QZ.sprint ? 5 + q[4] * 3 : [0, 10, 15, 25][q[4] || 1]; if (QZ.streak % 3 === 0) gain += 10; SH.Sound.play('good'); SH.haptic && SH.haptic(12); }
@@ -9934,32 +10121,127 @@ function endQuiz() {
   const n = QZ.sprint ? QZ.i + (QZ.answered ? 1 : 0) : QZ.qs.length, perfect = !QZ.sprint && QZ.score === n;
   let bonus = 0;
   if (perfect) bonus += QZ.daily ? 150 : 50;
-  if (QZ.daily) { ST.daily = today(); ST.dailyScore = QZ.score; if (QZ.score >= 4) bonus += 100; }
+  if (QZ.daily && QZ.counts) { ST.daily = today(); ST.dailyScore = QZ.score; ST.dailyGrid = QZ.res.join(''); if (QZ.score >= 4) bonus += 100; }
+  if (QZ.daily && !QZ.counts && perfect) bonus = 0;
   if (bonus) { const g = W.earn(bonus, QZ.daily ? 'Daily Challenge bonus' : 'Perfect round bonus'); QZ.earned += g; }
   const key = QZ.daily ? 'daily' : QZ.cat, prev = ST.best[key] || 0; if (QZ.score > prev) ST.best[key] = QZ.score; LS.set('ch-stats', ST);
   const c = T.CATS.find(x => x.id === QZ.cat) || { name: 'Daily Challenge', icon: '📅' };
   $('qz-head').innerHTML = `<span class="qz-cat">${QZ.daily ? '📅 Daily Challenge' : c.icon + ' ' + c.name}</span>`;
-  $('qz-q').innerHTML = `<div class="qz-end"><div class="qz-big">${QZ.score}<small>/${n}</small></div><div class="serif" style="font-size:22px">${perfect ? 'Perfect round!' : QZ.score >= n * .7 ? 'Great work!' : 'Keep practicing!'}</div><div class="tiny muted">${QZ.sprint ? `${QZ.score} right in 60 seconds · best streak ${QZ.best}` : `Best streak ${QZ.best}`}${QZ.score > prev ? ' · new personal best' : ''}</div><div class="qz-earn">+${fmt(QZ.earned)} McLearn Bucks</div></div>`;
-  $('qz-opts').innerHTML = `<button class="btn-gold" id="qz-again">${QZ.daily ? 'Back to challenges' : 'Play again'}</button><button class="btn-glass" id="qz-share">Share my score</button><button class="btn-glass" id="qz-back">All challenges</button>`;
+  $('qz-q').innerHTML = `<div class="qz-end"><div class="qz-big">${QZ.score}<small>/${n}</small></div><div class="serif" style="font-size:22px">${perfect ? 'Perfect round!' : QZ.score >= n * .7 ? 'Great work!' : 'Keep practicing!'}</div><div class="tiny muted">${QZ.sprint ? `${QZ.score} right in 60 seconds · best streak ${QZ.best}` : `Best streak ${QZ.best}`}${QZ.score > prev ? ' · new personal best' : ''}</div><div class="qz-earn">+${fmt(QZ.earned)} McLearn Bucks</div>${QZ.sprint ? '' : `<div class="qz-grid" aria-label="Your answers">${grid(QZ.res)}</div>`}${duelBlock(QZ)}</div>`;
+  $('qz-opts').innerHTML = `${QZ.sprint ? '' : `<button class="btn-gold" id="qz-duel">🥊 ${QZ.duel ? 'Send it back' : 'Challenge a friend'}</button>`}<button class="${QZ.sprint ? 'btn-gold' : 'btn-glass'}" id="qz-again">${QZ.daily ? 'Back to challenges' : 'Play again'}</button><button class="btn-glass" id="qz-share">Share my score</button><button class="btn-glass" id="qz-card">🖼️ Score card</button><button class="btn-glass" id="qz-back">All challenges</button>`;
   $('qz-fb').innerHTML = ''; $('qz-next').classList.add('hidden'); $('qz-bar').style.setProperty('--p', 0);
   const done = QZ; QZ = null;
   $('qz-again').onclick = () => done.daily ? closeQuiz() : startQuiz(done.cat);
   $('qz-back').onclick = closeQuiz;
-  $('qz-share').onclick = () => share({ title: 'McLearn Arena', text: `I scored ${done.score}/${n} in ${done.daily ? 'the McLearn Daily Challenge' : c.name + ' at the McLearn Arena'} and earned ${fmt(done.earned)} McLearn Bucks. Can you beat me?` });
+  const label = done.daily ? `McLearn Daily ${String(done.dkey).replace(/(\d{4})(\d\d)(\d\d)/, '$2/$3')}` : c.name;
+  $('qz-share').onclick = () => share({ title: 'McLearn Arena', text: done.sprint ? `I got ${done.score} math questions right in 60 seconds at the McLearn Arena. Can you beat me?` : `McLearn Arena · ${label} ${done.score}/${n}\n${grid(done.res)}\nCan you beat me?` });
+  if ($('qz-duel')) $('qz-duel').onclick = () => sendDuel(done, label, n);
+  $('qz-card').onclick = () => scoreCard(done, done.sprint ? 'Math Sprint · 60 seconds' : label, n);
+  const rr = $('qz-race'); if (rr) rr.remove();
+  if (done.duel) { const me = done.score, them = done.duel.score; if (them != null) SH.toast(me > them ? `You beat ${done.duel.by}!` : me === them ? `Tied with ${done.duel.by}` : `${done.duel.by} wins this one`); }
   if (perfect || QZ === null) SH.Sound.play(perfect ? 'victory' : 'good');
   if (perfect && SH.celebrate) SH.celebrate(false);
   Cloud.push();
 }
 function closeQuiz() { if (QZ) clearInterval(QZ.timer); QZ = null; $('ch-quiz').classList.add('hidden'); $('ch-hub').classList.remove('hidden'); renderHub(); }
+// ---------- Ghost Race: your friend's recorded run, replayed live ----------
+function raceEl() { let r = $('qz-race'); if (!r) { r = document.createElement('div'); r.id = 'qz-race'; $('qz-bar').after(r); } return r; }
+function raceQ() {
+  const r = $('qz-race'); clearTimeout(QZ && QZ.gT);
+  if (!QZ || !QZ.duel || !QZ.duel.ghost) { if (r) r.remove(); return; }
+  const G = QZ.duel.ghost, n = QZ.qs.length, me = QZ.score, them = G.slice(0, QZ.i).filter(x => x.ok).length, by = esc(QZ.duel.by || 'Friend');
+  raceEl().innerHTML = `<div class="rc-lane"><span class="rc-name">You</span><div class="rc-track"><span class="rc-run me" style="--p:${me / n}">${myFace(30)}</span></div><b class="rc-n">${me}</b></div>
+    <div class="rc-lane ghost"><span class="rc-name">👻 ${by}</span><div class="rc-track"><span class="rc-run" style="--p:${them / n}"><span class="dr-them sm">${by.charAt(0).toUpperCase()}</span></span><span class="rc-lock hidden" id="rc-lock">🔒 locked in</span></div><b class="rc-n" id="rc-them">${them}</b></div>`;
+  const g = G[QZ.i]; if (!g) return;
+  QZ.gT = setTimeout(() => { if (QZ && !QZ.answered) { const l = $('rc-lock'); if (l) { l.classList.remove('hidden'); SH.Sound.play('tick'); } } }, g.t);
+}
+function raceAnswer(ok) {
+  if (!QZ || !QZ.duel || !QZ.duel.ghost) return; clearTimeout(QZ.gT);
+  const g = QZ.duel.ghost[QZ.i]; if (!g) return; const n = QZ.qs.length;
+  const them = QZ.duel.ghost.slice(0, QZ.i + 1).filter(x => x.ok).length, myT = QZ.times[QZ.times.length - 1], d = ((g.t - myT) / 1000).toFixed(1);
+  const runs = document.querySelectorAll('#qz-race .rc-run'); if (runs[0]) runs[0].style.setProperty('--p', QZ.score / n); if (runs[1]) runs[1].style.setProperty('--p', them / n);
+  const tn = $('rc-them'); if (tn) tn.textContent = them; const meN = document.querySelector('#qz-race .rc-n'); if (meN) meN.textContent = QZ.score;
+  const l = $('rc-lock'); if (l) { l.classList.remove('hidden'); l.textContent = `${g.ok ? '✓' : '✗'} ${(g.t / 1000).toFixed(1)}s · ${ok && g.ok ? (d > 0 ? `you were ${d}s faster` : `they were ${-d}s faster`) : g.ok ? 'they got it' : 'they missed it'}`; l.className = 'rc-lock ' + (g.ok ? 'ok' : 'no'); }
+}
+function grid(res) { return res.map(r => r ? '🟩' : '🟥').join(''); }
+function duelBlock(z) {
+  if (!z.duel || z.duel.score == null) return '';
+  const me = z.score, them = z.duel.score, by = esc(z.duel.by || 'Your friend');
+  const G = z.duel.ghost, myT = z.times.reduce((a, b) => a + b, 0), thT = G ? G.reduce((a, b) => a + b.t, 0) : 0;
+  const verdict = me > them ? `You win! 🏆` : me < them ? `${by} takes it` : G ? (myT < thT ? `Photo finish — you win on time! 📸` : myT > thT ? `Photo finish — ${by} wins on time 📸` : 'Dead even 🤝') : 'Dead even 🤝';
+  return `<div class="duel-res"><div class="dr-side"><span>${myFace(46)}</span><b>${me}</b><small>You</small></div><div class="dr-vs">VS</div><div class="dr-side"><span class="dr-them">${by.charAt(0).toUpperCase()}</span><b>${them}</b><small>${by}</small></div><div class="dr-v serif">${verdict}</div>${G ? `<div class="dr-t">Total time · You ${(myT / 1000).toFixed(1)}s · ${by} ${(thT / 1000).toFixed(1)}s</div>` : ''}</div>`;
+}
+function ghostEnc(z) { return z.res.map((r, i) => (Math.min(200, Math.round((z.times[i] || 20000) / 100)) * 2 + (r ? 1 : 0)).toString(36).padStart(2, '0')).join(''); }
+function ghostDec(g, n) { if (!g || !/^[0-9a-z]+$/.test(g) || g.length !== n * 2) return null; const out = []; for (let i = 0; i < n; i++) { const v = parseInt(g.substr(i * 2, 2), 36); if (!(v >= 0 && v <= 401)) return null; out.push({ t: (v >> 1) * 100, ok: v & 1 }); } return out; }
+// ---------- picture score card for social media ----------
+function loadImg(src) { return new Promise(res => { const im = new Image(); im.onload = () => res(im); im.onerror = () => res(null); im.src = src; }); }
+async function scoreCard(z, label, n) {
+  const W2 = 1080, H2 = 1350, cv = document.createElement('canvas'); cv.width = W2; cv.height = H2; const x = cv.getContext('2d');
+  const serif = 'Cinzel, Georgia, serif', sans = '"Plus Jakarta Sans", Arial, sans-serif';
+  const bg = x.createRadialGradient(W2 * .5, H2 * .25, 60, W2 * .5, H2 * .5, H2 * .8); bg.addColorStop(0, '#5a0a1c'); bg.addColorStop(.55, '#1e0007'); bg.addColorStop(1, '#0a0003'); x.fillStyle = bg; x.fillRect(0, 0, W2, H2);
+  const gold = x.createLinearGradient(0, 0, W2, H2); gold.addColorStop(0, '#ffe6a8'); gold.addColorStop(.5, '#e6b84a'); gold.addColorStop(1, '#a9741a');
+  x.strokeStyle = 'rgba(230,184,74,.55)'; x.lineWidth = 4; x.strokeRect(36, 36, W2 - 72, H2 - 72);
+  // crest
+  x.save(); x.translate(W2 / 2 - 60, 80); x.scale(3, 3); const cg = x.createLinearGradient(0, 0, 40, 40); cg.addColorStop(0, '#ffe6a8'); cg.addColorStop(.5, '#e6b84a'); cg.addColorStop(1, '#9c6a14'); x.fillStyle = '#2a0009'; x.strokeStyle = cg; x.lineWidth = 1.6; const cr = new Path2D('M20 2l15 6v11c0 9.5-6.4 16.4-15 19-8.6-2.6-15-9.5-15-19V8z'); x.fill(cr); x.stroke(cr); x.lineWidth = 2.6; x.lineJoin = 'round'; x.lineCap = 'round'; x.stroke(new Path2D('M11 27V13l9 9 9-9v14')); x.fillStyle = '#f4c86a'; x.beginPath(); x.arc(20, 9, 1.6, 0, Math.PI * 2); x.fill(); x.restore();
+  x.textAlign = 'center'; x.fillStyle = gold; x.font = `900 64px ${serif}`; x.fillText('McLEARN ARENA', W2 / 2, 290);
+  x.fillStyle = '#e8c9ce'; x.font = `600 34px ${sans}`; x.fillText(label, W2 / 2, 350);
+  // avatar
+  const avSrc = ME.usePhoto && ME.photo ? ME.photo : 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(avatarSVG(ME.av, 240).replace('<svg ', '<svg xmlns="http://www.w3.org/2000/svg" '));
+  const av = await loadImg(avSrc);
+  x.save(); x.beginPath(); x.arc(W2 / 2, 520, 120, 0, Math.PI * 2); x.closePath(); x.fillStyle = '#32000c'; x.fill(); x.clip(); if (av) x.drawImage(av, W2 / 2 - 120, 400, 240, 240); x.restore();
+  x.beginPath(); x.arc(W2 / 2, 520, 124, 0, Math.PI * 2); x.strokeStyle = gold; x.lineWidth = 8; x.stroke();
+  x.fillStyle = '#fff'; x.font = `800 44px ${sans}`; x.fillText(ME.name || 'McLearn Player', W2 / 2, 700);
+  // score
+  x.fillStyle = gold; x.font = `900 200px ${serif}`; const sc = String(z.score), scW = x.measureText(sc).width; x.fillText(sc, W2 / 2 - (z.sprint ? 0 : 50), 920);
+  if (!z.sprint) { x.fillStyle = '#c57d88'; x.font = `700 80px ${serif}`; x.textAlign = 'left'; x.fillText('/' + n, W2 / 2 - 50 + scW / 2 + 6, 920); x.textAlign = 'center'; }
+  else { x.fillStyle = '#c57d88'; x.font = `700 36px ${sans}`; x.fillText('right in 60 seconds', W2 / 2, 975); }
+  // grid of results
+  if (!z.sprint) { const sq = 64, gap = 14, tot = z.res.length * sq + (z.res.length - 1) * gap; let gx = W2 / 2 - tot / 2; z.res.forEach(r => { x.fillStyle = r ? '#2fae74' : '#d0414f'; x.beginPath(); x.roundRect ? x.roundRect(gx, 990, sq, sq, 12) : x.rect(gx, 990, sq, sq); x.fill(); gx += sq + gap; }); }
+  // duel line
+  let y = 1130;
+  if (z.duel && z.duel.score != null) { x.fillStyle = '#fff'; x.font = `800 40px ${sans}`; const by = z.duel.by || 'a friend'; x.fillText(z.score > z.duel.score ? `🏆 Beat ${by} ${z.score}–${z.duel.score}` : z.score === z.duel.score ? `🤝 Tied ${by} ${z.score}–${z.duel.score}` : `${by} won ${z.duel.score}–${z.score} · rematch!`, W2 / 2, y); y += 60; }
+  x.fillStyle = '#f4c86a'; x.font = `700 36px ${sans}`; x.fillText(z.earned ? `+${fmt(z.earned)} McLearn Bucks earned` : 'Can you beat me?', W2 / 2, y);
+  x.fillStyle = 'rgba(232,201,206,.75)'; x.font = `600 28px ${sans}`; x.fillText('Play free at McLearn Media Central · A McLearn Media game', W2 / 2, H2 - 80);
+  const blob = await new Promise(r => cv.toBlob(r, 'image/png')); if (!blob) { SH.toast('Couldn’t make the card here', 'x'); return; }
+  const file = new File([blob], 'mclearn-score.png', { type: 'image/png' }), url = URL.createObjectURL(blob);
+  if (navigator.canShare && navigator.canShare({ files: [file] })) { try { await navigator.share({ files: [file], title: 'McLearn Arena', text: `${label}: ${z.score}${z.sprint ? '' : '/' + n} — can you beat me?` }); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
+  $('sh-body').innerHTML = `<img class="sc-img" src="${url}" alt="Your McLearn score card"><div class="row" style="gap:8px;margin-top:10px;flex-wrap:wrap"><a class="btn-gold" download="mclearn-score.png" href="${url}">⬇️ Save image</a><span class="tiny muted">Then post it to Instagram, TikTok, Facebook or your story.</span></div>`;
+  $('sh-modal').classList.remove('hidden'); SH.scoreCardURL = url;
+}
+function duelLink(code, g) { const u = siteUrl(); if (!u) return ''; const nm = (ME.name || '').trim(); return `${u}?duel=${code}${nm ? '&by=' + encodeURIComponent(clean(nm).slice(0, 24)) : ''}${g ? '&g=' + g : ''}`; }
+function sendDuel(z, label, n) {
+  const code = makeCode(z), url = duelLink(code, ghostEnc(z));
+  const text = `🥊 I challenge you! McLearn Arena · ${label}: I scored ${z.score}/${n}.\n${grid(z.res)}\nSame ${n} questions — race my ghost and beat me.` + (url ? '' : `\nChallenge code: ${code.toUpperCase()} (enter it in the McLearn Arena Challenge Center)`);
+  share({ title: 'McLearn Arena challenge', text, url: url || undefined });
+}
+function acceptDuel(code, by, g) {
+  const d = parseCode(code); if (d) d.ghost = ghostDec(g, d.daily ? 5 : 10); if (!d) { SH.toast('That challenge code doesn’t look right', 'x'); return false; }
+  d.by = clean(String(by || 'A friend')).slice(0, 24) || 'A friend';
+  if (!d.daily && (!T.bank[d.cat] || d.L > T.bank[d.cat].length)) { SH.toast('That challenge needs a newer McLearn Arena — refresh and try again', 'x'); return false; }
+  SH.go('challenges'); SH.Sound.unlock && SH.Sound.unlock();
+  startQuiz(d.daily ? 'mix' : d.cat, !!d.daily, d); return true;
+}
+function duelBanner() {
+  const P = pendingDuel; if (!P) return '';
+  const d = parseCode(P.code); if (!d) return '';
+  const c = d.daily ? { icon: '📅', name: 'a Daily Challenge' } : T.CATS.find(x => x.id === d.cat) || { icon: '❓', name: d.cat };
+  return `<div class="duel-banner glass"><div class="db-ic">🥊</div><div><b>${esc(P.by || 'A friend')} challenged you</b><small>${c.icon} ${esc(c.name)}${d.score != null ? ` — they scored ${d.score}/${d.daily ? 5 : 10}` : ''}. Same questions${P.g ? ' — race their ghost live' : ''}. Can you beat them?</small></div><button class="btn-gold" id="duel-go">${P.g ? '👻 Race' : 'Accept'}</button><button class="btn btn-ghost" id="duel-no" aria-label="Dismiss">✕</button></div>`;
+}
+let pendingDuel = null;
+try { const sp = new URLSearchParams(location.search), dc = sp.get('duel'); if (dc && CODE_RE.test(dc.toLowerCase())) pendingDuel = { code: dc, by: sp.get('by') || '', g: sp.get('g') || '' }; } catch (e) { /* no query */ }
 function renderHub() {
   const can = W.canClaim(), s = W.state(), dailyDone = ST.daily === today();
   $('ch-wallet').innerHTML = `<div class="chw-main"><span class="label">Your McLearn Bucks</span><div class="chw-bal"><span class="bk-coin big">M$</span>${fmt(W.get())}</div><div class="tiny muted">Earned today from challenges: ${fmt(W.earnedToday())} / ${fmt(W.EARN_CAP)} · Bucks are free and play-only — they can't be bought or cashed out.</div></div>
     <div class="chw-side"><button class="btn-gold" id="ch-claim" ${can ? '' : 'disabled'}>${can ? `Claim daily bonus +${W.DAILY + Math.min(6, (s.lastClaim === new Date(Date.now() - 864e5).toISOString().slice(0, 10) ? s.streak : 0)) * 25}` : `Daily bonus claimed · day ${s.streak}`}</button><div class="tiny muted">Come back every day — your bonus grows with your streak.</div></div>`;
   $('ch-claim').onclick = () => { const n = W.claim(); if (n) { floatBucks(n); SH.Sound.play('victory'); SH.toast(`Daily bonus: +${n} McLearn Bucks`); renderHub(); } };
-  $('ch-daily').innerHTML = `<div><span class="s-kicker">📅 Daily Challenge</span><h3 class="serif">Five questions. Five subjects. Once a day.</h3><p class="tiny muted">Get 4 right for +100 bonus Bucks — all 5 for +250.</p></div><button class="btn-gold" id="ch-daily-go" ${dailyDone ? 'disabled' : ''}>${dailyDone ? `Done today · ${ST.dailyScore}/5` : 'Play today’s challenge'}</button>`;
+  $('ch-daily').innerHTML = `<div><span class="s-kicker">📅 Daily Challenge</span><h3 class="serif">Same five questions for everyone today.</h3><p class="tiny muted">Get 4 right for +100 bonus Bucks — all 5 for +250.</p></div><button class="btn-gold" id="ch-daily-go" ${dailyDone ? 'disabled' : ''}>${dailyDone ? `Done today · ${ST.dailyScore}/5 ${ST.dailyGrid ? grid(ST.dailyGrid.split('').map(Number)) : ''}` : 'Play today’s challenge'}</button>`;
   $('ch-daily-go').onclick = () => startQuiz('mix', true);
   $('ch-cats').innerHTML = T.CATS.map(c => `<button class="ch-cat" style="--h:${c.hue}" data-cat="${c.id}"><span class="ch-ic">${c.icon}</span><b>${c.name}</b><small>${c.blurb}</small><span class="pill">${c.id === 'math' ? `Best ${ST.best.math || 0} in 60s` : `Best ${ST.best[c.id] || 0}/10 · ${T.bank[c.id].length} questions`}</span></button>`).join('');
   $('ch-stat').textContent = `${fmt(ST.played)} answered · ${ST.played ? Math.round(ST.correct / ST.played * 100) : 0}% correct · ${T.count()}+ questions and endless math`;
+  $('ch-duel').innerHTML = duelBanner();
+  $('ch-codebox').innerHTML = `<form class="ch-code" id="ch-code"><span>🥊 Got a challenge code?</span><input id="ch-code-in" placeholder="e.g. BIBLE-6A-K3F9-7" autocomplete="off" aria-label="Challenge code"><button class="btn btn-sec" type="submit">Play it</button></form>`;
+  if ($('duel-go')) { $('duel-go').onclick = () => { const P = pendingDuel; pendingDuel = null; acceptDuel(P.code, P.by, P.g); }; $('duel-no').onclick = () => { pendingDuel = null; renderHub(); }; }
+  $('ch-code').onsubmit = e => { e.preventDefault(); acceptDuel($('ch-code-in').value, 'Your friend'); };
   $('ch-me').innerHTML = `${myFace(54)}<div><b>${esc(ME.name || 'Create your McLearn ID')}</b><small>${ME.name ? 'Tap to edit your profile & avatar' : 'Pick a name and build your avatar'}</small></div>`;
 }
 
@@ -10120,10 +10402,12 @@ function build() {
       <div class="gbar"><button class="gb-back" data-go="lobby"><svg class="ic"><use href="#i-home"/></svg><span>Lobby</span></button><span class="gicon" style="--h1:#3a2a08;--h2:#c08a1c;--s:38px"><svg aria-hidden="true"><use href="#gi-trophy"/></svg></span><div class="gb-t"><b>Challenge Center</b><small>Answer questions. Earn McLearn Bucks.</small></div><span class="gb-sp"></span><button class="gb-btn" data-go="leaders"><span>🏆 Leaderboards</span></button></div>
       <div id="ch-hub">
         <button class="ch-me" id="ch-me"></button>
+        <div id="ch-duel"></div>
         <div class="ch-wallet glass" id="ch-wallet"></div>
         <div class="ch-daily glass" id="ch-daily"></div>
         <div class="sec-h"><h3>Pick a challenge</h3><span id="ch-stat"></span></div>
         <div class="ch-cats" id="ch-cats"></div>
+        <div id="ch-codebox" style="margin-top:12px"></div>
         <div class="glass card tiny muted" style="margin-top:14px">Ways to earn McLearn Bucks: correct answers (+10 to +25), streak bonuses, perfect rounds, the Daily Challenge, your daily login bonus, and winning games (+25, or +75 for big games — doubled in Pro). Spend them at 21, Keno and Roulette. McLearn Bucks are free, have no cash value, and can't be bought, sold, traded or redeemed.</div>
       </div>
       <div class="ch-quiz hidden" id="ch-quiz">
@@ -10176,14 +10460,279 @@ function build() {
   paintHeader();
 }
 build();
-SH.games.challenges = { onShow() { if (!QZ) { $('ch-quiz').classList.add('hidden'); $('ch-hub').classList.remove('hidden'); } renderHub(); }, _startQuiz: startQuiz, _answer: answer, _next: next, _QZ: () => QZ, _ST: ST };
+SH.games.challenges = { onShow() { if (!QZ) { $('ch-quiz').classList.add('hidden'); $('ch-hub').classList.remove('hidden'); } renderHub(); }, _startQuiz: startQuiz, _answer: answer, _next: next, _QZ: () => QZ, _ST: ST, _code: makeCode, _parse: parseCode, _accept: acceptDuel, _daily: dailyQs, _ghostEnc: ghostEnc, _ghostDec: ghostDec, _card: scoreCard };
 SH.games.leaders = { onShow() { renderBoard(); Cloud.watch(lbField); } };
+if (pendingDuel) { const goCh = () => SH.go ? SH.go('challenges') : setTimeout(goCh, 50); if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', goCh); else setTimeout(goCh, 0); }
 SH.social = { openMe, share, Chat, Cloud, clean, avatarSVG };
 // follow the player from table to table
 const _go = SH.go;
 function hookGo() { if (!SH.go || SH.go._chat) return; const g = SH.go; SH.go = function (v) { const r = g.apply(this, arguments); Chat.join(LS.get('view', 'lobby')); if (Chat.open) Chat.render(); return r; }; SH.go._chat = true; }
 void _go;
 setTimeout(() => { hookGo(); Chat.init().then(() => Chat.join(LS.get('view', 'lobby'))); Cloud.init(); }, 0);
+})();
+
+// McLearn Party Mode — team trivia on one big screen (youth nights, reunions, classrooms, church events)
+(function () {
+'use strict';
+const SH = window.McShared; if (!SH || !SH.trivia) return;
+const T = SH.trivia, $ = id => document.getElementById(id), LS = SH.LS;
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const COLORS = [['Gold', '#e6b84a'], ['Rose', '#d9788a'], ['Royal', '#4f7fd9'], ['Emerald', '#2fae74'], ['Violet', '#9a6ad9'], ['Copper', '#d9823f']];
+const PTS = [0, 100, 200, 300], LIMIT = 20, STEAL = 10;
+const CATS = () => T.CATS.filter(c => c.id !== 'math');
+let cfg = LS.get('party-cfg', { teams: 3, names: COLORS.map(c => 'Team ' + c[0]), cats: ['bible', 'aah', 'history', 'sports', 'music', 'geo'], per: 5 });
+let P = null;
+
+function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function deal() { // a fair mixed deck from the chosen subjects, options shuffled
+  const pool = []; cfg.cats.forEach(c => (T.bank[c] || []).forEach(q => pool.push([c, q])));
+  return shuffle(pool).slice(0, cfg.teams * cfg.per).map(([c, q]) => { const idx = shuffle([0, 1, 2, 3]); return { cat: c, q: q[0], o: idx.map(k => q[1][k]), a: idx.indexOf(q[2]), why: q[3], d: q[4] || 1 }; });
+}
+
+function open() { build(); $('party').classList.remove('hidden'); document.body.classList.add('party-on'); setup(); }
+function close() { if (SH.voice) SH.voice.stop(); clearInterval(P && P.tick); P = null; $('party').classList.add('hidden'); document.body.classList.remove('party-on'); if (document.fullscreenElement) document.exitFullscreen().catch(() => {}); }
+
+function build() {
+  if ($('party')) return;
+  const d = document.createElement('div'); d.id = 'party'; d.className = 'hidden'; d.setAttribute('role', 'dialog'); d.setAttribute('aria-label', 'McLearn Party Mode');
+  d.innerHTML = `<div class="pt-top"><div class="pt-brand"><span>🎉</span><b class="serif">McLearn Party</b></div><div class="pt-tools"><button class="btn btn-ghost" id="pt-fs" title="Full screen (F)">⛶ Full screen</button><button class="btn btn-ghost" id="pt-x">✕ Exit</button></div></div><div id="pt-body"></div><div class="pt-score" id="pt-score"></div>`;
+  document.body.appendChild(d);
+  $('pt-x').onclick = close;
+  $('pt-fs').onclick = () => { if (document.fullscreenElement) document.exitFullscreen().catch(() => {}); else if (d.requestFullscreen) d.requestFullscreen().catch(() => SH.toast('Full screen isn’t allowed here', 'x')); };
+  document.addEventListener('keydown', e => {
+    if ($('party').classList.contains('hidden') || /INPUT|TEXTAREA/.test((e.target || {}).tagName)) return;
+    const k = e.key.toLowerCase();
+    if (k === 'f') $('pt-fs').click();
+    if (P && P.phase === 'ask') { const i = 'abcd'.indexOf(k) >= 0 ? 'abcd'.indexOf(k) : '1234'.indexOf(k); if (i >= 0) pick(i); }
+    if (P && (k === ' ' || k === 'enter') && P.phase === 'reveal') { e.preventDefault(); next(); }
+  });
+}
+
+function setup() {
+  $('pt-score').innerHTML = '';
+  const cats = CATS();
+  $('pt-body').innerHTML = `<div class="pt-setup">
+    <h2 class="serif">Team trivia for the whole room</h2>
+    <p class="muted">Put this on a TV or projector. Teams take turns — miss it and the next team can <b>steal</b>. The host taps the answer the team calls out.</p>
+    <div class="pt-row"><span class="label">Teams</span><div class="chiprow">${[2, 3, 4, 5, 6].map(n => `<button class="chipbtn ${cfg.teams === n ? 'on' : ''}" data-teams="${n}">${n}</button>`).join('')}</div></div>
+    <div class="pt-names">${Array.from({ length: cfg.teams }, (_, i) => `<label style="--tc:${COLORS[i][1]}"><i></i><input data-name="${i}" maxlength="18" value="${esc(cfg.names[i] || 'Team ' + COLORS[i][0])}" aria-label="Team ${i + 1} name"></label>`).join('')}</div>
+    <div class="pt-row"><span class="label">Questions per team</span><div class="chiprow">${[3, 5, 8].map(n => `<button class="chipbtn ${cfg.per === n ? 'on' : ''}" data-per="${n}">${n}</button>`).join('')}</div></div>
+    <div class="pt-row"><span class="label">Subjects</span><div class="chiprow">${cats.map(c => `<button class="chipbtn ${cfg.cats.includes(c.id) ? 'on' : ''}" data-cat="${c.id}">${c.icon} ${esc(c.name)}</button>`).join('')}</div></div>
+    <button class="btn-gold pt-go" id="pt-go">Start the party · ${cfg.teams * cfg.per} questions</button>
+    <p class="tiny muted">Keyboard: A–D or 1–4 to pick · Space for next · F for full screen. Party games are for fun — no McLearn Bucks change hands.</p></div>`;
+  $('pt-body').onclick = e => {
+    const b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.teams) { cfg.teams = +b.dataset.teams; save(); setup(); }
+    else if (b.dataset.per) { cfg.per = +b.dataset.per; save(); setup(); }
+    else if (b.dataset.cat) { const c = b.dataset.cat; cfg.cats = cfg.cats.includes(c) ? cfg.cats.filter(x => x !== c) : cfg.cats.concat(c); if (!cfg.cats.length) cfg.cats = [c]; save(); setup(); }
+    else if (b.id === 'pt-go') start();
+  };
+  $('pt-body').oninput = e => { const i = e.target.dataset.name; if (i != null) { cfg.names[i] = SH.social && SH.social.clean ? SH.social.clean(e.target.value).slice(0, 18) : e.target.value.slice(0, 18); save(); } };
+}
+function save() { LS.set('party-cfg', cfg); }
+
+function start() {
+  const qs = deal();
+  if (qs.length < cfg.teams) { SH.toast('Pick more subjects for that many questions', 'x'); return; }
+  P = { qs, i: 0, turn: 0, teams: Array.from({ length: cfg.teams }, (_, i) => ({ name: (cfg.names[i] || '').trim() || 'Team ' + COLORS[i][0], color: COLORS[i][1], pts: 0, right: 0 })), phase: 'ask', stealer: -1, tick: null };
+  SH.Sound.unlock && SH.Sound.unlock(); ask();
+}
+function cur() { return P.qs[P.i]; }
+function ask(steal) {
+  const q = cur(), c = T.CATS.find(x => x.id === q.cat) || {}, team = P.teams[steal ? P.stealer : P.turn];
+  P.phase = 'ask'; P.steal = !!steal; P.t0 = Date.now(); P.lim = (steal ? STEAL : LIMIT) * 1000;
+  $('pt-body').innerHTML = `<div class="pt-q ${steal ? 'steal' : ''}" style="--tc:${team.color}">
+    <div class="pt-meta"><span class="pt-turn">${steal ? '⚡ STEAL — ' : ''}${esc(team.name)}</span><span class="pill">${c.icon || ''} ${esc(c.name || '')}</span><span class="pill gold">${steal ? PTS[q.d] / 2 : PTS[q.d]} pts</span><span class="pill">Question ${P.i + 1} of ${P.qs.length}</span></div>
+    <div class="pt-timer"><i id="pt-bar"></i><b id="pt-sec">${steal ? STEAL : LIMIT}</b></div>
+    <h2 class="pt-text serif">${esc(q.q)}</h2>
+    <div class="pt-opts">${q.o.map((o, k) => `<button class="pt-opt" data-k="${k}" ${steal && P.missed === k ? 'disabled' : ''}><b>${'ABCD'[k]}</b><span>${esc(o)}</span></button>`).join('')}</div>
+    <div id="pt-fb"></div></div>`;
+  $('pt-body').onclick = e => { const b = e.target.closest('.pt-opt'); if (b && !b.disabled) pick(+b.dataset.k); const n = e.target.closest('#pt-next'); if (n) next(); };
+  scores();
+  clearInterval(P.tick);
+  P.tick = setInterval(() => {
+    if (!P || P.phase !== 'ask') return clearInterval(P && P.tick);
+    const left = Math.max(0, P.lim - (Date.now() - P.t0)), bar = $('pt-bar'), sec = $('pt-sec');
+    if (bar) bar.style.transform = `scaleX(${left / P.lim})`; if (sec) { const s = Math.ceil(left / 1000); if (sec.textContent !== String(s)) { sec.textContent = s; if (s <= 3 && s > 0) SH.Sound.play('tick'); } }
+    if (left <= 0) pick(-1);
+  }, 100);
+  if (SH.voice) SH.voice.partyAsk(team.name, !!steal, q);
+}
+function pick(k) {
+  if (!P || P.phase !== 'ask') return;
+  const q = cur(), ok = k === q.a, who = P.steal ? P.stealer : P.turn, team = P.teams[who];
+  clearInterval(P.tick);
+  if (ok) {
+    const pts = P.steal ? PTS[q.d] / 2 : PTS[q.d]; team.pts += pts; team.right++;
+    SH.Sound.play('good'); SH.haptic && SH.haptic(15);
+    return reveal(k, `<b>${esc(team.name)}</b> ${P.steal ? 'steals it' : 'got it'}! +${pts}`);
+  }
+  SH.Sound.play('bad');
+  if (!P.steal && P.teams.length > 1) { P.missed = k; P.stealer = (P.turn + 1) % P.teams.length; P.phase = 'wait'; mark(k, q.a, false); $('pt-fb').innerHTML = `<div class="pt-fb no">${k < 0 ? 'Time’s up' : 'Not quite'} — <b style="color:${P.teams[P.stealer].color}">${esc(P.teams[P.stealer].name)}</b>, get ready to steal…</div>`; setTimeout(() => P && ask(true), 1600); return; }
+  reveal(k, k < 0 ? 'Time’s up — nobody scores.' : 'Nobody got it.');
+}
+function mark(k, a, showRight) { document.querySelectorAll('.pt-opt').forEach((b, j) => { b.disabled = true; if (showRight) b.classList.toggle('right', j === a); b.classList.toggle('wrong', j === k && k !== a); }); }
+function reveal(k, msg) {
+  const q = cur(); P.phase = 'reveal'; mark(k, q.a, true);
+  if (SH.voice) SH.voice.partySay(msg.replace(/<[^>]+>/g, '') + ' The answer is ' + q.o[q.a] + '.');
+  $('pt-fb').innerHTML = `<div class="pt-fb ${k === q.a ? 'ok' : 'no'}">${msg}<small>${esc(q.why)}</small></div><button class="btn-gold" id="pt-next">${P.i + 1 >= P.qs.length ? 'See the winners 🏆' : 'Next question ▸'}</button>`;
+  scores(true);
+}
+function next() {
+  if (!P) return; if (P.i + 1 >= P.qs.length) return finish();
+  P.i++; P.turn = (P.turn + 1) % P.teams.length; P.missed = -1; ask();
+}
+function scores(bump) {
+  const lead = Math.max(...P.teams.map(t => t.pts));
+  $('pt-score').innerHTML = P.teams.map((t, i) => `<div class="pt-team ${i === (P.steal ? P.stealer : P.turn) && P.phase === 'ask' ? 'up' : ''} ${t.pts === lead && lead > 0 ? 'lead' : ''}" style="--tc:${t.color}"><b>${esc(t.name)}</b><span class="${bump ? 'bump' : ''}">${t.pts}</span></div>`).join('');
+}
+function finish() {
+  clearInterval(P.tick); P.phase = 'done';
+  const order = P.teams.slice().sort((a, b) => b.pts - a.pts), top = order[0], tie = order[1] && order[1].pts === top.pts;
+  order.forEach(t => { t.rank = 1 + order.filter(o => o.pts > t.pts).length; });
+  const podium = [order[1], order[0], order[2]].map((t, i) => t ? `<div class="pd pd${[2, 1, 3][i]}" style="--tc:${t.color}"><b>${esc(t.name)}</b><span>${t.pts}</span><i>${t.rank === 1 ? '1st' : t.rank === 2 ? '2nd' : t.rank === 3 ? '3rd' : t.rank + 'th'}${order.filter(o => o.rank === t.rank).length > 1 ? ' (tie)' : ''}</i></div>` : '<div></div>').join('');
+  $('pt-body').innerHTML = `<div class="pt-end"><div class="label">Final scores</div><h2 class="serif">${tie ? 'It’s a tie at the top!' : esc(top.name) + ' wins! 🏆'}</h2><div class="podium">${podium}</div>${order.length > 3 ? `<div class="tiny muted">${order.slice(3).map(t => `${esc(t.name)} ${t.pts}${t.rank <= 3 ? ' (tied ' + t.rank + ')' : ''}`).join(' · ')}</div>` : ''}
+    <div class="row" style="gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px"><button class="btn-gold" id="pt-again">Play again</button><button class="btn-glass" id="pt-setup">Change teams</button><button class="btn-glass" id="pt-share">Share the results</button></div></div>`;
+  $('pt-score').innerHTML = '';
+  $('pt-again').onclick = start; $('pt-setup').onclick = setup;
+  $('pt-share').onclick = () => SH.share && SH.share({ title: 'McLearn Party', text: `McLearn Party results 🎉\n${order.map((t, i) => `${['🥇', '🥈', '🥉'][i] || '▫️'} ${t.name} — ${t.pts}`).join('\n')}\nPlay team trivia at the McLearn Arena.` });
+  SH.Sound.play('victory'); if (SH.celebrate) SH.celebrate(true);
+  if (SH.voice) SH.voice.partySay(tie ? 'It is a tie at the top! What a game.' : `${top.name} wins with ${top.pts} points! Congratulations!`);
+}
+
+SH.party = { open, close, _P: () => P, _pick: pick, _next: next, _start: start, _cfg: () => cfg };
+// entry card in the Challenge Center (re-added whenever the hub repaints)
+const hub = document.getElementById('ch-hub');
+if (hub) {
+  const card = document.createElement('button'); card.className = 'pt-entry glass'; card.id = 'pt-entry';
+  card.innerHTML = `<span class="pt-e-ic">🎉</span><div><b class="serif">Party Mode</b><small>Team trivia on one TV — youth nights, family reunions, classrooms. 2–6 teams, steals, big-screen scoreboard.</small></div><span class="btn-gold">Host a game</span>`;
+  card.onclick = open;
+  const daily = document.getElementById('ch-daily'); if (daily) daily.after(card); else hub.prepend(card);
+}
+})();
+
+// McLearn Voice — read questions aloud and answer by speaking (Challenge Center + Party Mode)
+(function () {
+'use strict';
+const SH = window.McShared; if (!SH) return;
+const $ = id => document.getElementById(id), LS = SH.LS;
+const synth = window.speechSynthesis, Rec = window.SpeechRecognition || window.webkitSpeechRecognition;
+const V = LS.get('voice', { read: false, listen: false, host: true, rate: 1 });
+const save = () => LS.set('voice', V);
+let voice = null, rec = null, listening = false, wantListen = null;
+
+function pickVoice() {
+  if (!synth) return null; const vs = synth.getVoices().filter(v => /^en(-|_)/i.test(v.lang)); if (!vs.length) return null;
+  const pref = [/natural/i, /aria|jenny|guy|davis/i, /google us english/i, /samantha|ava|allison|evan/i, /en-us/i];
+  for (const r of pref) { const v = vs.find(v => r.test(v.name) || r.test(v.lang)); if (v) return v; } return vs[0];
+}
+if (synth) { voice = pickVoice(); synth.onvoiceschanged = () => { voice = pickVoice(); }; }
+
+function speak(text, done) {
+  if (!synth) { done && done(); return; }
+  synth.cancel(); stopListen();
+  const u = new SpeechSynthesisUtterance(String(text).replace(/[“”]/g, '"').replace(/…/g, '...').replace(/M\$/g, 'McLearn Bucks'));
+  if (voice) u.voice = voice; u.rate = V.rate || 1; u.pitch = 1;
+  let fired = false; const fin = () => { if (fired) return; fired = true; done && done(); };
+  u.onend = fin; u.onerror = fin; synth.speak(u);
+  setTimeout(() => { if (!synth.speaking) fin(); }, Math.max(4000, text.length * 90)); // safety for browsers that drop onend
+}
+function stop() { if (synth) synth.cancel(); stopListen(); }
+
+// ---- understanding a spoken answer ----
+const LETTERS = [['a', 'ay', 'eh', 'hey', 'letter a', 'option a'], ['b', 'be', 'bee', 'letter b', 'option b'], ['c', 'see', 'sea', 'si', 'letter c', 'option c'], ['d', 'dee', 'the', 'letter d', 'option d']];
+const ORD = [['first', 'one', '1', '1st'], ['second', 'two', 'to', 'too', '2', '2nd'], ['third', 'three', '3', '3rd'], ['fourth', 'four', 'for', '4', '4th', 'last']];
+const norm = s => String(s).toLowerCase().replace(/[“”"'’.,!?()]/g, '').replace(/\s+/g, ' ').trim();
+function match(heard, opts) {
+  for (const h0 of heard) {
+    const h = norm(h0); if (!h) continue;
+    const o = opts.map(norm);
+    let i = o.findIndex(x => x && (h === x || h.includes(x) && x.length > 2)); if (i >= 0) return i;
+    const words = h.split(' ');
+    if (words.length <= 3) {
+      for (let k = 0; k < 4; k++) if (LETTERS[k].some(w => h === w || h === 'answer ' + w || h === 'its ' + w || h === 'i choose ' + w)) return k;
+      for (let k = 0; k < 4; k++) if (ORD[k].some(w => h === w || h === 'the ' + w || h === 'number ' + w || h === 'the ' + w + ' one')) return k;
+    }
+    // fuzzy: most shared words with an option
+    const STOP = new Set(['the', 'and', 'for', 'with', 'from', 'that', 'this']), hw = new Set(words);
+    let best = -1, bs = 0, bn = 0, tie = false;
+    o.forEach((x, k) => { const xw = x.split(' ').filter(w => w.length > 2 && !STOP.has(w)), n = xw.filter(w => hw.has(w)).length, sc = n / Math.max(1, xw.length); if (sc > bs || (sc === bs && n > bn)) { tie = false; bs = sc; bn = n; best = k; } else if (sc === bs && sc > 0) tie = true; });
+    if (best >= 0 && !tie && (bs >= .6 || bn >= 2 || (bn === 1 && bs >= .3))) return best;
+  }
+  return -1;
+}
+function listen(opts, onPick, onMiss) {
+  if (!Rec) return false;
+  stopListen();
+  try {
+    rec = new Rec(); rec.lang = 'en-US'; rec.interimResults = false; rec.maxAlternatives = 5; rec.continuous = false;
+    rec.onresult = e => { const alts = Array.from(e.results[0] || []).map(a => a.transcript); const k = match(alts, opts); setMic(false); if (k >= 0) onPick(k, alts[0]); else onMiss && onMiss(alts[0]); };
+    rec.onerror = e => { setMic(false); if (e.error === 'not-allowed' || e.error === 'service-not-allowed') { V.listen = false; save(); paint(); SH.toast('Microphone blocked — allow it in your browser to answer by voice', 'x'); } };
+    rec.onend = () => { listening = false; setMic(false); };
+    rec.start(); listening = true; setMic(true); return true;
+  } catch (e) { setMic(false); return false; }
+}
+function stopListen() { if (rec) { try { rec.abort(); } catch (e) { /* idle */ } } rec = null; listening = false; setMic(false); }
+function setMic(on) { document.querySelectorAll('.vc-mic').forEach(b => b.classList.toggle('live', !!on)); }
+
+// ---- Challenge Center integration ----
+function quizOpts() { return Array.from(document.querySelectorAll('#qz-opts .qz-opt span')).map(s => s.textContent); }
+function quizAsk() {
+  const q = ($('qz-q') || {}).textContent || '', opts = quizOpts(); if (!opts.length) return;
+  const go = () => { const z = SH.games.challenges && SH.games.challenges._QZ(); if (z && V.read && !z.sprint && !z.answered) z.t0 = Date.now(); if (V.listen) listenQuiz(); };
+  if (V.read) speak(`${q} ... ${opts.map((o, i) => `${'ABCD'[i]}: ${o}`).join('. ')}.`, go); else go();
+}
+function listenQuiz() {
+  const opts = quizOpts(); if (!opts.length || document.querySelector('#qz-opts .qz-opt:disabled')) return;
+  listen(opts, k => { const b = document.querySelectorAll('#qz-opts .qz-opt')[k]; if (b && !b.disabled) b.click(); },
+    heard => { SH.toast(heard ? `Heard “${heard}” — say A, B, C or D` : 'Didn’t catch that — tap 🎤 to try again', 'x'); });
+}
+function quizFeedback() { if (!V.read) return; const fb = document.querySelector('#qz-fb .qz-fb'); if (fb) speak(fb.textContent.replace(/\+\d+ M\$/, '')); }
+function paint() {
+  document.querySelectorAll('.vc-read').forEach(b => { b.classList.toggle('on', V.read); b.setAttribute('aria-pressed', V.read); });
+  document.querySelectorAll('.vc-listen').forEach(b => { b.classList.toggle('on', V.listen); b.setAttribute('aria-pressed', V.listen); });
+  document.querySelectorAll('.vc-host').forEach(b => { b.classList.toggle('on', V.host); b.setAttribute('aria-pressed', V.host); });
+}
+function bar(where, party) {
+  const d = document.createElement('div'); d.className = 'vc-bar';
+  d.innerHTML = (party ? `<button class="vc-btn vc-host" title="AI host reads questions and calls the turns">🎙️ Host voice</button>` : `<button class="vc-btn vc-read" title="Read questions aloud">🔊 Read aloud</button>`) +
+    (Rec ? `<button class="vc-btn vc-listen" title="Answer by speaking">🗣️ Answer by voice</button><button class="vc-btn vc-mic" title="Listen now" aria-label="Listen now">🎤</button>` : '');
+  where.appendChild(d);
+  d.onclick = e => {
+    const b = e.target.closest('button'); if (!b) return; SH.Sound.unlock && SH.Sound.unlock();
+    if (b.classList.contains('vc-read')) { V.read = !V.read; if (!V.read) stop(); else quizAsk(); }
+    else if (b.classList.contains('vc-host')) { V.host = !V.host; if (!V.host) stop(); }
+    else if (b.classList.contains('vc-listen')) { V.listen = !V.listen; if (!V.listen) stopListen(); else if (party) partyListen(); else listenQuiz(); if (V.listen) SH.toast('Say the letter or the answer — “B” or “Hawaii”'); }
+    else if (b.classList.contains('vc-mic')) { if (listening) stopListen(); else if (party) partyListen(); else listenQuiz(); }
+    save(); paint();
+  };
+  paint();
+}
+const top = document.querySelector('#ch-quiz .qz-top'); if (top) bar(top, false);
+const opts = $('qz-opts'), fb = $('qz-fb');
+if (opts) new MutationObserver(() => { if (document.querySelector('#qz-opts .qz-opt:not(:disabled)')) setTimeout(quizAsk, 250); else if (!document.querySelector('#qz-opts .qz-opt')) stop(); }).observe(opts, { childList: true });
+if (fb) new MutationObserver(() => { stopListen(); quizFeedback(); }).observe(fb, { childList: true });
+// leaving the quiz silences everything
+document.addEventListener('click', e => { if (e.target.closest('#qz-quit,#qz-back,.gb-back,[data-go]')) stop(); }, true);
+
+// ---- Party Mode host ----
+let partyQ = null;
+function partyAsk(team, steal, q) {
+  partyQ = q;
+  const go = () => { const P = SH.party && SH.party._P(); if (P && V.host && P.phase === 'ask') P.t0 = Date.now(); if (V.listen) partyListen(); };
+  if (!V.host) return go();
+  speak(`${steal ? 'Steal! ' : ''}${team}, ${steal ? 'for half the points' : 'this one is yours'}. ${q.q} ... ${q.o.map((o, i) => `${'ABCD'[i]}: ${o}`).join('. ')}.`, go);
+}
+function partyListen() {
+  const P = SH.party && SH.party._P(); if (!P || P.phase !== 'ask' || !partyQ) return;
+  listen(partyQ.o, k => SH.party._pick(k), heard => SH.toast(heard ? `Heard “${heard}” — say A, B, C or D` : 'Didn’t catch that', 'x'));
+}
+function partySay(text) { if (V.host) speak(text); }
+const ptObs = new MutationObserver(() => { const t = document.querySelector('#party .pt-tools'); if (t && !t.querySelector('.vc-bar')) bar(t, true); });
+ptObs.observe(document.body, { childList: true });
+
+SH.voice = { speak, stop, listen, match, partyAsk, partySay, supported: { speak: !!synth, listen: !!Rec }, _V: V };
+SH.speak = speak;
 })();
 
 </script>
