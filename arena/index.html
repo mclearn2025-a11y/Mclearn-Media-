@@ -1036,6 +1036,61 @@ body.event .gwrap .felt{transform:none}
 .br-dock .pk-ctl .fan{--cw:clamp(58px,8vw,80px)}
 @media (max-width:820px){.br-felt{min-height:420px;border-width:10px;border-radius:150px/110px}.br-backs{--cw:22px}.br-backs .pcard+.pcard{margin-left:-16px}.br-mid{top:38%;gap:10px}.br-trump{--cw:40px}#br-trick{--cw:44px}}
 @media (max-width:700px){.br-seat .pk-pod{flex-direction:column;gap:2px;padding:4px 6px;border-radius:14px;text-align:center}.br-seat .pk-id{align-items:center}.br-seat .pk-id b{font-size:9.5px}.br-seat .pk-id span{font-size:9.5px}.br-seat .ava{--as:26px}}
+
+/* ===== McLearn Roulette ===== */
+#view-roulette .felt.rl-felt{display:block;min-height:0;padding:16px;border-radius:26px;background:radial-gradient(ellipse at 30% 20%,#1a7a4c 0%,#0e5a37 45%,#073a23 90%);border:14px solid #3b1408;box-shadow:inset 0 0 0 2px #c8961e,inset 0 0 70px rgba(0,0,0,.55),0 0 0 2px #1a0703,0 26px 60px rgba(0,0,0,.75)}
+#view-roulette .felt.rl-felt::before{content:none}
+.rl-top{display:grid;grid-template-columns:minmax(220px,300px) 1fr;gap:18px;align-items:center;margin-bottom:14px}
+.rl-wheel{aspect-ratio:1;width:100%;filter:drop-shadow(0 18px 30px rgba(0,0,0,.6))}
+.rl-svg{width:100%;height:100%;display:block}
+.rl-spin{transform-box:view-box;transform-origin:0 0}
+.rl-side{display:flex;flex-direction:column;gap:12px;min-width:0}
+.rl-sign{font-size:clamp(20px,3.4vw,32px);letter-spacing:.18em;color:#ffe6a8;text-shadow:0 0 18px rgba(244,200,106,.45)}.rl-sign b{color:#fff}
+.rl-res{display:flex;align-items:center;gap:12px;min-height:56px;color:#fff}
+.rl-hist{display:flex;gap:5px;flex-wrap:wrap}
+.rl-h{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;font-family:var(--serif);font-weight:900;font-size:12px;color:#fff;box-shadow:inset 0 -2px 4px rgba(0,0,0,.35),0 2px 6px rgba(0,0,0,.4)}
+.rl-h.r{background:radial-gradient(circle at 35% 30%,#ff6b85,#b3122e 60%,#6d0a1c)}.rl-h.b{background:radial-gradient(circle at 35% 30%,#555,#16161c 60%,#000)}.rl-h.g{background:radial-gradient(circle at 35% 30%,#5be0a0,#13804c 60%,#0a4a2c)}
+.rl-h.new{animation:pop .5s cubic-bezier(.3,1.5,.5,1)}
+.rl-h.big{width:54px;height:54px;font-size:22px;animation:pop .6s cubic-bezier(.3,1.5,.5,1)}
+.rl-layout{display:grid;gap:4px;user-select:none}
+.rl-layout.horiz{grid-template-columns:52px 1fr 56px;grid-template-rows:auto auto auto auto}
+.rl-layout.horiz .rl-zeros{grid-column:1;grid-row:1;display:flex;flex-direction:column;gap:4px}
+.rl-layout.horiz .rl-gridwrap{grid-column:2;grid-row:1}
+.rl-layout.horiz .rl-cols{grid-column:3;grid-row:1;display:grid;grid-template-rows:repeat(3,1fr);gap:4px}
+.rl-layout.horiz .rl-doz{grid-column:2;grid-row:2;display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.rl-layout.horiz .rl-even{grid-column:2;grid-row:3;display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
+.rl-layout.horiz .rl-top{grid-column:1;grid-row:2/4}
+.rl-layout.vert{grid-template-columns:1fr 3fr 1fr;grid-template-rows:auto 1fr auto}
+.rl-layout.vert .rl-zeros{grid-column:2;grid-row:1;display:flex;gap:4px}
+.rl-layout.vert .rl-gridwrap{grid-column:2;grid-row:2}
+.rl-layout.vert .rl-cols{grid-column:2;grid-row:3;display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.rl-layout.vert .rl-doz{grid-column:1;grid-row:2;display:grid;grid-template-rows:repeat(3,1fr);gap:4px}
+.rl-layout.vert .rl-even{grid-column:3;grid-row:2;display:grid;grid-template-rows:repeat(6,1fr);gap:4px}
+.rl-layout.vert .rl-top{grid-column:1;grid-row:1}
+.rl-gridwrap{position:relative}
+.rl-grid{display:grid;gap:4px}
+.rl-layout.horiz .rl-grid .rl-num{aspect-ratio:1/1.15}
+.rl-layout.vert .rl-grid .rl-num{aspect-ratio:1.6/1}
+.rl-num,.rl-out{position:relative;border:1px solid rgba(255,236,190,.55);border-radius:6px;color:#fff;font-family:var(--serif);font-weight:900;font-size:clamp(12px,1.5vw,16px);display:grid;place-items:center;padding:4px 2px;background:rgba(0,0,0,.08);transition:transform .12s,box-shadow .12s;min-height:30px}
+.rl-num.r{background:linear-gradient(180deg,#c21f40,#8a0a24)}.rl-num.b{background:linear-gradient(180deg,#2c2c34,#0c0c10)}.rl-num.g{background:linear-gradient(180deg,#1fa064,#0b5a34)}
+.rl-zeros .rl-num{flex:1}
+.rl-out{font-size:clamp(10px,1.2vw,13px);letter-spacing:.06em;background:rgba(0,0,0,.18)}
+.rl-num:hover:not(:disabled),.rl-out:hover:not(:disabled){box-shadow:0 0 0 2px #ffe6a8,0 0 14px rgba(244,200,106,.5);z-index:2}
+.dia{display:block;width:26px;height:18px;clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}.dia.r{background:#c21f40}.dia.b{background:#111}
+.rl-hots{position:absolute;inset:0;pointer-events:none}
+.rl-hot{position:absolute;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;pointer-events:auto;cursor:pointer;z-index:3}
+.rl-hot:hover{background:rgba(255,230,168,.45);box-shadow:0 0 0 2px #ffe6a8}
+.rl-hot.st:hover{background:rgba(120,200,255,.45)}
+.rl-chip{position:absolute;right:-6px;top:-8px;z-index:4;pointer-events:none;--chs:24px;animation:chipdrop .28s cubic-bezier(.2,1.4,.4,1) both}
+.rl-hot .rl-chip{right:auto;top:auto;left:50%;top:50%;transform:translate(-50%,-50%)}
+.rl-chip .chp{--chs:24px;width:24px;height:24px}.rl-chip .chp b{font-size:0}
+.rl-chip em{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-style:normal;font-family:var(--mono);font-size:9.5px;font-weight:800;color:#fff;text-shadow:0 1px 2px #000}
+.rl-num.dolly::after{content:'';position:absolute;left:50%;top:50%;width:62%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#e6f2ff 40%,rgba(200,220,255,.4));box-shadow:0 0 18px #fff,0 0 30px rgba(244,200,106,.8);animation:pop .5s cubic-bezier(.3,1.5,.5,1)}
+.winspot{box-shadow:0 0 0 3px #ffe6a8,0 0 22px rgba(244,200,106,.8)!important}
+.rl-spinning .rl-layout{opacity:.75;pointer-events:none}
+.rl-bar{display:flex;height:8px;border-radius:999px;overflow:hidden;margin-bottom:4px}.rl-bar .r{background:#c21f40}.rl-bar .b{background:#222}.rl-bar .g{background:#1fa064}
+#rl-chips .chip.on{transform:translateY(-6px);box-shadow:0 0 0 3px #ffe6a8,0 10px 18px rgba(0,0,0,.5)}
+@media (max-width:760px){.rl-top{grid-template-columns:1fr;justify-items:center}.rl-wheel{width:min(76vw,280px)}.rl-side{align-items:center;text-align:center}.rl-sign{display:none}.rl-hist{justify-content:center}#view-roulette .felt.rl-felt{border-width:8px;padding:10px}.rl-num,.rl-out{min-height:26px;font-size:12px}.rl-hot{width:14px;height:14px;margin:-7px 0 0 -7px}}
 </style>
 </head>
 <body>
@@ -1054,7 +1109,7 @@ body.event .gwrap .felt{transform:none}
 <marker id="ah-gold" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto"><path d="M0 0L10 5L0 10z" fill="#f2c4cb"/></marker>
 <marker id="ah-threat" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ef4444"/></marker>
 <marker id="ah-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto"><path d="M0 0L10 5L0 10z" fill="#4ade80"/></marker>
-<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol><symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></symbol><symbol id="gi-chess" viewBox="0 0 24 24"><path d="M12 2.5v4M10 4.5h4"/><path d="M8 13a4 4 0 0 1 8 0l-1 5H9z"/><path d="M7 21h10M8.5 18h7"/><path d="M9.5 9.5h5"/></symbol><symbol id="gi-checkers" viewBox="0 0 24 24"><ellipse cx="12" cy="8" rx="7.5" ry="3.2"/><path d="M4.5 8v3.4c0 1.8 3.4 3.2 7.5 3.2s7.5-1.4 7.5-3.2V8"/><path d="M4.5 13v3.4c0 1.8 3.4 3.2 7.5 3.2s7.5-1.4 7.5-3.2V13"/><ellipse cx="12" cy="8" rx="3.5" ry="1.4"/></symbol><symbol id="gi-spades" viewBox="0 0 24 24"><path d="M12 2.5c3.2 4.2 7.5 6.4 7.5 10.6a4.2 4.2 0 0 1-6.8 3.3l.8 5.1h-3l.8-5.1a4.2 4.2 0 0 1-6.8-3.3c0-4.2 4.3-6.4 7.5-10.6z"/></symbol><symbol id="gi-blackjack" viewBox="0 0 24 24"><rect x="3" y="6" width="11" height="15" rx="2" transform="rotate(-10 8.5 13.5)"/><rect x="10" y="3" width="11" height="15" rx="2"/><path d="M13.5 8.2c.4-.8 1.3-1.2 2-1 1 .3 1.3 1.4.6 2.3l-2.6 3h3.2M18 7v6"/></symbol><symbol id="gi-parcheesi" viewBox="0 0 24 24"><path d="M9 2.5h6v6.5h6.5v6H15v6.5H9V15H2.5V9H9z"/><circle cx="12" cy="12" r="1.7" fill="currentColor"/><path d="M12 5v1.5M12 17.5V19M5 12h1.5M17.5 12H19"/></symbol><symbol id="gi-colorclash" viewBox="0 0 24 24"><rect x="4.5" y="2.5" width="15" height="19" rx="3"/><path d="M12 6.5l4.5 5.5L12 17.5 7.5 12z"/><path d="M12 9.5l2 2.5-2 2.5-2-2.5z" fill="currentColor"/></symbol><symbol id="gi-pittypat" viewBox="0 0 24 24"><rect x="2.5" y="6" width="9.5" height="14" rx="2"/><rect x="12" y="4" width="9.5" height="14" rx="2"/><path d="M7.2 11.5c-.9-1.4-2.6-.6-2 .8.4.9 2 2 2 2s1.6-1.1 2-2c.6-1.4-1.1-2.2-2 -.8zM16.7 9.5c-.9-1.4-2.6-.6-2 .8.4.9 2 2 2 2s1.6-1.1 2-2c.6-1.4-1.1-2.2-2-.8z"/></symbol><symbol id="gi-mogul" viewBox="0 0 24 24"><path d="M2.5 21.5h19"/><path d="M4.5 21.5V11h4.5v10.5M10 21.5V3.5h5.5v18M16.5 21.5V9l4-2v14.5"/><path d="M12 7h2.5M12 10h2.5M12 13h2.5M6 14h1.5M6 17h1.5M18 12h1M18 15h1"/></symbol><symbol id="gi-dominoes" viewBox="0 0 24 24"><rect x="6.5" y="1.5" width="11" height="21" rx="2.8"/><path d="M7.5 12h9"/><circle cx="12" cy="6.8" r="1.3" fill="currentColor"/><circle cx="9.6" cy="15" r="1.2" fill="currentColor"/><circle cx="14.4" cy="19" r="1.2" fill="currentColor"/><circle cx="12" cy="17" r="1.2" fill="currentColor"/></symbol><symbol id="gi-bidwhist" viewBox="0 0 24 24"><rect x="4.5" y="2.5" width="15" height="19" rx="3"/><path d="M12 6.5l1.5 3.2 3.4.4-2.6 2.3.8 3.4-3.1-1.8-3.1 1.8.8-3.4-2.6-2.3 3.4-.4z"/><path d="M7.5 19h9"/></symbol><symbol id="gi-poker" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5"/><path d="M12 2.5v3.3M12 18.2v3.3M2.5 12h3.3M18.2 12h3.3M5.3 5.3l2.3 2.3M16.4 16.4l2.3 2.3M5.3 18.7l2.3-2.3M16.4 7.6l2.3-2.3"/></symbol><symbol id="gi-tonk" viewBox="0 0 24 24"><rect x="2.5" y="7" width="8" height="12.5" rx="1.6" transform="rotate(-14 6.5 13)"/><rect x="8" y="4.5" width="8" height="12.5" rx="1.6"/><rect x="13.5" y="7" width="8" height="12.5" rx="1.6" transform="rotate(14 17.5 13)"/></symbol><symbol id="gi-gofish" viewBox="0 0 24 24"><path d="M2.5 12c3.2-5.2 9.6-6.2 13.6-2l5.4-3.3-1.7 5.3 1.7 5.3-5.4-3.3c-4 4.2-10.4 3.2-13.6-2z"/><circle cx="8" cy="11.2" r="1.1" fill="currentColor"/><path d="M11.5 9.5c.8 1.6.8 3.4 0 5"/></symbol><symbol id="gi-war" viewBox="0 0 24 24"><path d="M3 3l10.5 10.5M3 3h3.8l9.7 9.7M14 17l3-3M16 19l-2.5-2.5M17 14l2.5 2.5M19 19l2 2"/><path d="M21 3L10.5 13.5M21 3h-3.8l-9.7 9.7M10 17l-3-3M8 19l2.5-2.5M7 14l-2.5 2.5M5 19l-2 2"/></symbol><symbol id="gi-bourre" viewBox="0 0 24 24"><path d="M12 2.5c1.6 2.6 1.6 5.2 0 7.8-1.6-2.6-1.6-5.2 0-7.8z"/><path d="M12 10.3c-3-.6-6.2.4-7.8 3.2 2.9.9 5.7.2 7.8-3.2zM12 10.3c3-.6 6.2.4 7.8 3.2-2.9.9-5.7.2-7.8-3.2z"/><path d="M8 15.5h8M12 10.3v10M9 21h6"/></symbol><symbol id="gi-keno" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/><circle cx="6" cy="6" r="1.4" fill="currentColor"/><circle cx="18" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="18" r="1.4" fill="currentColor"/></symbol><symbol id="gi-bingo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5.2"/><path d="M10.6 9.8h1.9a1.1 1.1 0 0 1 0 2.2h-1.9zM10.6 12h2.2a1.1 1.1 0 0 1 0 2.2h-2.2zM10.6 9.8v4.4"/></symbol><symbol id="gi-showdown" viewBox="0 0 24 24"><rect x="9" y="2.5" width="6" height="11.5" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5v4M8.5 21.5h7"/><path d="M9 6.5h6M9 9h6"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol><symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></symbol><symbol id="gi-chess" viewBox="0 0 24 24"><path d="M12 2.5v4M10 4.5h4"/><path d="M8 13a4 4 0 0 1 8 0l-1 5H9z"/><path d="M7 21h10M8.5 18h7"/><path d="M9.5 9.5h5"/></symbol><symbol id="gi-checkers" viewBox="0 0 24 24"><ellipse cx="12" cy="8" rx="7.5" ry="3.2"/><path d="M4.5 8v3.4c0 1.8 3.4 3.2 7.5 3.2s7.5-1.4 7.5-3.2V8"/><path d="M4.5 13v3.4c0 1.8 3.4 3.2 7.5 3.2s7.5-1.4 7.5-3.2V13"/><ellipse cx="12" cy="8" rx="3.5" ry="1.4"/></symbol><symbol id="gi-spades" viewBox="0 0 24 24"><path d="M12 2.5c3.2 4.2 7.5 6.4 7.5 10.6a4.2 4.2 0 0 1-6.8 3.3l.8 5.1h-3l.8-5.1a4.2 4.2 0 0 1-6.8-3.3c0-4.2 4.3-6.4 7.5-10.6z"/></symbol><symbol id="gi-blackjack" viewBox="0 0 24 24"><rect x="3" y="6" width="11" height="15" rx="2" transform="rotate(-10 8.5 13.5)"/><rect x="10" y="3" width="11" height="15" rx="2"/><path d="M13.5 8.2c.4-.8 1.3-1.2 2-1 1 .3 1.3 1.4.6 2.3l-2.6 3h3.2M18 7v6"/></symbol><symbol id="gi-parcheesi" viewBox="0 0 24 24"><path d="M9 2.5h6v6.5h6.5v6H15v6.5H9V15H2.5V9H9z"/><circle cx="12" cy="12" r="1.7" fill="currentColor"/><path d="M12 5v1.5M12 17.5V19M5 12h1.5M17.5 12H19"/></symbol><symbol id="gi-colorclash" viewBox="0 0 24 24"><rect x="4.5" y="2.5" width="15" height="19" rx="3"/><path d="M12 6.5l4.5 5.5L12 17.5 7.5 12z"/><path d="M12 9.5l2 2.5-2 2.5-2-2.5z" fill="currentColor"/></symbol><symbol id="gi-pittypat" viewBox="0 0 24 24"><rect x="2.5" y="6" width="9.5" height="14" rx="2"/><rect x="12" y="4" width="9.5" height="14" rx="2"/><path d="M7.2 11.5c-.9-1.4-2.6-.6-2 .8.4.9 2 2 2 2s1.6-1.1 2-2c.6-1.4-1.1-2.2-2 -.8zM16.7 9.5c-.9-1.4-2.6-.6-2 .8.4.9 2 2 2 2s1.6-1.1 2-2c.6-1.4-1.1-2.2-2-.8z"/></symbol><symbol id="gi-mogul" viewBox="0 0 24 24"><path d="M2.5 21.5h19"/><path d="M4.5 21.5V11h4.5v10.5M10 21.5V3.5h5.5v18M16.5 21.5V9l4-2v14.5"/><path d="M12 7h2.5M12 10h2.5M12 13h2.5M6 14h1.5M6 17h1.5M18 12h1M18 15h1"/></symbol><symbol id="gi-dominoes" viewBox="0 0 24 24"><rect x="6.5" y="1.5" width="11" height="21" rx="2.8"/><path d="M7.5 12h9"/><circle cx="12" cy="6.8" r="1.3" fill="currentColor"/><circle cx="9.6" cy="15" r="1.2" fill="currentColor"/><circle cx="14.4" cy="19" r="1.2" fill="currentColor"/><circle cx="12" cy="17" r="1.2" fill="currentColor"/></symbol><symbol id="gi-bidwhist" viewBox="0 0 24 24"><rect x="4.5" y="2.5" width="15" height="19" rx="3"/><path d="M12 6.5l1.5 3.2 3.4.4-2.6 2.3.8 3.4-3.1-1.8-3.1 1.8.8-3.4-2.6-2.3 3.4-.4z"/><path d="M7.5 19h9"/></symbol><symbol id="gi-poker" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5"/><path d="M12 2.5v3.3M12 18.2v3.3M2.5 12h3.3M18.2 12h3.3M5.3 5.3l2.3 2.3M16.4 16.4l2.3 2.3M5.3 18.7l2.3-2.3M16.4 7.6l2.3-2.3"/></symbol><symbol id="gi-tonk" viewBox="0 0 24 24"><rect x="2.5" y="7" width="8" height="12.5" rx="1.6" transform="rotate(-14 6.5 13)"/><rect x="8" y="4.5" width="8" height="12.5" rx="1.6"/><rect x="13.5" y="7" width="8" height="12.5" rx="1.6" transform="rotate(14 17.5 13)"/></symbol><symbol id="gi-gofish" viewBox="0 0 24 24"><path d="M2.5 12c3.2-5.2 9.6-6.2 13.6-2l5.4-3.3-1.7 5.3 1.7 5.3-5.4-3.3c-4 4.2-10.4 3.2-13.6-2z"/><circle cx="8" cy="11.2" r="1.1" fill="currentColor"/><path d="M11.5 9.5c.8 1.6.8 3.4 0 5"/></symbol><symbol id="gi-war" viewBox="0 0 24 24"><path d="M3 3l10.5 10.5M3 3h3.8l9.7 9.7M14 17l3-3M16 19l-2.5-2.5M17 14l2.5 2.5M19 19l2 2"/><path d="M21 3L10.5 13.5M21 3h-3.8l-9.7 9.7M10 17l-3-3M8 19l2.5-2.5M7 14l-2.5 2.5M5 19l-2 2"/></symbol><symbol id="gi-bourre" viewBox="0 0 24 24"><path d="M12 2.5c1.6 2.6 1.6 5.2 0 7.8-1.6-2.6-1.6-5.2 0-7.8z"/><path d="M12 10.3c-3-.6-6.2.4-7.8 3.2 2.9.9 5.7.2 7.8-3.2zM12 10.3c3-.6 6.2.4 7.8 3.2-2.9.9-5.7.2-7.8-3.2z"/><path d="M8 15.5h8M12 10.3v10M9 21h6"/></symbol><symbol id="gi-roulette" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/><path d="M12 2.5V6M12 18v3.5M2.5 12H6M18 12h3.5M5.3 5.3l2.5 2.5M16.2 16.2l2.5 2.5M5.3 18.7l2.5-2.5M16.2 7.8l2.5-2.5"/><circle cx="16.6" cy="5.6" r="1.2" fill="currentColor"/></symbol><symbol id="gi-keno" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/><circle cx="6" cy="6" r="1.4" fill="currentColor"/><circle cx="18" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="18" r="1.4" fill="currentColor"/></symbol><symbol id="gi-bingo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5.2"/><path d="M10.6 9.8h1.9a1.1 1.1 0 0 1 0 2.2h-1.9zM10.6 12h2.2a1.1 1.1 0 0 1 0 2.2h-2.2zM10.6 9.8v4.4"/></symbol><symbol id="gi-showdown" viewBox="0 0 24 24"><rect x="9" y="2.5" width="6" height="11.5" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5v4M8.5 21.5h7"/><path d="M9 6.5h6M9 9h6"/></symbol>
 <symbol id="gi-pluck" viewBox="0 0 24 24"><path d="M19.5 3.5C12 4 6.5 9 5 17.5l-1 3"/><path d="M19.5 3.5c.5 6-3 11-9.5 13"/><path d="M8 13.5l3.5.5M10.5 10l3.2.8M13 7l2.8.6"/></symbol><symbol id="i-crown" viewBox="0 0 24 24"><path d="M3 18h18l1.2-11-5.7 4.2L12 4 7.5 11.2 1.8 7z"/><path d="M4 21h16"/></symbol>
 <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
 <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
@@ -1147,6 +1202,7 @@ body.event .gwrap .felt{transform:none}
 <main class="gwrap hidden" id="view-bingo"></main>
 <main class="gwrap hidden" id="view-keno"></main>
 <main class="gwrap hidden" id="view-bourre"></main>
+<main class="gwrap hidden" id="view-roulette"></main>
 <main class="gwrap hidden" id="view-pluck"></main>
 <main class="wrap view" id="view-chess">
   <!-- LEFT -->
@@ -8654,6 +8710,242 @@ SH.games.bourre = { onShow() { if (!G.stack.length) newSession(); else render();
 
 </script>
 <script>
+// McLearn Roulette — European / American wheel with practice chips only (free, no purchases, no cash value). Teaches the house edge.
+(function () {
+'use strict';
+const SH = window.McShared, $ = id => document.getElementById(id), LS = SH.LS;
+McRules.register('roulette', {
+  title: 'Roulette',
+  proNote: 'Pro: the 20-spin Roulette Challenge on the American wheel — 1,000 chips, no coach, finish with your best stack.',
+  schema: [
+    { key: 'wheel', label: 'Wheel', help: 'European has one zero (2.70% house edge). American adds 00 (5.26%).', type: 'select', options: [['european', 'European (single 0)'], ['american', 'American (0 and 00)']] },
+    { key: 'partage', label: 'La Partage', help: 'European only: when the ball hits 0, even-money bets lose just half', type: 'bool' },
+    { key: 'session', label: 'Session', type: 'select', options: [['free', 'Free play'], ['challenge', '20-spin challenge']] },
+    { key: 'speed', label: 'Spin speed', type: 'select', options: [['normal', 'Normal'], ['fast', 'Fast']] },
+    { key: 'coach', label: 'Odds coach', help: 'Shows each bet’s real chance and the house edge', type: 'bool' }
+  ],
+  presets: { standard: { wheel: 'european', partage: false, session: 'free', speed: 'normal', coach: true }, pro: { wheel: 'american', partage: false, session: 'challenge', coach: false } }
+});
+let RU = McRules.get('roulette');
+const START = 1000, DZ = 37; // 37 stands for "00"
+const EU = [0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26];
+const US = [0, 28, 9, 26, 30, 11, 7, 20, 32, 17, 5, 22, 34, 15, 3, 24, 36, 13, 1, DZ, 27, 10, 25, 29, 12, 8, 19, 31, 18, 6, 21, 33, 16, 4, 23, 35, 14, 2];
+const REDS = new Set([1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36]);
+const color = n => n === 0 || n === DZ ? 'g' : REDS.has(n) ? 'r' : 'b';
+const lab = n => n === DZ ? '00' : String(n);
+const order = () => RU.wheel === 'american' ? US : EU;
+const st = LS.get('rl', { bank: START, spins: 0, best: 0 });
+const CH = { on: false, bank: START, spin: 0, of: 20, best: LS.get('rl-cbest', 0) };
+const A = () => (CH.on ? CH : st);
+const G = { bets: {}, hist: [], last: LS.get('rl-last', null), chip: LS.get('rl-chip', 5), phase: 'bet', wheelRot: 0, ballRot: 0, result: null, recent: LS.get('rl-recent', []), fast: false, token: 0, lastBets: null, win: 0 };
+const wait = ms => G.fast ? Promise.resolve() : new Promise(r => setTimeout(r, RU.speed === 'fast' ? ms * 0.55 : ms));
+// ---------- bets ----------
+const PAYS = { n: 35, split: 17, street: 11, corner: 8, line: 5, red: 1, black: 1, odd: 1, even: 1, low: 1, high: 1, doz: 2, col: 2, top: 6 };
+function cover(k) {
+  const [t, v] = k.split(':');
+  const R = Array.from({ length: 36 }, (_, i) => i + 1);
+  switch (t) {
+    case 'n': return [+v];
+    case 'split': case 'corner': case 'line': return v.split('-').map(Number);
+    case 'street': return [+v, +v + 1, +v + 2];
+    case 'red': return R.filter(n => REDS.has(n)); case 'black': return R.filter(n => !REDS.has(n));
+    case 'odd': return R.filter(n => n % 2); case 'even': return R.filter(n => n % 2 === 0);
+    case 'low': return R.filter(n => n <= 18); case 'high': return R.filter(n => n > 18);
+    case 'doz': return R.filter(n => Math.ceil(n / 12) === +v); case 'col': return R.filter(n => (n - 1) % 3 === +v - 1);
+    case 'top': return [0, DZ, 1, 2, 3];
+  }
+  return [];
+}
+const betName = k => { const [t, v] = k.split(':'); return { n: `Straight ${v === String(DZ) ? '00' : v}`, split: `Split ${v.replace(/37/g, '00')}`, street: `Street ${v}–${+v + 2}`, corner: `Corner ${v}`, line: `Six line ${v}`, red: 'Red', black: 'Black', odd: 'Odd', even: 'Even', low: '1 to 18', high: '19 to 36', doz: `${['1st', '2nd', '3rd'][v - 1]} 12`, col: `Column ${v}`, top: 'Top line (0-00-1-2-3)' }[t]; };
+const totalBet = () => Object.values(G.bets).reduce((a, b) => a + b, 0);
+function place(k) {
+  if (G.phase !== 'bet' || (CH.on && CH.spin >= CH.of)) return;
+  if (A().bank < G.chip) { SH.toast(CH.on ? 'Not enough chips left in the challenge' : 'Out of chips — tap Free refill', 'x'); return; }
+  A().bank -= G.chip; G.bets[k] = (G.bets[k] || 0) + G.chip; G.hist.push([k, G.chip]); G.result = null;
+  SH.Sound.play('tick'); SH.haptic && SH.haptic(6); render();
+}
+function undo() { if (G.phase !== 'bet' || !G.hist.length) return; const [k, a] = G.hist.pop(); G.bets[k] -= a; if (!G.bets[k]) delete G.bets[k]; A().bank += a; render(); }
+function clear() { if (G.phase !== 'bet') return; A().bank += totalBet(); G.bets = {}; G.hist = []; render(); }
+function rebet(double) {
+  if (G.phase !== 'bet') return;
+  const src = double ? { ...G.bets } : G.lastBets; if (!src || !Object.keys(src).length) return;
+  const need = Object.values(src).reduce((a, b) => a + b, 0); if (A().bank < need) { SH.toast('Not enough chips for that', 'x'); return; }
+  for (const [k, a] of Object.entries(src)) { A().bank -= a; G.bets[k] = (G.bets[k] || 0) + a; G.hist.push([k, a]); }
+  SH.Sound.play('move'); render();
+}
+// ---------- spin ----------
+async function spin() {
+  if (G.phase !== 'bet' || (CH.on && CH.spin >= CH.of)) return;
+  if (!totalBet()) { SH.toast('Place a bet first — tap the layout', 'x'); return; }
+  SH.Sound.unlock(); const tok = ++G.token; G.phase = 'spin'; G.lastBets = { ...G.bets }; render();
+  const ord = order(), idx = Math.floor(Math.random() * ord.length), n = ord[idx];
+  const seg = 360 / ord.length, pocketAng = idx * seg;
+  // wheel spins one way, the ball the other, and the ball comes to rest over the chosen pocket
+  G.wheelRot -= 720 + Math.random() * 360;
+  const wantAbs = ((G.wheelRot + pocketAng) % 360 + 360) % 360, cur = ((G.ballRot % 360) + 360) % 360;
+  G.ballRot += 1440 + ((wantAbs - cur + 360) % 360);
+  const dur = G.fast ? 0 : RU.speed === 'fast' ? 2.8 : 5;
+  const wh = $('rl-wheelg'), bl = $('rl-ballg'), bi = $('rl-ball');
+  wh.style.transition = `transform ${dur * 1.05}s cubic-bezier(.12,.62,.2,1)`; bl.style.transition = `transform ${dur}s cubic-bezier(.16,.58,.24,1)`;
+  bi.style.transition = 'none'; bi.style.transform = 'translate(0px,-158px)'; void bi.getBoundingClientRect();
+  wh.style.transform = `rotate(${G.wheelRot}deg)`; bl.style.transform = `rotate(${G.ballRot}deg)`;
+  bi.style.transition = `transform ${dur * 0.35}s cubic-bezier(.4,1.6,.5,1) ${dur * 0.62}s`; bi.style.transform = 'translate(0px,-127px)';
+  SH.Sound.play('start');
+  await wait(dur * 1000 + 150); if (tok !== G.token) return;
+  settle(n);
+}
+function settle(n) {
+  let win = 0, back = 0; const lines = [];
+  for (const [k, a] of Object.entries(G.bets)) {
+    const t = k.split(':')[0], hit = cover(k).includes(n);
+    if (hit) { const w = a * (PAYS[t] + 1); win += w; lines.push(`${betName(k)} pays ${(a * PAYS[t]).toLocaleString()}`); }
+    else if (n === 0 && RU.partage && RU.wheel === 'european' && PAYS[t] === 1) { back += a / 2; }
+  }
+  win += Math.floor(back); A().bank += win; G.win = win;
+  const staked = totalBet();
+  G.result = { n, win, staked, lines, partage: back > 0 };
+  G.recent.unshift(n); G.recent = G.recent.slice(0, 40); LS.set('rl-recent', G.recent);
+  G.bets = {}; G.hist = []; G.phase = 'bet';
+  if (!CH.on) { st.spins++; if (win - staked > st.best) st.best = win - staked; LS.set('rl', st); }
+  LS.set('rl-chip', G.chip);
+  const net = win - staked;
+  SH.Sound.play(net > staked * 10 ? 'victory' : net > 0 ? 'good' : win ? 'tick' : 'bad');
+  flash(`${lab(n)} ${{ r: 'RED', b: 'BLACK', g: 'GREEN' }[color(n)]}`);
+  if (net >= 35 * 5 && !CH.on && SH.onResult) SH.onResult('roulette', 'w', { pro: false });
+  if (CH.on) { CH.spin++; if (CH.spin >= CH.of) return endChallenge(); }
+  render();
+}
+function endChallenge() {
+  const best = CH.bank > CH.best; if (best) { CH.best = CH.bank; LS.set('rl-cbest', CH.best); }
+  const res = CH.bank > START ? 'w' : CH.bank === START ? 'd' : 'l';
+  showMsg(`<h4 class="serif" style="margin:0 0 4px;font-size:22px">Challenge complete</h4><div class="tiny muted">You finished with ${CH.bank.toLocaleString()} chips (started with ${START.toLocaleString()})${best ? ' — a new personal best!' : ` · best ${CH.best.toLocaleString()}`}</div><button class="btn-gold" style="margin-top:12px" id="rl-again">Run it again</button>`);
+  $('rl-again').onclick = () => { showMsg(''); startSession(); };
+  if (SH.onResult) SH.onResult('roulette', res, { pro: !!RU.pro });
+  render();
+}
+function startSession() { RU = McRules.get('roulette'); G.token++; G.phase = 'bet'; G.bets = {}; G.hist = []; G.result = null; G.lastBets = null; CH.on = RU.session === 'challenge'; CH.bank = START; CH.spin = 0; showMsg(''); buildWheel(); buildLayout(); render(); if (CH.on) SH.toast(`Roulette Challenge: ${CH.of} spins, ${START.toLocaleString()} chips`); }
+
+// ---------- wheel (SVG) ----------
+function buildWheel() {
+  const ord = order(), N = ord.length, seg = 360 / N, P = (r, a) => [r * Math.sin(a * Math.PI / 180), -r * Math.cos(a * Math.PI / 180)];
+  const wedge = (a0, a1, r0, r1) => { const [x0, y0] = P(r1, a0), [x1, y1] = P(r1, a1), [x2, y2] = P(r0, a1), [x3, y3] = P(r0, a0); return `M${x0.toFixed(2)} ${y0.toFixed(2)}A${r1} ${r1} 0 0 1 ${x1.toFixed(2)} ${y1.toFixed(2)}L${x2.toFixed(2)} ${y2.toFixed(2)}A${r0} ${r0} 0 0 0 ${x3.toFixed(2)} ${y3.toFixed(2)}Z`; };
+  const fill = { r: 'url(#rlRed)', b: 'url(#rlBlk)', g: 'url(#rlGrn)' };
+  const pockets = ord.map((n, i) => { const a = i * seg; return `<path d="${wedge(a - seg / 2, a + seg / 2, 108, 146)}" fill="${fill[color(n)]}" stroke="#c8961e" stroke-width=".8"/><text transform="rotate(${a}) translate(0 -133)" text-anchor="middle" dominant-baseline="middle" font-family="Cinzel" font-weight="900" font-size="${N > 37 ? 9.5 : 10.5}" fill="#fff">${lab(n)}</text>`; }).join('');
+  const frets = ord.map((_, i) => { const a = i * seg - seg / 2, [x0, y0] = P(108, a), [x1, y1] = P(124, a); return `<line x1="${x0.toFixed(1)}" y1="${y0.toFixed(1)}" x2="${x1.toFixed(1)}" y2="${y1.toFixed(1)}" stroke="#ffe6a8" stroke-width="1.2"/>`; }).join('');
+  $('rl-wheel').innerHTML = `<svg viewBox="-180 -180 360 360" class="rl-svg" aria-label="Roulette wheel"><defs>
+    <radialGradient id="rlBowl"><stop offset=".78" stop-color="#2a0e05"/><stop offset=".9" stop-color="#5a2a10"/><stop offset="1" stop-color="#1a0703"/></radialGradient>
+    <radialGradient id="rlTrack"><stop offset=".86" stop-color="#3b1a0a"/><stop offset=".93" stop-color="#7a4520"/><stop offset="1" stop-color="#2a0e05"/></radialGradient>
+    <linearGradient id="rlRed" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d42a4c"/><stop offset="1" stop-color="#8a0a24"/></linearGradient>
+    <linearGradient id="rlBlk" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2c2c34"/><stop offset="1" stop-color="#0a0a0e"/></linearGradient>
+    <linearGradient id="rlGrn" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22a066"/><stop offset="1" stop-color="#0a5a34"/></linearGradient>
+    <radialGradient id="rlCone" cx=".4" cy=".35"><stop offset="0" stop-color="#ffe6a8"/><stop offset=".35" stop-color="#c8961e"/><stop offset=".7" stop-color="#6b3a12"/><stop offset="1" stop-color="#3a1806"/></radialGradient>
+    <radialGradient id="rlBall" cx=".35" cy=".3"><stop offset="0" stop-color="#fff"/><stop offset=".6" stop-color="#e8e4dc"/><stop offset="1" stop-color="#9a958c"/></radialGradient></defs>
+    <circle r="178" fill="url(#rlBowl)"/><circle r="170" fill="url(#rlTrack)"/><circle r="170" fill="none" stroke="#c8961e" stroke-width="1.5"/>
+    <g id="rl-wheelg" class="rl-spin">${pockets}${frets}<circle r="146" fill="none" stroke="#ffe6a8" stroke-width="1.2"/><circle r="108" fill="url(#rlCone)" stroke="#ffe6a8" stroke-width="1.2"/>
+      ${[0, 45, 90, 135].map(a => `<rect x="-3" y="-80" width="6" height="160" rx="3" fill="url(#rlCone)" stroke="#9c6a14" stroke-width=".6" transform="rotate(${a})"/>`).join('')}<circle r="20" fill="url(#rlCone)" stroke="#ffe6a8"/><text y="5" text-anchor="middle" font-family="Cinzel" font-weight="900" font-size="16" fill="#3a1806">M</text></g>
+    <g id="rl-ballg" class="rl-spin"><circle id="rl-ball" r="6.5" fill="url(#rlBall)" style="transform:translate(0px,-158px);filter:drop-shadow(0 2px 2px rgba(0,0,0,.6))"/></g>
+  </svg>`;
+  $('rl-wheelg').style.transform = `rotate(${G.wheelRot}deg)`; $('rl-ballg').style.transform = `rotate(${G.ballRot}deg)`;
+}
+
+// ---------- layout (betting cloth) ----------
+let vertical = false;
+function buildLayout() {
+  vertical = innerWidth < 760;
+  const am = RU.wheel === 'american';
+  // number cell positions in a grid: horizontal = 12 columns x 3 rows; vertical = 3 columns x 12 rows
+  const pos = n => vertical ? { c: (n - 1) % 3, r: Math.ceil(n / 3) - 1 } : { c: Math.ceil(n / 3) - 1, r: 2 - (n - 1) % 3 };
+  const C = vertical ? 3 : 12, R = vertical ? 12 : 3;
+  const cell = (n) => { const p = pos(n); return `<button class="rl-num ${color(n)}" data-bet="n:${n}" style="grid-column:${p.c + 1};grid-row:${p.r + 1}">${n}</button>`; };
+  const pct = (c, r) => `left:${(c / C * 100).toFixed(3)}%;top:${(r / R * 100).toFixed(3)}%`;
+  let hot = '';
+  for (let n = 1; n <= 36; n++) {
+    const p = pos(n);
+    if (n + 3 <= 36) { const q = pos(n + 3); hot += `<i class="rl-hot" data-bet="split:${n}-${n + 3}" style="${pct((p.c + q.c + 1) / 2, (p.r + q.r + 1) / 2)}" title="Split ${n}/${n + 3}"></i>`; }
+    if (n % 3 !== 0) { const q = pos(n + 1); hot += `<i class="rl-hot" data-bet="split:${n}-${n + 1}" style="${pct((p.c + q.c + 1) / 2, (p.r + q.r + 1) / 2)}" title="Split ${n}/${n + 1}"></i>`; }
+    if (n % 3 !== 0 && n + 4 <= 36) { const q = pos(n + 4); hot += `<i class="rl-hot cor" data-bet="corner:${n}-${n + 1}-${n + 3}-${n + 4}" style="${pct((p.c + q.c + 1) / 2, (p.r + q.r + 1) / 2)}" title="Corner ${n}-${n + 1}-${n + 3}-${n + 4}"></i>`; }
+    if (n % 3 === 1) { hot += `<i class="rl-hot st" data-bet="street:${n}" style="${vertical ? pct(0, p.r + .5) : pct(p.c + .5, 3)}" title="Street ${n}-${n + 2}"></i>`;
+      if (n + 3 <= 36) hot += `<i class="rl-hot st" data-bet="line:${[0, 1, 2, 3, 4, 5].map(k => n + k).join('-')}" style="${vertical ? pct(0, p.r + 1) : pct(p.c + 1, 3)}" title="Six line ${n}-${n + 5}"></i>`; }
+  }
+  const zeros = am ? `<button class="rl-num g zero" data-bet="n:0">0</button><button class="rl-num g zero" data-bet="n:${DZ}">00</button>` : `<button class="rl-num g zero" data-bet="n:0">0</button>`;
+  const cols = [1, 2, 3].map(v => `<button class="rl-out col" data-bet="col:${vertical ? v : 4 - v}">2 to 1</button>`).join('');
+  const dozens = [1, 2, 3].map(v => `<button class="rl-out" data-bet="doz:${v}">${['1st', '2nd', '3rd'][v - 1]} 12</button>`).join('');
+  const even = `<button class="rl-out" data-bet="low:1">1–18</button><button class="rl-out" data-bet="even:1">EVEN</button><button class="rl-out" data-bet="red:1"><span class="dia r"></span></button><button class="rl-out" data-bet="black:1"><span class="dia b"></span></button><button class="rl-out" data-bet="odd:1">ODD</button><button class="rl-out" data-bet="high:1">19–36</button>`;
+  $('rl-layout').className = 'rl-layout ' + (vertical ? 'vert' : 'horiz') + (am ? ' am' : '');
+  $('rl-layout').innerHTML = `<div class="rl-zeros">${zeros}</div><div class="rl-gridwrap"><div class="rl-grid" style="grid-template-columns:repeat(${C},1fr);grid-template-rows:repeat(${R},1fr)">${Array.from({ length: 36 }, (_, i) => cell(i + 1)).join('')}</div><div class="rl-hots">${hot}</div></div><div class="rl-cols">${cols}</div><div class="rl-doz">${dozens}</div><div class="rl-even">${even}</div>${am ? '<button class="rl-out rl-top" data-bet="top:1" title="0, 00, 1, 2, 3 — pays 6 to 1 (worst bet on the table)">Top line</button>' : ''}`;
+}
+// ---------- render ----------
+function showMsg(html) { const m = $('rl-msg'); m.innerHTML = html ? `<div class="glass" style="padding:16px 18px;text-align:center">${html}</div>` : ''; m.classList.toggle('hidden', !html); }
+function flash(t) { if (G.fast) return; const el = $('rl-flash'); el.textContent = t; el.classList.remove('show'); void el.offsetWidth; el.classList.add('show'); }
+function render() {
+  const res = G.result;
+  // chips on the cloth
+  document.querySelectorAll('#rl-layout [data-bet]').forEach(el => {
+    const k = el.dataset.bet, a = G.bets[k] || 0;
+    let ch = el.querySelector(':scope > .rl-chip'); if (ch) ch.remove();
+    if (a) { el.insertAdjacentHTML('beforeend', `<span class="rl-chip">${SH.chips.chip(Object.keys(SH.chips.colors).map(Number).sort((x, y) => y - x).find(d => a >= d) || 1)}<em>${a >= 1000 ? (a / 1000).toFixed(a % 1000 ? 1 : 0) + 'K' : a}</em></span>`); }
+    el.classList.toggle('winspot', !!(res && res.n != null && cover(k).includes(res.n) && (k.startsWith('n:') || G.lastBets && G.lastBets[k])));
+  });
+  document.querySelectorAll('#rl-layout .rl-num').forEach(el => el.classList.toggle('dolly', !!(res && el.dataset.bet === 'n:' + res.n)));
+  $('rl-hist').innerHTML = G.recent.slice(0, 14).map((n, i) => `<span class="rl-h ${color(n)} ${i === 0 ? 'new' : ''}">${lab(n)}</span>`).join('') || '<span class="tiny muted">Results appear here</span>';
+  const last = G.recent.slice(0, 40), reds = last.filter(n => color(n) === 'r').length, blacks = last.filter(n => color(n) === 'b').length;
+  $('rl-stats').innerHTML = last.length ? `<div class="rl-bar"><i class="r" style="flex:${reds}"></i><i class="b" style="flex:${blacks}"></i><i class="g" style="flex:${last.length - reds - blacks}"></i></div><div class="tiny muted">Last ${last.length}: ${reds} red · ${blacks} black · ${last.length - reds - blacks} green. Past spins never change the next one.</div>` : '';
+  $('rl-res').innerHTML = res ? `<span class="rl-h big ${color(res.n)}">${lab(res.n)}</span><div><b>${res.win ? `You collect ${res.win.toLocaleString()}` : 'No winners this spin'}</b><div class="tiny muted">${res.lines.slice(0, 3).join(' · ') || `Bet ${res.staked.toLocaleString()}`}${res.partage ? ' · La Partage returned half' : ''}</div></div>` : `<span class="tiny muted">${G.phase === 'spin' ? 'No more bets…' : 'Place your bets'}</span>`;
+  $('rl-bank').textContent = A().bank.toLocaleString();
+  $('rl-bet').textContent = totalBet().toLocaleString();
+  $('rl-sess').textContent = CH.on ? `Challenge · spin ${Math.min(CH.spin + 1, CH.of)} of ${CH.of}` : `Free play · ${st.spins} spin${st.spins === 1 ? '' : 's'}`;
+  document.querySelectorAll('#rl-chips [data-chip]').forEach(b => b.classList.toggle('on', +b.dataset.chip === G.chip));
+  const betting = G.phase === 'bet';
+  ['rl-spin', 'rl-undo', 'rl-clear', 'rl-rebet', 'rl-double'].forEach(id => { $(id).disabled = !betting; });
+  $('rl-rebet').disabled = !betting || !G.lastBets || !!totalBet(); $('rl-double').disabled = !betting || !totalBet();
+  $('rl-refill').disabled = CH.on || st.bank >= START;
+  $('view-roulette').classList.toggle('rl-spinning', G.phase === 'spin');
+  // coach
+  const N = order().length, edge = RU.wheel === 'american' ? 5.26 : (RU.partage ? 1.35 : 2.70);
+  const ks = Object.keys(G.bets);
+  $('rl-coach').classList.toggle('hidden', !RU.coach);
+  if (RU.coach) $('rl-coach').innerHTML = `<div class="between"><span class="label">Odds coach</span><span class="tiny" style="color:#ffe6a8">House edge ${edge.toFixed(2)}%</span></div>${ks.length ? ks.slice(0, 6).map(k => { const c = cover(k).length; return `<div class="kpay"><span>${betName(k)}</span><b>${PAYS[k.split(':')[0]]}:1</b><small>${(c / N * 100).toFixed(1)}% to hit</small></div>`; }).join('') : '<div class="tiny muted">Tap the layout to bet. Hover the lines between numbers for splits, corners and streets.</div>'}<div class="tiny muted" style="margin-top:6px">Every bet pays a little less than its true odds — on this wheel you keep about ${(100 - edge).toFixed(1)}¢ of every dollar over time${RU.wheel === 'american' ? ' (the Top Line bet is worse, at 7.89%)' : ''}. Practice chips only.</div>`;
+  $('rl-rb').textContent = McRules.label('roulette') + (CH.on ? ' · Challenge' : ''); $('rl-rb').className = 'rbadge r-' + McRules.mode('roulette');
+}
+const root = $('view-roulette');
+root.innerHTML = `
+<section class="col center" style="width:100%">
+  <div class="felt rl-felt" id="rl-felt">
+    <div class="rl-top"><div class="rl-wheel" id="rl-wheel"></div>
+      <div class="rl-side"><div class="rl-sign serif">McLEARN <b>ROULETTE</b></div><div class="rl-res" id="rl-res"></div><div class="rl-hist" id="rl-hist"></div></div></div>
+    <div class="rl-layout" id="rl-layout"></div>
+    <div class="cc-flash" id="rl-flash"></div>
+    <div class="felt-msg hidden" id="rl-msg"></div>
+  </div>
+  <div class="glass controls kn-ctl rl-ctl">
+    <div class="row" id="rl-chips" style="gap:8px">${[1, 5, 25, 100, 500].map(v => `<button class="chip bjchip" data-chip="${v}" style="--c:${SH.chips.colors[v]}" aria-label="Chip ${v}"><b>${v}</b></button>`).join('')}</div>
+    <div class="row" style="gap:8px;flex-wrap:wrap;justify-content:center"><button class="btn btn-sec" id="rl-undo">Undo</button><button class="btn btn-sec" id="rl-clear">Clear</button><button class="btn btn-sec" id="rl-rebet">Rebet</button><button class="btn btn-sec" id="rl-double">Double</button><span class="mono">Bet <b id="rl-bet">0</b></span><button class="cbtn c-hit" id="rl-spin"><b>Spin</b><small>SPACE</small></button></div>
+  </div>
+</section>
+<section class="col right">
+  <div class="glass card stack">
+    <div class="between"><h3 class="h3">McLearn Roulette</h3><span class="rbadge" id="rl-rb">Standard</span></div>
+    <div class="grid2"><div class="stat"><span>Chips</span><b id="rl-bank"></b></div><div class="stat"><span>Session</span><b id="rl-sess" style="font-size:10.5px"></b></div></div>
+    <div class="kn-paybox" id="rl-coach"></div>
+    <div id="rl-stats"></div>
+    <div id="rules-roulette"></div>
+    <button class="btn btn-sec" id="rl-refill">Free refill to ${START.toLocaleString()} chips</button>
+    <div class="note">Practice chips are free, can't be bought or cashed out, and have no value. Pick a chip, tap the layout to bet, then Spin. Straight up pays 35 to 1; red/black, odd/even and high/low pay even money.</div>
+  </div>
+</section>`;
+$('rl-layout').addEventListener('click', e => { const b = e.target.closest('[data-bet]'); if (b) { SH.Sound.unlock(); place(b.dataset.bet); } });
+$('rl-chips').addEventListener('click', e => { const b = e.target.closest('[data-chip]'); if (b) { G.chip = +b.dataset.chip; SH.Sound.play('tick'); render(); } });
+$('rl-undo').onclick = undo; $('rl-clear').onclick = clear; $('rl-rebet').onclick = () => rebet(false); $('rl-double').onclick = () => rebet(true); $('rl-spin').onclick = spin;
+$('rl-refill').onclick = () => { st.bank = START; LS.set('rl', st); SH.toast('Chips refilled — practice only'); render(); };
+document.addEventListener('keydown', e => { if (root.classList.contains('hidden') || /INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName)) return; if (e.key === ' ') { e.preventDefault(); spin(); } else if (e.key.toLowerCase() === 'z') undo(); });
+let rz; window.addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { if (!root.classList.contains('hidden') && (innerWidth < 760) !== vertical) { buildLayout(); render(); } }, 150); });
+McRules.mount('roulette', $('rules-roulette'));
+McRules.onChange('roulette', () => { if (G.phase === 'bet' && !totalBet()) startSession(); else SH.toast('New rules apply after this spin — clear your bets to switch now'); });
+SH.games.roulette = { onShow() { if (!$('rl-layout').children.length) startSession(); else { if ((innerWidth < 760) !== vertical) buildLayout(); render(); } }, _G: G, _place: place, _spin: spin, _cover: cover, _settle: settle, _start: startSession, _CH: CH, _A: A };
+})();
+
+</script>
+<script>
 // McLearn Pluck — three-handed trick taking: quotas 7-6-4, dealer calls trump, over-quota players PLUCK the under-quota players' best cards.
 (function () {
 'use strict';
@@ -8954,6 +9246,7 @@ const ACH = [
   { id: 'bingo', name: 'BINGO!', desc: 'Win a McLearn Media Bingo match', icon: '🎱' },
   { id: 'keno', name: 'Lucky Spots', desc: 'Catch a 20× win (or better) in McLearn Keno', icon: '🔢' },
   { id: 'booray', name: 'Bayou Boss', desc: 'Finish a Booray session with the biggest stack', icon: '⚜️' },
+  { id: 'roulette', name: 'Straight Up', desc: 'Hit a straight-up number in McLearn Roulette', icon: '🎡' },
   { id: 'procircuit', name: 'Pro Circuit', desc: 'Win in Pro mode in 3 different games', icon: '🥇' }
 ];
 function save() { LS.set('player', P); renderChip(); }
@@ -8975,7 +9268,7 @@ function addXP(n, silent) {
 }
 function floatXP(n) { const el = document.createElement('div'); el.className = 'xpfloat'; el.textContent = `+${n} XP`; document.body.appendChild(el); setTimeout(() => el.remove(), 1400); }
 
-const GAME_NAMES = { bourre: 'Booray', keno: 'Keno', bingo: 'Bingo', pluck: 'Pluck', dominoes: 'Dominoes', bidwhist: 'Biz Wiz', poker: "Hold'em", tonk: 'Tonk', gofish: 'Go Fish', war: 'I Declare War', showdown: 'Studio Showdown', mogul: 'Mega Media Mogul', pittypat: 'Pitty Pat', colorclash: 'Color Clash', 'blackjack-tourney': 'Blackjack Tournament', chess: 'Chess', checkers: 'Checkers', spades: 'Spades', blackjack: '21 · Blackjack', parcheesi: 'Parcheesi', academy: 'Chess Academy' };
+const GAME_NAMES = { roulette: 'Roulette', bourre: 'Booray', keno: 'Keno', bingo: 'Bingo', pluck: 'Pluck', dominoes: 'Dominoes', bidwhist: 'Biz Wiz', poker: "Hold'em", tonk: 'Tonk', gofish: 'Go Fish', war: 'I Declare War', showdown: 'Studio Showdown', mogul: 'Mega Media Mogul', pittypat: 'Pitty Pat', colorclash: 'Color Clash', 'blackjack-tourney': 'Blackjack Tournament', chess: 'Chess', checkers: 'Checkers', spades: 'Spades', blackjack: '21 · Blackjack', parcheesi: 'Parcheesi', academy: 'Chess Academy' };
 SH.onResult = function (game, res, extra) {
   extra = extra || {};
   const g = P.games[game] = P.games[game] || { w: 0, l: 0, d: 0 };
@@ -8996,13 +9289,13 @@ SH.onResult = function (game, res, extra) {
   if (game === 'colorclash' && res === 'w') unlock('clash');
   if (game === 'pittypat' && res === 'w') unlock('pat');
   if (game === 'mogul' && res === 'w') unlock('mogul');
-  if (res === 'w') { const m = { dominoes: 'domino', bidwhist: 'boston', poker: 'holdem', tonk: 'tonk', gofish: 'fish', war: 'general', showdown: 'owner', pluck: 'plucker', bingo: 'bingo', keno: 'keno', bourre: 'booray' }[game]; if (m) unlock(m); }
+  if (res === 'w') { const m = { dominoes: 'domino', bidwhist: 'boston', poker: 'holdem', tonk: 'tonk', gofish: 'fish', war: 'general', showdown: 'owner', pluck: 'plucker', bingo: 'bingo', keno: 'keno', bourre: 'booray', roulette: 'roulette' }[game]; if (m) unlock(m); }
   if (game === 'blackjack') {
     if (extra.bj) { unlock('natural'); queueCard({ kind: 'win', headline: 'BLACKJACK!', sub: 'A natural 21 at the McLearn Arena table', icon: '🂡' }); }
     const st = LS.get('bj', null); if (st && st.total >= 50 && st.good / st.total >= 0.95) unlock('strategist');
   }
   if (game === 'academy') { const pz = LS.get('puzzles', { solved: [] }); if (pz.solved.length >= 7) unlock('drills'); queueCard({ kind: 'win', headline: 'PUZZLE SOLVED', sub: extra.name || 'McLearn Academy drill', icon: '🎓' }); }
-  if (res === 'w' && big && game !== 'blackjack-tourney') queueCard({ kind: 'win', headline: game === 'chess' ? (extra.reason === 'checkmate' ? 'CHECKMATE' : 'VICTORY') : 'VICTORY', sub: `${extra.pro ? 'Pro · ' : ''}${GAME_NAMES[game]}${extra.vs ? ' vs ' + extra.vs : ''}`, icon: { chess: '♚', checkers: '⛀', spades: '♠', parcheesi: '⚄', colorclash: '✦', pittypat: '🂫', mogul: '🏙', dominoes: '🁫', bidwhist: '🃏', poker: '♦', tonk: '♣', gofish: '🐟', war: '⚔️', showdown: '🎤', pluck: '🪶' , bingo: '🎱', keno: '🔢', bourre: '⚜️' }[game] || '🏆' });
+  if (res === 'w' && big && game !== 'blackjack-tourney') queueCard({ kind: 'win', headline: game === 'chess' ? (extra.reason === 'checkmate' ? 'CHECKMATE' : 'VICTORY') : 'VICTORY', sub: `${extra.pro ? 'Pro · ' : ''}${GAME_NAMES[game]}${extra.vs ? ' vs ' + extra.vs : ''}`, icon: { chess: '♚', checkers: '⛀', spades: '♠', parcheesi: '⚄', colorclash: '✦', pittypat: '🂫', mogul: '🏙', dominoes: '🁫', bidwhist: '🃏', poker: '♦', tonk: '♣', gofish: '🐟', war: '⚔️', showdown: '🎤', pluck: '🪶' , bingo: '🎱', keno: '🔢', bourre: '⚜️', roulette: '🎡' }[game] || '🏆' });
   if (game !== 'blackjack' || (P.games.blackjack.w + P.games.blackjack.l + P.games.blackjack.d) % 6 === 0) setTimeout(() => Minute.maybe(), 2600);
 };
 SH.onEvent = function (game, ev, data) {
@@ -9108,7 +9401,7 @@ function openPlayerCard() {
   const rec = k => { const g = P.games[k] || { w: 0, l: 0, d: 0 }; return `${g.w}W ${g.l}L${g.d ? ' ' + g.d + 'D' : ''}`; };
   $('pcm-body').innerHTML = `
     <div class="row" style="gap:14px;align-items:center"><div class="lvl big">${lv}</div><div><div class="serif" style="font-size:22px">${title(lv)}</div><div class="tiny muted">${P.xp.toLocaleString()} XP · ${(next - P.xp).toLocaleString()} to level ${lv + 1}</div><div class="tiny" style="color:var(--amber)">${P.season} season · ${P.sxp.toLocaleString()} XP this season · best streak ${P.bestStreak}</div></div></div>
-    <div class="grid3" style="margin-top:12px">${['chess', 'checkers', 'spades', 'blackjack', 'parcheesi', 'colorclash', 'pittypat', 'mogul', 'dominoes', 'bidwhist', 'poker', 'tonk', 'gofish', 'war', 'showdown', 'pluck', 'bingo', 'keno', 'bourre'].map(k => `<div class="stat"><span>${GAME_NAMES[k]}</span><b style="font-size:12px">${rec(k)}</b></div>`).join('')}<div class="stat"><span>Chess Elo</span><b style="font-size:12px">${SH.profile.elo}</b></div></div>
+    <div class="grid3" style="margin-top:12px">${['chess', 'checkers', 'spades', 'blackjack', 'parcheesi', 'colorclash', 'pittypat', 'mogul', 'dominoes', 'bidwhist', 'poker', 'tonk', 'gofish', 'war', 'showdown', 'pluck', 'bingo', 'keno', 'bourre', 'roulette'].map(k => `<div class="stat"><span>${GAME_NAMES[k]}</span><b style="font-size:12px">${rec(k)}</b></div>`).join('')}<div class="stat"><span>Chess Elo</span><b style="font-size:12px">${SH.profile.elo}</b></div></div>
     <div class="label" style="margin:14px 0 6px">Achievements · ${Object.keys(P.ach).length}/${ACH.length}</div>
     <div class="achgrid">${ACH.map(a => `<div class="ach ${P.ach[a.id] ? 'on' : ''}" title="${esc(a.desc)}"><span>${a.icon}</span><b>${esc(a.name)}</b><small>${esc(a.desc)}</small></div>`).join('')}</div>
     <div class="label" style="margin:16px 0 6px">Event Mode — big screen for churches, schools &amp; fundraisers</div>
@@ -9171,10 +9464,11 @@ const GAMES = [
   { v: 'gofish', title: 'Go Fish', sub: 'The family favorite. Ask, fish, and make your books.', cats: ['cards'], icon: 'gofish', h1: '#052f45', h2: '#1aa0c8', stat: () => rec('gf-stats'), keys: 'go fish kids family' },
   { v: 'war', title: 'I Declare War', sub: 'Classic War — plus a Pro Tactics mode where you pick your fighter.', cats: ['cards'], icon: 'war', h1: '#3b0b0b', h2: '#a02020', stat: () => rec('war-stats'), keys: 'war i declare war' },
   { v: 'blackjack', title: '21 · Blackjack', sub: 'The card game 21 on a real casino table. Practice chips, and a coach that grades every decision.', cats: ['casino'], icon: 'blackjack', h1: '#0f3a26', h2: '#22845a', stat: () => `Chips ${(LS.get('bj', { bank: 1000 }).bank).toLocaleString()}`, keys: '21 twenty-one twenty one blackjack card game casino' },
+  { v: 'roulette', title: 'McLearn Roulette', sub: 'European or American wheel, a full betting layout and an odds coach. Practice chips only.', cats: ['casino'], icon: 'roulette', h1: '#3a0612', h2: '#b3264a', stat: () => `Chips ${(LS.get('rl', { bank: 1000 }).bank).toLocaleString()}`, keys: 'roulette wheel red black casino spin zero' },
   { v: 'keno', title: 'McLearn Keno', sub: 'Pick up to 10 numbers, watch 20 balls drop. Gold Ball doubles it. Practice credits only.', cats: ['casino'], icon: 'keno', h1: '#0d1a3a', h2: '#2e5fd0', stat: () => `Credits ${(LS.get('kn', { bank: 500 }).bank).toLocaleString()}`, keys: 'keno lottery numbers 80 balls lounge casino' },
   { v: 'poker', title: "Hold'em Poker", sub: 'Sit & Go tournament with practice chips and a live win-odds coach.', cats: ['casino'], icon: 'poker', h1: '#052c2a', h2: '#13806e', stat: () => { const s = LS.get('pk-stats', { w: 0, l: 0 }); return `${s.w} titles`; }, keys: 'poker holdem texas chips' }
 ];
-const TAG = { dominoes: 'Slam the bones.', chess: 'Think like a grandmaster.', spades: 'Bid it. Make it. Bag it.', bidwhist: 'Uptown, Downtown — your call.', mogul: 'Own the whole catalog.', showdown: 'Write it. Sing it. Own it.', bingo: 'Daub it. Shout it. BINGO!', keno: 'Pick your spots. Watch them drop.', bourre: 'Take a trick or get boorayed.', colorclash: 'Match it or draw it.', tonk: 'Drop it like it’s low.', pittypat: 'Pair it up, Pitty Pat!', checkers: 'King me.', parcheesi: 'Race every pawn home.', gofish: 'Ask, fish, book it.', war: 'I — DE — CLARE — WAR!', blackjack: 'Get to 21 — beat the dealer.', poker: 'Last stack standing.' };
+const TAG = { dominoes: 'Slam the bones.', chess: 'Think like a grandmaster.', spades: 'Bid it. Make it. Bag it.', bidwhist: 'Uptown, Downtown — your call.', mogul: 'Own the whole catalog.', showdown: 'Write it. Sing it. Own it.', bingo: 'Daub it. Shout it. BINGO!', keno: 'Pick your spots. Watch them drop.', bourre: 'Take a trick or get boorayed.', roulette: 'Place your bets. Watch it spin.', colorclash: 'Match it or draw it.', tonk: 'Drop it like it’s low.', pittypat: 'Pair it up, Pitty Pat!', checkers: 'King me.', parcheesi: 'Race every pawn home.', gofish: 'Ask, fish, book it.', war: 'I — DE — CLARE — WAR!', blackjack: 'Get to 21 — beat the dealer.', poker: 'Last stack standing.' };
 const SOLO = (() => { try { return new URLSearchParams(location.search).get('solo') === '1'; } catch (e) { return false; } })();
 if (SOLO) document.body.classList.add('solo');
 const views = ['lobby'].concat(GAMES.map(g => g.v)).filter(v => document.getElementById('view-' + v));
