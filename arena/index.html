@@ -1200,7 +1200,8 @@ body.event .gwrap .felt{transform:none}
 .pl-chip{display:inline-grid;place-items:center;width:17px;height:17px;border-radius:50%;background:var(--c);color:#fff;font:800 9px var(--sans);box-shadow:inset -2px -2px 3px rgba(0,0,0,.35)}
 .pl-chip.st{background:radial-gradient(circle,#fbf8f0 0 40%,var(--c) 41%);color:#111}
 .pl-stage{position:relative;display:flex;justify-content:center;touch-action:none}
-#pl-cv{display:block;border-radius:12px;box-shadow:0 30px 60px -18px rgba(0,0,0,.85),0 0 0 1px rgba(0,0,0,.6);touch-action:none;cursor:crosshair;max-width:100%}
+#pl-gl{position:absolute;left:50%;top:0;transform:translateX(-50%);display:block;border-radius:12px;pointer-events:none}.pl-views{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}.pl-views button{background:rgba(0,0,0,.3);color:var(--wg-400);border:0;padding:7px 11px;font-size:12px;font-weight:700}.pl-views button.on{background:linear-gradient(135deg,#f4c86a,#c08a1c);color:#1e0007}
+#pl-cv{position:relative;display:block;border-radius:12px;box-shadow:0 30px 60px -18px rgba(0,0,0,.85),0 0 0 1px rgba(0,0,0,.6);touch-action:none;cursor:crosshair;max-width:100%}
 .pl-power{position:absolute;right:-6px;top:10%;height:80%;width:26px;border-radius:14px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.18);overflow:hidden;cursor:ns-resize;touch-action:none;display:none}
 .pl-room.mine .pl-power{display:block}
 .pl-power i{position:absolute;left:0;right:0;top:0;height:0;background:linear-gradient(180deg,#4ade80,#f4c86a 55%,#f87171)}
@@ -9500,6 +9501,175 @@ McRules.onChange('pluck', () => { if (!G.hands.length || G.over || (G.handNo <= 
 SH.games.pluck = { onShow() { if (!G.hands.length) newGame(); else render(); }, _G: G, _newGame: newGame, _youPlay: youPlay, _aiPlay: aiPlay, _setTrump: setTrump, _bestTrump: bestTrump, _youPluck: youPluck, _aiPluckCard: aiPluckCard };
 })();
 
+// McLearn Pool Room 3-D — WebGL table, glossy numbered balls that really roll, 3-D cue and themed rooms. No libraries.
+window.McPool3D = (function () {
+'use strict';
+const V = { sub: (a, b) => [a[0] - b[0], a[1] - b[1], a[2] - b[2]], add: (a, b) => [a[0] + b[0], a[1] + b[1], a[2] + b[2]], mul: (a, s) => [a[0] * s, a[1] * s, a[2] * s], dot: (a, b) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2], cross: (a, b) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]], norm: a => { const l = Math.hypot(a[0], a[1], a[2]) || 1; return [a[0] / l, a[1] / l, a[2] / l]; }, lerp: (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t] };
+function persp(fov, asp, n, f) { const t = 1 / Math.tan(fov / 2), nf = 1 / (n - f); return [t / asp, 0, 0, 0, 0, t, 0, 0, 0, 0, (f + n) * nf, -1, 0, 0, 2 * f * n * nf, 0]; }
+function lookAt(e, c, up) { const z = V.norm(V.sub(e, c)), x = V.norm(V.cross(up, z)), y = V.cross(z, x); return [x[0], y[0], z[0], 0, x[1], y[1], z[1], 0, x[2], y[2], z[2], 0, -V.dot(x, e), -V.dot(y, e), -V.dot(z, e), 1]; }
+function mm(a, b) { const o = new Array(16); for (let i = 0; i < 4; i++) for (let j = 0; j < 4; j++) { let s = 0; for (let k = 0; k < 4; k++) s += a[k * 4 + j] * b[i * 4 + k]; o[i * 4 + j] = s; } return o; }
+const hex = h => { const n = parseInt(h.slice(1), 16); return [(n >> 16 & 255) / 255, (n >> 8 & 255) / 255, (n & 255) / 255]; };
+const mixc = (a, b, t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t];
+// rotation helpers (3x3, column-major)
+function rotAxis(ax, an) { const [x, y, z] = ax, c = Math.cos(an), s = Math.sin(an), t = 1 - c; return [t * x * x + c, t * x * y + s * z, t * x * z - s * y, t * x * y - s * z, t * y * y + c, t * y * z + s * x, t * x * z + s * y, t * y * z - s * x, t * z * z + c]; }
+function m3(a, b) { const o = new Array(9); for (let i = 0; i < 3; i++) for (let j = 0; j < 3; j++) { let s = 0; for (let k = 0; k < 3; k++) s += a[k * 3 + j] * b[i * 3 + k]; o[i * 3 + j] = s; } return o; }
+function ortho(m) { let x = V.norm([m[0], m[1], m[2]]), y = [m[3], m[4], m[5]]; const z = V.norm(V.cross(x, y)); y = V.cross(z, x); return [x[0], x[1], x[2], y[0], y[1], y[2], z[0], z[1], z[2]]; }
+
+const VS = `attribute vec3 aP;attribute vec3 aN;attribute vec3 aC;attribute vec2 aU;uniform mat4 uVP;uniform mat4 uM;varying vec3 vC;varying vec3 vN;varying vec3 vW;varying vec2 vU;
+void main(){vec4 w=uM*vec4(aP,1.);vW=w.xyz;vN=normalize((uM*vec4(aN,0.)).xyz);vC=aC;vU=aU;gl_Position=uVP*w;}`;
+const FS = `#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
+precision mediump float;
+#endif
+varying vec3 vC;varying vec3 vN;varying vec3 vW;varying vec2 vU;uniform sampler2D uTex;uniform float uUseTex;uniform vec3 uCam;uniform vec3 uL1;uniform vec3 uL2;uniform vec3 uLC;uniform vec3 uAmb;uniform float uShine;uniform float uA;uniform float uEmit;uniform vec3 uFog;
+void main(){vec3 n=normalize(vN);vec3 v=normalize(uCam-vW);if(dot(n,v)<0.&&uShine<1.)n=-n;
+vec3 base=vC;if(uUseTex>.5)base*=texture2D(uTex,vU).rgb;
+vec3 col=base*uAmb;float spec=0.;
+for(int i=0;i<2;i++){vec3 lp=i==0?uL1:uL2;vec3 ld=lp-vW;float dist=length(ld);ld/=dist;float att=1./(1.+dist*dist*.00006);float spot=smoothstep(.2,.75,dot(-ld,vec3(0.,-1.,0.)));
+col+=base*uLC*max(dot(n,ld),0.)*att*(.35+.65*spot);vec3 h=normalize(ld+v);spec+=pow(max(dot(n,h),0.),uShine>1.?uShine:8.)*att*spot*(uShine>1.?1.4:.12);}
+float fr=pow(1.-max(dot(n,v),0.),4.)*(uShine>1.?.35:.05);col+=uLC*spec+vec3(fr);col=mix(col,base,uEmit);
+float d=length(uCam-vW);col=mix(col,uFog,clamp((d-260.)/600.,0.,.85));gl_FragColor=vec4(col,uA);}`;
+
+function Geo() { this.p = []; this.n = []; this.c = []; this.u = []; }
+Geo.prototype.v = function (p, n, c, u) { this.p.push(p[0], p[1], p[2]); this.n.push(n[0], n[1], n[2]); this.c.push(c[0], c[1], c[2]); this.u.push(u ? u[0] : 0, u ? u[1] : 0); };
+Geo.prototype.tri = function (a, b, c, col, jit) { const n = V.norm(V.cross(V.sub(b, a), V.sub(c, a))), k = jit ? 1 + (Math.random() - .5) * jit : 1, cc = col.map(x => x * k); this.v(a, n, cc); this.v(b, n, cc); this.v(c, n, cc); };
+Geo.prototype.quad = function (a, b, c, d, col, jit) { this.tri(a, b, c, col, jit); this.tri(a, c, d, col, jit); };
+Geo.prototype.box = function (x0, y0, z0, x1, y1, z1, col, jit, topCol) {
+  this.quad([x0, y1, z0], [x0, y1, z1], [x1, y1, z1], [x1, y1, z0], topCol || col, jit); this.quad([x0, y0, z1], [x0, y0, z0], [x1, y0, z0], [x1, y0, z1], col, jit);
+  this.quad([x0, y0, z1], [x1, y0, z1], [x1, y1, z1], [x0, y1, z1], col, jit); this.quad([x1, y0, z0], [x0, y0, z0], [x0, y1, z0], [x1, y1, z0], col, jit);
+  this.quad([x1, y0, z1], [x1, y0, z0], [x1, y1, z0], [x1, y1, z1], col, jit); this.quad([x0, y0, z0], [x0, y0, z1], [x0, y1, z1], [x0, y1, z0], col, jit);
+};
+Geo.prototype.cyl = function (a, b, r1, r2, col, seg, smooth) {
+  seg = seg || 12; const ax = V.norm(V.sub(b, a)), t = Math.abs(ax[1]) < .9 ? [0, 1, 0] : [1, 0, 0], u = V.norm(V.cross(ax, t)), w = V.cross(ax, u);
+  const ring = (c, r, i) => { const th = i / seg * Math.PI * 2; return [V.add(c, V.add(V.mul(u, Math.cos(th) * r), V.mul(w, Math.sin(th) * r))), V.add(V.mul(u, Math.cos(th)), V.mul(w, Math.sin(th)))]; };
+  for (let i = 0; i < seg; i++) { const [p1, n1] = ring(a, r1, i), [p2, n2] = ring(a, r1, i + 1), [p3, n3] = ring(b, r2, i + 1), [p4, n4] = ring(b, r2, i); if (smooth) { this.v(p1, n1, col); this.v(p2, n2, col); this.v(p3, n3, col); this.v(p1, n1, col); this.v(p3, n3, col); this.v(p4, n4, col); } else this.quad(p1, p2, p3, p4, col); }
+};
+Geo.prototype.disc = function (cx, y, cz, r, col, seg) { seg = seg || 20; for (let i = 0; i < seg; i++) { const a = i / seg * Math.PI * 2, b = (i + 1) / seg * Math.PI * 2; this.tri([cx, y, cz], [cx + Math.cos(b) * r, y, cz + Math.sin(b) * r], [cx + Math.cos(a) * r, y, cz + Math.sin(a) * r], col); } };
+function sphere(r, seg) { // smooth UV sphere for the balls
+  const g = new Geo(), st = seg, sl = Math.round(seg / 2), P = (i, j) => { const th = i / st * Math.PI * 2, ph = j / sl * Math.PI, n = [Math.cos(th) * Math.sin(ph), Math.cos(ph), Math.sin(th) * Math.sin(ph)]; return [V.mul(n, r), n, [i / st, j / sl]]; };
+  for (let i = 0; i < st; i++) for (let j = 0; j < sl; j++) { const a = P(i, j), b = P(i + 1, j), c = P(i + 1, j + 1), d = P(i, j + 1), w = [1, 1, 1]; g.v(a[0], a[1], w, a[2]); g.v(c[0], c[1], w, c[2]); g.v(b[0], b[1], w, b[2]); g.v(a[0], a[1], w, a[2]); g.v(d[0], d[1], w, d[2]); g.v(c[0], c[1], w, c[2]); }
+  return g;
+}
+
+function create(canvas) {
+  let gl = null; try { gl = canvas.getContext('webgl', { antialias: true, alpha: false, preserveDrawingBuffer: true }); } catch (e) { gl = null; }
+  if (!gl) return { ok: false };
+  let P; try {
+    const p = gl.createProgram(); for (const [t, s] of [[gl.VERTEX_SHADER, VS], [gl.FRAGMENT_SHADER, FS]]) { const sh = gl.createShader(t); gl.shaderSource(sh, s); gl.compileShader(sh); if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(sh)); gl.attachShader(p, sh); }
+    gl.linkProgram(p); if (!gl.getProgramParameter(p, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(p)); const u = {}; const n = gl.getProgramParameter(p, gl.ACTIVE_UNIFORMS); for (let i = 0; i < n; i++) { const a = gl.getActiveUniform(p, i); u[a.name] = gl.getUniformLocation(p, a.name); } P = { p, u };
+  } catch (e) { console.warn('Pool3D', e); return { ok: false }; }
+  const loc = { aP: gl.getAttribLocation(P.p, 'aP'), aN: gl.getAttribLocation(P.p, 'aN'), aC: gl.getAttribLocation(P.p, 'aC'), aU: gl.getAttribLocation(P.p, 'aU') };
+  const buf = arr => { const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(arr), gl.STATIC_DRAW); return b; };
+  const mesh = g => ({ p: buf(g.p), n: buf(g.n), c: buf(g.c), u: buf(g.u), count: g.p.length / 3 });
+  const white = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, white); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array([255, 255, 255, 255]));
+  const texFrom = cvs => { const t = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, t); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, cvs); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE); return t; };
+  // ball textures: equirectangular, number on both sides, stripe band for 9–15
+  const ballTex = {};
+  function texFor(n, color) {
+    if (ballTex[n]) return ballTex[n]; const c = document.createElement('canvas'); c.width = 256; c.height = 128; const x = c.getContext('2d');
+    const stripe = n >= 9; x.fillStyle = n === 0 || stripe ? '#f6f1e6' : color; x.fillRect(0, 0, 256, 128);
+    if (stripe) { x.fillStyle = color; x.fillRect(0, 128 * .3, 256, 128 * .4); }
+    if (n > 0) for (const u of [64, 192]) { x.fillStyle = '#fbf8f0'; x.beginPath(); x.ellipse(u, 64, 19, 21, 0, 0, 7); x.fill(); x.fillStyle = '#111'; x.font = '800 24px Arial'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(n, u, 66); }
+    if (n === 0) { x.fillStyle = 'rgba(190,30,40,.55)'; for (const u of [64, 192]) { x.beginPath(); x.arc(u, 64, 4, 0, 7); x.fill(); } }
+    return ballTex[n] = texFrom(c);
+  }
+  let ballMesh = null, R = 1.32, table = null, tableKey = '', VP = null, cam = null, W = 1, H = 1, view = { eye: [0, 0, 0], tgt: [0, 0, 0] }, lights = null;
+  const rot = {}, last = {};
+  function buildTable(T, room) {
+    const g = new Geo(), Wd = T.W, Hd = T.H, cloth = hex(T.cloth[0]), cloth2 = hex(T.cloth[1]), cush = hex(T.cushion), rail = hex(T.rail[0]), rail2 = hex(T.rail[1]), sight = hex(T.sight), CM = T.CM, SM = T.SM, rw = 5.5;
+    // cloth bed (slight radial shading via 4 triangles meeting in the middle)
+    const mid = [Wd / 2, 0, Hd / 2]; const corners = [[-1.4, 0, -1.4], [Wd + 1.4, 0, -1.4], [Wd + 1.4, 0, Hd + 1.4], [-1.4, 0, Hd + 1.4]];
+    for (let i = 0; i < 4; i++) { const a = corners[i], b = corners[(i + 1) % 4]; g.v(mid, [0, 1, 0], cloth); g.v(b, [0, 1, 0], cloth2); g.v(a, [0, 1, 0], cloth2); }
+    // cushions (between pocket jaws), height ~1.6
+    const ch = 1.55, cw = 1.4, cushSeg = (x0, z0, x1, z1, nx, nz) => { // nose along (x0,z0)-(x1,z1), extends outward by cw along -normal
+      const o = [-nx * cw, 0, -nz * cw]; const a = [x0, .05, z0], b = [x1, .05, z1], a2 = V.add(a, o), b2 = V.add(b, o);
+      g.quad([x0, ch, z0], [x1, ch, z1], [b2[0], ch + .15, b2[2]], [a2[0], ch + .15, a2[2]], cush); g.quad(a, b, [x1, ch, z1], [x0, ch, z0], mixc(cush, [0, 0, 0], .15));
+    };
+    cushSeg(CM, 0, Wd / 2 - SM, 0, 0, 1); cushSeg(Wd / 2 + SM, 0, Wd - CM, 0, 0, 1); cushSeg(CM, Hd, Wd / 2 - SM, Hd, 0, -1); cushSeg(Wd / 2 + SM, Hd, Wd - CM, Hd, 0, -1); cushSeg(0, CM, 0, Hd - CM, 1, 0); cushSeg(Wd, CM, Wd, Hd - CM, -1, 0);
+    // wooden rails & apron
+    const y1 = ch + .32; g.box(-1.4 - rw, 0, -1.4 - rw, Wd + 1.4 + rw, y1, -1.4, rail, .04); g.box(-1.4 - rw, 0, Hd + 1.4, Wd + 1.4 + rw, y1, Hd + 1.4 + rw, rail, .04); g.box(-1.4 - rw, 0, -1.4, -1.4, y1, Hd + 1.4, rail, .04); g.box(Wd + 1.4, 0, -1.4, Wd + 1.4 + rw, y1, Hd + 1.4, rail, .04);
+    g.box(-1.4 - rw + 1, -9, -1.4 - rw + 1, Wd + 1.4 + rw - 1, -.35, Hd + 1.4 + rw - 1, rail2, .03);
+    for (const [lx, lz] of [[-1, -1], [Wd + 1, -1], [-1, Hd + 1], [Wd + 1, Hd + 1], [Wd / 2, -1], [Wd / 2, Hd + 1]].slice(0, Wd > 90 ? 6 : 4)) g.box(lx - 2.5, -30, lz - 2.5, lx + 2.5, -9, lz + 2.5, rail2);
+    // pockets: dark holes + leather rims
+    const pk = [[-.55, -.55], [Wd / 2, -1.05], [Wd + .55, -.55], [-.55, Hd + .55], [Wd / 2, Hd + 1.05], [Wd + .55, Hd + .55]];
+    pk.forEach(([px, pz], i) => { const r = (i === 1 || i === 4 ? SM : CM * .86); g.disc(px, y1 + .02, pz, r * 1.3, hex(T.leather), 18); g.disc(px, y1 + .04, pz, r, [.02, .02, .02], 18); g.disc(px, .03, pz, r * .95, [.01, .01, .01], 18); });
+    // diamonds
+    const dm = (x, z) => g.box(x - .3, y1, z - .3, x + .3, y1 + .06, z + .3, sight);
+    for (let k = 1; k < 8; k++) { if (k === 4) continue; dm(Wd * k / 8, -1.4 - rw * .5); dm(Wd * k / 8, Hd + 1.4 + rw * .5); } for (let k = 1; k < 4; k++) { dm(-1.4 - rw * .5, Hd * k / 4); dm(Wd + 1.4 + rw * .5, Hd * k / 4); }
+    // head string + spots
+    g.box(Wd / 4 - .04, .01, 0, Wd / 4 + .04, .015, Hd, mixc(cloth, [1, 1, 1], .15)); g.disc(Wd * .75, .02, Hd / 2, .3, [.9, .9, .9], 10);
+    // room: floor, walls, lamp
+    const theme = { pro: ['#10131c', '#0b1a33', '#e8f0ff'], hall: ['#2a1a10', '#3a2214', '#ffe0a8'], online: ['#1b222b', '#24303c', '#f4f8ff'], southern: ['#2b1712', '#4a2318', '#ffd09a'] }[room] || ['#222', '#333', '#fff'];
+    const floor = hex(theme[0]), wall = hex(theme[1]), lampC = hex(theme[2]);
+    g.box(-260, -31, -220, Wd + 260, -30, Hd + 220, floor, .05);
+    const wz0 = -200, wz1 = Hd + 200, wx0 = -230, wx1 = Wd + 230; g.quad([wx0, -30, wz0], [wx1, -30, wz0], [wx1, 140, wz0], [wx0, 140, wz0], wall); g.quad([wx0, -30, wz1], [wx0, 140, wz1], [wx1, 140, wz1], [wx1, -30, wz1], wall); g.quad([wx0, -30, wz0], [wx0, 140, wz0], [wx0, 140, wz1], [wx0, -30, wz1], wall); g.quad([wx1, -30, wz0], [wx1, -30, wz1], [wx1, 140, wz1], [wx1, 140, wz0], wall);
+    if (room === 'hall' || room === 'southern') for (let i = 0; i < 26; i++) { const x = wx0 + i * (wx1 - wx0) / 26; g.box(x, -30, wz0 + .5, x + 1.2, 140, wz0 + 1.6, mixc(wall, [0, 0, 0], .3)); }
+    if (room === 'southern') for (let i = 0; i < 30; i++) { const x = wx0 + 20 + i * 18; g.box(x - .8, 95 + Math.sin(i) * 3, wz0 + 3, x + .8, 96.6 + Math.sin(i) * 3, wz0 + 4.6, hex('#ffd98a')); }
+    // lamp shade(s) over the table
+    const lamps = Wd > 90 ? [Wd * .25, Wd * .5, Wd * .75] : [Wd * .3, Wd * .7];
+    for (const lx of lamps) { const lc = [lx, 46, Hd / 2]; g.cyl([lx, 52, Hd / 2], [lx, 44, Hd / 2], 3, 8, room === 'pro' ? hex('#1b1f2a') : room === 'online' ? hex('#e6ecf2') : hex('#2a5a32'), 14); g.disc(lx, 44.05, Hd / 2, 7.8, lampC, 14); g.cyl([lx, 52, Hd / 2], [lx, 140, Hd / 2], .2, .2, [.1, .1, .1], 4); void lc; }
+    lights = { l1: [Wd * .3, 44, Hd / 2], l2: [Wd * .7, 44, Hd / 2], col: lampC.map(v => v * .92), amb: mixc(wall, [1, 1, 1], .2).map(v => v * .5), fog: mixc(wall, floor, .5) };
+    return mesh(g);
+  }
+  let cueMesh = null, shadowMesh = null;
+  function cueStickMesh() { if (cueMesh) return cueMesh; const g = new Geo(); g.cyl([0, 0, 0], [0, 0, -.35], .26, .26, hex('#3b6fb0'), 12, true); g.cyl([0, 0, -.35], [0, 0, -1.2], .27, .28, hex('#f4f1ea'), 12, true); g.cyl([0, 0, -1.2], [0, 0, -30], .28, .42, hex('#e2c48a'), 12, true); g.cyl([0, 0, -30], [0, 0, -36], .42, .48, hex('#2b1208'), 12, true); g.cyl([0, 0, -36], [0, 0, -46], .48, .55, hex('#7a1f22'), 12, true); g.cyl([0, 0, -46], [0, 0, -58], .55, .6, hex('#141414'), 12, true); return cueMesh = mesh(g); }
+  function shadowDisc() { if (shadowMesh) return shadowMesh; const g = new Geo(); g.disc(0, 0, 0, 1, [0, 0, 0], 20); return shadowMesh = mesh(g); }
+
+  function setCam(eye, tgt, fov) {
+    W = canvas.width; H = canvas.height; const asp = W / H, f = V.norm(V.sub(tgt, eye)), r = V.norm(V.cross(f, [0, 1, 0])), u = V.cross(r, f);
+    cam = { eye, f, r, u, th: Math.tan(fov * Math.PI / 360), asp }; VP = mm(persp(fov * Math.PI / 180, asp, 4, 1400), lookAt(eye, tgt, [0, 1, 0]));
+  }
+  function draw(m, M, opt) {
+    opt = opt || {}; gl.useProgram(P.p); gl.uniformMatrix4fv(P.u.uVP, false, VP); gl.uniformMatrix4fv(P.u.uM, false, M);
+    gl.uniform3fv(P.u.uCam, cam.eye); gl.uniform3fv(P.u.uL1, lights.l1); gl.uniform3fv(P.u.uL2, lights.l2); gl.uniform3fv(P.u.uLC, lights.col); gl.uniform3fv(P.u.uAmb, lights.amb); gl.uniform3fv(P.u.uFog, lights.fog);
+    gl.uniform1f(P.u.uShine, opt.shine || 0); gl.uniform1f(P.u.uA, opt.alpha == null ? 1 : opt.alpha); gl.uniform1f(P.u.uEmit, opt.emit || 0); gl.uniform1f(P.u.uUseTex, opt.tex ? 1 : 0);
+    gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, opt.tex || white); gl.uniform1i(P.u.uTex, 0);
+    for (const [k, b, n] of [['aP', m.p, 3], ['aN', m.n, 3], ['aC', m.c, 3], ['aU', m.u, 2]]) { gl.bindBuffer(gl.ARRAY_BUFFER, b); gl.enableVertexAttribArray(loc[k]); gl.vertexAttribPointer(loc[k], n, gl.FLOAT, false, 0, 0); }
+    gl.drawArrays(gl.TRIANGLES, 0, m.count);
+  }
+  const M4 = (r, p, s) => { s = s || 1; return [r[0] * s, r[1] * s, r[2] * s, 0, r[3] * s, r[4] * s, r[5] * s, 0, r[6] * s, r[7] * s, r[8] * s, 0, p[0], p[1], p[2], 1]; };
+  function render(st) {
+    // st: { T, room, balls:[{n,x,y,in}], colorOf, view:'tv'|'cue', aim, cue:{show,ang,pull}, potting:[{n,x,y,k}], R }
+    R = st.R; if (!ballMesh) ballMesh = mesh(sphere(1, 28));
+    const key = st.room + st.T.W; if (key !== tableKey) { table = buildTable(st.T, st.room); tableKey = key; }
+    const T = st.T, c = st.balls[0];
+    // camera
+    let eye, tgt, fov;
+    if (st.view === 'cue' && c && !c.in) { const dx = Math.cos(st.aim), dz = Math.sin(st.aim); eye = [c.x - dx * 36, 15, c.y - dz * 36]; tgt = [c.x + dx * 22, -2, c.y + dz * 22]; fov = 50; }
+    else { const k2 = T.W > 90 ? 1.0 : .9; eye = [T.W / 2, T.W * .84 * k2, T.H / 2 + T.W * .76 * k2]; tgt = [T.W / 2, -4, T.H / 2 + 2]; fov = 40; }
+    const k = st.snap ? 1 : .18; view.eye = V.lerp(view.eye[0] || view.eye[1] ? view.eye : eye, eye, k); view.tgt = V.lerp(view.tgt[0] || view.tgt[1] ? view.tgt : tgt, tgt, k);
+    setCam(view.eye, view.tgt, fov);
+    gl.viewport(0, 0, W, H); gl.clearColor(lights ? lights.fog[0] : 0, lights ? lights.fog[1] : 0, lights ? lights.fog[2] : 0, 1); gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT); gl.enable(gl.DEPTH_TEST);
+    draw(table, M4([1, 0, 0, 0, 1, 0, 0, 0, 1], [0, 0, 0]));
+    // ball shadows
+    gl.enable(gl.BLEND); gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA); gl.depthMask(false);
+    for (const b of st.balls) if (!b.in) draw(shadowDisc(), M4([1, 0, 0, 0, 1, 0, 0, 0, .8], [b.x + .25, .03, b.y + .35], R * 1.05), { alpha: .38, emit: 1 });
+    gl.depthMask(true); gl.disable(gl.BLEND);
+    // balls with real rolling
+    for (const b of st.balls) {
+      if (b.in) { delete last[b.n]; continue; }
+      let r = rot[b.n] || (rot[b.n] = [1, 0, 0, 0, 1, 0, 0, 0, 1]); const l = last[b.n];
+      if (l) { const dx = b.x - l[0], dz = b.y - l[1], d = Math.hypot(dx, dz); if (d > 1e-4 && d < 30) { r = rot[b.n] = ortho(m3(rotAxis(V.norm([dz, 0, -dx]), d / R), r)); } }
+      last[b.n] = [b.x, b.y];
+      draw(ballMesh, M4(r, [b.x, R, b.y], R), { tex: texFor(b.n, st.colorOf(b.n)), shine: 90 });
+    }
+    for (const p of st.potting || []) draw(ballMesh, M4(rot[p.n] || [1, 0, 0, 0, 1, 0, 0, 0, 1], [p.x, R - (1 - p.k) * 3.5, p.y], R * Math.max(.3, p.k)), { tex: texFor(p.n, st.colorOf(p.n)), shine: 90 });
+    // cue stick
+    if (st.cue && st.cue.show && c && !c.in) { const a = st.cue.ang, dx = Math.cos(a), dz = Math.sin(a), back = R * 1.5 + st.cue.pull * 9, el = .09; const zAx = [dx * Math.cos(el), Math.sin(el), dz * Math.cos(el)], xAx = V.norm(V.cross([0, 1, 0], zAx)), yAx = V.cross(zAx, xAx);
+      draw(cueStickMesh(), [xAx[0], xAx[1], xAx[2], 0, yAx[0], yAx[1], yAx[2], 0, zAx[0], zAx[1], zAx[2], 0, c.x - zAx[0] * back, R + .3 - zAx[1] * back + .2, c.y - zAx[2] * back, 1], { shine: 40 }); }
+  }
+  function ray(sx, sy) { const x = (sx * 2 - 1) * cam.th * cam.asp, y = (1 - sy * 2) * cam.th; return V.norm(V.add(cam.f, V.add(V.mul(cam.r, x), V.mul(cam.u, y)))); }
+  return {
+    ok: true, render,
+    project(x, y, z) { const p = [x, y, z], X = VP[0] * p[0] + VP[4] * p[1] + VP[8] * p[2] + VP[12], Y = VP[1] * p[0] + VP[5] * p[1] + VP[9] * p[2] + VP[13], w = VP[3] * p[0] + VP[7] * p[1] + VP[11] * p[2] + VP[15]; if (w <= .1) return null; return { x: (X / w) * .5 + .5, y: 1 - ((Y / w) * .5 + .5) }; },
+    toTable(sx, sy, h) { if (!cam) return null; const d = ray(sx, sy); if (d[1] >= -1e-4) return null; const t = ((h || 0) - cam.eye[1]) / d[1]; return { x: cam.eye[0] + d[0] * t, y: cam.eye[2] + d[2] * t }; },
+    reset() { for (const k in rot) delete rot[k]; for (const k in last) delete last[k]; },
+  };
+}
+return { create };
+})();
+
 // McLearn Pool Room — real ball physics on four tables: Professional, Pool Room, Standard Online and Southern Style.
 // 8-Ball, 9-Ball, 10-Ball and Practice; computer opponents at four levels or Pass & Play.
 (function () {
@@ -9709,7 +9879,7 @@ root.innerHTML = `
 <section class="col center" style="width:100%">
   <div class="pl-room" id="pl-room">
     <div class="pl-hud"><div class="pl-p" id="pl-p0"></div><div class="pl-mid"><b id="pl-race">Race to 3</b><small id="pl-game">8-Ball</small></div><div class="pl-p r" id="pl-p1"></div></div>
-    <div class="pl-stage" id="pl-stage"><canvas id="pl-cv" aria-label="Pool table" role="img"></canvas>
+    <div class="pl-stage" id="pl-stage"><canvas id="pl-gl" aria-hidden="true"></canvas><canvas id="pl-cv" aria-label="Pool table" role="img"></canvas>
       <div class="pl-power" id="pl-power" aria-label="Shot power — drag down and let go to shoot" role="slider" aria-valuemin="0" aria-valuemax="100" tabindex="0"><i id="pl-pfill"></i><span>POWER</span></div>
       <div class="felt-msg hidden" id="pl-msg"></div></div>
     <div class="pl-tray" id="pl-tray"></div>
@@ -9720,6 +9890,7 @@ root.innerHTML = `
     <div class="pl-spin" id="pl-spin" title="Spin: drag the dot — top = follow, bottom = draw, sides = English" aria-label="Cue ball spin"><i id="pl-spot"></i></div>
     <label class="pl-pw">Power <input type="range" id="pl-pwr" min="5" max="100" value="55"></label>
     <button class="btn btn-lux" id="pl-shoot">Shoot</button>
+    <div class="pl-views" id="pl-views" role="group" aria-label="Camera"><button data-view="cue" title="Your view, from behind the cue ball (default)">🎯 Player</button><button data-view="tv" title="3-D broadcast angle">🎥 TV</button><button data-view="top" title="Classic overhead view">⬛ Top</button></div>
     <span class="ptimer hidden" id="pl-timer"></span>
   </div>
   <div class="tiny muted" id="pl-tip" style="text-align:center;margin-top:6px">Drag on the table to aim · drag the power bar down and let go to shoot · ←/→ aim, Shift for fine, ↑/↓ power, Space shoots.</div>
@@ -9731,12 +9902,17 @@ root.innerHTML = `
     <div class="pl-log" id="pl-log" aria-live="polite"></div></div>
   <div class="card" style="margin-top:10px"><div id="rules-pool"></div></div>
 </section>`;
-const cv = $('pl-cv'), ctx = cv.getContext('2d');
+const cv = $('pl-cv'), ctx = cv.getContext('2d'), glc = $('pl-gl');
+let P3 = { ok: false }; try { if (window.McPool3D && !/[?&]flat=1/.test(location.search)) P3 = McPool3D.create(glc); } catch (e) { P3 = { ok: false }; }
+G.view = P3.ok ? LS.get('pool-view2', 'cue') : 'top'; // default: the player's own point of view, behind the cue ball
+const is3D = () => P3.ok && G.view !== 'top';
 let S = 10, cssW = 0, cssH = 0, tableImg = null, dpr = 1;
 function layout() {
   const st = $('pl-stage'); const w = Math.max(280, Math.min(st.clientWidth || 800, 1100));
-  const TW = T.W + RAIL * 2, TH = T.H + RAIL * 2; S = w / TW; cssW = w; cssH = TH * S;
+  const TW = T.W + RAIL * 2, TH = T.H + RAIL * 2; S = w / TW; cssW = w; cssH = is3D() ? Math.round(Math.min(w * .6, Math.max(220, (window.innerHeight || 800) * .78))) : TH * S;
   dpr = Math.min(2, window.devicePixelRatio || 1); cv.width = Math.round(cssW * dpr); cv.height = Math.round(cssH * dpr); cv.style.width = cssW + 'px'; cv.style.height = cssH + 'px';
+  glc.style.display = is3D() ? '' : 'none'; if (is3D()) { const gd = Math.min(dpr, 1.5); glc.width = Math.round(cssW * gd); glc.height = Math.round(cssH * gd); glc.style.width = cssW + 'px'; glc.style.height = cssH + 'px'; }
+  document.querySelectorAll('#pl-views [data-view]').forEach(b => { b.classList.toggle('on', b.dataset.view === G.view); if (!P3.ok && b.dataset.view !== 'top') b.hidden = true; });
   tableImg = paintTable(); draw();
 }
 const X = x => (x + RAIL) * S, Y = y => (y + RAIL) * S;
@@ -9800,6 +9976,7 @@ function ray(from, ang) { // first ball hit along the aim, or the cushion
 let anim = null, frameT = 0, pottedFx = [];
 function draw() {
   if (!tableImg) return;
+  if (is3D()) { try { return draw3D(); } catch (err) { console.warn('Pool 3-D off', err); P3 = { ok: false }; G.view = 'top'; layout(); return; } }
   ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height); ctx.drawImage(tableImg, 0, 0); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   // called pocket marker
   if (G.called != null && G.phase === 'aim') { const [px, py] = pockets()[G.called]; ctx.strokeStyle = '#f4c86a'; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(X(px), Y(py), T.CM * S, 0, 7); ctx.stroke(); }
@@ -9811,6 +9988,33 @@ function draw() {
   if (G.phase === 'aim' && P[G.turn].ai && G.aiAim != null) cueStick(G.aiAim, G.aiPow || .5);
   if (pottedFx.length && !anim) requestAnimationFrame(draw);
 }
+let snap = true;
+function draw3D() {
+  const ai = P[G.turn] && P[G.turn].ai, ang = ai && G.aiAim != null ? G.aiAim : G.aim;
+  const pot = []; pottedFx = pottedFx.filter(f => { f.t += 1; const k = 1 - f.t / 18; if (k <= 0) return false; pot.push({ n: f.b.n, x: f.b.x + (f.px - f.b.x) * (1 - k), y: f.b.y + (f.py - f.b.y) * (1 - k), k }); return true; });
+  P3.render({ T, room: G.room, balls: G.balls, colorOf, view: G.view === 'cue' && (G.inHand || G.phase === 'rackover') && !ai ? 'tv' : G.view, aim: ang, R, snap, potting: pot, cue: { show: G.phase === 'aim' && !G.over && (!ai || G.aiAim != null), ang, pull: G.drag ? G.dragPow : ai ? (G.aiPow || .5) : G.power } }); snap = false;
+  ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, cv.width, cv.height); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const pj = (x, y, h) => { const q = P3.project(x, h == null ? R : h, y); return q ? [q.x * cssW, q.y * cssH] : null; };
+  if (G.called != null && G.phase === 'aim') { const [px, py] = pockets()[G.called], c = pj(px, py, 1.9), e = pj(px + T.CM, py, 1.9); if (c && e) { ctx.strokeStyle = '#f4c86a'; ctx.lineWidth = 3; ctx.beginPath(); ctx.ellipse(c[0], c[1], Math.abs(e[0] - c[0]), Math.abs(e[0] - c[0]) * .6, 0, 0, 7); ctx.stroke(); } }
+  if (G.phase === 'aim' && !ai && !G.over) {
+    const c = cue(), dx = Math.cos(G.aim), dy = Math.sin(G.aim), h = ray(c, G.aim), len = RU.guide === 'off' ? 0 : RU.guide === 'short' ? Math.min(h.t, 14) : h.t;
+    if (G.inHand && G.kitchen) { const a = pj(T.W / 4, 0, .05), b = pj(T.W / 4, T.H, .05); if (a && b) { ctx.strokeStyle = 'rgba(255,255,255,.45)'; ctx.setLineDash([5, 5]); ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke(); ctx.setLineDash([]); } }
+    if (len > 0) {
+      const a = pj(c.x, c.y), b = pj(c.x + dx * len, c.y + dy * len); if (a && b) { ctx.strokeStyle = 'rgba(255,255,255,.8)'; ctx.lineWidth = 1.6; ctx.setLineDash([7, 6]); ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke(); ctx.setLineDash([]); }
+      if (h.ball && (RU.guide === 'full' || h.t <= 14)) {
+        const gx = c.x + dx * h.t, gy = c.y + dy * h.t, ok = legalTargets(G.turn).includes(h.ball.n), gc = pj(gx, gy), ge = pj(gx + R, gy);
+        if (gc && ge) { ctx.strokeStyle = ok ? 'rgba(255,255,255,.95)' : 'rgba(255,90,90,.95)'; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.arc(gc[0], gc[1], Math.max(4, Math.hypot(ge[0] - gc[0], ge[1] - gc[1])), 0, 7); ctx.stroke(); }
+        if (RU.guide === 'full') { const nx = h.ball.x - gx, ny = h.ball.y - gy, nl = Math.hypot(nx, ny) || 1, ux = nx / nl, uy = ny / nl, cut = dx * ux + dy * uy, L = 6 + 12 * cut, o1 = pj(h.ball.x, h.ball.y), o2 = pj(h.ball.x + ux * L, h.ball.y + uy * L); if (o1 && o2) { ctx.strokeStyle = ok ? 'rgba(255,255,255,.9)' : 'rgba(255,90,90,.9)'; ctx.lineWidth = 2.2; ctx.beginPath(); ctx.moveTo(o1[0], o1[1]); ctx.lineTo(o2[0], o2[1]); ctx.stroke(); }
+          const tx = dx - ux * cut, ty = dy - uy * cut, tl = Math.hypot(tx, ty); if (tl > .05 && gc) { const t2 = pj(gx + tx / tl * 6 * (1 - cut + .2), gy + ty / tl * 6 * (1 - cut + .2)); if (t2) { ctx.strokeStyle = 'rgba(180,220,255,.6)'; ctx.lineWidth = 1.3; ctx.beginPath(); ctx.moveTo(gc[0], gc[1]); ctx.lineTo(t2[0], t2[1]); ctx.stroke(); } } }
+      }
+    }
+    if (G.inHand) { const a = pj(c.x, c.y, .1), e = pj(c.x + R * 1.7, c.y, .1); if (a && e) { ctx.strokeStyle = 'rgba(244,200,106,.95)'; ctx.lineWidth = 2; ctx.setLineDash([3, 3]); const rr = Math.abs(e[0] - a[0]) || 8; ctx.beginPath(); ctx.ellipse(a[0], a[1], rr, rr * .7, 0, 0, 7); ctx.stroke(); ctx.setLineDash([]); } }
+  }
+}
+let loop3 = false;
+function run3() { if (root.classList.contains('hidden') || !is3D()) { loop3 = false; return; } if (!anim) draw(); requestAnimationFrame(run3); }
+function start3() { if (!loop3 && is3D()) { loop3 = true; requestAnimationFrame(run3); } }
+function setView(v) { if (v !== 'top' && !P3.ok) return; G.view = v; LS.set('pool-view2', v); snap = true; layout(); start3(); }
 function aimOverlay() {
   const c = cue(), a = G.aim, dx = Math.cos(a), dy = Math.sin(a), h = ray(c, a);
   const len = RU.guide === 'off' ? 0 : RU.guide === 'short' ? Math.min(h.t, 14) : h.t * T.guideLen;
@@ -9849,7 +10053,7 @@ function play(ang, power, spin) {
     if (G.fast) { let time = 0; while (moving(G.balls) && time < 40) { const dt = dtFor(G.balls); step(G.balls, dt, ev, T, spin); time += dt; } return done(); }
     let last = performance.now(), seen = 0, potSeen = 0;
     const tick = now => {
-      let budget = Math.min(.05, (now - last) / 1000) * 1.35; last = now;
+      let budget = Math.min(.12, (now - last) / 1000) * 1.35; last = now;
       while (budget > 0 && moving(G.balls)) { const dt = Math.min(budget, dtFor(G.balls)); step(G.balls, dt, ev, T, spin); budget -= dt; }
       if ((ev.clicks || 0) > seen) { seen = ev.clicks; if (!G.fast) SH.Sound.play(ev.hard > 120 ? 'capture' : 'move'); }
       while (ev.pots.length > potSeen) { const pt = ev.pots[potSeen++], b = G.balls.find(x => x.n === pt.n), [px, py] = pockets()[pt.p]; pottedFx.push({ b: Object.assign({}, b, { in: false }), px, py, t: 0 }); SH.Sound.play(pt.n === 0 ? 'bad' : 'good'); SH.haptic && SH.haptic(12); }
@@ -10033,18 +10237,19 @@ function setRoom(k) {
 }
 
 // ---------- input ----------
-function toTable(e) { const r = cv.getBoundingClientRect(); return { x: (e.clientX - r.left) / S - RAIL, y: (e.clientY - r.top) / S - RAIL }; }
+function toTable(e) { const r = cv.getBoundingClientRect(); if (is3D()) { const t = P3.toTable((e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height, R); return t || { x: -999, y: -999 }; } return { x: (e.clientX - r.left) / S - RAIL, y: (e.clientY - r.top) / S - RAIL }; }
 let dragMode = null;
 cv.addEventListener('pointerdown', e => {
   if (G.phase !== 'aim' || P[G.turn].ai || G.over) return; SH.Sound.unlock && SH.Sound.unlock();
   const p = toTable(e), c = cue();
-  if (G.needCall) { const pk = pockets().findIndex(([px, py]) => Math.hypot(px - p.x, py - p.y) < 4.2); if (pk >= 0) { G.called = pk; hud(); draw(); return; } }
+  if (G.needCall) { let pk = -1; if (is3D()) { const r = cv.getBoundingClientRect(), mx = e.clientX - r.left, my = e.clientY - r.top; pockets().forEach(([px, py], i) => { const q = P3.project(px, 1.9, py); if (q && Math.hypot(q.x * r.width - mx, q.y * r.height - my) < 34) pk = i; }); } else pk = pockets().findIndex(([px, py]) => Math.hypot(px - p.x, py - p.y) < 4.2); if (pk >= 0) { G.called = pk; hud(); draw(); return; } }
   if (G.inHand && Math.hypot(p.x - c.x, p.y - c.y) < R * 2.6) dragMode = 'place'; else dragMode = 'aim';
-  cv.setPointerCapture(e.pointerId); move(e);
+  cv.setPointerCapture(e.pointerId); G.lastPX = e.clientX; if (!(is3D() && G.view === 'cue' && dragMode === 'aim')) move(e);
 });
 function move(e) {
   if (!dragMode) return; const p = toTable(e), c = cue();
   if (dragMode === 'place') { const x = Math.max(R, Math.min((G.kitchen ? T.W / 4 : T.W - R), p.x)), y = Math.max(R, Math.min(T.H - R, p.y)); if (validSpot(x, y)) { c.x = x; c.y = y; } }
+  else if (is3D() && G.view === 'cue') { const dx = e.clientX - (G.lastPX == null ? e.clientX : G.lastPX); G.lastPX = e.clientX; G.aim += dx * (e.shiftKey ? .0008 : .0045); }
   else if (Math.hypot(p.x - c.x, p.y - c.y) > .5) G.aim = Math.atan2(p.y - c.y, p.x - c.x);
   draw();
 }
@@ -10076,6 +10281,7 @@ document.addEventListener('keydown', e => {
   else if (e.key === ' ' && document.activeElement !== pb) { e.preventDefault(); shoot(G.aim, G.power, Object.assign({}, G.spin)); }
 });
 $('pl-rooms').innerHTML = Object.entries(ROOMS).map(([k, r]) => `<button class="pl-room-btn" data-room="${k}" style="--c1:${r.cloth[0]};--c2:${r.rail[0]}"><i></i><b>${r.name}</b><small>${r.sub}</small></button>`).join('');
+$('pl-views').onclick = e => { const b = e.target.closest('[data-view]'); if (b) setView(b.dataset.view); };
 $('pl-rooms').onclick = e => { const b = e.target.closest('[data-room]'); if (b) setRoom(b.dataset.room); };
 $('pl-new').onclick = newMatch;
 $('pl-rerack').onclick = () => { if (G.over || RU.game === 'practice' || G.shotNo <= 1 || confirm('Re-rack and replay this rack?')) newRack(); };
@@ -10083,8 +10289,8 @@ window.addEventListener('resize', () => { if (!root.classList.contains('hidden')
 McRules.mount('pool', $('rules-pool'));
 McRules.onChange('pool', () => { const before = RU; RU = McRules.get('pool'); P = players(); if (before.game !== RU.game || before.opp !== RU.opp || !G.shotNo || G.over) newMatch(); else { hud(); draw(); SH.toast('New rules apply now'); } });
 SH.games.pool = {
-  onShow() { $('pl-room').dataset.room = G.room; if (matchMedia('(orientation: portrait) and (max-width: 700px)').matches && !LS.get('pool-rot', false)) { LS.set('pool-rot', true); setTimeout(() => SH.toast('Tip: turn your phone sideways for a bigger table'), 900); } requestAnimationFrame(() => { layout(); if (!G.balls.length) newMatch(); else { hud(); draw(); } }); },
-  _G: G, _shoot: shoot, _newMatch: newMatch, _setRoom: setRoom, _sim: simulate, _cands: candidates, _ai: aiTurn,
+  onShow() { $('pl-room').dataset.room = G.room; snap = true; setTimeout(start3, 50); if (matchMedia('(orientation: portrait) and (max-width: 700px)').matches && !LS.get('pool-rot', false)) { LS.set('pool-rot', true); setTimeout(() => SH.toast('Tip: turn your phone sideways for a bigger table'), 900); } requestAnimationFrame(() => { layout(); if (!G.balls.length) newMatch(); else { hud(); draw(); } }); },
+  _G: G, _setView: setView, _p3: () => P3, _shoot: shoot, _newMatch: newMatch, _setRoom: setRoom, _sim: simulate, _cands: candidates, _ai: aiTurn,
 };
 })();
 
@@ -12932,7 +13138,7 @@ pool: {
   turn: ['Drag anywhere on the table to aim — the cue points from the cue ball toward your finger. ◀ ▶ fine-tune.', 'Pull the POWER bar down and let go to shoot (or set the Power slider and press Shoot).', 'Tap the spin ball for English: top = follow, bottom = draw (backspin), sides = side spin off the rails. Double-tap to reset.', 'The guide shows the ghost ball, where the object ball goes, and where the cue ball heads. Red means that ball isn’t legal to hit first.', 'After a foul you get ball in hand: drag the cue ball where you want it (behind the line in bar rules).'],
   win: ['8-Ball: break, then claim solids (1–7) or stripes (9–15) with your first legal pot. Clear your group, then sink the 8. Sinking the 8 early, or scratching on it, loses the rack.', '9-Ball: always hit the lowest-numbered ball first. Anything that drops counts. Sink the 9 legally — even on a combo — to win.', '10-Ball: the same, but the 10 is spotted if it drops on the break; in Pro you must call the 10’s pocket.', 'Practice: a free table to work on shots — rack again when it’s clear.', 'Fouls: scratching, hitting the wrong ball first, hitting nothing, or no ball reaching a rail after contact. Your opponent gets ball in hand.', 'Win the race (1, 3, 5 or 7 racks) to win the match.'],
   modes: [['vs the computer', 'Cousin Dre (rookie), Miss Loretta (hustler), Uncle Ray (shark) and Deacon Earl (pro) — each one aims and plans further ahead.'], ['Pass & Play', 'Two people share one device and take turns.'], ['Bar rules', 'Set Ball in hand to “Kitchen only” and 8 on the break to “Wins the rack” — the way it’s played at the juke joint.']],
-  keys: ['←/→ aim (hold Shift for fine aim), ↑/↓ power, Space shoots.', 'On a phone, turn it sideways for a bigger table.'],
+  keys: ['Camera: 🎯 Player is the default — your own view from behind the cue ball (drag left and right to aim, Shift for fine aim). Switch to 🎥 TV (broadcast angle) or ⬛ Top (classic overhead) any time. While you place the cue ball, the camera rises so you can see the table.', '←/→ aim (hold Shift for fine aim), ↑/↓ power, Space shoots.', 'On a phone, turn it sideways for a bigger table.'],
   tips: ['Aim at the ghost ball, not the object ball.', 'Use draw (bottom spin) to stop the cue ball from following into a pocket.', 'Play position: think about where the cue ball stops for your next shot.'],
 },
 outdoors: {
