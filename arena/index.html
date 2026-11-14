@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>McLearn Arena — 22 Games by McLearn Media</title>
-<meta name="description" content="Play 22 games free — Spades, Biz Wiz, Dominoes, Chess, Bingo and more — plus trivia challenges in Bible, African American history, sports and music. Earn McLearn Bucks and climb the leaderboards.">
+<title>McLearn Arena — 34 Games by McLearn Media</title>
+<meta name="description" content="Play 34 games free — Spades, Biz Wiz, Dominoes, Chess, Solitaire, Sudoku, Bingo and more — plus trivia challenges in Bible, African American history, sports and music. Earn McLearn Bucks and climb the leaderboards.">
 <meta name="theme-color" content="#1e0007">
 <link rel="manifest" href="/arena/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/arena/apple-touch-icon.png">
@@ -13,7 +13,7 @@
 <meta name="apple-mobile-web-app-title" content="McLearn Arena">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="McLearn Media">
-<meta property="og:title" content="McLearn Arena — 22 games by McLearn Media">
+<meta property="og:title" content="McLearn Arena — 34 games by McLearn Media">
 <meta property="og:description" content="Spades, Biz Wiz, Dominoes, Chess and more, plus trivia challenges. Free to play — earn McLearn Bucks and climb the leaderboards.">
 <meta property="og:image" content="/arena/og-arena.png">
 <meta property="og:image:width" content="1200">
@@ -1355,6 +1355,134 @@ body.event #chat-dock{display:none}
 .sv-banner button{min-height:40px}@keyframes svIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1}}
 body.calm .sv-banner{animation:none}
 @media(max-width:560px){.sv-banner{gap:8px}.sv-banner div{flex-basis:calc(100% - 48px)}.sv-banner button{flex:1}}
+/* ---------- Quiet Corner & Quick Play ---------- */
+.so-col{width:100%;display:flex;flex-direction:column;align-items:center;gap:10px;min-width:0}
+.so-status{font-size:13px;color:var(--wg-300,#f3d9dd);text-align:center;min-height:20px}.so-status b{color:var(--gold1)}
+.so-stage{width:100%;display:flex;flex-direction:column;align-items:center;gap:12px;position:relative}
+.so-acts{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;min-height:38px}.so-acts .btn.on{border-color:var(--gold2);color:var(--gold1)}
+.so-end{width:100%;display:flex;justify-content:center}.so-endcard{padding:16px 18px;text-align:center;display:flex;flex-direction:column;gap:8px;max-width:440px;border-color:rgba(230,184,74,.5);animation:svIn .35s ease}
+.so-endcard h4{margin:0;font-size:22px;color:var(--gold1)}
+.so-opt{display:flex;flex-direction:column;gap:4px;font-size:11px;color:var(--rose-300,#dfa6af)}.so-opt select{width:100%;min-height:38px}
+.so-daily{display:inline-block;font:700 9px var(--mono);letter-spacing:.12em;text-transform:uppercase;padding:2px 7px;border-radius:99px;background:var(--goldg);color:#2a0009;vertical-align:1px}
+.so-ok{color:#9be0b4}
+.so-nope{animation:soNope .3s}@keyframes soNope{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+body.calm .so-nope,body.calm .so-endcard{animation:none}
+/* solitaire */
+#view-solitaire .so-stage{--cw:clamp(40px,12.6vw,78px);max-width:calc(var(--cw) * 7 + 48px)}
+.sol-top{display:flex;gap:8px;width:100%;align-items:flex-start}.sol-gap{flex:1}
+.sol-slot{width:var(--cw);aspect-ratio:5/7;border-radius:calc(var(--cw)*.11);border:2px dashed rgba(230,184,74,.35);display:grid;place-items:center;position:relative;flex:none;cursor:pointer}
+.sol-slot .pcard{position:absolute;inset:0;width:100%}.sol-slot.sol-f{cursor:default}
+.sol-n{position:absolute;right:-6px;bottom:-6px;z-index:2;font:700 10px var(--mono);background:#2a0009;border:1px solid var(--gold2);color:var(--gold1);border-radius:99px;padding:1px 6px}
+.sol-re{font-size:calc(var(--cw)*.5);color:var(--gold2)}.sol-sy{font-size:calc(var(--cw)*.5);opacity:.45;color:#f3d9dd}.sol-sy.red{color:#e0607a}
+.sol-waste{position:relative;width:calc(var(--cw) * 1.7);aspect-ratio:8.5/7;flex:none}.sol-waste .pcard{position:absolute;top:0}.sol-waste .sol-live{cursor:pointer}
+.sol-tab{display:grid;grid-template-columns:repeat(7,var(--cw));gap:8px;justify-content:space-between;width:100%;min-height:calc(var(--cw) * 4.4)}
+.sol-col{position:relative;border-radius:calc(var(--cw)*.11);box-shadow:inset 0 0 0 2px rgba(255,255,255,.05);min-height:calc(var(--cw) * 1.4)}
+.sol-c{position:absolute!important;left:0}#view-solitaire .pcard .ix.tl{display:flex;flex-direction:row;align-items:center;gap:1.5cqw;white-space:nowrap;width:auto;top:4cqw;left:6cqw}#view-solitaire .pcard .ix.tl b{font-size:26cqw}#view-solitaire .pcard .ix.tl i{display:inline!important;font-size:24cqw;margin-top:0}.sol-c[data-a]{cursor:pointer}
+.sol-c.tip,.sol-live.tip,.sol-slot.tip{box-shadow:0 0 0 3px var(--gold2),0 0 18px rgba(230,184,74,.7);z-index:3}
+#view-solitaire [data-a]:focus-visible{outline:3px solid #fff;outline-offset:2px;z-index:4}
+@media(max-width:560px){.sol-tab,.sol-top{gap:4px}#view-solitaire .so-stage{max-width:100%;--cw:calc((100vw - 52px) / 7)}}
+/* sudoku */
+.sk-grid{display:grid;grid-template-columns:repeat(9,1fr);width:min(100%,460px);aspect-ratio:1;border:3px solid var(--gold2);border-radius:10px;overflow:hidden;background:#1c0208}
+.sk-c{border:0;border-right:1px solid rgba(230,184,74,.18);border-bottom:1px solid rgba(230,184,74,.18);background:#240510;color:var(--gold1);font:700 clamp(15px,4.6vw,24px) var(--mono);display:grid;place-items:center;padding:0;min-width:0}
+.sk-c.given{background:#3a0a18;color:#fff3e0}.sk-c.br{border-right:2px solid var(--gold2)}.sk-c.bb{border-bottom:2px solid var(--gold2)}
+.sk-c.peer{background:#33101c}.sk-c.given.peer{background:#451424}.sk-c.same{background:#5a3a14}.sk-c.sel{background:#7a5a1c;color:#fff}.sk-c.bad{color:#ff8296;text-decoration:underline wavy}
+.sk-n{display:grid;grid-template-columns:repeat(3,1fr);width:100%;height:100%;font:600 clamp(7px,1.9vw,10px) var(--mono);color:#dfa6af}.sk-n i{display:grid;place-items:center;font-style:normal}
+.sk-pad{display:grid;grid-template-columns:repeat(9,1fr);gap:5px;width:min(100%,460px)}
+.sk-pad button{min-height:48px;border-radius:10px;background:rgba(230,184,74,.1);border:1px solid rgba(230,184,74,.35);color:var(--gold1);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2px 0}
+.sk-pad b{font:700 18px var(--mono)}.sk-pad small{font-size:9px;opacity:.7}.sk-pad button:disabled{opacity:.3}
+/* royalty stack */
+.rs-board{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:min(100%,420px);aspect-ratio:1;padding:10px;border-radius:18px;background:rgba(0,0,0,.4);border:1px solid rgba(230,184,74,.3);touch-action:none;user-select:none}
+.rs-c{border-radius:12px;background:rgba(255,255,255,.04);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05;color:#fff3e0;min-width:0}
+.rs-c b{font:800 clamp(18px,6vw,30px) var(--serif)}.rs-c small{font:600 clamp(8px,2.3vw,10px) var(--mono);text-transform:uppercase;letter-spacing:.06em;opacity:.85}
+.rs-c.fresh{animation:rsPop .18s ease-out}@keyframes rsPop{from{transform:scale(.4)}}body.calm .rs-c.fresh{animation:none}
+.rs-c[data-v="2"]{background:#3a1420}.rs-c[data-v="4"]{background:#541a2c}.rs-c[data-v="8"]{background:#7a2238}.rs-c[data-v="16"]{background:#9b2c48}.rs-c[data-v="32"]{background:#b8475a}
+.rs-c[data-v="64"]{background:#c9684a}.rs-c[data-v="128"]{background:#c98a2e;color:#2a0009}.rs-c[data-v="256"]{background:#dba63a;color:#2a0009}.rs-c[data-v="512"]{background:#e6b84a;color:#2a0009}
+.rs-c[data-v="1024"]{background:linear-gradient(135deg,#ffe6a8,#e6b84a);color:#2a0009;box-shadow:0 0 16px rgba(255,230,168,.6)}.rs-c[data-v="2048"],.rs-c[data-v="4096"]{background:linear-gradient(135deg,#fff,#ffe6a8 40%,#e6b84a);color:#2a0009;box-shadow:0 0 24px rgba(255,230,168,.9)}
+.rs-pad{display:none;flex-direction:column;align-items:center;gap:6px}.rs-pad div{display:flex;gap:6px}.rs-pad button{width:56px;height:46px;border-radius:12px;background:rgba(230,184,74,.1);border:1px solid rgba(230,184,74,.35);color:var(--gold1);font-size:16px}
+@media(pointer:coarse){.rs-pad{display:flex}}
+/* sound check */
+.mn-grid{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:3px;width:min(100%,calc(var(--n) * 44px));padding:6px;border-radius:14px;background:rgba(0,0,0,.4);border:1px solid rgba(230,184,74,.3);user-select:none;-webkit-touch-callout:none}
+.mn-c{aspect-ratio:1;border-radius:6px;border:0;background:linear-gradient(145deg,#7a2238,#4a0f1e);color:#fff;font:800 clamp(12px,3.6vw,18px) var(--mono);padding:0;display:grid;place-items:center;min-width:0;box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
+.mn-c.open{background:#1c0208;box-shadow:none}.mn-c.mic{background:#3a0a18}.mn-c.boom{background:#c0203c}
+.mn-c.n1{color:#8fc4ff}.mn-c.n2{color:#9be0b4}.mn-c.n3{color:#ffd76a}.mn-c.n4{color:#ff9f6a}.mn-c.n5{color:#ff8296}.mn-c.n6,.mn-c.n7,.mn-c.n8{color:#e7a8ff}
+/* set list */
+.mm-grid{display:grid;grid-template-columns:repeat(var(--n),1fr);gap:8px;width:min(100%,calc(var(--n) * 92px))}
+.mm-c{aspect-ratio:1;border-radius:12px;border:1px solid rgba(230,184,74,.4);background:repeating-linear-gradient(45deg,#680d22 0 6px,#4a0011 6px 12px);color:#f2c4cb;font:700 clamp(18px,6vw,34px) var(--serif);padding:0;min-width:0;transition:transform .18s}
+.mm-c.up{background:linear-gradient(160deg,#fffdf8,#efe6dc);color:#1c0208;transform:rotateY(0)}.mm-c.done{opacity:.75}.mm-c.done.d1{box-shadow:0 0 0 3px var(--gold2)}.mm-c.done.d2{box-shadow:0 0 0 3px #c57d88}
+/* mahjong */
+.mj-board{--mw:min(54px,calc((100vw - 40px) / 10.4));--mh:calc(var(--mw) * 1.28);position:relative;width:calc(var(--mw) * 10 + 14px);height:calc(var(--mh) * 5 + 16px);margin-top:10px}
+.mj-t{position:absolute;left:calc(var(--x) * var(--mw) - var(--z) * 5px + 12px);top:calc(var(--y) * var(--mh) - var(--z) * 5px + 12px);width:var(--mw);height:var(--mh);z-index:calc(var(--z) * 100 + var(--y) * 10 + var(--x));border-radius:7px;border:1px solid #b9a37c;border-right:3px solid #8f7a55;border-bottom:4px solid #7c6846;background:linear-gradient(160deg,#fffdf4,#efe3c8);color:#1c0208;padding:0;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;box-shadow:2px 3px 5px rgba(0,0,0,.45)}
+.mj-t b{font:800 calc(var(--mw) * .42) var(--serif)}.mj-t i{font-style:normal;font-size:calc(var(--mw) * .24);margin-top:1px}
+.mj-t.dot{color:#1d4fa8}.mj-t.bam{color:#1b7a3d}.mj-t.chr{color:#a61c2e}.mj-t.wnd{color:#2a1a2e}.mj-t.drg.r{color:#c0203c}.mj-t.drg.g{color:#1b7a3d}.mj-t.drg.w{color:#4a5a8a}
+.mj-t.lock{filter:brightness(.62) saturate(.7);cursor:default}.mj-t.free{cursor:pointer}.mj-t.sel{background:linear-gradient(160deg,#ffe6a8,#e6b84a);box-shadow:0 0 0 3px #fff,2px 3px 8px rgba(0,0,0,.5)}.mj-t.tip{animation:mjTip .8s infinite alternate}
+@keyframes mjTip{to{box-shadow:0 0 0 4px var(--gold2),0 0 18px var(--gold2)}}body.calm .mj-t.tip{animation:none;box-shadow:0 0 0 4px var(--gold2)}
+/* four in a row */
+.c4-board{display:grid;grid-template-columns:repeat(7,1fr);gap:0;width:min(100%,470px);padding:10px;border-radius:18px;background:linear-gradient(160deg,#5a0f22,#2a0510);border:2px solid var(--gold3);box-shadow:0 18px 40px rgba(0,0,0,.6)}
+.c4-col{display:grid;gap:6px;padding:3px;border:0;background:transparent;border-radius:12px;min-width:0}.c4-col:not(:disabled):hover,.c4-col:focus-visible{background:rgba(230,184,74,.14)}
+.c4-cell{aspect-ratio:1;border-radius:50%;background:#12020680;box-shadow:inset 0 3px 6px rgba(0,0,0,.7)}
+.c4-cell.p1{background:radial-gradient(circle at 32% 30%,#fff3c8,#e6b84a 55%,#9c6a14)}.c4-cell.p2{background:radial-gradient(circle at 32% 30%,#f2c4cb,#b3264a 55%,#5a0a1e)}
+.c4-cell.last{box-shadow:0 0 0 3px rgba(255,255,255,.75)}.c4-cell.win{box-shadow:0 0 0 4px #fff,0 0 18px #fff}.c4-you{color:var(--gold1)}
+/* dots & boxes */
+.db-svg{width:min(100%,480px);height:auto;background:#240510;border-radius:16px;border:1px solid rgba(230,184,74,.3)}
+.db-d{fill:#fff3e0}.db-hit{fill:transparent}.db-l.open{cursor:pointer}.db-l.open .db-ink{fill:rgba(255,255,255,.1)}.db-l.open:hover .db-ink,.db-l.open:focus .db-ink{fill:rgba(255,230,168,.8)}.db-l:focus{outline:none}
+.db-l.p1 .db-ink{fill:#e6b84a}.db-l.p2 .db-ink{fill:#d0637a}.db-l.last .db-ink{stroke:#fff;stroke-width:1.5}
+.db-b.p1{fill:rgba(230,184,74,.35)}.db-b.p2{fill:rgba(208,99,122,.35)}.db-t{font:700 13px var(--mono);fill:#fff3e0;text-anchor:middle}
+/* tic-tac-toe */
+.tt-board{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:min(100%,360px);aspect-ratio:1}
+.tt-c{border-radius:16px;border:2px solid rgba(230,184,74,.35);background:rgba(230,184,74,.06);font:800 clamp(40px,14vw,68px) var(--serif);color:#fff3e0;padding:0;line-height:1}
+.tt-c.x{color:var(--gold1)}.tt-c.o{color:#e58a9c}.tt-c.win{background:rgba(230,184,74,.3);border-color:#fff}.tt-c.old{opacity:.38}
+/* crazy eights */
+.ce-table{width:100%;max-width:680px;display:flex;flex-direction:column;align-items:center;gap:12px;--cw:clamp(52px,13vw,76px)}
+.ce-opp{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.ce-mid{display:flex;gap:16px;align-items:center;padding:14px 22px;border-radius:999px;background:radial-gradient(ellipse,#5a0f22,#2a0510);border:2px solid var(--gold3)}
+.ce-stock{position:relative}.ce-stock small{position:absolute;right:-6px;bottom:-6px;font:700 10px var(--mono);background:#2a0009;border:1px solid var(--gold2);color:var(--gold1);border-radius:99px;padding:1px 6px}
+.ce-suit{display:flex;flex-direction:column;align-items:center;min-width:64px;color:#fff3e0}.ce-suit b{font-size:34px;line-height:1}.ce-suit.red b{color:#ff7a92}.ce-suit small{font:600 10px var(--mono);text-transform:uppercase;letter-spacing:.08em}
+.ce-msg{font-size:13px;color:var(--gold1);text-align:center;min-height:18px}.ce-pick{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;align-items:center;font-size:12px}.ce-pick .red{color:#ff9fb0}
+.ce-hand{flex-wrap:wrap;justify-content:center;row-gap:8px;padding-left:calc(var(--cw) * .42)}
+/* track lanes */
+.bw-wrap{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;align-items:flex-start;width:100%}
+.bw-cv{width:min(300px,62vw);aspect-ratio:300/520;border-radius:14px;border:2px solid var(--gold3);touch-action:none;cursor:pointer;background:#1a0a04}
+.bw-card{flex:1;min-width:250px;max-width:420px;display:flex;flex-direction:column;gap:8px}
+.bw-row{display:grid;grid-template-columns:44px repeat(10,1fr);gap:2px;align-items:stretch}.bw-who{font:700 10px var(--mono);color:var(--gold1);align-self:center;overflow:hidden;text-overflow:ellipsis}
+.bw-f{display:flex;flex-direction:column;align-items:center;border:1px solid rgba(230,184,74,.25);border-radius:5px;min-height:38px;background:rgba(0,0,0,.35);font-family:var(--mono)}.bw-f.on{border-color:var(--gold1);background:rgba(230,184,74,.16)}
+.bw-f i{font-style:normal;font-size:10px;min-height:14px;color:#f3d9dd}.bw-f b{font-size:11px;color:var(--gold1)}.bw-row.riv .bw-f b{color:#e58a9c}.bw-row.riv .bw-who{color:#e58a9c}
+/* feedback loop */
+.pg-cv{width:min(100%,640px);aspect-ratio:600/360;border-radius:14px;border:2px solid var(--gold3);touch-action:none;background:#0d0003}
+@media(max-width:560px){.so-acts .btn{min-height:44px}.sk-pad button{min-height:44px}}
+.so-new{border:1px solid rgba(230,184,74,.25)}
+.so-first{width:100%;max-width:640px;display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:10px 14px;border-radius:14px;background:rgba(230,184,74,.1);border:1px solid rgba(230,184,74,.4);font-size:13px;line-height:1.45;color:#fff3e0}.so-first>span:first-child{flex:1;min-width:200px}
+.so-pb{color:var(--gold1)}
+/* daily table */
+.dt{margin:14px 0 6px}.dt-card{border-radius:22px;padding:16px 18px;background:radial-gradient(ellipse at 85% 0%,rgba(230,184,74,.22),transparent 55%),linear-gradient(160deg,#3a0714,#1a0208);border:1px solid rgba(230,184,74,.45);box-shadow:0 14px 40px -12px rgba(0,0,0,.7);display:flex;flex-direction:column;gap:12px}
+.dt-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap}.dt-kick{font:700 10px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--gold2)}.dt-head h3{margin:4px 0 0;font-size:clamp(18px,3.4vw,26px);color:#fff3e0;line-height:1.15}
+.dt-streak{text-align:right;line-height:1.1}.dt-streak>b{font:800 30px var(--serif);color:var(--gold1)}.dt-streak small{display:block;font-size:10px;color:#dfa6af}
+.dt-week{display:flex;gap:4px;margin-top:6px;justify-content:flex-end}.dt-day{width:22px;display:flex;flex-direction:column;align-items:center;gap:2px}.dt-day i{font:600 9px var(--mono);font-style:normal;color:#dfa6af}.dt-day b{width:20px;height:20px;border-radius:50%;border:1px solid rgba(230,184,74,.35);display:grid;place-items:center;font-size:11px;color:#2a0009}.dt-day.on b{background:var(--goldg);border-color:transparent}.dt-day.today b{box-shadow:0 0 0 2px rgba(255,255,255,.55)}
+.dt-picks{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.dt-pick{display:flex;flex-direction:column;align-items:center;gap:3px;padding:12px 6px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid rgba(230,184,74,.3);color:#fff3e0;min-height:96px;transition:transform .2s,border-color .2s}
+.dt-pick:hover{transform:translateY(-2px);border-color:var(--gold1)}.dt-ic{font-size:26px;line-height:1}.dt-pick b{font:700 14px var(--serif)}.dt-pick small{font:600 11px var(--mono);color:var(--gold1)}.dt-pick.ok{background:rgba(230,184,74,.16);border-color:var(--gold2)}.dt-pick.ok small{color:#9be0b4}
+.dt-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.dt-wait{display:flex;gap:8px;flex-wrap:wrap;align-items:center;border-top:1px solid rgba(230,184,74,.2);padding-top:10px}.dt-wait .label{font:700 10px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--gold2);width:100%}
+.dt-wait button{display:flex;align-items:center;gap:8px;padding:6px 12px 6px 6px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);color:#fff3e0;text-align:left;font-size:12px;font-weight:600}.dt-wait small{display:block;font-weight:400;font-size:10px;color:#dfa6af}
+body.calm .dt-pick{transition:none}@media(max-width:560px){.dt-streak{text-align:left}.dt-week{justify-content:flex-start}.dt-pick b{font-size:12px}}
+/* family table + passport */
+.fam{margin:18px 0 6px;display:flex;flex-direction:column;gap:10px}
+.fam-face{--s:44px;width:var(--s);height:var(--s);flex:none;border-radius:50%;display:grid;place-items:center;font:800 calc(var(--s) * .36) var(--serif);color:#fff;background:linear-gradient(145deg,hsl(var(--h) 60% 46%),hsl(var(--h) 70% 22%));box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 6px 14px -6px rgba(0,0,0,.7);border:2px solid rgba(255,230,168,.55)}
+.fam-call{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 14px;border-radius:18px;background:linear-gradient(90deg,rgba(230,184,74,.18),rgba(230,184,74,.04));border:1px solid rgba(230,184,74,.45)}
+.fam-call>div{flex:1;min-width:190px;display:flex;flex-direction:column;gap:2px}.fam-call .label{color:var(--gold2)}.fam-call b{font:700 16px var(--serif);color:#fff3e0}.fam-call small{font-size:11px;color:#dfa6af}.fam-call.done{opacity:.85}
+.fam-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:10px}
+.fam-c{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;padding:12px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1)}
+.fam-t{flex:1;min-width:150px;display:flex;flex-direction:column;gap:2px;font-size:12px;color:#f3d9dd}.fam-t>b{font:700 15px var(--serif);color:#fff3e0}.fam-t small{font-size:10px;color:#dfa6af}.fam-rec b{color:var(--gold1)}.fam-t em{font-size:12px;color:var(--gold1);margin-top:2px}
+.fam-c .btn{width:100%}
+.fam-line{display:flex;flex-direction:column;gap:2px;font-size:12px;padding:8px 10px;border-radius:12px;background:rgba(230,184,74,.1);border:1px solid rgba(230,184,74,.3);color:#fff3e0}.fam-line span{color:var(--gold1);font-style:italic}
+.pp-bar{display:flex;align-items:center;gap:12px;width:100%;padding:10px 14px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid rgba(230,184,74,.3);color:#fff3e0;text-align:left}.pp-bar:hover{border-color:var(--gold1)}
+.pp-ic{font-size:24px}.pp-tx{display:flex;flex-direction:column;flex:1;min-width:0}.pp-tx b{font:700 14px var(--serif)}.pp-tx small{font-size:11px;color:#dfa6af;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pp-meter{width:min(34%,220px);height:8px;border-radius:99px;background:rgba(255,255,255,.1);overflow:hidden;flex:none}.pp-meter i{display:block;height:100%;background:var(--goldg);border-radius:99px}
+.pp-card{max-width:760px;width:100%;max-height:90vh;overflow:auto;padding:18px}
+.pp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px;margin-top:10px}
+.pp-s{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 4px;border-radius:14px;background:rgba(255,255,255,.03);border:1px dashed rgba(255,255,255,.18);color:#dfa6af;font-size:10.5px;line-height:1.2;text-align:center}
+.pp-s .gicon{filter:grayscale(1) brightness(.55)}.pp-s.on{border-style:solid;border-color:rgba(255,255,255,.35);color:#fff3e0}.pp-s.on .gicon{filter:none}.pp-s.won{border-color:var(--gold2);box-shadow:0 0 0 1px var(--gold2) inset}
+.pp-s i{position:absolute;top:4px;right:6px;font-style:normal;font-size:11px;width:18px;height:18px;border-radius:50%;background:var(--goldg);color:#2a0009;display:grid;place-items:center;font-weight:800}
+.pp-card{background:linear-gradient(170deg,#3a0714,#150005);border:1px solid rgba(230,184,74,.45);border-radius:22px;box-shadow:0 30px 80px rgba(0,0,0,.7)}
+@media(max-width:620px){.fam-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;padding-bottom:6px;-webkit-overflow-scrolling:touch}.fam-c{flex:0 0 82%;scroll-snap-align:start}.pp-meter{width:70px}}
+
 </style>
 </head>
 <body>
@@ -1373,7 +1501,7 @@ body.calm .sv-banner{animation:none}
 <marker id="ah-gold" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto"><path d="M0 0L10 5L0 10z" fill="#f2c4cb"/></marker>
 <marker id="ah-threat" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ef4444"/></marker>
 <marker id="ah-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto"><path d="M0 0L10 5L0 10z" fill="#4ade80"/></marker>
-<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol><symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></symbol><symbol id="gi-chess" viewBox="0 0 24 24"><path d="M12 2.5v4M10 4.5h4"/><path d="M8 13a4 4 0 0 1 8 0l-1 5H9z"/><path d="M7 21h10M8.5 18h7"/><path d="M9.5 9.5h5"/></symbol><symbol id="gi-checkers" viewBox="0 0 24 24"><ellipse cx="12" cy="8" rx="7.5" ry="3.2"/><path d="M4.5 8v3.4c0 1.8 3.4 3.2 7.5 3.2s7.5-1.4 7.5-3.2V8"/><path d="M4.5 13v3.4c0 1.8 3.4 3.2 7.5 3.2s7.5-1.4 7.5-3.2V13"/><ellipse cx="12" cy="8" rx="3.5" ry="1.4"/></symbol><symbol id="gi-spades" viewBox="0 0 24 24"><path d="M12 2.5c3.2 4.2 7.5 6.4 7.5 10.6a4.2 4.2 0 0 1-6.8 3.3l.8 5.1h-3l.8-5.1a4.2 4.2 0 0 1-6.8-3.3c0-4.2 4.3-6.4 7.5-10.6z"/></symbol><symbol id="gi-blackjack" viewBox="0 0 24 24"><rect x="3" y="6" width="11" height="15" rx="2" transform="rotate(-10 8.5 13.5)"/><rect x="10" y="3" width="11" height="15" rx="2"/><path d="M13.5 8.2c.4-.8 1.3-1.2 2-1 1 .3 1.3 1.4.6 2.3l-2.6 3h3.2M18 7v6"/></symbol><symbol id="gi-parcheesi" viewBox="0 0 24 24"><path d="M9 2.5h6v6.5h6.5v6H15v6.5H9V15H2.5V9H9z"/><circle cx="12" cy="12" r="1.7" fill="currentColor"/><path d="M12 5v1.5M12 17.5V19M5 12h1.5M17.5 12H19"/></symbol><symbol id="gi-colorclash" viewBox="0 0 24 24"><rect x="4.5" y="2.5" width="15" height="19" rx="3"/><path d="M12 6.5l4.5 5.5L12 17.5 7.5 12z"/><path d="M12 9.5l2 2.5-2 2.5-2-2.5z" fill="currentColor"/></symbol><symbol id="gi-pittypat" viewBox="0 0 24 24"><rect x="2.5" y="6" width="9.5" height="14" rx="2"/><rect x="12" y="4" width="9.5" height="14" rx="2"/><path d="M7.2 11.5c-.9-1.4-2.6-.6-2 .8.4.9 2 2 2 2s1.6-1.1 2-2c.6-1.4-1.1-2.2-2 -.8zM16.7 9.5c-.9-1.4-2.6-.6-2 .8.4.9 2 2 2 2s1.6-1.1 2-2c.6-1.4-1.1-2.2-2-.8z"/></symbol><symbol id="gi-mogul" viewBox="0 0 24 24"><path d="M2.5 21.5h19"/><path d="M4.5 21.5V11h4.5v10.5M10 21.5V3.5h5.5v18M16.5 21.5V9l4-2v14.5"/><path d="M12 7h2.5M12 10h2.5M12 13h2.5M6 14h1.5M6 17h1.5M18 12h1M18 15h1"/></symbol><symbol id="gi-dominoes" viewBox="0 0 24 24"><rect x="6.5" y="1.5" width="11" height="21" rx="2.8"/><path d="M7.5 12h9"/><circle cx="12" cy="6.8" r="1.3" fill="currentColor"/><circle cx="9.6" cy="15" r="1.2" fill="currentColor"/><circle cx="14.4" cy="19" r="1.2" fill="currentColor"/><circle cx="12" cy="17" r="1.2" fill="currentColor"/></symbol><symbol id="gi-bidwhist" viewBox="0 0 24 24"><rect x="4.5" y="2.5" width="15" height="19" rx="3"/><path d="M12 6.5l1.5 3.2 3.4.4-2.6 2.3.8 3.4-3.1-1.8-3.1 1.8.8-3.4-2.6-2.3 3.4-.4z"/><path d="M7.5 19h9"/></symbol><symbol id="gi-poker" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5"/><path d="M12 2.5v3.3M12 18.2v3.3M2.5 12h3.3M18.2 12h3.3M5.3 5.3l2.3 2.3M16.4 16.4l2.3 2.3M5.3 18.7l2.3-2.3M16.4 7.6l2.3-2.3"/></symbol><symbol id="gi-tonk" viewBox="0 0 24 24"><rect x="2.5" y="7" width="8" height="12.5" rx="1.6" transform="rotate(-14 6.5 13)"/><rect x="8" y="4.5" width="8" height="12.5" rx="1.6"/><rect x="13.5" y="7" width="8" height="12.5" rx="1.6" transform="rotate(14 17.5 13)"/></symbol><symbol id="gi-gofish" viewBox="0 0 24 24"><path d="M2.5 12c3.2-5.2 9.6-6.2 13.6-2l5.4-3.3-1.7 5.3 1.7 5.3-5.4-3.3c-4 4.2-10.4 3.2-13.6-2z"/><circle cx="8" cy="11.2" r="1.1" fill="currentColor"/><path d="M11.5 9.5c.8 1.6.8 3.4 0 5"/></symbol><symbol id="gi-outdoors" viewBox="0 0 24 24"><path d="M3 20l6-9 4 5 3-4 5 8z"/><path d="M14 6c2-2 5-2 7 0M15.5 8c1.2-1 2.8-1 4 0"/><circle cx="6.5" cy="6" r="2"/></symbol><symbol id="gi-pool" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="10.5" r="3.6"/><path d="M10.9 8.6c.7-.5 1.6-.5 2.2 0M11.6 10.4h.8M11.2 12.2h1.6"/></symbol><symbol id="gi-war" viewBox="0 0 24 24"><path d="M3 3l10.5 10.5M3 3h3.8l9.7 9.7M14 17l3-3M16 19l-2.5-2.5M17 14l2.5 2.5M19 19l2 2"/><path d="M21 3L10.5 13.5M21 3h-3.8l-9.7 9.7M10 17l-3-3M8 19l2.5-2.5M7 14l-2.5 2.5M5 19l-2 2"/></symbol><symbol id="gi-bourre" viewBox="0 0 24 24"><path d="M12 2.5c1.6 2.6 1.6 5.2 0 7.8-1.6-2.6-1.6-5.2 0-7.8z"/><path d="M12 10.3c-3-.6-6.2.4-7.8 3.2 2.9.9 5.7.2 7.8-3.2zM12 10.3c3-.6 6.2.4 7.8 3.2-2.9.9-5.7.2-7.8-3.2z"/><path d="M8 15.5h8M12 10.3v10M9 21h6"/></symbol><symbol id="gi-trophy" viewBox="0 0 24 24"><path d="M7 3.5h10v5a5 5 0 0 1-10 0z"/><path d="M7 5.5H3.5a3.5 3.5 0 0 0 3.8 3.9M17 5.5h3.5a3.5 3.5 0 0 1-3.8 3.9M12 13.5v3.5M8 21h8M9.5 17h5v4h-5z"/></symbol><symbol id="gi-roulette" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/><path d="M12 2.5V6M12 18v3.5M2.5 12H6M18 12h3.5M5.3 5.3l2.5 2.5M16.2 16.2l2.5 2.5M5.3 18.7l2.5-2.5M16.2 7.8l2.5-2.5"/><circle cx="16.6" cy="5.6" r="1.2" fill="currentColor"/></symbol><symbol id="gi-keno" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/><circle cx="6" cy="6" r="1.4" fill="currentColor"/><circle cx="18" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="18" r="1.4" fill="currentColor"/></symbol><symbol id="gi-bingo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5.2"/><path d="M10.6 9.8h1.9a1.1 1.1 0 0 1 0 2.2h-1.9zM10.6 12h2.2a1.1 1.1 0 0 1 0 2.2h-2.2zM10.6 9.8v4.4"/></symbol><symbol id="gi-showdown" viewBox="0 0 24 24"><rect x="9" y="2.5" width="6" height="11.5" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5v4M8.5 21.5h7"/><path d="M9 6.5h6M9 9h6"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol><symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol><symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></symbol><symbol id="gi-chess" viewBox="0 0 24 24"><path d="M12 2.5v4M10 4.5h4"/><path d="M8 13a4 4 0 0 1 8 0l-1 5H9z"/><path d="M7 21h10M8.5 18h7"/><path d="M9.5 9.5h5"/></symbol><symbol id="gi-checkers" viewBox="0 0 24 24"><ellipse cx="12" cy="8" rx="7.5" ry="3.2"/><path d="M4.5 8v3.4c0 1.8 3.4 3.2 7.5 3.2s7.5-1.4 7.5-3.2V8"/><path d="M4.5 13v3.4c0 1.8 3.4 3.2 7.5 3.2s7.5-1.4 7.5-3.2V13"/><ellipse cx="12" cy="8" rx="3.5" ry="1.4"/></symbol><symbol id="gi-spades" viewBox="0 0 24 24"><path d="M12 2.5c3.2 4.2 7.5 6.4 7.5 10.6a4.2 4.2 0 0 1-6.8 3.3l.8 5.1h-3l.8-5.1a4.2 4.2 0 0 1-6.8-3.3c0-4.2 4.3-6.4 7.5-10.6z"/></symbol><symbol id="gi-blackjack" viewBox="0 0 24 24"><rect x="3" y="6" width="11" height="15" rx="2" transform="rotate(-10 8.5 13.5)"/><rect x="10" y="3" width="11" height="15" rx="2"/><path d="M13.5 8.2c.4-.8 1.3-1.2 2-1 1 .3 1.3 1.4.6 2.3l-2.6 3h3.2M18 7v6"/></symbol><symbol id="gi-parcheesi" viewBox="0 0 24 24"><path d="M9 2.5h6v6.5h6.5v6H15v6.5H9V15H2.5V9H9z"/><circle cx="12" cy="12" r="1.7" fill="currentColor"/><path d="M12 5v1.5M12 17.5V19M5 12h1.5M17.5 12H19"/></symbol><symbol id="gi-colorclash" viewBox="0 0 24 24"><rect x="4.5" y="2.5" width="15" height="19" rx="3"/><path d="M12 6.5l4.5 5.5L12 17.5 7.5 12z"/><path d="M12 9.5l2 2.5-2 2.5-2-2.5z" fill="currentColor"/></symbol><symbol id="gi-pittypat" viewBox="0 0 24 24"><rect x="2.5" y="6" width="9.5" height="14" rx="2"/><rect x="12" y="4" width="9.5" height="14" rx="2"/><path d="M7.2 11.5c-.9-1.4-2.6-.6-2 .8.4.9 2 2 2 2s1.6-1.1 2-2c.6-1.4-1.1-2.2-2 -.8zM16.7 9.5c-.9-1.4-2.6-.6-2 .8.4.9 2 2 2 2s1.6-1.1 2-2c.6-1.4-1.1-2.2-2-.8z"/></symbol><symbol id="gi-mogul" viewBox="0 0 24 24"><path d="M2.5 21.5h19"/><path d="M4.5 21.5V11h4.5v10.5M10 21.5V3.5h5.5v18M16.5 21.5V9l4-2v14.5"/><path d="M12 7h2.5M12 10h2.5M12 13h2.5M6 14h1.5M6 17h1.5M18 12h1M18 15h1"/></symbol><symbol id="gi-dominoes" viewBox="0 0 24 24"><rect x="6.5" y="1.5" width="11" height="21" rx="2.8"/><path d="M7.5 12h9"/><circle cx="12" cy="6.8" r="1.3" fill="currentColor"/><circle cx="9.6" cy="15" r="1.2" fill="currentColor"/><circle cx="14.4" cy="19" r="1.2" fill="currentColor"/><circle cx="12" cy="17" r="1.2" fill="currentColor"/></symbol><symbol id="gi-bidwhist" viewBox="0 0 24 24"><rect x="4.5" y="2.5" width="15" height="19" rx="3"/><path d="M12 6.5l1.5 3.2 3.4.4-2.6 2.3.8 3.4-3.1-1.8-3.1 1.8.8-3.4-2.6-2.3 3.4-.4z"/><path d="M7.5 19h9"/></symbol><symbol id="gi-poker" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5"/><path d="M12 2.5v3.3M12 18.2v3.3M2.5 12h3.3M18.2 12h3.3M5.3 5.3l2.3 2.3M16.4 16.4l2.3 2.3M5.3 18.7l2.3-2.3M16.4 7.6l2.3-2.3"/></symbol><symbol id="gi-tonk" viewBox="0 0 24 24"><rect x="2.5" y="7" width="8" height="12.5" rx="1.6" transform="rotate(-14 6.5 13)"/><rect x="8" y="4.5" width="8" height="12.5" rx="1.6"/><rect x="13.5" y="7" width="8" height="12.5" rx="1.6" transform="rotate(14 17.5 13)"/></symbol><symbol id="gi-gofish" viewBox="0 0 24 24"><path d="M2.5 12c3.2-5.2 9.6-6.2 13.6-2l5.4-3.3-1.7 5.3 1.7 5.3-5.4-3.3c-4 4.2-10.4 3.2-13.6-2z"/><circle cx="8" cy="11.2" r="1.1" fill="currentColor"/><path d="M11.5 9.5c.8 1.6.8 3.4 0 5"/></symbol><symbol id="gi-outdoors" viewBox="0 0 24 24"><path d="M3 20l6-9 4 5 3-4 5 8z"/><path d="M14 6c2-2 5-2 7 0M15.5 8c1.2-1 2.8-1 4 0"/><circle cx="6.5" cy="6" r="2"/></symbol><symbol id="gi-pool" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="10.5" r="3.6"/><path d="M10.9 8.6c.7-.5 1.6-.5 2.2 0M11.6 10.4h.8M11.2 12.2h1.6"/></symbol><symbol id="gi-solitaire" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2.5"/><path d="M12 7c2 2.6 4 3.8 4 6a2.3 2.3 0 0 1-3.6 1.9l.5 2.6h-1.8l.5-2.6A2.3 2.3 0 0 1 8 13c0-2.2 2-3.4 4-6z"/></symbol><symbol id="gi-sudoku" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2.5"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/><path d="M5.6 6.8l.8-.8v2.2M11 11h1.6l-1.6 2h1.7"/></symbol><symbol id="gi-stack" viewBox="0 0 24 24"><rect x="3" y="14" width="18" height="7" rx="2"/><rect x="5.5" y="8" width="13" height="6" rx="2"/><rect x="8" y="3" width="8" height="5" rx="1.8"/></symbol><symbol id="gi-mines" viewBox="0 0 24 24"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5v4M8.5 21.5h7"/><path d="M3 5l2 1M21 5l-2 1M3.5 9.5H5M20.5 9.5H19"/></symbol><symbol id="gi-memory" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/><path d="M6 8V6l2-.5V7.5M16 18v-2l2-.5v2"/></symbol><symbol id="gi-mahjong" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2.5"/><circle cx="12" cy="8" r="2.2"/><circle cx="9" cy="15" r="1.8"/><circle cx="15" cy="15" r="1.8"/></symbol><symbol id="gi-four" viewBox="0 0 24 24"><rect x="2.5" y="4" width="19" height="16" rx="3"/><circle cx="7" cy="9" r="1.7"/><circle cx="12" cy="9" r="1.7"/><circle cx="17" cy="9" r="1.7"/><circle cx="7" cy="15" r="1.7" fill="currentColor"/><circle cx="12" cy="15" r="1.7" fill="currentColor"/><circle cx="17" cy="15" r="1.7"/></symbol><symbol id="gi-dots" viewBox="0 0 24 24"><circle cx="5" cy="5" r="1.6" fill="currentColor"/><circle cx="19" cy="5" r="1.6" fill="currentColor"/><circle cx="5" cy="19" r="1.6" fill="currentColor"/><circle cx="19" cy="19" r="1.6" fill="currentColor"/><circle cx="12" cy="5" r="1.6" fill="currentColor"/><circle cx="12" cy="19" r="1.6" fill="currentColor"/><path d="M5 5h7v14H5z"/></symbol><symbol id="gi-ttt" viewBox="0 0 24 24"><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/><path d="M4.5 4.5l3 3M7.5 4.5l-3 3"/><circle cx="12" cy="12" r="1.7"/></symbol><symbol id="gi-eights" viewBox="0 0 24 24"><rect x="5" y="2.5" width="14" height="19" rx="2.5"/><circle cx="12" cy="9" r="2.4"/><circle cx="12" cy="14.6" r="3"/></symbol><symbol id="gi-bowling" viewBox="0 0 24 24"><circle cx="9" cy="15" r="6.5"/><circle cx="7.5" cy="13" r=".9" fill="currentColor"/><circle cx="10.5" cy="12.5" r=".9" fill="currentColor"/><circle cx="9.5" cy="15.5" r=".9" fill="currentColor"/><path d="M17.5 2.5c1.3 0 1.8 1.2 1.6 2.4-.2 1-.9 1.6-.9 2.8 0 1.4 1.8 2.6 1.8 6.3 0 2.6-.8 4.5-1.3 5.5h-2.4"/></symbol><symbol id="gi-pong" viewBox="0 0 24 24"><rect x="2.5" y="4" width="19" height="16" rx="2.5"/><path d="M5.5 8v5M18.5 11v5"/><circle cx="11" cy="12" r="1.5" fill="currentColor"/><path d="M12 4v2M12 9v2M12 14v2M12 18v2"/></symbol><symbol id="gi-war" viewBox="0 0 24 24"><path d="M3 3l10.5 10.5M3 3h3.8l9.7 9.7M14 17l3-3M16 19l-2.5-2.5M17 14l2.5 2.5M19 19l2 2"/><path d="M21 3L10.5 13.5M21 3h-3.8l-9.7 9.7M10 17l-3-3M8 19l2.5-2.5M7 14l-2.5 2.5M5 19l-2 2"/></symbol><symbol id="gi-bourre" viewBox="0 0 24 24"><path d="M12 2.5c1.6 2.6 1.6 5.2 0 7.8-1.6-2.6-1.6-5.2 0-7.8z"/><path d="M12 10.3c-3-.6-6.2.4-7.8 3.2 2.9.9 5.7.2 7.8-3.2zM12 10.3c3-.6 6.2.4 7.8 3.2-2.9.9-5.7.2-7.8-3.2z"/><path d="M8 15.5h8M12 10.3v10M9 21h6"/></symbol><symbol id="gi-trophy" viewBox="0 0 24 24"><path d="M7 3.5h10v5a5 5 0 0 1-10 0z"/><path d="M7 5.5H3.5a3.5 3.5 0 0 0 3.8 3.9M17 5.5h3.5a3.5 3.5 0 0 1-3.8 3.9M12 13.5v3.5M8 21h8M9.5 17h5v4h-5z"/></symbol><symbol id="gi-roulette" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="1.8" fill="currentColor"/><path d="M12 2.5V6M12 18v3.5M2.5 12H6M18 12h3.5M5.3 5.3l2.5 2.5M16.2 16.2l2.5 2.5M5.3 18.7l2.5-2.5M16.2 7.8l2.5-2.5"/><circle cx="16.6" cy="5.6" r="1.2" fill="currentColor"/></symbol><symbol id="gi-keno" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/><circle cx="6" cy="6" r="1.4" fill="currentColor"/><circle cx="18" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="18" r="1.4" fill="currentColor"/></symbol><symbol id="gi-bingo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><circle cx="12" cy="12" r="5.2"/><path d="M10.6 9.8h1.9a1.1 1.1 0 0 1 0 2.2h-1.9zM10.6 12h2.2a1.1 1.1 0 0 1 0 2.2h-2.2zM10.6 9.8v4.4"/></symbol><symbol id="gi-showdown" viewBox="0 0 24 24"><rect x="9" y="2.5" width="6" height="11.5" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5v4M8.5 21.5h7"/><path d="M9 6.5h6M9 9h6"/></symbol>
 <symbol id="gi-pluck" viewBox="0 0 24 24"><path d="M19.5 3.5C12 4 6.5 9 5 17.5l-1 3"/><path d="M19.5 3.5c.5 6-3 11-9.5 13"/><path d="M8 13.5l3.5.5M10.5 10l3.2.8M13 7l2.8.6"/></symbol><symbol id="i-crown" viewBox="0 0 24 24"><path d="M3 18h18l1.2-11-5.7 4.2L12 4 7.5 11.2 1.8 7z"/><path d="M4 21h16"/></symbol>
 <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
 <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
@@ -1420,7 +1548,7 @@ body.calm .sv-banner{animation:none}
 <header class="topbar glass" id="topbar">
   <button class="brand" data-go="lobby" aria-label="McLearn Arena — home">
     <span class="crest" aria-hidden="true"><svg viewBox="0 0 40 40"><defs><linearGradient id="crestG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe6a8"/><stop offset=".5" stop-color="#e6b84a"/><stop offset="1" stop-color="#9c6a14"/></linearGradient></defs><path d="M20 2l15 6v11c0 9.5-6.4 16.4-15 19-8.6-2.6-15-9.5-15-19V8z" fill="#2a0009" stroke="url(#crestG)" stroke-width="1.6"/><path d="M11 27V13l9 9 9-9v14" fill="none" stroke="url(#crestG)" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/><circle cx="20" cy="9" r="1.6" fill="#f4c86a"/></svg></span>
-    <span class="wm"><b class="title">McLEARN ARENA</b><small class="sub">A McLearn Media game studio · <span id="ver-tag">v6.1</span></small></span>
+    <span class="wm"><b class="title">McLEARN ARENA</b><small class="sub">A McLearn Media game studio · <span id="ver-tag">v7.0</span></small></span>
   </button>
   <button class="tb-games" id="btn-games" aria-haspopup="dialog"><svg class="ic"><use href="#i-grid"/></svg><span>All Games</span><kbd>/</kbd></button>
   <div class="hstats">
@@ -1443,7 +1571,7 @@ body.calm .sv-banner{animation:none}
   </div>
   <div id="cont-row"></div>
   <div class="lob-tools">
-    <label class="lob-search"><svg class="ic"><use href="#i-search"/></svg><input id="lob-q" type="search" placeholder="Search 22 games…" autocomplete="off" aria-label="Search games"></label>
+    <label class="lob-search"><svg class="ic"><use href="#i-search"/></svg><input id="lob-q" type="search" placeholder="Search 34 games…" autocomplete="off" aria-label="Search games"></label>
     <div class="lob-chips" id="lob-chips" role="tablist" aria-label="Game categories"></div>
   </div>
   <div id="shelves"></div>
@@ -1465,6 +1593,18 @@ body.calm .sv-banner{animation:none}
 <main class="gwrap hidden" id="view-pool"></main>
 <main class="gwrap hidden" id="view-outdoors"></main>
 <main class="gwrap hidden" id="view-showdown"></main>
+<main class="gwrap hidden" id="view-solitaire"></main>
+<main class="gwrap hidden" id="view-sudoku"></main>
+<main class="gwrap hidden" id="view-stack"></main>
+<main class="gwrap hidden" id="view-mines"></main>
+<main class="gwrap hidden" id="view-memory"></main>
+<main class="gwrap hidden" id="view-mahjong"></main>
+<main class="gwrap hidden" id="view-four"></main>
+<main class="gwrap hidden" id="view-dots"></main>
+<main class="gwrap hidden" id="view-ttt"></main>
+<main class="gwrap hidden" id="view-eights"></main>
+<main class="gwrap hidden" id="view-bowling"></main>
+<main class="gwrap hidden" id="view-pong"></main>
 <main class="gwrap hidden" id="view-bingo"></main>
 <main class="gwrap hidden" id="view-keno"></main>
 <main class="gwrap hidden" id="view-bourre"></main>
@@ -1708,7 +1848,7 @@ body.calm .sv-banner{animation:none}
     <button id="copy-email"><svg class="ic"><use href="#i-mail"/></svg>Mclearn2025@gmail.com</button>
     <a href="tel:+16018089559"><svg class="ic"><use href="#i-phone"/></svg>(601) 808-9559</a>
   </div>
-  <a class="sf-solo" href="./">▸ Play all 22 games in the McLearn Arena</a><div class="sf-note">All chips are practice chips — no real money, no purchases, no gambling. Opponent names are fictional. © McLearn Media LLC</div>
+  <a class="sf-solo" href="./">▸ Play all 34 games in the McLearn Arena</a><div class="sf-note">All chips are practice chips — no real money, no purchases, no gambling. Opponent names are fictional. © McLearn Media LLC</div>
 </footer>
 <div class="modal hidden" id="vip-modal">
   <div class="glass box" style="text-align:center;border-color:var(--rose-400)">
@@ -11304,6 +11444,925 @@ SH.games.outdoors = {
 };
 })();
 
+// McLearn Quiet Corner — shared frame for the solo & quick-play games, plus the puzzle tables:
+// Solitaire, Sudoku (Track Grid), Royalty Stack, Sound Check, Set List and Mahjong Solitaire.
+(function () {
+'use strict';
+const SH = window.McShared; if (!SH || !SH.games) return;
+const $ = id => document.getElementById(id), LS = SH.LS, C = SH.cards;
+// ---- random that lives inside the game state, so a saved game or a daily deal is always the same deal ----
+function rnd(G) { if (G.rs == null) return Math.random(); let t = (G.rs = (G.rs + 0x6D2B79F5) | 0); t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }
+const shuf = (a, G) => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(rnd(G) * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const dayKey = () => { const d = new Date(); return d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate(); };
+const hash = s => { let h = 2166136261; for (const ch of String(s)) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619); } return h | 0; };
+const PB = ' · <b class="so-pb">new personal best!</b>';
+const clock = s => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+const listeners = [], setters = {};
+const dailyLog = () => LS.get('solo-daily', {});
+function dailyDone(v) { const d = dailyLog()[dayKey()]; return d && d[v]; }
+
+// ---- one frame for every game: status line, stage, action row, end card, side panel with options ----
+function shell(v, o) {
+  const root = $('view-' + v); if (!root) return null;
+  const cfg = Object.assign({}, o.defaults, LS.get(v + '-cfg', {}));
+  const stats = Object.assign({ w: 0, l: 0, d: 0 }, LS.get(v + '-stats', {}));
+  root.classList.add('so-view');
+  root.innerHTML = `<section class="col center so-col">
+    <div class="so-status" id="${v}-status" role="status" aria-live="polite"></div>
+    <div class="so-stage" id="${v}-stage"></div>
+    <div class="so-acts" id="${v}-acts"></div>
+    <div class="so-end hidden" id="${v}-end"></div>
+  </section>
+  <section class="col right"><div class="glass card stack">
+    <div class="between"><h3 class="h3">${o.title}</h3><span class="pill" id="${v}-rec"></span></div>
+    <div class="tiny muted">${o.blurb}</div>
+    ${(o.opts || []).map(op => `<label class="so-opt"><span>${op.label}</span><select class="field" data-opt="${op.k}" aria-label="${op.label}">${op.options.map(([val, l]) => `<option value="${val}">${l}</option>`).join('')}</select></label>`).join('')}
+    <button class="btn btn-lux" id="${v}-new">New game</button>
+    ${o.daily ? `<button class="btn btn-sec" id="${v}-daily"></button>` : ''}
+    <div class="tiny muted" id="${v}-best"></div>
+  </div></section>`;
+  root.querySelectorAll('[data-opt]').forEach(s => { s.value = cfg[s.dataset.opt]; });
+  setters[v] = (k, val) => { cfg[k] = val; LS.set(v + '-cfg', cfg); const el = root.querySelector(`[data-opt="${k}"]`); if (el) el.value = val; };
+  const A = {
+    v, cfg, stats, root, stage: $(v + '-stage'),
+    status(t) { $(v + '-status').innerHTML = t; },
+    acts(h) { $(v + '-acts').innerHTML = h + `<button class="btn btn-ghost so-new" data-new aria-label="Start a new game">⟳ New</button>` + (hasStash(v) ? '<button class="btn btn-sec" data-unstash>↩ Back to my earlier game</button>' : ''); },
+    rec() { $(v + '-rec').textContent = o.rec ? o.rec(stats) : `W${stats.w} L${stats.l}`; const db = $(v + '-daily'); if (db) db.textContent = dailyDone(v) ? 'Today’s daily ✓ — play it again' : 'Play today’s daily'; },
+    best(t) { $(v + '-best').innerHTML = t || ''; },
+    visible: () => !root.classList.contains('hidden'),
+    // record a personal best; says true only when you beat a mark you had already set
+    pb(key, val, lower) { const b = LS.get(key, 0), better = !b || (lower ? val < b : val > b); if (better) LS.set(key, val); return !!b && better; },
+    hideEnd() { $(v + '-end').classList.add('hidden'); $(v + '-end').innerHTML = ''; },
+    // res: 'w' | 'l' | 'd'.  keep:true awards the result without ending the game (used when you reach a goal and play on)
+    finish(G, res, head, sub, extra) {
+      extra = extra || {};
+      if (!extra.keep) G.over = true;
+      stats[res]++; LS.set(v + '-stats', stats);
+      if (G.daily && !extra.keep || G.daily && extra.daily) { const log = dailyLog(), k = G.daily; log[k] = log[k] || {}; if (!log[k][v] || res === 'w') log[k][v] = { res, score: extra.score == null ? null : extra.score, t: G.el || 0 }; for (const key of Object.keys(log)) if (+key < k - 60) delete log[key]; LS.set('solo-daily', log); }
+      if (!G.fast) SH.Sound.play(res === 'w' ? 'victory' : res === 'l' ? 'defeat' : 'draw');
+      if (!extra.keep) {
+        const e = $(v + '-end');
+        e.innerHTML = `<div class="glass so-endcard"><h4 class="serif">${head}</h4><div class="tiny muted">${sub || ''}</div><div class="row" style="justify-content:center;flex-wrap:wrap"><button class="btn btn-lux" data-again>Play again</button><button class="btn btn-sec" data-go="lobby">Back to the lobby</button></div></div>`;
+        e.classList.remove('hidden');
+      } else SH.toast(head, 'crown');
+      if (SH.onResult) SH.onResult(v, res, Object.assign({ vs: o.vs || 'the table' }, extra));
+      listeners.forEach(fn => { try { fn({ v, res, daily: G.daily || 0, score: extra.score, time: G.el || 0, head }); } catch (e) { /* a listener must never break a game */ } });
+      A.rec();
+    },
+    // seconds played, counted only while the table is on screen
+    clockOn(G, paint) { setInterval(() => { if (!A.visible() || document.hidden || !G.started || G.over || G.paused) return; G.el = (G.el || 0) + 1; if (paint) paint(); }, 1000); },
+    later(G, ms, fn) { if (G.fast) return fn(); const tok = G.token; setTimeout(() => { if (tok === G.token) fn(); }, ms); }
+  };
+  root.addEventListener('change', e => { const s = e.target.closest('[data-opt]'); if (!s) return; const val = s.value; cfg[s.dataset.opt] = isNaN(+val) || val === '' ? val : +val; LS.set(v + '-cfg', cfg); o.onNew({}); });
+  // starting over in the middle of a game takes two taps, so a slip of the thumb never costs you your progress
+  let armed = 0;
+  const fresh = (opt, btn) => {
+    const g = SH.games[v], mid = g && g._G && g._G.started && !g._G.over && SH.save && SH.save.quiet && SH.save.quiet(v, g._G);
+    if (mid && opt.daily && !g._G.daily) { stash(v); armed = 0; return o.onNew(opt); } // your other game is set aside, not lost
+    if (mid && Date.now() - armed > 4000) { armed = Date.now(); const t = btn.textContent; btn.textContent = 'Tap again to start over'; setTimeout(() => { btn.textContent = t; }, 4000); return; }
+    armed = 0; o.onNew(opt);
+  };
+  $(v + '-new').onclick = e => fresh({}, e.currentTarget);
+  if (o.daily) $(v + '-daily').onclick = e => fresh({ daily: true }, e.currentTarget);
+  $(v + '-acts').addEventListener('click', e => { const b = e.target.closest('[data-new]'); if (b) fresh({}, b); if (e.target.closest('[data-unstash]')) unstash(v); });
+  // the first time you sit down at a table, one line says what the game is about
+  if (!LS.get('seen-' + v, 0)) {
+    const tip = document.createElement('div'); tip.className = 'so-first'; tip.id = v + '-first';
+    tip.innerHTML = `<span>${o.first || o.blurb}</span><span class="row"><button class="btn btn-sec" data-ht>How to play</button><button class="btn btn-lux" data-ok>Got it</button></span>`;
+    root.querySelector('.so-col').prepend(tip);
+    tip.addEventListener('click', e => { if (e.target.closest('[data-ht]') && SH.howto) SH.howto.open(v); if (e.target.closest('button')) { LS.set('seen-' + v, 1); tip.remove(); } });
+  }
+  $(v + '-end').addEventListener('click', e => { if (e.target.closest('[data-again]')) o.onNew({}); });
+  // Enter or Space presses anything on the stage that acts like a button
+  root.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('[role="button"]')) { e.preventDefault(); e.target.click(); } });
+  A.rec();
+  return A;
+}
+// a regular game that was in progress when you opened the Daily waits here until you come back to it
+const SK = v => 'mcl-arena-save-' + v, TK = v => 'mcl-arena-stash-' + v;
+function hasStash(v) { try { return !!localStorage.getItem(TK(v)); } catch (e) { return false; } }
+function stash(v) { try { if (SH.save) { SH.save._dirty[v] = true; SH.save.snap(v); } const s = localStorage.getItem(SK(v)); if (s) localStorage.setItem(TK(v), s); } catch (e) { /* storage unavailable */ } }
+function unstash(v) { try { const s = localStorage.getItem(TK(v)); if (!s) return; localStorage.setItem(SK(v), s); localStorage.removeItem(TK(v)); const A2 = $(v + '-end'); if (A2) { A2.classList.add('hidden'); A2.innerHTML = ''; } if (SH.save && SH.save.resume(v)) SH.toast('Your earlier game is back on the table'); } catch (e) { /* storage unavailable */ } }
+// open a table straight into today's daily (or carry on with it if it is already under way)
+function playDaily(v) { SH.go(v); setTimeout(() => { const g = SH.games[v]; if (!g) return; const G = g._G; if (G.daily === dayKey() && G.started && !G.over) return; if (G.started && !G.over && !G.daily && SH.save && SH.save.quiet(v, G)) stash(v); g._new({ daily: true }); }, 220); }
+const seedFor = (v, o) => o && o.daily ? hash(v + dayKey()) : (o && o.seed != null ? o.seed : ((Math.random() * 0x7fffffff) | 0));
+const dailyTag = G => G.daily ? '<span class="so-daily">Daily</span> ' : '';
+window.McSolo = { PB, setOpt: (v, k, val) => setters[v] && setters[v](k, val), playDaily, hasStash, unstash, shell, rnd, shuf, dayKey, hash, clock, seedFor, dailyTag, dailyLog, dailyDone, onFinish: fn => listeners.push(fn), games: {} };
+const reg = (v, g) => { SH.games[v] = g; window.McSolo.games[v] = g; };
+
+// =====================================================================================================
+// SOLITAIRE (Klondike) — tap a card and it goes where it fits. Deals are checked so they can be won.
+// =====================================================================================================
+(function () {
+  const v = 'solitaire';
+  const A = shell(v, { title: 'Solitaire', vs: 'the deck', daily: true, blurb: 'Klondike — the quiet corner of the Arena. Tap a card and it moves to where it fits. Build all four suits from Ace up to King.', defaults: { draw: 1, fair: 1 }, opts: [{ k: 'draw', label: 'Draw from the stock', options: [[1, 'One card (relaxed)'], [3, 'Three cards (classic)']] }, { k: 'fair', label: 'Deals', options: [[1, 'Winnable deals only'], [0, 'Any shuffle']] }], rec: s => `Wins ${s.w}`, onNew: o => start(o) });
+  if (!A) return;
+  const G = { started: false, token: 0 };
+  const val = c => (c.r === 14 ? 1 : c.r), red = c => c.s === 'h' || c.s === 'd';
+  function deal(seed) {
+    const R = { rs: seed }, d = shuf(C.deck().map(c => ({ s: c.s, r: c.r, up: false })), R), tab = [];
+    for (let i = 0; i < 7; i++) { const col = []; for (let j = 0; j <= i; j++) { const c = d.pop(); c.up = j === i; col.push(c); } tab.push(col); }
+    return { tab, stock: d, waste: [], found: { s: [], h: [], d: [], c: [] } };
+  }
+  const canFound = (S, c) => val(c) === S.found[c.s].length + 1;
+  const canTab = (c, col) => { if (!col.length) return val(c) === 13; const t = col[col.length - 1]; return t.up && red(t) !== red(c) && val(t) === val(c) + 1; };
+  // where would this card go? returns a move or null
+  function moveFor(S, src, ci, idx) {
+    if (src === 'waste') {
+      const c = S.waste[S.waste.length - 1]; if (!c) return null;
+      if (canFound(S, c)) return { src, to: 'found' };
+      let empty = -1; for (let k = 0; k < 7; k++) { if (!canTab(c, S.tab[k])) continue; if (S.tab[k].length) return { src, to: k }; if (empty < 0) empty = k; }
+      return empty >= 0 ? { src, to: empty } : null;
+    }
+    const col = S.tab[ci], c = col[idx]; if (!c || !c.up) return null;
+    if (idx === col.length - 1 && canFound(S, c)) return { src, ci, idx, to: 'found' };
+    let empty = -1; for (let k = 0; k < 7; k++) { if (k === ci || !canTab(c, S.tab[k])) continue; if (S.tab[k].length) return { src, ci, idx, to: k }; if (empty < 0) empty = k; }
+    return empty >= 0 && idx > 0 ? { src, ci, idx, to: empty } : null;
+  }
+  function apply(S, m) {
+    if (m.src === 'draw') { if (S.stock.length) { for (let k = 0; k < S.draw && S.stock.length; k++) { const c = S.stock.pop(); c.up = true; S.waste.push(c); } } else { S.stock = S.waste.reverse(); S.stock.forEach(c => { c.up = false; }); S.waste = []; } return; }
+    let cards;
+    if (m.src === 'waste') cards = [S.waste.pop()];
+    else { cards = S.tab[m.ci].splice(m.idx); const col = S.tab[m.ci]; if (col.length) col[col.length - 1].up = true; }
+    if (m.to === 'found') S.found[cards[0].s].push(cards[0]); else S.tab[m.to].push(...cards);
+  }
+  // the move a careful player would make next (used for Hint, for Finish, and to check that a deal can be won)
+  function bestMove(S) {
+    for (let k = 0; k < 7; k++) { const col = S.tab[k]; if (col.length && canFound(S, col[col.length - 1])) return { src: 'tab', ci: k, idx: col.length - 1, to: 'found' }; }
+    if (S.waste.length && canFound(S, S.waste[S.waste.length - 1])) return { src: 'waste', to: 'found' };
+    for (let k = 0; k < 7; k++) { const col = S.tab[k]; for (let j = 0; j < col.length; j++) { if (!col[j].up) continue; if (j > 0 && !col[j - 1].up) { const m = moveFor(S, 'tab', k, j); if (m && m.to !== 'found') return m; } break; } }
+    // clear a whole column so a waiting King (with cards under it) can use the space
+    for (let k = 0; k < 7; k++) { const col = S.tab[k]; if (col.length && col[0].up && val(col[0]) !== 13) { for (let t = 0; t < 7; t++) if (t !== k && S.tab[t].length && canTab(col[0], S.tab[t])) return { src: 'tab', ci: k, idx: 0, to: t }; } }
+    const w = moveFor(S, 'waste'); if (w) return w;
+    return null;
+  }
+  const won = S => S.found.s.length + S.found.h.length + S.found.d.length + S.found.c.length === 52;
+  function solvable(seed, draw) {
+    const S = deal(seed); S.draw = draw; let idle = 0, steps = 0;
+    while (steps++ < 900) { if (won(S)) return true; const m = bestMove(S); if (m) { apply(S, m); idle = 0; continue; } if (!S.stock.length && !S.waste.length) return false; apply(S, { src: 'draw' }); if (++idle > Math.ceil(24 / draw) * 2 + 4) return false; }
+    return false;
+  }
+  function start(o) {
+    o = o || {}; G.token++; G.started = true; G.over = false; G.daily = o.daily ? dayKey() : 0; G.draw = +A.cfg.draw || 1; G.fast = !!G.fast;
+    let seed = seedFor(v, o), tries = 0;
+    if (o.daily || +A.cfg.fair) while (!solvable(seed, G.draw) && tries++ < 200) seed = (seed + 7919) | 0;
+    G.seed = seed; G.checked = (o.daily || +A.cfg.fair) && tries <= 200 ? 1 : 0;
+    Object.assign(G, deal(seed)); G.moves = 0; G.el = 0; G.hist = []; G.tip = null;
+    A.hideEnd(); if (!G.fast) SH.Sound.play('start'); render();
+  }
+  const snap = () => { G.hist.push(JSON.stringify({ tab: G.tab, stock: G.stock, waste: G.waste, found: G.found })); if (G.hist.length > 120) G.hist.shift(); };
+  function doMove(m) {
+    if (G.over) return; snap(); apply(G, m); G.moves++; G.tip = null;
+    if (!G.fast) SH.Sound.play(m.to === 'found' ? 'good' : m.src === 'draw' ? 'tick' : 'move');
+    if (won(G)) { render(); const pb = A.pb('sol-best', G.moves, true); return A.finish(G, 'w', 'You cleared the table!', `${G.moves} moves · ${clock(G.el)}${G.daily ? ' · today’s daily deal' : ''}${pb ? PB : ''}`, { score: G.moves, pb }); }
+    render();
+  }
+  function undo() { if (!G.hist.length || G.over) return; Object.assign(G, JSON.parse(G.hist.pop())); G.moves++; G.tip = null; render(); }
+  const canFinish = () => !G.stock.length && !G.waste.length && G.tab.every(col => col.every(c => c.up)) && !G.over;
+  function finishAll() { if (!canFinish()) return; const step = () => { const m = bestMove(G); if (!m || G.over) return; doMove(m); if (!G.over) A.later(G, 70, step); }; step(); }
+  function hint() {
+    const m = bestMove(G);
+    if (m) { G.tip = m.src === 'waste' ? 'w' : m.ci + '-' + m.idx; render(); return; }
+    if (G.stock.length || G.waste.length) { G.tip = 'stock'; render(); SH.toast('Nothing to move yet — turn the stock'); } else SH.toast('No moves left here — try Undo, or deal a new game', 'x');
+  }
+  function tap(el) {
+    if (G.over) return; const a = el.dataset.a;
+    if (a === 'stock') { if (!G.stock.length && !G.waste.length) return; return doMove({ src: 'draw' }); }
+    const m = a === 'waste' ? moveFor(G, 'waste') : a === 'card' ? moveFor(G, 'tab', +el.dataset.col, +el.dataset.idx) : null;
+    if (m) return doMove(m);
+    if (a === 'waste' || a === 'card') { el.classList.remove('so-nope'); void el.offsetWidth; el.classList.add('so-nope'); if (!G.fast) SH.Sound.play('bad'); }
+  }
+  const SY = { s: '♠', h: '♥', d: '♦', c: '♣' };
+  function paintStatus() { A.status(`${dailyTag(G)}Moves <b>${G.moves}</b> · <span id="${v}-time">${clock(G.el || 0)}</span>${G.checked ? ' · <span class="so-ok">winnable deal</span>' : ''}`); }
+  function render() {
+    const wasteShow = G.waste.slice(-(G.draw === 3 ? 3 : 1));
+    let h = `<div class="sol-top"><div class="sol-slot ${G.tip === 'stock' ? 'tip' : ''}" data-a="stock" role="button" tabindex="0" aria-label="Stock: ${G.stock.length} cards. Tap to draw.">${G.stock.length ? C.html(null, { back: true }) + `<span class="sol-n">${G.stock.length}</span>` : `<span class="sol-re">${G.waste.length ? '↻' : ''}</span>`}</div>
+      <div class="sol-waste">${wasteShow.map((c, i) => C.html(c, { cls: (i === wasteShow.length - 1 ? 'sol-live ' : '') + (G.tip === 'w' && i === wasteShow.length - 1 ? 'tip' : ''), style: `left:calc(var(--cw) * ${i * 0.32})`, attr: i === wasteShow.length - 1 ? `data-a="waste" role="button" tabindex="0" aria-label="${C.name(c)} from the waste pile"` : '' })).join('')}</div>
+      <span class="sol-gap"></span>${['s', 'h', 'd', 'c'].map(s => { const p = G.found[s]; return `<div class="sol-slot sol-f" aria-label="${p.length ? C.name(p[p.length - 1]) : 'empty'} foundation">${p.length ? C.html(p[p.length - 1]) : `<span class="sol-sy ${s === 'h' || s === 'd' ? 'red' : ''}">${SY[s]}</span>`}</div>`; }).join('')}</div><div class="sol-tab">`;
+    for (let i = 0; i < 7; i++) {
+      const col = G.tab[i]; let y = 0, cards = '';
+      col.forEach((c, j) => { cards += C.html(c.up ? c : null, { back: !c.up, cls: 'sol-c ' + (G.tip === i + '-' + j ? 'tip' : ''), style: `top:calc(var(--cw) * ${y.toFixed(2)})`, attr: c.up ? `data-a="card" data-col="${i}" data-idx="${j}" role="button" tabindex="0" aria-label="${C.name(c)}, column ${i + 1}"` : '' }); y += c.up ? 0.36 : 0.16; });
+      h += `<div class="sol-col" style="height:calc(var(--cw) * ${(Math.max(0, y - (col.length && col[col.length - 1].up ? 0.36 : 0.16)) + 1.4).toFixed(2)})">${cards}</div>`;
+    }
+    A.stage.innerHTML = h + '</div>';
+    paintStatus();
+    A.acts(`<button class="btn btn-sec" data-x="undo" ${G.hist.length && !G.over ? '' : 'disabled'}>Undo</button><button class="btn btn-sec" data-x="hint" ${G.over ? 'disabled' : ''}>Hint</button>${canFinish() ? '<button class="btn btn-lux" data-x="fin">Finish for me</button>' : ''}`);
+    const b = LS.get('sol-best', 0); A.best(b ? `Fewest moves to win: <b>${b}</b>` : 'Tip: Aces go up top first. Turn over hidden cards whenever you can.');
+  }
+  A.stage.addEventListener('click', e => { const el = e.target.closest('[data-a]'); if (el) tap(el); });
+  $(v + '-acts').addEventListener('click', e => { const x = (e.target.closest('[data-x]') || {}).dataset; if (!x) return; if (x.x === 'undo') undo(); else if (x.x === 'hint') hint(); else if (x.x === 'fin') finishAll(); });
+  A.clockOn(G, () => { const t = $(v + '-time'); if (t) t.textContent = clock(G.el); });
+  reg(v, { onShow() { if (!G.started) start(); else render(); }, _G: G, _render: render, _new: start, _solvable: solvable, _best: () => bestMove(G), _do: doMove,
+    _auto() { if (G.over) return 'over'; const m = bestMove(G); if (m) { doMove(m); return 'move'; } if (G.stock.length || G.waste.length) { doMove({ src: 'draw' }); return 'draw'; } return 'stuck'; } });
+})();
+
+// =====================================================================================================
+// TRACK GRID (Sudoku) — fresh puzzle every time, one answer only, notes, hints and three levels
+// =====================================================================================================
+(function () {
+  const v = 'sudoku';
+  const A = shell(v, { title: 'Track Grid · Sudoku', vs: 'the grid', daily: true, blurb: 'Fill every row, every column and every 3×3 box with 1 to 9 — no repeats. Every puzzle has exactly one answer, so you never have to guess.', defaults: { level: 'easy', check: 1 }, opts: [{ k: 'level', label: 'Level', options: [['easy', 'Easy'], ['medium', 'Medium'], ['hard', 'Hard']] }, { k: 'check', label: 'Mistakes', options: [[1, 'Show me right away'], [0, 'Don’t tell me']] }], rec: s => `Solved ${s.w}`, onNew: o => start(o) });
+  if (!A) return;
+  const G = { started: false, token: 0 };
+  const CLUES = { easy: 40, medium: 32, hard: 26 };
+  function count(p, limit) {
+    const g = p.slice(); let n = 0;
+    const cand = i => { let m = 0; const r = (i / 9) | 0, c = i % 9, br = r - r % 3, bc = c - c % 3; for (let k = 0; k < 9; k++) { m |= 1 << g[r * 9 + k]; m |= 1 << g[k * 9 + c]; m |= 1 << g[(br + ((k / 3) | 0)) * 9 + bc + k % 3]; } return ~m & 0x3FE; };
+    (function go() {
+      let best = -1, bm = 0, bc = 10;
+      for (let i = 0; i < 81; i++) if (!g[i]) { const m = cand(i); let cnt = 0; for (let d = 1; d <= 9; d++) if (m >> d & 1) cnt++; if (cnt < bc) { bc = cnt; best = i; bm = m; if (cnt <= 1) break; } }
+      if (best < 0) { n++; return; }
+      for (let d = 1; d <= 9 && n < limit; d++) if (bm >> d & 1) { g[best] = d; go(); }
+      g[best] = 0;
+    })();
+    return n;
+  }
+  function gen(R, clues) {
+    const base = (r, c) => (r * 3 + ((r / 3) | 0) + c) % 9, three = () => shuf([0, 1, 2], R);
+    const rows = [].concat(...three().map(b => three().map(r => b * 3 + r))), cols = [].concat(...three().map(b => three().map(c => b * 3 + c))), dig = shuf([1, 2, 3, 4, 5, 6, 7, 8, 9], R);
+    const sol = []; for (let r = 0; r < 9; r++) for (let c = 0; c < 9; c++) sol.push(dig[base(rows[r], cols[c])]);
+    const puz = sol.slice(); let left = 81;
+    for (const i of shuf([...Array(81).keys()], R)) { if (left <= clues) break; const k = puz[i]; puz[i] = 0; if (count(puz, 2) !== 1) puz[i] = k; else left--; }
+    return { sol, puz };
+  }
+  function start(o) {
+    o = o || {}; G.token++; G.started = true; G.over = false; G.daily = o.daily ? dayKey() : 0; G.level = o.daily ? 'medium' : A.cfg.level; G.check = +A.cfg.check;
+    const R = { rs: seedFor(v, o) }, p = gen(R, CLUES[G.level] || 36);
+    G.sol = p.sol; G.puz = p.puz; G.cur = p.puz.slice(); G.notes = Array(81).fill(0); G.sel = G.cur.indexOf(0); G.note = false; G.miss = 0; G.hints = 3; G.el = 0;
+    A.hideEnd(); if (!G.fast) SH.Sound.play('start'); render();
+  }
+  const peers = i => { const r = (i / 9) | 0, c = i % 9, br = r - r % 3, bc = c - c % 3, s = new Set(); for (let k = 0; k < 9; k++) { s.add(r * 9 + k); s.add(k * 9 + c); s.add((br + ((k / 3) | 0)) * 9 + bc + k % 3); } s.delete(i); return s; };
+  function place(d) {
+    const i = G.sel; if (G.over || i < 0 || G.puz[i]) return;
+    if (G.note && d) { if (!G.cur[i]) G.notes[i] ^= 1 << d; return render(); }
+    if (G.cur[i] === d) return;
+    G.cur[i] = d; G.notes[i] = 0;
+    if (d && d !== G.sol[i]) { G.miss++; if (!G.fast) SH.Sound.play(G.check ? 'bad' : 'move'); }
+    else if (d) { peers(i).forEach(p => { G.notes[p] &= ~(1 << d); }); if (!G.fast) SH.Sound.play('move'); }
+    if (G.cur.every((x, k) => x === G.sol[k])) { render(); const pb = A.pb('sk-best-' + G.level, G.el, true); return A.finish(G, 'w', 'Puzzle solved!', `${G.level[0].toUpperCase() + G.level.slice(1)} · ${clock(G.el)} · ${G.miss} mistake${G.miss === 1 ? '' : 's'}${G.daily ? ' · today’s daily' : ''}${pb ? PB : ''}`, { score: G.el, pro: G.level === 'hard', pb }); }
+    render();
+  }
+  function hint() { if (G.over || G.hints < 1) return; let i = G.sel; if (i < 0 || G.cur[i] === G.sol[i]) i = G.cur.findIndex((x, k) => x !== G.sol[k]); if (i < 0) return; G.hints--; G.sel = i; const n = G.note; G.note = false; place(G.sol[i]); G.note = n; if (!G.over) render(); }
+  function render() {
+    const sel = G.sel, P = sel >= 0 ? peers(sel) : new Set(), sv = sel >= 0 ? G.cur[sel] : 0, left = Array(10).fill(9);
+    G.cur.forEach((x, k) => { if (x && x === G.sol[k]) left[x]--; });
+    let h = '<div class="sk-grid" role="grid" aria-label="Sudoku grid">';
+    for (let i = 0; i < 81; i++) {
+      const x = G.cur[i], given = !!G.puz[i], bad = x && !given && G.check && x !== G.sol[i], r = (i / 9) | 0, c = i % 9;
+      const cls = ['sk-c', given ? 'given' : '', i === sel ? 'sel' : P.has(i) ? 'peer' : '', x && sv && x === sv && i !== sel ? 'same' : '', bad ? 'bad' : '', c % 3 === 2 && c < 8 ? 'br' : '', r % 3 === 2 && r < 8 ? 'bb' : ''].join(' ');
+      const inner = x ? x : G.notes[i] ? `<span class="sk-n">${[1, 2, 3, 4, 5, 6, 7, 8, 9].map(d => `<i>${G.notes[i] >> d & 1 ? d : ''}</i>`).join('')}</span>` : '';
+      h += `<button class="${cls}" data-i="${i}" aria-label="Row ${r + 1}, column ${c + 1}: ${x || 'empty'}${given ? ', given' : ''}">${inner}</button>`;
+    }
+    h += `</div><div class="sk-pad">${[1, 2, 3, 4, 5, 6, 7, 8, 9].map(d => `<button data-d="${d}" ${left[d] <= 0 ? 'disabled' : ''} aria-label="Place ${d}, ${left[d]} left"><b>${d}</b><small>${Math.max(0, left[d])}</small></button>`).join('')}</div>`;
+    A.stage.innerHTML = h;
+    A.status(`${dailyTag(G)}${G.level[0].toUpperCase() + G.level.slice(1)} · <span id="${v}-time">${clock(G.el || 0)}</span>${G.check ? ` · Mistakes <b>${G.miss}</b>` : ''}`);
+    A.acts(`<button class="btn btn-sec ${G.note ? 'on' : ''}" data-x="note" aria-pressed="${!!G.note}">Notes ${G.note ? 'on' : 'off'}</button><button class="btn btn-sec" data-x="erase">Erase</button><button class="btn btn-sec" data-x="hint" ${G.hints && !G.over ? '' : 'disabled'}>Hint (${G.hints})</button>`);
+    const b = LS.get('sk-best-' + G.level, 0); A.best(b ? `Best ${G.level} time: <b>${clock(b)}</b>` : 'Keys: arrows move, 1–9 fill, N toggles notes, Backspace erases.');
+  }
+  A.stage.addEventListener('click', e => { const c = e.target.closest('[data-i]'); if (c) { G.sel = +c.dataset.i; return render(); } const d = e.target.closest('[data-d]'); if (d) place(+d.dataset.d); });
+  $(v + '-acts').addEventListener('click', e => { const x = (e.target.closest('[data-x]') || {}).dataset; if (!x) return; if (x.x === 'note') { G.note = !G.note; render(); } else if (x.x === 'erase') { const n = G.note; G.note = false; place(0); G.note = n; } else if (x.x === 'hint') hint(); });
+  document.addEventListener('keydown', e => {
+    if (!A.visible() || G.over || e.target.matches('input,select,textarea') || e.altKey || e.ctrlKey || e.metaKey) return;
+    const k = e.key, mv = { ArrowUp: -9, ArrowDown: 9, ArrowLeft: -1, ArrowRight: 1 }[k];
+    if (mv) { e.preventDefault(); const n = (G.sel < 0 ? 0 : G.sel) + mv; if (n >= 0 && n < 81 && !(Math.abs(mv) === 1 && ((n / 9) | 0) !== ((G.sel / 9) | 0))) { G.sel = n; render(); } }
+    else if (k >= '1' && k <= '9') place(+k); else if (k === 'Backspace' || k === 'Delete' || k === '0') { const n = G.note; G.note = false; place(0); G.note = n; } else if (k.toLowerCase() === 'n') { G.note = !G.note; render(); }
+  });
+  A.clockOn(G, () => { const t = $(v + '-time'); if (t) t.textContent = clock(G.el); });
+  reg(v, { onShow() { if (!G.started) start(); else render(); }, _G: G, _render: render, _new: start, _gen: gen, _count: count,
+    _auto() { if (G.over) return 'over'; const i = G.cur.findIndex((x, k) => x !== G.sol[k]); G.sel = i; G.note = false; place(G.sol[i]); return 'fill'; } });
+})();
+
+// =====================================================================================================
+// ROYALTY STACK — slide and merge your way from a Hum to a Legend
+// =====================================================================================================
+(function () {
+  const v = 'stack';
+  const NAME = { 2: 'Hum', 4: 'Hook', 8: 'Verse', 16: 'Demo', 32: 'Single', 64: 'EP', 128: 'Album', 256: 'Gold', 512: 'Platinum', 1024: 'Diamond', 2048: 'Legend', 4096: 'Icon', 8192: 'Immortal' };
+  const A = shell(v, { title: 'Royalty Stack', vs: 'the charts', daily: true, blurb: 'Slide the tiles. Two of the same merge into the next step of a career — Hum, Hook, Verse, Demo, Single… all the way to Legend. Swipe, or use the arrow keys.', defaults: { goal: 1024 }, opts: [{ k: 'goal', label: 'Goal', options: [[512, 'Platinum (512)'], [1024, 'Diamond (1024)'], [2048, 'Legend (2048)']] }], rec: s => `Goals hit ${s.w}`, onNew: o => start(o) });
+  if (!A) return;
+  const G = { started: false, token: 0 };
+  function spawn() { const e = []; G.g.forEach((x, i) => { if (!x) e.push(i); }); if (!e.length) return; const i = e[Math.floor(rnd(G) * e.length)]; G.g[i] = rnd(G) < 0.9 ? 2 : 4; G.fresh = i; }
+  function start(o) {
+    o = o || {}; G.token++; G.started = true; G.over = false; G.daily = o.daily ? dayKey() : 0; G.rs = o.daily ? seedFor(v, o) : (o.seed != null ? o.seed : null);
+    G.goal = o.daily ? 512 : +A.cfg.goal; G.pb0 = LS.get('rs-best', 0); G.g = Array(16).fill(0); G.score = 0; G.won = false; G.prev = null; G.moves = 0; G.el = 0; spawn(); spawn(); G.fresh = -1;
+    A.hideEnd(); if (!G.fast) SH.Sound.play('start'); render();
+  }
+  function slide(line) { const f = line.filter(x => x), out = []; let gain = 0; for (let i = 0; i < f.length; i++) { if (f[i] === f[i + 1]) { out.push(f[i] * 2); gain += f[i] * 2; i++; } else out.push(f[i]); } while (out.length < 4) out.push(0); return [out, gain]; }
+  const LINES = { left: r => [0, 1, 2, 3].map(i => r * 4 + i), right: r => [3, 2, 1, 0].map(i => r * 4 + i), up: c => [0, 1, 2, 3].map(i => i * 4 + c), down: c => [3, 2, 1, 0].map(i => i * 4 + c) };
+  function shift(g, dir) { const n = g.slice(); let gain = 0, moved = false; for (let k = 0; k < 4; k++) { const idx = LINES[dir](k), [out, ga] = slide(idx.map(i => g[i])); gain += ga; idx.forEach((i, j) => { if (n[i] !== out[j]) moved = true; n[i] = out[j]; }); } return { n, gain, moved }; }
+  const stuck = g => !['left', 'right', 'up', 'down'].some(d => shift(g, d).moved);
+  function move(dir) {
+    if (G.over || !G.started) return; const r = shift(G.g, dir); if (!r.moved) return;
+    G.prev = { g: G.g.slice(), score: G.score, rs: G.rs }; G.g = r.n; G.score += r.gain; G.moves++; spawn();
+    if (!G.fast) SH.Sound.play(r.gain ? 'capture' : 'move');
+    const top = Math.max(...G.g), best = LS.get('rs-best', 0); if (G.score > best) LS.set('rs-best', G.score);
+    if (!G.won && top >= G.goal) { G.won = true; A.finish(G, 'w', `${NAME[G.goal]}! You hit ${G.goal} — keep stacking`, '', { keep: true, daily: true, score: G.score }); }
+    if (stuck(G.g)) { render(); const pb = G.pb0 > 0 && G.score > G.pb0; return A.finish(G, 'd', G.won ? 'No moves left — what a run' : 'No moves left', `Score ${G.score.toLocaleString()} · top tile ${NAME[top] || top} (${top})${G.won ? '' : ` · goal was ${NAME[G.goal]}`}${pb ? PB : ''}`, { score: G.score, pb }); }
+    render();
+  }
+  function undo() { if (!G.prev || G.over) return; G.g = G.prev.g; G.score = G.prev.score; G.rs = G.prev.rs; G.prev = null; G.fresh = -1; render(); }
+  function render() {
+    A.stage.innerHTML = `<div class="rs-board" tabindex="0" role="application" aria-label="Royalty Stack board. Use the arrow keys to slide.">${G.g.map((x, i) => `<div class="rs-c ${i === G.fresh ? 'fresh' : ''}" data-v="${Math.min(x, 4096)}">${x ? `<b>${x}</b><small>${NAME[x] || ''}</small>` : ''}</div>`).join('')}</div>
+      <div class="rs-pad" aria-hidden="true"><button data-m="up">▲</button><div><button data-m="left">◀</button><button data-m="down">▼</button><button data-m="right">▶</button></div></div>`;
+    A.status(`${dailyTag(G)}Score <b>${G.score.toLocaleString()}</b> · Goal ${NAME[G.goal]} (${G.goal})${G.won ? ' ✓' : ''}`);
+    A.acts(`<button class="btn btn-sec" data-x="undo" ${G.prev && !G.over ? '' : 'disabled'}>Undo last slide</button>`);
+    const b = LS.get('rs-best', 0); A.best(b ? `Best score: <b>${b.toLocaleString()}</b>` : 'Tip: keep your biggest tile in one corner.');
+  }
+  A.stage.addEventListener('click', e => { const b = e.target.closest('[data-m]'); if (b) move(b.dataset.m); });
+  $(v + '-acts').addEventListener('click', e => { if (e.target.closest('[data-x="undo"]')) undo(); });
+  let p0 = null;
+  A.stage.addEventListener('pointerdown', e => { if (e.target.closest('.rs-board')) p0 = [e.clientX, e.clientY]; });
+  addEventListener('pointerup', e => { if (!p0) return; const dx = e.clientX - p0[0], dy = e.clientY - p0[1]; p0 = null; if (Math.max(Math.abs(dx), Math.abs(dy)) < 22) return; move(Math.abs(dx) > Math.abs(dy) ? (dx > 0 ? 'right' : 'left') : (dy > 0 ? 'down' : 'up')); });
+  document.addEventListener('keydown', e => { if (!A.visible() || e.target.matches('input,select,textarea') || e.altKey || e.ctrlKey || e.metaKey) return; const d = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down', a: 'left', d: 'right', w: 'up', s: 'down' }[e.key]; if (d) { e.preventDefault(); move(d); } });
+  reg(v, { onShow() { if (!G.started) start(); else render(); }, _G: G, _render: render, _new: start, _move: move, _shift: shift,
+    _auto() { if (G.over) return 'over'; for (const d of ['down', 'left', 'right', 'up']) if (shift(G.g, d).moved) { move(d); return d; } return 'over'; } });
+})();
+
+// =====================================================================================================
+// SOUND CHECK — clear the stage without stepping on a hot mic (first tap is always safe)
+// =====================================================================================================
+(function () {
+  const v = 'mines';
+  const SIZE = { small: [8, 8, 9], medium: [10, 10, 15], large: [12, 12, 24] };
+  const A = shell(v, { title: 'Sound Check', vs: 'the stage', daily: true, blurb: 'Clear the stage before the show. Each number tells you how many hot mics touch that square. Flag the mics, open everything else. Your first tap is always safe.', defaults: { size: 'small' }, opts: [{ k: 'size', label: 'Stage', options: [['small', 'Club — 8×8, 9 mics'], ['medium', 'Theater — 10×10, 15 mics'], ['large', 'Arena — 12×12, 24 mics']] }], onNew: o => start(o) });
+  if (!A) return;
+  const G = { started: false, token: 0 };
+  const nb = i => { const r = (i / G.w) | 0, c = i % G.w, out = []; for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) { const rr = r + dr, cc = c + dc; if ((dr || dc) && rr >= 0 && rr < G.h && cc >= 0 && cc < G.w) out.push(rr * G.w + cc); } return out; };
+  function start(o) {
+    o = o || {}; G.token++; G.started = true; G.over = false; G.daily = o.daily ? dayKey() : 0; G.rs = seedFor(v, o); G.size = o.daily ? 'medium' : A.cfg.size;
+    [G.w, G.h, G.n] = SIZE[G.size] || SIZE.small; const N = G.w * G.h;
+    G.m = Array(N).fill(0); G.rev = Array(N).fill(0); G.flag = Array(N).fill(0); G.num = Array(N).fill(0); G.laid = false; G.flagMode = false; G.boom = -1; G.el = 0;
+    A.hideEnd(); if (!G.fast) SH.Sound.play('start'); render();
+  }
+  function lay(first) { const safe = new Set([first, ...nb(first)]), spots = shuf([...Array(G.w * G.h).keys()].filter(i => !safe.has(i)), G).slice(0, G.n); spots.forEach(i => { G.m[i] = 1; }); for (let i = 0; i < G.m.length; i++) G.num[i] = nb(i).filter(k => G.m[k]).length; G.laid = true; }
+  function open(i) {
+    if (G.rev[i] || G.flag[i]) return; const stack = [i];
+    while (stack.length) { const k = stack.pop(); if (G.rev[k] || G.flag[k]) continue; G.rev[k] = 1; if (G.m[k]) { G.boom = k; return; } if (!G.num[k]) nb(k).forEach(x => { if (!G.rev[x]) stack.push(x); }); }
+  }
+  function tap(i, alt) {
+    if (G.over) return;
+    if (G.rev[i]) { const around = nb(i); if (G.num[i] && around.filter(k => G.flag[k]).length === G.num[i]) around.forEach(open); else return; }
+    else if (alt || G.flagMode) { G.flag[i] ^= 1; if (!G.fast) SH.Sound.play('tick'); return render(); }
+    else { if (G.flag[i]) return; if (!G.laid) lay(i); open(i); }
+    if (G.boom >= 0) { G.m.forEach((x, k) => { if (x) G.rev[k] = 1; }); render(); return A.finish(G, 'l', 'Feedback! You hit a hot mic', `${clock(G.el)} on the ${G.size} stage — the first tap is always safe, so run it back`, {}); }
+    if (!G.fast) SH.Sound.play('move');
+    if (G.rev.reduce((a, b) => a + b, 0) === G.w * G.h - G.n) { G.m.forEach((x, k) => { if (x) G.flag[k] = 1; }); render(); const pb = A.pb('mn-best-' + G.size, G.el, true); return A.finish(G, 'w', 'Stage is clear — show time!', `${clock(G.el)} on the ${G.size} stage${G.daily ? ' · today’s daily' : ''}${pb ? PB : ''}`, { score: G.el, pro: G.size === 'large', pb }); }
+    render();
+  }
+  function render() {
+    const flags = G.flag.reduce((a, b) => a + b, 0);
+    A.stage.innerHTML = `<div class="mn-grid" style="--n:${G.w}" role="grid" aria-label="Sound Check stage">${G.rev.map((r, i) => { const mine = G.m[i]; return `<button class="mn-c ${r ? 'open' : ''} ${r && mine ? 'mic' : ''} ${i === G.boom ? 'boom' : ''} n${r && !mine ? G.num[i] : ''}" data-i="${i}" aria-label="Row ${((i / G.w) | 0) + 1}, column ${i % G.w + 1}: ${r ? (mine ? 'hot mic' : G.num[i] + ' nearby') : G.flag[i] ? 'flagged' : 'covered'}">${r ? (mine ? '🎤' : G.num[i] || '') : G.flag[i] ? '🚩' : ''}</button>`; }).join('')}</div>`;
+    A.status(`${dailyTag(G)}Mics left <b>${G.n - flags}</b> · <span id="${v}-time">${clock(G.el || 0)}</span>`);
+    A.acts(`<button class="btn btn-sec ${G.flagMode ? 'on' : ''}" data-x="flag" aria-pressed="${!!G.flagMode}">🚩 Flag mode ${G.flagMode ? 'on' : 'off'}</button>`);
+    const b = LS.get('mn-best-' + G.size, 0); A.best(b ? `Best ${G.size} time: <b>${clock(b)}</b>` : 'Tip: long-press or right-click to flag. Tap a number once its flags are set to open the rest around it.');
+  }
+  let press = null;
+  A.stage.addEventListener('pointerdown', e => { const c = e.target.closest('[data-i]'); if (!c || e.button === 2) return; press = { i: +c.dataset.i, t: setTimeout(() => { if (press) { press.long = true; tap(press.i, true); } }, 420) }; });
+  A.stage.addEventListener('pointerup', () => { if (press) clearTimeout(press.t); });
+  A.stage.addEventListener('pointerleave', () => { if (press) { clearTimeout(press.t); press = null; } });
+  A.stage.addEventListener('click', e => { const c = e.target.closest('[data-i]'); if (!c) return; if (press && press.long) { press = null; return; } press = null; tap(+c.dataset.i, e.shiftKey); });
+  A.stage.addEventListener('contextmenu', e => { const c = e.target.closest('[data-i]'); if (c) { e.preventDefault(); tap(+c.dataset.i, true); } });
+  $(v + '-acts').addEventListener('click', e => { if (e.target.closest('[data-x="flag"]')) { G.flagMode = !G.flagMode; render(); } });
+  A.clockOn(G, () => { const t = $(v + '-time'); if (t) t.textContent = clock(G.el); });
+  reg(v, { onShow() { if (!G.started) start(); else render(); }, _G: G, _render: render, _new: start, _tap: tap,
+    _auto() { if (G.over) return 'over'; if (!G.laid) { tap(((G.h / 2) | 0) * G.w + ((G.w / 2) | 0)); return 'first'; } const i = G.rev.findIndex((r, k) => !r && !G.m[k]); G.flag[i] = 0; tap(i); return 'open'; } });
+})();
+
+// =====================================================================================================
+// SET LIST — memory match, alone or against a rival who remembers what was turned over
+// =====================================================================================================
+(function () {
+  const v = 'memory';
+  const ICONS = ['🎤', '🎹', '🎸', '🥁', '🎷', '🎺', '🎻', '🎧', '📻', '💿', '🎼', '🎵', '🎬', '📀', '🎶', '🏆', '🔔', '⭐'];
+  const RIV = { easy: ['Cousin Dre', 0.35], medium: ['Miss Loretta', 0.65], sharp: ['Uncle Ray', 0.93] };
+  const A = shell(v, { title: 'Set List', daily: true, blurb: 'Turn over two cards. Match the pair and they stay up. Play alone for the fewest turns, or take on a rival who is watching the same cards you are.', defaults: { mode: 'solo', size: 16 }, opts: [{ k: 'mode', label: 'Play', options: [['solo', 'Solo — fewest turns'], ['easy', 'vs Cousin Dre (forgetful)'], ['medium', 'vs Miss Loretta (steady)'], ['sharp', 'vs Uncle Ray (sharp)']] }, { k: 'size', label: 'Cards', options: [[12, '12 cards'], [16, '16 cards'], [24, '24 cards'], [36, '36 cards']] }], onNew: o => start(o) });
+  if (!A) return;
+  const G = { started: false, token: 0 };
+  function start(o) {
+    o = o || {}; G.token++; G.started = true; G.over = false; G.daily = o.daily ? dayKey() : 0; G.rs = seedFor(v, o); G.mode = o.daily ? 'solo' : A.cfg.mode; G.size = o.daily ? 24 : +A.cfg.size;
+    const ks = shuf(ICONS.map((_, i) => i), G).slice(0, G.size / 2); G.cards = shuf(ks.concat(ks), G).map(k => ({ k, up: 0, done: 0 }));
+    G.open = []; G.turns = 0; G.turn = 0; G.score = [0, 0]; G.seen = {}; G.busy = false; G.el = 0;
+    A.hideEnd(); if (!G.fast) SH.Sound.play('start'); render();
+  }
+  function flip(i, who) {
+    const c = G.cards[i]; if (G.over || c.up || c.done || G.open.length >= 2) return false;
+    c.up = 1; G.open.push(i); if (G.mode !== 'solo' && rnd({}) < RIV[G.mode][1]) G.seen[i] = c.k;
+    if (!G.fast) SH.Sound.play('move');
+    if (G.open.length < 2) { render(); return true; }
+    const [a, b] = G.open; if (who === 0) G.turns++;
+    if (G.cards[a].k === G.cards[b].k) {
+      G.cards[a].done = G.cards[b].done = who + 1; G.score[who]++; G.open = []; delete G.seen[a]; delete G.seen[b];
+      if (!G.fast) SH.Sound.play('good'); render();
+      if (G.cards.every(x => x.done)) return end(), true;
+      if (who === 1) A.later(G, 650, rival);
+      return true;
+    }
+    G.busy = true; render();
+    A.later(G, G.fast ? 0 : 850, () => { G.cards[a].up = G.cards[b].up = 0; G.open = []; G.busy = false; if (G.mode !== 'solo') G.turn = 1 - who; render(); if (G.turn === 1 && G.mode !== 'solo') A.later(G, 600, rival); });
+    return true;
+  }
+  function rival() {
+    if (G.over || G.turn !== 1) return;
+    const live = G.cards.map((c, i) => i).filter(i => !G.cards[i].done && !G.cards[i].up), known = Object.keys(G.seen).map(Number).filter(i => live.includes(i));
+    let pick = null;
+    for (let x = 0; x < known.length && !pick; x++) for (let y = x + 1; y < known.length; y++) if (G.seen[known[x]] === G.seen[known[y]]) { pick = [known[x], known[y]]; break; }
+    if (!pick) { const unk = live.filter(i => !(i in G.seen)), first = (unk.length ? unk : live)[Math.floor(Math.random() * (unk.length ? unk : live).length)]; const mate = known.find(i => i !== first && G.seen[i] === G.cards[first].k); const rest = live.filter(i => i !== first); pick = [first, mate != null ? mate : rest[Math.floor(Math.random() * rest.length)]]; }
+    flip(pick[0], 1); A.later(G, 700, () => flip(pick[1], 1));
+  }
+  function end() {
+    if (G.mode === 'solo') { const par = Math.round(G.size * 0.9), pb = A.pb('mm-best-' + G.size, G.turns, true); return A.finish(G, 'w', 'Every pair found!', `${G.turns} turns · ${clock(G.el)}${G.turns <= par ? ' · sharp memory' : ''}${G.daily ? ' · today’s daily' : ''}${pb ? PB : ''}`, { score: G.turns, pb }); }
+    const [y, r] = G.score, name = RIV[G.mode][0];
+    A.finish(G, y > r ? 'w' : y < r ? 'l' : 'd', y > r ? 'You took the set!' : y < r ? `${name} takes the set` : 'Dead even', `You ${y} pairs · ${name} ${r} pairs`, { vs: name, pro: G.mode === 'sharp' });
+  }
+  function render() {
+    const cols = G.size <= 12 ? 4 : G.size <= 16 ? 4 : 6;
+    A.stage.innerHTML = `<div class="mm-grid" style="--n:${cols}">${G.cards.map((c, i) => `<button class="mm-c ${c.up || c.done ? 'up' : ''} ${c.done ? 'done d' + c.done : ''}" data-i="${i}" aria-label="Card ${i + 1}: ${c.up || c.done ? ICONS[c.k] : 'face down'}" ${c.done ? 'disabled' : ''}><span>${c.up || c.done ? ICONS[c.k] : 'M'}</span></button>`).join('')}</div>`;
+    A.status(G.mode === 'solo' ? `${dailyTag(G)}Turns <b>${G.turns}</b> · Pairs ${G.score[0]}/${G.size / 2} · <span id="${v}-time">${clock(G.el || 0)}</span>` : `You <b>${G.score[0]}</b> · ${RIV[G.mode][0]} <b>${G.score[1]}</b> — ${G.turn === 0 ? 'your turn' : RIV[G.mode][0] + ' is looking…'}`);
+    A.acts('');
+    const b = LS.get('mm-best-' + G.size, 0); A.best(G.mode === 'solo' && b ? `Fewest turns with ${G.size} cards: <b>${b}</b>` : 'A match earns another turn.');
+  }
+  A.stage.addEventListener('click', e => { const c = e.target.closest('[data-i]'); if (!c || G.busy || (G.mode !== 'solo' && G.turn !== 0)) return; flip(+c.dataset.i, 0); });
+  A.clockOn(G, () => { const t = $(v + '-time'); if (t) t.textContent = clock(G.el); });
+  reg(v, { onShow() { if (!G.started) start(); else render(); }, _G: G, _render: render, _new: start,
+    _auto() { if (G.over) return 'over'; if (G.busy || (G.mode !== 'solo' && G.turn !== 0)) return 'wait'; const live = G.cards.map((c, i) => i).filter(i => !G.cards[i].done && !G.cards[i].up); if (G.open.length === 1) { const k = G.cards[G.open[0]].k, m = live.find(i => G.cards[i].k === k); flip(Math.random() < 0.6 ? m : live[0], 0); } else flip(live[0], 0); return 'flip'; } });
+})();
+
+// =====================================================================================================
+// MAHJONG SOLITAIRE — a layered board, the real "free tile" rule, and deals that can always be cleared
+// =====================================================================================================
+(function () {
+  const v = 'mahjong';
+  const KINDS = [];
+  for (let n = 1; n <= 9; n++) KINDS.push({ t: n, s: '●', c: 'dot', n: n + ' of dots' });
+  for (let n = 1; n <= 9; n++) KINDS.push({ t: n, s: '❙❙', c: 'bam', n: n + ' of bamboo' });
+  for (let n = 1; n <= 9; n++) KINDS.push({ t: n, s: '万', c: 'chr', n: n + ' of characters' });
+  [['E', 'East wind'], ['S', 'South wind'], ['W', 'West wind'], ['N', 'North wind']].forEach(([t, n]) => KINDS.push({ t, s: 'wind', c: 'wnd', n }));
+  [['R', 'drg r', 'Red dragon'], ['G', 'drg g', 'Green dragon'], ['◇', 'drg w', 'White dragon']].forEach(([t, c, n]) => KINDS.push({ t, s: 'dragon', c, n }));
+  const SLOTS = [];
+  for (let y = 0; y < 5; y++) for (let x = 0; x < 8; x++) SLOTS.push([x, y, 0]);
+  SLOTS.push([-1, 2, 0], [8, 2, 0]);
+  for (let y = 1; y < 4; y++) for (let x = 1; x < 7; x++) SLOTS.push([x, y, 1]);
+  for (let x = 2; x < 6; x++) SLOTS.push([x, 2, 2]);
+  SLOTS.push([3, 2, 3], [4, 2, 3]);
+  const key = (x, y, z) => x + ',' + y + ',' + z, IDX = {}; SLOTS.forEach((s, i) => { IDX[key(...s)] = i; });
+  const A = shell(v, { title: 'Mahjong Solitaire', vs: 'the wall', daily: true, blurb: 'Clear the board two matching tiles at a time. A tile is free when nothing sits on top of it and its left or right side is open. Every deal can be cleared.', defaults: {}, opts: [], rec: s => `Cleared ${s.w}`, onNew: o => start(o) });
+  if (!A) return;
+  const G = { started: false, token: 0 };
+  const has = (live, x, y, z) => { const i = IDX[key(x, y, z)]; return i != null && live[i]; };
+  const free = (live, i) => { if (!live[i]) return false; const [x, y, z] = SLOTS[i]; return !has(live, x, y, z + 1) && !(has(live, x - 1, y, z) && has(live, x + 1, y, z)); };
+  // hand out kinds by clearing the board backwards — that guarantees at least one way to win
+  function assign(live, kinds, R) {
+    for (let attempt = 0; attempt < 300; attempt++) {
+      const L = live.slice(), out = {}, ks = kinds.slice(); let ok = true;
+      while (L.some(x => x)) { const f = []; for (let i = 0; i < L.length; i++) if (free(L, i)) f.push(i); if (f.length < 2) { ok = false; break; } shuf(f, R); const k = ks.pop(); out[f[0]] = out[f[1]] = k; L[f[0]] = L[f[1]] = 0; }
+      if (ok) return out;
+    }
+    return null;
+  }
+  function start(o) {
+    o = o || {}; G.token++; G.started = true; G.over = false; G.daily = o.daily ? dayKey() : 0; G.rs = seedFor(v, o);
+    const pick = shuf(KINDS.map((_, i) => i), G).slice(0, 17), kinds = shuf(pick.concat(pick.slice(0, 16)), G);
+    G.live = SLOTS.map(() => 1); const a = assign(G.live, kinds, G); G.kind = SLOTS.map((_, i) => a[i]);
+    G.sel = -1; G.hist = []; G.shuffles = 0; G.tip = null; G.el = 0;
+    A.hideEnd(); if (!G.fast) SH.Sound.play('start'); render();
+  }
+  function pairs() { const f = []; for (let i = 0; i < SLOTS.length; i++) if (free(G.live, i)) f.push(i); const out = []; for (let a = 0; a < f.length; a++) for (let b = a + 1; b < f.length; b++) if (G.kind[f[a]] === G.kind[f[b]]) out.push([f[a], f[b]]); return out; }
+  function tap(i) {
+    if (G.over || !free(G.live, i)) { if (!G.over && G.live[i] && !G.fast) SH.Sound.play('bad'); return; }
+    G.tip = null;
+    if (G.sel === i) { G.sel = -1; return render(); }
+    if (G.sel >= 0 && G.kind[G.sel] === G.kind[i]) {
+      G.hist.push([G.sel, i]); G.live[G.sel] = G.live[i] = 0; G.sel = -1; if (!G.fast) SH.Sound.play('capture');
+      const left = G.live.reduce((a, b) => a + b, 0);
+      if (!left) { render(); const pb = A.pb('mj-best', G.el, true); return A.finish(G, 'w', 'Board cleared!', `${clock(G.el)}${G.shuffles ? ` · ${G.shuffles} shuffle${G.shuffles > 1 ? 's' : ''}` : ' · no shuffles'}${G.daily ? ' · today’s daily' : ''}${pb ? PB : ''}`, { score: G.el, pb }); }
+      render(); if (!pairs().length) SH.toast('No matching free tiles — use Shuffle', 'x'); return;
+    }
+    G.sel = i; if (!G.fast) SH.Sound.play('move'); render();
+  }
+  function shuffle() {
+    if (G.over) return; const ids = G.live.map((x, i) => x ? i : -1).filter(i => i >= 0), kinds = shuf(ids.map(i => G.kind[i]).sort((a, b) => a - b), { rs: null });
+    const ordered = kinds.slice().sort((a, b) => a - b), pairKinds = []; for (let k = 0; k < ordered.length; k += 2) pairKinds.push(ordered[k]);
+    const a = assign(G.live, shuf(pairKinds, { rs: null }), { rs: null });
+    if (!a) { render(); return A.finish(G, 'l', 'No way through this time', 'The tiles left cannot be cleared — deal a new board', {}); }
+    ids.forEach(i => { G.kind[i] = a[i]; }); G.shuffles++; G.sel = -1; G.hist = []; render();
+  }
+  function undo() { const m = G.hist.pop(); if (!m || G.over) return; G.live[m[0]] = G.live[m[1]] = 1; G.sel = -1; render(); }
+  function hint() { const p = pairs(); if (!p.length) return SH.toast('No matching free tiles — use Shuffle', 'x'); G.tip = p[0]; G.sel = -1; render(); }
+  function render() {
+    const left = G.live.reduce((a, b) => a + b, 0), np = pairs().length;
+    A.stage.innerHTML = `<div class="mj-board">${SLOTS.map(([x, y, z], i) => { if (!G.live[i]) return ''; const k = KINDS[G.kind[i]], f = free(G.live, i); return `<button class="mj-t ${k.c} ${f ? 'free' : 'lock'} ${i === G.sel ? 'sel' : ''} ${G.tip && G.tip.includes(i) ? 'tip' : ''}" style="--x:${x + 1};--y:${y};--z:${z}" data-i="${i}" aria-label="${k.n}${f ? '' : ', blocked'}" ${f ? '' : 'aria-disabled="true"'}><b>${k.t}</b><i>${k.s === 'wind' || k.s === 'dragon' ? '' : k.s}</i></button>`; }).join('')}</div>`;
+    A.status(`${dailyTag(G)}Tiles left <b>${left}</b> · Moves open <b>${np}</b> · <span id="${v}-time">${clock(G.el || 0)}</span>`);
+    A.acts(`<button class="btn btn-sec" data-x="hint" ${G.over ? 'disabled' : ''}>Hint</button><button class="btn btn-sec" data-x="undo" ${G.hist.length && !G.over ? '' : 'disabled'}>Undo</button><button class="btn btn-sec" data-x="shuf" ${G.over ? 'disabled' : ''}>Shuffle</button>`);
+    const b = LS.get('mj-best', 0); A.best(b ? `Fastest clear: <b>${clock(b)}</b>` : 'Tip: free the tall stack in the middle early — it blocks the most tiles.');
+  }
+  A.stage.addEventListener('click', e => { const t = e.target.closest('[data-i]'); if (t) tap(+t.dataset.i); });
+  $(v + '-acts').addEventListener('click', e => { const x = (e.target.closest('[data-x]') || {}).dataset; if (!x) return; if (x.x === 'hint') hint(); else if (x.x === 'undo') undo(); else if (x.x === 'shuf') shuffle(); });
+  A.clockOn(G, () => { const t = $(v + '-time'); if (t) t.textContent = clock(G.el); });
+  reg(v, { onShow() { if (!G.started) start(); else render(); }, _G: G, _render: render, _new: start, _pairs: pairs, _slots: SLOTS,
+    _auto() { if (G.over) return 'over'; const p = pairs(); if (!p.length) { shuffle(); return 'shuffle'; } G.sel = -1; tap(p[0][0]); tap(p[0][1]); return 'pair'; } });
+})();
+})();
+
+// McLearn Quick Play — Four in a Row, Dots & Boxes, Tic-Tac-Toe, Crazy Eights, Track Lanes (bowling) and Feedback Loop (paddle game).
+(function () {
+'use strict';
+const SH = window.McShared, S = window.McSolo; if (!SH || !S) return;
+const $ = id => document.getElementById(id), LS = SH.LS, C = SH.cards, { shell, rnd, shuf, clock } = S;
+const reg = (v, g) => { SH.games[v] = g; S.games[v] = g; };
+const CAST = { easy: 'Cousin Dre', medium: 'Miss Loretta', hard: 'Uncle Ray' };
+const LEVELS = [['easy', 'Cousin Dre — easygoing'], ['medium', 'Miss Loretta — steady'], ['hard', 'Uncle Ray — sharp']];
+
+// =====================================================================================================
+// FOUR IN A ROW
+// =====================================================================================================
+(function () {
+  const v = 'four', W = 7, H = 6;
+  const WINS = []; for (let r = 0; r < H; r++) for (let c = 0; c < W; c++) for (const [dr, dc] of [[0, 1], [1, 0], [1, 1], [1, -1]]) { const q = []; for (let k = 0; k < 4; k++) { const rr = r + dr * k, cc = c + dc * k; if (rr < 0 || rr >= H || cc < 0 || cc >= W) break; q.push(rr * W + cc); } if (q.length === 4) WINS.push(q); }
+  const A = shell(v, { title: 'Four in a Row', blurb: 'Drop a disc in any column. First to line up four — across, up and down, or on a slant — wins. Tap a column, or press 1 to 7.', defaults: { level: 'medium' }, opts: [{ k: 'level', label: 'Opponent', options: LEVELS }], onNew: () => start() });
+  if (!A) return;
+  const G = { started: false, token: 0, games: 0 };
+  const ORDER = [3, 2, 4, 1, 5, 0, 6];
+  const row = (b, c) => { for (let r = H - 1; r >= 0; r--) if (!b[r * W + c]) return r; return -1; };
+  const winner = b => { for (const q of WINS) { const x = b[q[0]]; if (x && x === b[q[1]] && x === b[q[2]] && x === b[q[3]]) return q; } return null; };
+  function evalB(b, p) { let s = 0; for (const q of WINS) { let me = 0, op = 0; for (const i of q) { if (b[i] === p) me++; else if (b[i]) op++; } if (me && !op) s += me === 3 ? 9 : me === 2 ? 3 : 1; else if (op && !me) s -= op === 3 ? 9 : op === 2 ? 3 : 1; } for (let r = 0; r < H; r++) if (b[r * W + 3] === p) s += 2; return s; }
+  function nega(b, d, a, be, p) {
+    if (winner(b)) return -100000 - d;
+    if (!d) return evalB(b, p);
+    let any = false, best = -Infinity;
+    for (const c of ORDER) { const r = row(b, c); if (r < 0) continue; any = true; b[r * W + c] = p; const s = -nega(b, d - 1, -be, -a, 3 - p); b[r * W + c] = 0; if (s > best) best = s; if (s > a) a = s; if (a >= be) break; }
+    return any ? best : 0;
+  }
+  function pick() {
+    const d = { easy: 2, medium: 4, hard: 6 }[G.level], opts = ORDER.filter(c => row(G.b, c) >= 0);
+    if (G.level === 'easy' && Math.random() < 0.3) return opts[Math.floor(Math.random() * opts.length)];
+    let best = -Infinity, bc = opts[0];
+    for (const c of opts) { const r = row(G.b, c); G.b[r * W + c] = 2; const s = -nega(G.b, d - 1, -Infinity, Infinity, 1) + Math.random() * 0.5; G.b[r * W + c] = 0; if (s > best) { best = s; bc = c; } }
+    return bc;
+  }
+  function start() {
+    G.token++; G.started = true; G.over = false; G.level = A.cfg.level; G.b = Array(W * H).fill(0); G.turn = G.games++ % 2 ? 2 : 1; G.last = -1; G.line = null; G.busy = false; G.n = 0;
+    A.hideEnd(); if (!G.fast) SH.Sound.play('start'); render(); if (G.turn === 2) ai();
+  }
+  function drop(c, p) {
+    const r = row(G.b, c); if (r < 0) return false;
+    G.b[r * W + c] = p; G.last = r * W + c; G.n++; if (!G.fast) SH.Sound.play('move');
+    const q = winner(G.b), name = CAST[G.level];
+    if (q) { G.line = q; render(); A.finish(G, p === 1 ? 'w' : 'l', p === 1 ? 'Four in a row — you win!' : `${name} lines up four`, `${G.n} discs played`, { vs: name, pro: G.level === 'hard' }); return true; }
+    if (G.n === W * H) { render(); A.finish(G, 'd', 'Board is full — a draw', 'Nobody found four', { vs: name }); return true; }
+    G.turn = 3 - p; render(); return true;
+  }
+  function ai() { G.busy = true; render(); A.later(G, 420, () => { G.busy = false; drop(pick(), 2); }); }
+  function you(c) { if (G.over || G.busy || G.turn !== 1) return; if (drop(c, 1) && !G.over) ai(); }
+  function render() {
+    A.stage.innerHTML = `<div class="c4-board" role="grid" aria-label="Four in a Row board">${[...Array(W)].map((_, c) => `<button class="c4-col" data-c="${c}" aria-label="Column ${c + 1}${row(G.b, c) < 0 ? ', full' : ''}" ${row(G.b, c) < 0 || G.over ? 'disabled' : ''}>${[...Array(H)].map((__, r) => { const i = r * W + c, x = G.b[i]; return `<span class="c4-cell ${x === 1 ? 'p1' : x === 2 ? 'p2' : ''} ${i === G.last ? 'last' : ''} ${G.line && G.line.includes(i) ? 'win' : ''}"></span>`; }).join('')}</button>`).join('')}</div>`;
+    A.status(G.over ? 'Game over' : G.busy || G.turn === 2 ? `${CAST[G.level]} is thinking…` : 'Your turn — you are <b class="c4-you">gold</b>');
+    A.acts(''); A.best(`Playing ${CAST[G.level]}. You take turns going first.`);
+  }
+  A.stage.addEventListener('click', e => { const c = e.target.closest('[data-c]'); if (c) you(+c.dataset.c); });
+  document.addEventListener('keydown', e => { if (!A.visible() || e.target.matches('input,select,textarea') || e.altKey || e.ctrlKey || e.metaKey) return; const k = +e.key; if (k >= 1 && k <= 7) you(k - 1); });
+  reg(v, { onShow() { if (!G.started) start(); else render(); }, _G: G, _render: render, _new: start, _pick: pick, _winner: winner,
+    _auto() { if (G.over) return 'over'; if (G.busy || G.turn !== 1) return 'wait'; const o = ORDER.filter(c => row(G.b, c) >= 0); you(o[Math.floor(Math.random() * o.length)]); return 'drop'; } });
+})();
+
+// =====================================================================================================
+// DOTS & BOXES
+// =====================================================================================================
+(function () {
+  const v = 'dots';
+  const A = shell(v, { title: 'Dots & Boxes', blurb: 'Take turns drawing one line between two dots. Close the fourth side of a box and it is yours — and you go again. Most boxes wins.', defaults: { level: 'medium', n: 4 }, opts: [{ k: 'level', label: 'Opponent', options: LEVELS }, { k: 'n', label: 'Board', options: [[3, 'Small — 9 boxes'], [4, 'Classic — 16 boxes'], [5, 'Big — 25 boxes']] }], onNew: () => start() });
+  if (!A) return;
+  const G = { started: false, token: 0, games: 0 };
+  const sides = (S2, r, c) => { const n = S2.n; return (S2.h[r * n + c] ? 1 : 0) + (S2.h[(r + 1) * n + c] ? 1 : 0) + (S2.v[r * (n + 1) + c] ? 1 : 0) + (S2.v[r * (n + 1) + c + 1] ? 1 : 0); };
+  const lines = S2 => { const out = []; S2.h.forEach((x, i) => { if (!x) out.push('h' + i); }); S2.v.forEach((x, i) => { if (!x) out.push('v' + i); }); return out; };
+  // boxes that touch a line
+  function touch(S2, id) { const n = S2.n, i = +id.slice(1), out = []; if (id[0] === 'h') { const r = (i / n) | 0, c = i % n; if (r > 0) out.push([r - 1, c]); if (r < n) out.push([r, c]); } else { const r = (i / (n + 1)) | 0, c = i % (n + 1); if (c > 0) out.push([r, c - 1]); if (c < n) out.push([r, c]); } return out; }
+  function put(S2, id, p) { (id[0] === 'h' ? S2.h : S2.v)[+id.slice(1)] = p; let got = 0; for (const [r, c] of touch(S2, id)) if (sides(S2, r, c) === 4 && !S2.box[r * S2.n + c]) { S2.box[r * S2.n + c] = p; got++; } return got; }
+  const clone = S2 => ({ n: S2.n, h: S2.h.slice(), v: S2.v.slice(), box: S2.box.slice() });
+  // how many boxes the other side could scoop up right after this line
+  function gift(S2, id) { const T = clone(S2); put(T, id, 9); let n = 0, go = true; while (go) { go = false; for (const l of lines(T)) if (touch(T, l).some(([r, c]) => sides(T, r, c) === 3)) { n += put(T, l, 9); go = true; break; } } return n; }
+  function pick() {
+    const all = lines(G), takes = all.filter(l => touch(G, l).some(([r, c]) => sides(G, r, c) === 3));
+    if (G.level === 'easy' && Math.random() < 0.35) return all[Math.floor(Math.random() * all.length)];
+    if (takes.length) return takes[Math.floor(Math.random() * takes.length)];
+    const safe = all.filter(l => touch(G, l).every(([r, c]) => sides(G, r, c) < 2));
+    if (safe.length) return safe[Math.floor(Math.random() * safe.length)];
+    if (G.level === 'easy') return all[Math.floor(Math.random() * all.length)];
+    let best = Infinity, out = all[0]; for (const l of shuf(all.slice(), {})) { const g = gift(G, l); if (g < best) { best = g; out = l; } } return out;
+  }
+  function start() {
+    G.token++; G.started = true; G.over = false; G.level = A.cfg.level; G.n = +A.cfg.n; const n = G.n;
+    G.h = Array((n + 1) * n).fill(0); G.v = Array(n * (n + 1)).fill(0); G.box = Array(n * n).fill(0); G.turn = G.games++ % 2 ? 2 : 1; G.score = [0, 0]; G.last = ''; G.busy = false;
+    A.hideEnd(); if (!G.fast) SH.Sound.play('start'); render(); if (G.turn === 2) ai();
+  }
+  function play(id, p) {
+    const got = put(G, id, p); G.last = id; G.score[p - 1] += got; if (!G.fast) SH.Sound.play(got ? 'capture' : 'move');
+    if (G.box.every(x => x)) { render(); const [y, r] = G.score, name = CAST[G.level]; A.finish(G, y > r ? 'w' : y < r ? 'l' : 'd', y > r ? 'You own the board!' : y < r ? `${name} takes it` : 'A tie', `You ${y} · ${name} ${r}`, { vs: name, pro: G.level === 'hard' }); return; }
+    if (!got) G.turn = 3 - p; render();
+    if (G.turn === 2) ai();
+  }
+  function ai() { G.busy = true; render(); A.later(G, 480, () => { G.busy = false; if (!G.over && G.turn === 2) play(pick(), 2); }); }
+  function you(id) { if (G.over || G.busy || G.turn !== 1) return; if ((id[0] === 'h' ? G.h : G.v)[+id.slice(1)]) return; play(id, 1); }
+  function render() {
+    const n = G.n, U = 60, P = 16, Wd = n * U + P * 2; let s = '';
+    for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) { const b = G.box[r * n + c]; if (b) s += `<rect class="db-b p${b}" x="${P + c * U + 5}" y="${P + r * U + 5}" width="${U - 10}" height="${U - 10}" rx="8"/><text class="db-t" x="${P + c * U + U / 2}" y="${P + r * U + U / 2 + 6}">${b === 1 ? 'You' : CAST[G.level].split(' ').pop()[0]}</text>`; }
+    const line = (id, x, y, w, h, lab) => { const o = (id[0] === 'h' ? G.h : G.v)[+id.slice(1)]; return `<g class="db-l ${o ? 'p' + o : 'open'} ${id === G.last ? 'last' : ''}" ${o ? '' : `data-l="${id}" role="button" tabindex="0" aria-label="${lab}"`}><rect class="db-hit" x="${x - (h > w ? 11 : 0)}" y="${y - (w > h ? 11 : 0)}" width="${w + (h > w ? 22 : 0)}" height="${h + (w > h ? 22 : 0)}"/><rect class="db-ink" x="${x}" y="${y}" width="${w}" height="${h}" rx="3"/></g>`; };
+    for (let r = 0; r <= n; r++) for (let c = 0; c < n; c++) s += line('h' + (r * n + c), P + c * U + 7, P + r * U - 3, U - 14, 6, `Line across, row ${r + 1}, column ${c + 1}`);
+    for (let r = 0; r < n; r++) for (let c = 0; c <= n; c++) s += line('v' + (r * (n + 1) + c), P + c * U - 3, P + r * U + 7, 6, U - 14, `Line down, row ${r + 1}, column ${c + 1}`);
+    for (let r = 0; r <= n; r++) for (let c = 0; c <= n; c++) s += `<circle class="db-d" cx="${P + c * U}" cy="${P + r * U}" r="5.5"/>`;
+    A.stage.innerHTML = `<svg class="db-svg" viewBox="0 0 ${Wd} ${Wd}" role="group" aria-label="Dots and Boxes board">${s}</svg>`;
+    A.status(`You <b>${G.score[0]}</b> · ${CAST[G.level]} <b>${G.score[1]}</b> — ${G.over ? 'game over' : G.busy || G.turn === 2 ? CAST[G.level] + ' is drawing…' : 'your line'}`);
+    A.acts(''); A.best('Tip: avoid drawing the third side of a box — it hands the box to the other player.');
+  }
+  A.stage.addEventListener('click', e => { const l = e.target.closest('[data-l]'); if (l) you(l.dataset.l); });
+  reg(v, { onShow() { if (!G.started) start(); else render(); }, _G: G, _render: render, _new: start, _pick: pick,
+    _auto() { if (G.over) return 'over'; if (G.busy || G.turn !== 1) return 'wait'; const all = lines(G); you(all[Math.floor(Math.random() * all.length)]); return 'line'; } });
+})();
+
+// =====================================================================================================
+// TIC-TAC-TOE — classic, plus "Three's Company" where every player keeps only three marks on the board
+// =====================================================================================================
+(function () {
+  const v = 'ttt', LN = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
+  const A = shell(v, { title: 'Tic-Tac-Toe', blurb: 'Three in a row wins the round. A match is five rounds — most rounds wins. Try “Three’s Company”: each player keeps only three marks, and your oldest one lifts off when you place a fourth — so there are no draws.', defaults: { level: 'medium', mode: 'three' }, opts: [{ k: 'mode', label: 'Game', options: [['three', 'Three’s Company (no draws)'], ['classic', 'Classic']] }, { k: 'level', label: 'Opponent', options: LEVELS }], onNew: () => start() });
+  if (!A) return;
+  const G = { started: false, token: 0 };
+  const win = b => { for (const l of LN) if (b[l[0]] && b[l[0]] === b[l[1]] && b[l[1]] === b[l[2]]) return l; return null; };
+  function apply(st, i, p) { const b = st.b.slice(), q = [st.q[0].slice(), st.q[1].slice()]; if (st.three && q[p].length === 3) b[q[p].shift()] = 0; b[i] = p + 1; q[p].push(i); return { b, q, three: st.three }; }
+  function nega(st, p, d) { if (win(st.b)) return -(20 + d); if (!d) return 0; let best = -Infinity, any = false; for (let i = 0; i < 9; i++) if (!st.b[i]) { any = true; const s = -nega(apply(st, i, p), 1 - p, d - 1); if (s > best) best = s; if (best >= 20) break; } return any ? best : 0; }
+  function pick() {
+    const st = { b: G.b, q: G.q, three: G.mode === 'three' }, free = []; for (let i = 0; i < 9; i++) if (!G.b[i]) free.push(i);
+    const wild = { easy: 0.55, medium: 0.18, hard: 0.05 }[G.level]; if (Math.random() < wild) return free[Math.floor(Math.random() * free.length)];
+    let best = -Infinity, out = []; for (const i of free) { const s = -nega(apply(st, i, 1), 0, st.three ? 5 : 9); if (s > best) { best = s; out = [i]; } else if (s === best) out.push(i); }
+    return out[Math.floor(Math.random() * out.length)];
+  }
+  function round() { G.b = Array(9).fill(0); G.q = [[], []]; G.line = null; G.turn = G.rounds % 2; G.moves = 0; G.busy = false; G.msg = ''; render(); if (G.turn === 1) ai(); }
+  function start() { G.token++; G.started = true; G.over = false; G.level = A.cfg.level; G.mode = A.cfg.mode; G.wins = [0, 0]; G.rounds = 0; A.hideEnd(); if (!G.fast) SH.Sound.play('start'); round(); }
+  function move(i, p) {
+    const st = apply({ b: G.b, q: G.q, three: G.mode === 'three' }, i, p); G.b = st.b; G.q = st.q; G.moves++; if (!G.fast) SH.Sound.play('move');
+    const l = win(G.b), name = CAST[G.level];
+    if (l || G.b.every(x => x) || G.moves >= 60) {
+      G.line = l; G.rounds++; if (l) G.wins[p]++; G.msg = l ? (p === 0 ? 'You take the round!' : `${name} takes the round`) : 'Round drawn'; G.busy = true; render();
+      const [y, r] = G.wins, left = 5 - G.rounds;
+      if (y >= 3 || r >= 3 || left === 0 || Math.abs(y - r) > left) return A.finish(G, y > r ? 'w' : y < r ? 'l' : 'd', y > r ? 'Match is yours!' : y < r ? `${name} wins the match` : 'Match drawn', `Rounds: you ${y} · ${name} ${r}${G.rounds - y - r ? ` · ${G.rounds - y - r} drawn` : ''}`, { vs: name, pro: G.level === 'hard' });
+      return A.later(G, 1100, round);
+    }
+    G.turn = 1 - p; render(); if (G.turn === 1) ai();
+  }
+  function ai() { G.busy = true; render(); A.later(G, 420, () => { G.busy = false; move(pick(), 1); }); }
+  function you(i) { if (G.over || G.busy || G.turn !== 0 || G.b[i]) return; move(i, 0); }
+  function render() {
+    const old = G.mode === 'three' && !G.line ? [G.q[0].length === 3 ? G.q[0][0] : -1, G.q[1].length === 3 ? G.q[1][0] : -1] : [-1, -1];
+    A.stage.innerHTML = `<div class="tt-board" role="grid" aria-label="Tic-Tac-Toe board">${G.b.map((x, i) => `<button class="tt-c ${x === 1 ? 'x' : x === 2 ? 'o' : ''} ${G.line && G.line.includes(i) ? 'win' : ''} ${old.includes(i) ? 'old' : ''}" data-i="${i}" aria-label="Square ${i + 1}: ${x === 1 ? 'your X' : x === 2 ? 'their O' : 'empty'}${old.includes(i) ? ', lifts off next' : ''}">${x === 1 ? '✕' : x === 2 ? '◯' : ''}</button>`).join('')}</div>`;
+    A.status(`Round ${Math.min(5, G.rounds + (G.line || G.msg ? 0 : 1))} of 5 — you <b>${G.wins[0]}</b> · ${CAST[G.level]} <b>${G.wins[1]}</b> — ${G.msg || (G.busy || G.turn === 1 ? CAST[G.level] + ' is thinking…' : 'your move (✕)')}`);
+    A.acts(''); A.best(G.mode === 'three' ? 'A faded mark is the next one to lift off the board.' : 'Classic rules: a full board with no line is a drawn round.');
+  }
+  A.stage.addEventListener('click', e => { const c = e.target.closest('[data-i]'); if (c) you(+c.dataset.i); });
+  document.addEventListener('keydown', e => { if (!A.visible() || e.target.matches('input,select,textarea') || e.altKey || e.ctrlKey || e.metaKey) return; const k = +e.key; if (k >= 1 && k <= 9) you(k - 1); });
+  reg(v, { onShow() { if (!G.started) start(); else render(); }, _G: G, _render: render, _new: start, _pick: pick,
+    _smart() { if (G.over) return 'over'; if (G.busy || G.turn !== 0) return 'wait'; const st = { b: G.b, q: G.q, three: G.mode === 'three' }; let best = -Infinity, out = 0; for (let i = 0; i < 9; i++) if (!G.b[i]) { const s = -nega(apply(st, i, 0), 1, st.three ? 7 : 9) + Math.random() * 0.01; if (s > best) { best = s; out = i; } } you(out); return 'mark'; },
+    _auto() { if (G.over) return 'over'; if (G.busy || G.turn !== 0) return 'wait'; const f = []; G.b.forEach((x, i) => { if (!x) f.push(i); }); you(f[Math.floor(Math.random() * f.length)]); return 'mark'; } });
+})();
+
+// =====================================================================================================
+// CRAZY EIGHTS
+// =====================================================================================================
+(function () {
+  const v = 'eights', NAMES = ['You', 'Cousin Dre', 'Miss Loretta', 'Uncle Ray'], SY = { s: '♠', h: '♥', d: '♦', c: '♣' }, SN = { s: 'Spades', h: 'Hearts', d: 'Diamonds', c: 'Clubs' };
+  const A = shell(v, { title: 'Crazy Eights', blurb: 'Match the top card by suit or by number. Eights are wild — play one any time and call the suit. No play? Draw up to three. First with an empty hand wins.', defaults: { n: 3 }, opts: [{ k: 'n', label: 'Table', options: [[2, 'Head to head'], [3, 'Three players'], [4, 'Four players']] }], onNew: () => start() });
+  if (!A) return;
+  const G = { started: false, token: 0 };
+  const top = () => G.pile[G.pile.length - 1];
+  const can = c => c.r === 8 || c.s === G.suit || c.r === top().r;
+  const pts = h => h.reduce((a, c) => a + (c.r === 8 ? 50 : c.r >= 11 && c.r <= 13 ? 10 : c.r === 14 ? 1 : c.r), 0);
+  function start() {
+    G.token++; G.started = true; G.over = false; G.n = +A.cfg.n; const d = C.shuffle(C.deck());
+    G.hands = []; for (let p = 0; p < G.n; p++) G.hands.push(d.splice(0, G.n === 2 ? 7 : 5));
+    let i = d.findIndex(c => c.r !== 8); G.pile = d.splice(i, 1); G.stock = d; G.suit = top().s; G.turn = 0; G.drew = 0; G.pick = -1; G.passes = 0; G.busy = false; G.msg = 'Your turn — match the suit or the number.';
+    sort(); A.hideEnd(); if (!G.fast) SH.Sound.play('start'); render();
+  }
+  const sort = () => G.hands[0].sort((a, b) => 'shdc'.indexOf(a.s) - 'shdc'.indexOf(b.s) || a.r - b.r);
+  function refill() { if (G.stock.length || G.pile.length < 2) return; const t = G.pile.pop(); G.stock = C.shuffle(G.pile); G.pile = [t]; }
+  function end(p, blocked) {
+    const name = NAMES[p]; render();
+    A.finish(G, p === 0 ? 'w' : 'l', p === 0 ? (blocked ? 'Table is blocked — lowest hand wins, and that’s you!' : 'You’re out — you win!') : (blocked ? `Blocked — ${name} holds the lowest hand` : `${name} goes out first`), G.hands.map((h, k) => `${NAMES[k]} ${h.length ? pts(h) + ' pts left' : 'out'}`).join(' · '), { vs: G.n === 2 ? NAMES[1] : 'the table' });
+  }
+  function next() {
+    if (G.passes >= G.n) { let best = 0; for (let p = 1; p < G.n; p++) if (pts(G.hands[p]) < pts(G.hands[best])) best = p; return end(best, true); }
+    G.turn = (G.turn + 1) % G.n; G.drew = 0; G.pick = -1;
+    if (G.turn === 0) { G.msg = G.hands[0].some(can) ? 'Your turn.' : 'No play — draw a card.'; render(); } else { G.busy = true; render(); A.later(G, 750, ai); }
+  }
+  function play(p, i, suit) {
+    const c = G.hands[p].splice(i, 1)[0]; G.pile.push(c); G.suit = c.r === 8 ? suit : c.s; G.passes = 0; if (!G.fast) SH.Sound.play(c.r === 8 ? 'good' : 'move');
+    G.msg = `${NAMES[p]} ${p ? 'plays' : 'play'} ${C.name(c)}${c.r === 8 ? ` and ${p ? 'calls' : 'call'} ${SN[suit]}` : ''}.`;
+    if (!G.hands[p].length) return end(p);
+    next();
+  }
+  function drawOne(p) { refill(); if (!G.stock.length) return false; G.hands[p].push(G.stock.pop()); G.drew++; if (!G.fast) SH.Sound.play('tick'); return true; }
+  function pass(p) { G.passes++; G.msg = `${NAMES[p]} ${p ? 'passes' : 'pass'}.`; next(); }
+  function ai() {
+    const p = G.turn; G.busy = false; if (G.over) return; const h = G.hands[p];
+    let opts = h.map((c, i) => i).filter(i => can(h[i]));
+    while (!opts.length && G.drew < 3 && drawOne(p)) opts = h.map((c, i) => i).filter(i => can(h[i]));
+    if (!opts.length) return pass(p);
+    const cnt = s => h.filter(c => c.s === s && c.r !== 8).length, non8 = opts.filter(i => h[i].r !== 8);
+    const i = non8.length ? non8.sort((a, b) => cnt(h[b].s) - cnt(h[a].s) || h[b].r - h[a].r)[0] : opts[0];
+    const suit = 'shdc'.split('').sort((a, b) => cnt(b) - cnt(a))[0];
+    play(p, i, suit);
+  }
+  function you(i) { if (G.over || G.busy || G.turn !== 0) return; const c = G.hands[0][i]; if (!c || !can(c)) { if (!G.fast) SH.Sound.play('bad'); return; } if (c.r === 8) { G.pick = i; return render(); } play(0, i); }
+  function youDraw() { if (G.over || G.busy || G.turn !== 0 || G.drew >= 3) return; if (!drawOne(0)) return pass(0); sort(); const ok = G.hands[0].some(can); G.msg = ok ? 'You drew — you have a play.' : G.drew >= 3 ? 'Three draws and no play.' : 'Still no play — draw again.'; render(); }
+  function render() {
+    const opp = []; for (let p = 1; p < G.n; p++) opp.push(`<div class="seat-tag ${G.turn === p && !G.over ? 'on' : ''}"><b>${NAMES[p]}</b><span>${G.hands[p].length} card${G.hands[p].length === 1 ? '' : 's'}</span></div>`);
+    const mine = G.turn === 0 && !G.over && !G.busy, anyPlay = G.hands[0].some(can);
+    A.stage.innerHTML = `<div class="ce-table"><div class="ce-opp">${opp.join('')}</div>
+      <div class="ce-mid"><div class="ce-stock" aria-label="Stock: ${G.stock.length} cards">${C.html(null, { back: true })}<small>${G.stock.length}</small></div><div class="ce-top">${C.html(top())}</div><div class="ce-suit ${G.suit === 'h' || G.suit === 'd' ? 'red' : ''}" aria-label="Suit in play: ${SN[G.suit]}"><b>${SY[G.suit]}</b><small>${SN[G.suit]}</small></div></div>
+      <div class="ce-msg" aria-live="polite">${G.msg}</div>
+      ${G.pick >= 0 ? `<div class="ce-pick"><span>Call a suit:</span>${'shdc'.split('').map(s => `<button class="btn btn-sec ${s === 'h' || s === 'd' ? 'red' : ''}" data-suit="${s}">${SY[s]} ${SN[s]}</button>`).join('')}</div>` : ''}
+      <div class="fan ce-hand">${G.hands[0].map((c, i) => C.html(c, { cls: (mine && can(c) ? 'playable ' : mine ? 'dim ' : '') + (i === G.pick ? 'tip' : ''), attr: `data-i="${i}" role="button" tabindex="0" aria-label="${C.name(c)}${mine && can(c) ? ', playable' : ''}"` })).join('')}</div></div>`;
+    A.status(G.over ? 'Hand over' : mine ? 'Your turn' : `${NAMES[G.turn]} is playing…`);
+    A.acts(mine ? `<button class="btn btn-sec" data-x="draw" ${G.drew >= 3 ? 'disabled' : ''}>Draw a card (${3 - G.drew} left)</button>${!anyPlay && (G.drew >= 3 || !G.stock.length && G.pile.length < 2) ? '<button class="btn btn-lux" data-x="pass">Pass</button>' : ''}` : '');
+    A.best('Eights are wild. Face cards count 10, eights 50 if you are caught holding them.');
+  }
+  A.stage.addEventListener('click', e => { const s = e.target.closest('[data-suit]'); if (s && G.pick >= 0) return play(0, G.pick, s.dataset.suit); const c = e.target.closest('.ce-hand [data-i]'); if (c) you(+c.dataset.i); });
+  $(v + '-acts').addEventListener('click', e => { const x = (e.target.closest('[data-x]') || {}).dataset; if (!x) return; if (x.x === 'draw') youDraw(); else if (x.x === 'pass') pass(0); });
+  reg(v, { onShow() { if (!G.started) start(); else render(); }, _G: G, _render: render, _new: start,
+    _auto() { if (G.over) return 'over'; if (G.busy || G.turn !== 0) return 'wait'; const h = G.hands[0], i = h.findIndex(can); if (i >= 0) { if (h[i].r === 8) play(0, i, 'shdc'[Math.floor(Math.random() * 4)]); else you(i); return 'play'; } if (G.drew < 3 && (G.stock.length || G.pile.length > 1)) { youDraw(); return 'draw'; } pass(0); return 'pass'; } });
+})();
+
+// =====================================================================================================
+// TRACK LANES — ten frames of bowling against a rival's scorecard. Three taps: spot, aim, power.
+// =====================================================================================================
+(function () {
+  const v = 'bowling', W = 300, H = 520, L = 34, R = W - 34, BR = 13, PR = 7.5;
+  const PINS = []; { const hx = W / 2, hy = 150, dx = 31, dy = 27; let id = 0; for (let row = 0; row < 4; row++) for (let k = 0; k <= row; k++) PINS.push({ id: id++, x: hx + (k - row / 2) * dx, y: hy - row * dy }); }
+  const RIVAL = { easy: ['Cousin Dre', 92], medium: ['Miss Loretta', 128], hard: ['Uncle Ray', 162] };
+  const A = shell(v, { title: 'Track Lanes', blurb: 'Ten frames against a rival’s scorecard. Three taps bowl the ball: the first sets where you stand, the second sets your aim, the third sets your power. Space bar works too.', defaults: { level: 'medium' }, opts: [{ k: 'level', label: 'Bowling against', options: LEVELS }], onNew: () => start() });
+  if (!A) return;
+  const G = { started: false, token: 0 };
+  function frames(rolls) {
+    const out = []; let i = 0, tot = 0;
+    for (let f = 0; f < 10 && i < rolls.length; f++) {
+      if (f < 9) {
+        if (rolls[i] === 10) { const a = rolls[i + 1], b = rolls[i + 2]; out.push({ r: [10], s: a != null && b != null ? (tot += 10 + a + b) : null }); i += 1; }
+        else if (rolls[i + 1] == null) { out.push({ r: [rolls[i]], s: null }); i += 1; }
+        else if (rolls[i] + rolls[i + 1] === 10) { const a = rolls[i + 2]; out.push({ r: [rolls[i], rolls[i + 1]], s: a != null ? (tot += 10 + a) : null }); i += 2; }
+        else { out.push({ r: [rolls[i], rolls[i + 1]], s: (tot += rolls[i] + rolls[i + 1]) }); i += 2; }
+      } else { const r = rolls.slice(i, i + 3), done = r.length === 3 || (r.length === 2 && r[0] + r[1] < 10); out.push({ r, s: done ? (tot += r.reduce((x, y) => x + y, 0)) : null, done }); i += r.length; }
+    }
+    return out;
+  }
+  const total = rolls => frames(rolls).reduce((a, f) => f.s != null ? f.s : a, 0);
+  const finished = rolls => { const f = frames(rolls); return f.length === 10 && f[9].s != null; };
+  // one roll, start to finish. Returns the list of pins knocked down and (for drawing) the path of everything that moved.
+  function simulate(up, x0, ang, pow, rec) {
+    const ball = { x: x0, y: H - 70, vx: Math.sin(ang) * (7 + 5 * pow), vy: -Math.cos(ang) * (7 + 5 * pow) };
+    const pins = PINS.map(p => ({ id: p.id, x: p.x, y: p.y, vx: 0, vy: 0, on: !!up[p.id], hit: false })), path = [];
+    let gutter = false;
+    for (let step = 0; step < 420; step++) {
+      if (ball.y > -40) { ball.x += ball.vx; ball.y += ball.vy; if (!gutter && (ball.x < L + BR * 0.6 || ball.x > R - BR * 0.6)) { gutter = true; ball.x = ball.x < W / 2 ? L - 4 : R + 4; ball.vx = 0; } }
+      for (const p of pins) {
+        if (!p.on) continue;
+        if (!gutter && ball.y > -40) { const dx = p.x - ball.x, dy = p.y - ball.y, d = Math.hypot(dx, dy); if (d < BR + PR && d > 0) { const nx = dx / d, ny = dy / d, rel = ball.vx * nx + ball.vy * ny; if (rel > 0) { p.vx += nx * rel * 1.25; p.vy += ny * rel * 1.25; ball.vx -= nx * rel * 0.22; ball.vy -= ny * rel * 0.22; p.hit = true; p.x = ball.x + nx * (BR + PR + 0.5); p.y = ball.y + ny * (BR + PR + 0.5); } } }
+        if (p.vx || p.vy) { p.x += p.vx; p.y += p.vy; p.vx *= 0.93; p.vy *= 0.93; if (Math.abs(p.vx) + Math.abs(p.vy) < 0.15) p.vx = p.vy = 0; if (p.x < L || p.x > R || p.y < 20) { p.on = false; p.hit = true; } }
+      }
+      for (let a = 0; a < pins.length; a++) for (let b = a + 1; b < pins.length; b++) {
+        const p = pins[a], q = pins[b]; if (!p.on || !q.on) continue; const dx = q.x - p.x, dy = q.y - p.y, d = Math.hypot(dx, dy);
+        if (d < PR * 2 && d > 0) { const nx = dx / d, ny = dy / d, rel = (p.vx - q.vx) * nx + (p.vy - q.vy) * ny; if (rel > 0.45) { p.vx -= nx * rel * 0.9; p.vy -= ny * rel * 0.9; q.vx += nx * rel * 0.9; q.vy += ny * rel * 0.9; p.hit = q.hit = true; } const ov = (PR * 2 - d) / 2; p.x -= nx * ov; p.y -= ny * ov; q.x += nx * ov; q.y += ny * ov; }
+      }
+      if (rec && step % 2 === 0) path.push({ b: ball.y > -40 ? [ball.x, ball.y] : null, p: pins.map(p => [p.x, p.y, p.on ? 1 : 0, p.hit ? 1 : 0]) });
+      if (ball.y <= -40 && pins.every(p => !p.vx && !p.vy)) break;
+    }
+    return { down: pins.filter(p => up[p.id] && p.hit).map(p => p.id), path, gutter };
+  }
+  function start() {
+    G.token++; G.started = true; G.over = false; G.level = A.cfg.level; G.rolls = []; G.up = PINS.map(() => 1); G.phase = 'pos'; G.t = 0; G.x = W / 2; G.ang = 0; G.pow = 0.7; G.msg = '';
+    const [, avg] = RIVAL[G.level], tot = Math.round(avg + (Math.random() - 0.5) * 36); let acc = 0; G.rival = []; for (let f = 1; f <= 10; f++) { acc = Math.max(acc + 4, Math.round(tot * f / 10 + (f < 10 ? (Math.random() - 0.5) * 10 : 0))); G.rival.push(acc); } G.rival[9] = Math.max(G.rival[8] + 4, tot);
+    A.hideEnd(); if (!G.fast) SH.Sound.play('start'); render(); loop();
+  }
+  function afterRoll(n) {
+    G.rolls.push(n); const fr = frames(G.rolls), cur = fr[fr.length - 1], f10 = fr.length === 10;
+    const clear = G.up.every(x => !x);
+    G.msg = clear && G.full ? 'STRIKE!' : clear ? 'Spare!' : n === 0 ? 'Missed — shake it off' : `${n} down`;
+    if (!G.fast) SH.Sound.play(clear ? 'good' : n ? 'capture' : 'bad');
+    let reset;
+    if (!f10) reset = cur.r[0] === 10 || cur.r.length === 2;
+    else { const r = cur.r; reset = n === 10 || (r.length === 2 && r[0] !== 10 && r[0] + r[1] === 10) || (r.length === 2 && r[0] === 10 && r[1] === 10); if (r.length === 2 && r[0] === 10 && r[1] < 10) reset = false; }
+    if (finished(G.rolls)) { G.phase = 'done'; render(); const me = total(G.rolls), riv = G.rival[9], name = RIVAL[G.level][0], pb = A.pb('bw-best', me, false); return A.finish(G, me > riv ? 'w' : me < riv ? 'l' : 'd', me > riv ? 'You win the match!' : me < riv ? `${name} takes it` : 'A tie!', `You ${me} · ${name} ${riv}${pb ? S.PB : ''}`, { vs: name, pro: G.level === 'hard', score: me, pb }); }
+    if (reset) G.up = PINS.map(() => 1);
+    G.phase = 'pos'; G.t = 0; render();
+  }
+  function roll() {
+    G.phase = 'roll'; G.full = G.up.every(x => x); const up = G.up.slice(), res = simulate(up, G.x, G.ang, G.pow, !G.fast);
+    const done = () => { res.down.forEach(id => { G.up[id] = 0; }); G.anim = null; afterRoll(res.down.length); };
+    if (G.fast) return done();
+    G.anim = { path: res.path, i: 0, done };
+  }
+  function tap() {
+    if (G.over || !G.started) return;
+    if (G.phase === 'pos') { G.phase = 'aim'; G.t = 0; } else if (G.phase === 'aim') { G.phase = 'pow'; G.t = 0; } else if (G.phase === 'pow') roll();
+    if (!G.fast) SH.Sound.play('tick'); paintStatus();
+  }
+  let cv, ctx, raf = 0;
+  function loop() {
+    cancelAnimationFrame(raf);
+    const tick = () => {
+      if (!A.visible() || G.over && !G.anim) { draw(); return; }
+      const slow = document.body.classList.contains('calm') ? 0.55 : 1;
+      if (G.phase === 'pos') { G.t += 0.03 * slow; G.x = W / 2 + Math.sin(G.t) * (R - L - 50) / 2; }
+      else if (G.phase === 'aim') { G.t += 0.045 * slow; G.ang = Math.sin(G.t) * 0.2; }
+      else if (G.phase === 'pow') { G.t += 0.06 * slow; G.pow = 0.5 + 0.5 * Math.abs(Math.sin(G.t)); }
+      if (G.anim) { G.anim.i += 1; if (G.anim.i >= G.anim.path.length) G.anim.done(); }
+      draw(); raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+  }
+  function draw() {
+    if (!ctx) return; const dpr = Math.min(devicePixelRatio || 1, 2); if (cv.width !== W * dpr || cv.height !== H * dpr) { cv.width = W * dpr; cv.height = H * dpr; } ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.fillStyle = '#1a0a04'; ctx.fillRect(0, 0, W, H);
+    const g = ctx.createLinearGradient(0, 0, 0, H); g.addColorStop(0, '#d9b27a'); g.addColorStop(1, '#a8743a'); ctx.fillStyle = g; ctx.fillRect(L, 0, R - L, H);
+    ctx.strokeStyle = 'rgba(90,50,15,.25)'; ctx.lineWidth = 1; for (let x = L + 12; x < R; x += 12) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+    ctx.fillStyle = '#0c0502'; ctx.fillRect(L - 16, 0, 16, H); ctx.fillRect(R, 0, 16, H);
+    ctx.fillStyle = 'rgba(60,25,5,.55)'; for (let k = -3; k <= 3; k++) { ctx.beginPath(); ctx.moveTo(W / 2 + k * 30, 330 + Math.abs(k) * 12); ctx.lineTo(W / 2 + k * 30 - 4, 344 + Math.abs(k) * 12); ctx.lineTo(W / 2 + k * 30 + 4, 344 + Math.abs(k) * 12); ctx.fill(); }
+    ctx.fillStyle = '#7a1f2c'; ctx.fillRect(L, H - 50, R - L, 3);
+    const fr = G.anim ? G.anim.path[Math.min(G.anim.i, G.anim.path.length - 1)] : null;
+    const pin = (x, y, hit) => { ctx.fillStyle = 'rgba(0,0,0,.28)'; ctx.beginPath(); ctx.ellipse(x + 2, y + 3, PR, PR, 0, 0, 7); ctx.fill(); ctx.fillStyle = hit ? '#e9d9c0' : '#fffdf6'; ctx.beginPath(); ctx.arc(x, y, PR, 0, 7); ctx.fill(); ctx.strokeStyle = '#b3162f'; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(x, y, PR - 3, 0, 7); ctx.stroke(); };
+    if (fr) fr.p.forEach(([x, y, on], i) => { if (on && G.up[i]) pin(x, y, fr.p[i][3]); }); else PINS.forEach(p => { if (G.up[p.id]) pin(p.x, p.y); });
+    const bx = fr ? (fr.b ? fr.b[0] : null) : G.x, by = fr ? (fr.b ? fr.b[1] : null) : H - 70;
+    if (!fr && (G.phase === 'aim' || G.phase === 'pow')) { ctx.strokeStyle = 'rgba(255,225,160,.9)'; ctx.setLineDash([6, 7]); ctx.lineWidth = 2.5; ctx.beginPath(); ctx.moveTo(G.x, H - 70); ctx.lineTo(G.x + Math.sin(G.ang) * 300, H - 70 - Math.cos(G.ang) * 300); ctx.stroke(); ctx.setLineDash([]); }
+    if (bx != null && G.phase !== 'done') { ctx.fillStyle = 'rgba(0,0,0,.3)'; ctx.beginPath(); ctx.arc(bx + 3, by + 4, BR, 0, 7); ctx.fill(); const bg = ctx.createRadialGradient(bx - 4, by - 5, 2, bx, by, BR); bg.addColorStop(0, '#d98a98'); bg.addColorStop(0.55, '#8a1230'); bg.addColorStop(1, '#3a0412'); ctx.fillStyle = bg; ctx.beginPath(); ctx.arc(bx, by, BR, 0, 7); ctx.fill(); ctx.fillStyle = '#1a0006'; [[-3, -4], [3, -4], [0, 1]].forEach(([a, b]) => { ctx.beginPath(); ctx.arc(bx + a, by + b, 1.6, 0, 7); ctx.fill(); }); }
+    if (!fr && G.phase === 'pow') { ctx.fillStyle = 'rgba(0,0,0,.5)'; ctx.fillRect(8, H - 220, 12, 160); const ph = 160 * (G.pow - 0.5) / 0.5; ctx.fillStyle = G.pow > 0.85 ? '#ffd76a' : '#e6b84a'; ctx.fillRect(8, H - 60 - ph, 12, ph); }
+  }
+  const STEP = { pos: 'Tap to set your spot', aim: 'Tap to set your aim', pow: 'Tap to set your power', roll: 'Rolling…', done: 'Match over' };
+  function curFrame() { const fr = frames(G.rolls); if (!fr.length) return 1; if (fr.length === 10) return 10; const l = fr[fr.length - 1]; return l.r[0] === 10 || l.r.length === 2 ? fr.length + 1 : fr.length; }
+  function paintStatus() { const f = curFrame(); A.status(`Frame <b>${f}</b> · ${G.msg ? `<b>${G.msg}</b> · ` : ''}${STEP[G.phase]}`); }
+  function render() {
+    if (!cv) { A.stage.innerHTML = `<div class="bw-wrap"><canvas class="bw-cv" id="bw-cv" role="button" tabindex="0" aria-label="Bowling lane. Tap or press Space three times to bowl: spot, aim, power."></canvas><div class="bw-card" id="bw-card"></div></div>`; cv = $('bw-cv'); ctx = cv.getContext('2d'); cv.addEventListener('pointerdown', e => { e.preventDefault(); tap(); }); }
+    const fr = frames(G.rolls), name = RIVAL[G.level][0], mark = (f, i) => { const r = f.r, n = x => x || '–'; if (i < 9) return r[0] === 10 ? 'X' : `${n(r[0])}${r[1] == null ? '' : r[0] + r[1] === 10 ? '/' : n(r[1])}`;
+      const out = []; r.forEach((x, k) => { const fresh = k === 0 || (k === 1 && r[0] === 10) || (k === 2 && (r[1] === 10 && r[0] === 10 || r[0] !== 10 && r[0] + r[1] === 10)); out.push(fresh ? (x === 10 ? 'X' : n(x)) : r[k - 1] + x === 10 ? '/' : n(x)); }); return out.join(''); };
+    $('bw-card').innerHTML = `<div class="bw-row"><span class="bw-who">You</span>${[...Array(10)].map((_, i) => `<span class="bw-f ${i === curFrame() - 1 && !G.over ? 'on' : ''}"><i>${fr[i] ? mark(fr[i], i) : ''}</i><b>${fr[i] && fr[i].s != null ? fr[i].s : ''}</b></span>`).join('')}</div>
+      <div class="bw-row riv"><span class="bw-who">${name.split(' ').pop()}</span>${G.rival.map((s, i) => `<span class="bw-f"><i></i><b>${i < fr.filter(f => f.s != null).length || G.over ? s : ''}</b></span>`).join('')}</div>`;
+    paintStatus(); A.acts(`<button class="btn btn-lux" data-x="tap" ${G.over || G.phase === 'roll' ? 'disabled' : ''}>${G.phase === 'pos' ? 'Set spot' : G.phase === 'aim' ? 'Set aim' : 'Bowl!'}</button>`);
+    const b = LS.get('bw-best', 0); A.best(b ? `Your best game: <b>${b}</b>` : 'Tip: aim just to one side of the front pin — that is the “pocket.”');
+    draw();
+  }
+  $(v + '-acts').addEventListener('click', e => { if (e.target.closest('[data-x="tap"]')) { tap(); render(); } });
+  document.addEventListener('keydown', e => { if (!A.visible() || e.target.matches('input,select,textarea,button') || e.key !== ' ') return; e.preventDefault(); tap(); render(); });
+  reg(v, { onShow() { if (!G.started) start(); else { render(); loop(); } }, onHide() { cancelAnimationFrame(raf); }, _G: G, _render: render, _new: start, _sim: simulate, _frames: frames, _total: total, _pins: PINS,
+    _auto() { if (G.over) return 'over'; G.x = W / 2 + (Math.random() - 0.5) * 60; G.ang = (Math.random() - 0.5) * 0.12; G.pow = 0.6 + Math.random() * 0.4; G.phase = 'pow'; roll(); return 'roll'; } });
+})();
+
+// =====================================================================================================
+// FEEDBACK LOOP — a fast paddle game. First to seven.
+// =====================================================================================================
+(function () {
+  const v = 'pong', W = 600, PH = 64, PW = 10; let H = 360;
+  const SPD = { easy: 2.6, medium: 3.7, hard: 5 };
+  const A = shell(v, { title: 'Feedback Loop', blurb: 'Keep the signal bouncing. Slide your paddle with a finger, the mouse, or the W / S and arrow keys. The ball speeds up with every return. First to seven wins.', defaults: { level: 'medium' }, opts: [{ k: 'level', label: 'Opponent', options: LEVELS }], onNew: () => start() });
+  if (!A) return;
+  const G = { started: false, token: 0 };
+  let cv, ctx, raf = 0, keys = {}, last = 0;
+  function serve(dir) { G.bx = W / 2; G.by = H / 2; const a = (Math.random() - 0.5) * 0.9; G.vx = Math.cos(a) * 4.2 * dir; G.vy = Math.sin(a) * 4.2; G.hold = true; }
+  function start() { G.token++; G.started = true; G.over = false; G.level = A.cfg.level; H = G.fast ? 360 : innerWidth < 620 && innerHeight > innerWidth ? 780 : 360; G.h = H; if (cv) cv.style.aspectRatio = W + '/' + H; G.py = H / 2; G.ay = H / 2; G.sc = [0, 0]; G.rally = 0; G.best = 0; serve(Math.random() < 0.5 ? 1 : -1); A.hideEnd(); if (!G.fast) SH.Sound.play('start'); render(); loop(); }
+  function step(k) {
+    if (keys.up) G.py -= 6.5 * k; if (keys.down) G.py += 6.5 * k;
+    G.py = Math.max(PH / 2, Math.min(H - PH / 2, G.py));
+    const want = G.vx > 0 ? G.by + (G.level === 'hard' ? 0 : Math.sin(G.bx / 37) * (G.level === 'easy' ? 26 : 12)) : H / 2, d = want - G.ay, s = SPD[G.level] * k; G.ay += Math.max(-s, Math.min(s, d)); G.ay = Math.max(PH / 2, Math.min(H - PH / 2, G.ay));
+    if (G.hold) return;
+    G.bx += G.vx * k; G.by += G.vy * k;
+    if (G.by < 8) { G.by = 8; G.vy = Math.abs(G.vy); } if (G.by > H - 8) { G.by = H - 8; G.vy = -Math.abs(G.vy); }
+    const hit = (py, dir) => { const off = (G.by - py) / (PH / 2), sp = Math.min(11, Math.hypot(G.vx, G.vy) * 1.05 + 0.15), a = off * 0.95; G.vx = Math.cos(a) * sp * dir; G.vy = Math.sin(a) * sp; G.rally++; G.best = Math.max(G.best, G.rally); if (!G.fast) SH.Sound.play('move'); };
+    if (G.vx < 0 && G.bx < 22 + PW && G.bx > 10 && Math.abs(G.by - G.py) < PH / 2 + 8) { G.bx = 22 + PW; hit(G.py, 1); }
+    if (G.vx > 0 && G.bx > W - 22 - PW && G.bx < W - 10 && Math.abs(G.by - G.ay) < PH / 2 + 8) { G.bx = W - 22 - PW; hit(G.ay, -1); }
+    if (G.bx < -12 || G.bx > W + 12) {
+      const me = G.bx > W; G.sc[me ? 0 : 1]++; G.rally = 0; if (!G.fast) SH.Sound.play(me ? 'good' : 'bad');
+      if (G.sc[0] >= 7 || G.sc[1] >= 7) { const name = CAST[G.level]; paintStatus(); return A.finish(G, G.sc[0] >= 7 ? 'w' : 'l', G.sc[0] >= 7 ? 'Signal is yours!' : `${name} wins it`, `You ${G.sc[0]} · ${name} ${G.sc[1]} · longest rally ${G.best}`, { vs: name, pro: G.level === 'hard' }); }
+      serve(me ? -1 : 1); paintStatus();
+    }
+  }
+  function draw() {
+    if (!ctx) return; const dpr = Math.min(devicePixelRatio || 1, 2); if (cv.width !== W * dpr || cv.height !== H * dpr) { cv.width = W * dpr; cv.height = H * dpr; } ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.fillStyle = '#0d0003'; ctx.fillRect(0, 0, W, H); ctx.strokeStyle = 'rgba(230,184,74,.25)'; ctx.setLineDash([8, 10]); ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(W / 2, 0); ctx.lineTo(W / 2, H); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = 'rgba(255,230,168,.16)'; ctx.font = '700 64px Georgia,serif'; ctx.textAlign = 'center'; ctx.fillText(G.sc[0], W / 2 - 70, 78); ctx.fillText(G.sc[1], W / 2 + 70, 78);
+    const pad = (x, y, c) => { ctx.fillStyle = c; ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x, y - PH / 2, PW, PH, 5) : ctx.rect(x, y - PH / 2, PW, PH); ctx.fill(); };
+    pad(14, G.py, '#e6b84a'); pad(W - 14 - PW, G.ay, '#c57d88');
+    ctx.fillStyle = '#fff6e0'; ctx.beginPath(); ctx.arc(G.bx, G.by, 8, 0, 7); ctx.fill();
+    if (G.hold && !G.over) { ctx.fillStyle = 'rgba(255,230,168,.9)'; ctx.font = '600 18px system-ui,sans-serif'; ctx.fillText('Tap or press Space to serve', W / 2, H - 28); }
+  }
+  function loop() { cancelAnimationFrame(raf); last = 0; const tick = t => { if (!A.visible() || G.over) { draw(); return; } const k = last ? Math.min(2.5, (t - last) / 16.7) : 1; last = t; if (!document.hidden) step(k * (document.body.classList.contains('calm') ? 0.7 : 1)); draw(); raf = requestAnimationFrame(tick); }; raf = requestAnimationFrame(tick); }
+  function paintStatus() { A.status(`You <b>${G.sc[0]}</b> · ${CAST[G.level]} <b>${G.sc[1]}</b> · first to 7`); }
+  function render() {
+    if (!cv) { A.stage.innerHTML = `<canvas class="pg-cv" id="pg-cv" style="aspect-ratio:${W}/${H}" role="application" tabindex="0" aria-label="Feedback Loop court. Move your paddle with W and S or the arrow keys. Space serves."></canvas>`; cv = $('pg-cv'); ctx = cv.getContext('2d');
+      const at = e => { const r = cv.getBoundingClientRect(); G.py = (e.clientY - r.top) / r.height * H; };
+      cv.addEventListener('pointerdown', e => { e.preventDefault(); cv.setPointerCapture(e.pointerId); at(e); G.hold = false; }); cv.addEventListener('pointermove', e => { if (e.pointerType === 'mouse' || e.buttons) at(e); }); }
+    paintStatus(); A.acts(''); A.best('Hit the ball with the edge of your paddle to send it at a sharp angle.'); draw();
+  }
+  document.addEventListener('keydown', e => { if (!A.visible() || e.target.matches('input,select,textarea')) return; const k = e.key.toLowerCase(); if (k === 'w' || k === 'arrowup') { keys.up = true; e.preventDefault(); } else if (k === 's' || k === 'arrowdown') { keys.down = true; e.preventDefault(); } else if (k === ' ' && !e.target.matches('button')) { G.hold = false; e.preventDefault(); } });
+  document.addEventListener('keyup', e => { const k = e.key.toLowerCase(); if (k === 'w' || k === 'arrowup') keys.up = false; else if (k === 's' || k === 'arrowdown') keys.down = false; });
+  reg(v, { onShow() { if (!G.started) start(); else { render(); loop(); } }, onHide() { cancelAnimationFrame(raf); keys = {}; if (!G.over) G.hold = true; }, _G: G, _render: render, _new: start, _step: step,
+    _auto() { if (G.over) return 'over'; G.hold = false; G.py += Math.max(-3.2, Math.min(3.2, G.by - G.py)); step(1); return 'step'; } });
+})();
+})();
+
 </script>
 <script>
 // McLearn Challenge Center question bank. Each item: [question, [4 options], correctIndex, why, difficulty 1-3]
@@ -11835,7 +12894,7 @@ const MORE2 = {
     ['McLearn Media’s portal for previewing its novels is called the…', ['McLearn Library', 'Reading Room', 'Book Vault', 'Story Hub'], 1, 'The McLearn Media Reading Room.', 2],
     ['“Grace Over the Grind” is a McLearn…', ['Video game', 'Faith-based study resource', 'Workout app', 'Cooking show'], 1, 'A faith-based study resource.', 2],
     ['“Faith, Your Way” is a McLearn platform for…', ['Sports stats', 'Spiritual motivation and community', 'Tax filing', 'Car repair'], 1, 'An interfaith motivation and community platform.', 2],
-    ['How many games are in the McLearn Arena?', ['12', '16', '22', '30'], 2, 'Twenty-two games and counting.', 1],
+    ['How many games are in the McLearn Arena?', ['12', '22', '34', '50'], 2, 'Thirty-four games and counting.', 1],
     ['In McLearn Arena’s Booray, a player who takes no tricks after playing is…', ['Safe', '“Booray’d” and pays the pot', 'The winner', 'Out of the game forever'], 1, 'Getting booray’d means matching the pot.', 2],
     ['McLearn Bucks can be…', ['Bought with real money', 'Cashed out', 'Earned free by playing and answering questions', 'Traded for gift cards'], 2, 'They’re free and play-only.', 1],
   ],
@@ -12013,7 +13072,7 @@ function addXP(n, silent) {
 }
 function floatXP(n) { const el = document.createElement('div'); el.className = 'xpfloat'; el.textContent = `+${n} XP`; document.body.appendChild(el); setTimeout(() => el.remove(), 1400); }
 
-const GAME_NAMES = { outdoors: 'McLearn Outdoors', pool: 'Pool', roulette: 'Roulette', bourre: 'Booray', keno: 'Keno', bingo: 'Bingo', pluck: 'Pluck', dominoes: 'Dominoes', bidwhist: 'Biz Wiz', poker: "Hold'em", tonk: 'Tonk', gofish: 'Go Fish', war: 'I Declare War', showdown: 'Studio Showdown', mogul: 'Mega Media Mogul', pittypat: 'Pitty Pat', colorclash: 'Color Clash', 'blackjack-tourney': 'Blackjack Tournament', chess: 'Chess', checkers: 'Checkers', spades: 'Spades', blackjack: '21 · Blackjack', parcheesi: 'Parcheesi', academy: 'Chess Academy' };
+const GAME_NAMES = { solitaire: 'Solitaire', sudoku: 'Sudoku', mahjong: 'Mahjong Solitaire', stack: 'Royalty Stack', mines: 'Sound Check', memory: 'Set List', four: 'Four in a Row', dots: 'Dots & Boxes', ttt: 'Tic-Tac-Toe', eights: 'Crazy Eights', bowling: 'Track Lanes', pong: 'Feedback Loop', outdoors: 'McLearn Outdoors', pool: 'Pool', roulette: 'Roulette', bourre: 'Booray', keno: 'Keno', bingo: 'Bingo', pluck: 'Pluck', dominoes: 'Dominoes', bidwhist: 'Biz Wiz', poker: "Hold'em", tonk: 'Tonk', gofish: 'Go Fish', war: 'I Declare War', showdown: 'Studio Showdown', mogul: 'Mega Media Mogul', pittypat: 'Pitty Pat', colorclash: 'Color Clash', 'blackjack-tourney': 'Blackjack Tournament', chess: 'Chess', checkers: 'Checkers', spades: 'Spades', blackjack: '21 · Blackjack', parcheesi: 'Parcheesi', academy: 'Chess Academy' };
 SH.onResult = function (game, res, extra) {
   extra = extra || {};
   const g = P.games[game] = P.games[game] || { w: 0, l: 0, d: 0 };
@@ -12021,7 +13080,8 @@ SH.onResult = function (game, res, extra) {
   if (game !== 'academy') P.played[game] = true;
   if (res === 'w') { P.streak++; P.bestStreak = Math.max(P.bestStreak, P.streak); } else if (res === 'l') P.streak = 0;
   const big = game !== 'blackjack' && game !== 'academy';
-  const base = game === 'blackjack' ? (res === 'w' ? 6 : 2) : game === 'academy' ? 30 : res === 'w' ? 60 : res === 'd' ? 25 : 12;
+  const light = /^(solitaire|sudoku|mahjong|stack|mines|memory|four|dots|ttt|eights|bowling|pong)$/.test(game); // quick tables pay a fair, smaller share
+  const base = game === 'blackjack' ? (res === 'w' ? 6 : 2) : game === 'academy' ? 30 : light ? (res === 'w' ? 30 : res === 'd' ? 12 : 6) : res === 'w' ? 60 : res === 'd' ? 25 : 12;
   addXP(extra.pro ? Math.round(base * 1.5) : base);
   if (extra.pro && res === 'w') { P.proWins = P.proWins || {}; P.proWins[game.replace('-tourney', '')] = true; save(); if (Object.keys(P.proWins).length >= 3) unlock('procircuit'); }
   if (res === 'w' && big) unlock('first');
@@ -12256,7 +13316,7 @@ function floatBucks(n) { if (!n) return; const el = document.createElement('div'
 // ---------- winning games earns Bucks ----------
 const CASINO = new Set(['blackjack', 'blackjack-tourney', 'keno', 'roulette']);
 const BIG = new Set(['poker', 'bourre', 'bingo', 'mogul', 'chess', 'bidwhist', 'spades']);
-if (SH.onResult) { const orig = SH.onResult; SH.onResult = function (game, res, extra) { const r = orig.apply(this, arguments); if (res === 'w' && !CASINO.has(game)) { const n = (BIG.has(game) ? 75 : 25) * (extra && extra.pro ? 2 : 1); W.add(n, `Won ${game}`); floatBucks(n); } Cloud.push(); return r; }; }
+if (SH.onResult) { const orig = SH.onResult; SH.onResult = function (game, res, extra) { const r = orig.apply(this, arguments); if (res === 'w' && !CASINO.has(game)) { const n = (BIG.has(game) ? 75 : /^(solitaire|sudoku|mahjong|stack|mines|memory|four|dots|ttt|eights|bowling|pong)$/.test(game) ? 10 : 25) * (extra && extra.pro ? 2 : 1); W.add(n, `Won ${game}`); floatBucks(n); } Cloud.push(); return r; }; }
 
 // ---------- Challenge Center ----------
 const ST = LS.get('ch-stats', { best: {}, played: 0, correct: 0, daily: '', dailyScore: null, seen: {} });
@@ -13013,8 +14073,9 @@ if (meBody) new MutationObserver(() => { if (!meBody.querySelector('.cf-box') &&
 const MOODS = [
   ['🧠', 'Think it through', 'Strategy and planning', ['chess', 'pool', 'checkers', 'dominoes', 'poker']],
   ['🤝', 'Play with a partner', 'Team up and read your partner', ['spades', 'bidwhist', 'dominoes']],
-  ['🏡', 'Family game night', 'Familiar, easy to explain', ['outdoors', 'gofish', 'parcheesi', 'bingo', 'colorclash']],
-  ['⚡', 'Quick break', 'A few minutes, fast fun', ['pool', 'showdown', 'war', 'blackjack']],
+  ['🏡', 'Family game night', 'Familiar, easy to explain', ['outdoors', 'gofish', 'parcheesi', 'bingo', 'colorclash', 'eights', 'memory']],
+  ['⚡', 'Quick break', 'A few minutes, fast fun', ['four', 'pong', 'ttt', 'bowling', 'showdown', 'war', 'dots']],
+  ['🌙', 'Quiet time', 'Just you and a puzzle', ['solitaire', 'sudoku', 'mahjong', 'stack', 'mines', 'memory']],
   ['🎓', 'Learn something', 'Trivia, Party Mode and coaching', ['challenges']],
   ['✨', 'McLearn originals', 'Only at the McLearn Arena', ['outdoors', 'mogul', 'showdown', 'bingo']],
 ];
@@ -13149,6 +14210,90 @@ mogul: {
   win: ['Bankrupt everyone else, or in a Quick or Speed game, have the most money and property when the last round ends.'],
   keys: ['Roll, Buy, Auction and Build buttons appear when they apply.'],
   tips: ['Complete a color set before building anywhere.', 'Keep some cash — royalties can surprise you.'],
+},
+solitaire: {
+  goal: 'Move all 52 cards onto the four suit piles at the top, each built from Ace up to King.',
+  turn: ['Tap a card and it moves to the best place it fits. Tap the face-down stock to turn new cards.', 'In the seven columns, build downward and switch colors: a red 6 goes on a black 7. You can move a whole run at once.', 'Only a King (or a run that starts with a King) can fill an empty column.'],
+  win: ['You win when every card is on the suit piles. “Finish for me” appears once nothing is hidden.', '“Winnable deals only” checks each deal first, so there is always a way to win. The Daily deal is the same for everyone that day.'],
+  keys: ['Tab to a card and press Enter or Space to move it.'],
+  tips: ['Turn over hidden cards before anything else.', 'Undo is free — use it to test an idea.'],
+},
+sudoku: {
+  goal: 'Fill the grid so every row, every column and every 3×3 box holds the numbers 1 to 9 exactly once.',
+  turn: ['Tap a square, then tap a number. The small number under each key shows how many of it are still missing.', 'Turn on Notes to pencil in small maybe-numbers. Erase clears a square.', 'A Hint fills one correct square. You get three per puzzle.'],
+  win: ['Fill every square correctly. Your time and your mistakes are shown at the end.', 'Every puzzle has one answer only, so it can always be solved by logic.'],
+  keys: ['Arrow keys move, 1–9 fill, N switches Notes, Backspace erases.'],
+  tips: ['Look for a row, column or box that is missing only one or two numbers.'],
+},
+mahjong: {
+  goal: 'Clear the whole board by removing tiles two at a time.',
+  turn: ['Tap two tiles that show the same picture to remove them.', 'A tile is free only when nothing sits on top of it and its left side or right side is open. Tiles that are not free look darker.', 'Hint shows a pair. Shuffle mixes the tiles that are left if you get stuck.'],
+  win: ['Remove every tile. Every deal has at least one way to clear the board.'],
+  keys: ['Tab to a tile and press Enter to pick it.'],
+  tips: ['Clear the tall middle stack and the long rows first — they block the most tiles.'],
+},
+stack: {
+  goal: 'Slide tiles together to build bigger ones. Reach your goal tile — Platinum, Diamond or Legend.',
+  turn: ['Swipe (or use the arrow keys) to slide every tile that way.', 'Two tiles with the same number merge into one worth double: Hum 2, Hook 4, Verse 8, Demo 16, Single 32, EP 64, Album 128, Gold 256, Platinum 512, Diamond 1024, Legend 2048.', 'A new small tile appears after every slide.'],
+  win: ['Reach the goal tile to win — then keep going for a high score.', 'The game ends when the board is full and nothing can merge.'],
+  keys: ['Arrow keys or W A S D slide. One Undo is always ready.'],
+  tips: ['Park your biggest tile in a corner and keep it there.'],
+},
+mines: {
+  goal: 'Open every square on the stage that does not hide a hot mic.',
+  turn: ['Tap a square to open it. A number tells you how many hot mics touch that square.', 'Long-press, right-click or turn on Flag mode to mark a square you think hides a mic.', 'Tap an open number once its flags are placed and the other squares around it open for you.'],
+  win: ['Open every safe square to win. Open a hot mic and the round is over.', 'Your first tap is always safe.'],
+  keys: ['Tab between squares, Enter opens, Shift+Enter flags.'],
+  tips: ['Start with the corners of open areas — a 1 beside a single covered square always marks a mic.'],
+},
+memory: {
+  goal: 'Find every matching pair of cards.',
+  turn: ['Tap two cards to turn them over. A match stays up; a miss turns back.', 'Solo counts your turns. Against a rival you take turns, and a match earns another go.'],
+  win: ['Solo: clear the board in as few turns as you can.', 'Versus: the player with more pairs wins. Cousin Dre forgets a lot, Miss Loretta is steady, Uncle Ray rarely forgets.'],
+  keys: ['Tab to a card and press Enter to turn it.'],
+  tips: ['Say each card to yourself as it turns — it really does help.'],
+},
+four: {
+  goal: 'Be first to line up four of your discs — across, up and down, or on a slant.',
+  turn: ['Tap a column to drop a disc. It falls to the lowest open space.', 'You are gold. You and your opponent swap who goes first each game.'],
+  win: ['Four in a line wins. A full board with no line is a draw.'],
+  keys: ['Press 1 to 7 to drop a disc in that column.'],
+  tips: ['The middle column touches the most winning lines.', 'Look for a move that makes two threats at once.'],
+},
+dots: {
+  goal: 'Close more boxes than your opponent.',
+  turn: ['On your turn draw one line between two neighboring dots.', 'Draw the fourth side of a box and it is yours — and you must take another turn.'],
+  win: ['When every box is closed, the player with more boxes wins.'],
+  keys: ['Tab to a line and press Enter to draw it.'],
+  tips: ['Do not draw the third side of a box unless you have to.', 'Late in the game, count how many boxes each move gives away.'],
+},
+ttt: {
+  goal: 'Get three of your marks in a row. A match is five rounds — win the most rounds.',
+  turn: ['Tap an empty square to place your ✕.', 'Three’s Company: each player keeps only three marks. When you place a fourth, your oldest mark lifts off. The faded mark is the next to go.', 'Classic: marks stay, and a full board is a drawn round.'],
+  win: ['Whoever wins more of the five rounds takes the match. It ends early once it is decided.'],
+  keys: ['Press 1 to 9 for the squares, left to right, top to bottom.'],
+  tips: ['In Three’s Company, plan around which of your marks is about to lift off.'],
+},
+eights: {
+  goal: 'Be the first player to get rid of every card in your hand.',
+  turn: ['Play a card that matches the top card by suit or by number.', 'Eights are wild: play one any time, then call the suit the next player must follow.', 'No play? Draw a card — up to three. Still nothing after three, and you pass.'],
+  win: ['Empty your hand to win. If nobody can play, the lowest hand wins: eights count 50, face cards 10, the rest their number.'],
+  keys: ['Tab to a card and press Enter to play it.'],
+  tips: ['Save an eight for when you are stuck.', 'Call the suit you hold the most of.'],
+},
+bowling: {
+  goal: 'Score more than your rival over ten frames.',
+  turn: ['Three taps bowl one ball: the first stops the ball where you stand, the second sets your aim, the third sets your power.', 'You get two balls a frame to knock down ten pins.', 'Strike (all ten on the first ball): 10 plus your next two balls. Spare (all ten in two): 10 plus your next ball.'],
+  win: ['Highest score after the tenth frame wins. A strike or spare in the tenth earns bonus balls.'],
+  keys: ['Space bar (or the button) does each of the three taps.'],
+  tips: ['Aim just beside the front pin, not straight at it.', 'Calm mode slows the moving markers.'],
+},
+pong: {
+  goal: 'Send the ball past your opponent’s paddle. First to seven points wins.',
+  turn: ['Slide your paddle (the gold one, on the left) up and down to meet the ball.', 'The ball speeds up with every return. Hit it near the edge of your paddle to send it at a sharp angle.'],
+  win: ['Score when the ball gets past the other paddle. First to seven.'],
+  keys: ['W and S or the arrow keys move. Space serves. On a phone, drag anywhere on the court.'],
+  tips: ['Move back to the middle after every hit.'],
 },
 showdown: {
   goal: 'Studio Showdown is McLearn’s rock-paper-scissors. Out-think your rival and win the match.',
@@ -13300,7 +14445,7 @@ SH.howto = { open, index, _G: G };
 'use strict';
 const SH = window.McShared; if (!SH || !SH.games) return;
 const LS = SH.LS, $ = id => document.getElementById(id);
-const SKIP = new Set(['outdoors', 'bingo', 'keno', 'roulette', 'blackjack', 'challenges', 'leaders', 'chess']);
+const SKIP = new Set(['outdoors', 'bingo', 'keno', 'roulette', 'blackjack', 'challenges', 'leaders', 'chess', 'bowling', 'pong']);
 const KEEP = new Set(['stats', 'recs', 'fast', 'token', 'auto', 'tmr', 'timer', 'view3d', 'room', 'view', 'level']); // never overwritten by a save
 const NAMES = () => { const m = {}; (SH.catalog || []).forEach(g => { m[g.v] = g.title; }); return m; };
 const dirty = {}; let lastJSON = {};
@@ -13324,7 +14469,18 @@ const MINE = {
   colorclash: G => T0(G) && G.phase === 'play',
   parcheesi: G => T0(G) && G.phase === 'roll',
   mogul: G => T0(G) && (G.phase === 'roll' || G.phase === 'post') && !G.auction && !G.owe && !G.proposal,
-  pool: G => T0(G) && G.phase === 'aim'
+  pool: G => T0(G) && G.phase === 'aim',
+  // solo tables: any calm moment once you have made a move
+  solitaire: G => G.started && G.moves > 0,
+  sudoku: G => G.started && G.cur.some((x, i) => x !== G.puz[i]),
+  mahjong: G => G.started && G.live.some(x => !x),
+  stack: G => G.started && G.moves > 0,
+  mines: G => G.started && G.laid,
+  memory: G => G.started && !G.busy && G.open.length === 0 && (G.turns > 0) && (G.mode === 'solo' || G.turn === 0),
+  four: G => G.started && !G.busy && G.turn === 1 && G.n > 0,
+  dots: G => G.started && !G.busy && G.turn === 1 && (G.score[0] + G.score[1] > 0 || G.last),
+  ttt: G => G.started && !G.busy && G.turn === 0 && G.rounds + G.moves > 0,
+  eights: G => G.started && !G.busy && G.turn === 0 && G.pick < 0 && G.pile.length > 1
 };
 function quiet(v, G) {
   if (!G || G.over || G.fast || G.thinking || !MINE[v]) return false;
@@ -13333,6 +14489,7 @@ function quiet(v, G) {
 function desc(v, G) {
   const n = NAMES()[v] || v, bits = [];
   if (G.score && Array.isArray(G.score)) bits.push(`score ${G.score.slice(0, 2).join('–')}`);
+  if (G.moves && !G.score) bits.push(`${G.moves} moves`); if (G.el) bits.push(`${Math.floor(G.el / 60)}:${String(G.el % 60).padStart(2, '0')} played`);
   if (G.racks) bits.push(`racks ${G.racks.join('–')}`);
   if (G.handNo) bits.push(`hand ${G.handNo}`); else if (G.round) bits.push(`round ${G.round}`);
   return `${n}${bits.length ? ' · ' + bits.join(' · ') : ''}`;
@@ -13360,12 +14517,14 @@ function resume(v) {
 const ago = t => { const m = Math.round((Date.now() - t) / 60000); return m < 1 ? 'just now' : m < 60 ? `${m} min ago` : m < 1440 ? `${Math.round(m / 60)} hr ago` : `${Math.round(m / 1440)} days ago`; };
 function offer(v) {
   const s = load(v), view = $('view-' + v); if (!s || !view || view.querySelector('.sv-banner')) return;
+  if (window.McSolo && McSolo.games[v]) { if (!offer.done[v]) { offer.done[v] = 1; if (resume(v) && SH.toast) SH.toast('Picked up right where you left off'); } return; } // puzzles simply come back — no question asked
   const G = SH.games[v]._G, fresh = JSON.stringify(G, enc) === s.g; if (fresh) return;
   const b = document.createElement('div'); b.className = 'sv-banner'; b.setAttribute('role', 'status');
   b.innerHTML = `<span class="sv-ic">💾</span><div><b>Pick up where you left off?</b><small>${s.d} · saved ${ago(s.at)}</small></div><button class="btn-gold" data-sv="go">Resume</button><button class="btn btn-ghost" data-sv="no">Start fresh</button>`;
   const bar = view.querySelector('.gbar'); if (bar) bar.after(b); else view.prepend(b);
   b.onclick = e => { const a = e.target.closest('[data-sv]'); if (!a) return; if (a.dataset.sv === 'go') { if (resume(v)) SH.toast && SH.toast('Game restored — your move'); } else clear(v); b.remove(); };
 }
+offer.done = {};
 // wrap each game's onShow so the offer appears when you open the table
 for (const v of Object.keys(SH.games)) {
   const g = SH.games[v]; if (!g || !g._G || SKIP.has(v)) continue;
@@ -13378,6 +14537,158 @@ setInterval(() => { for (const v of Object.keys(SH.games)) { const g = SH.games[
 addEventListener('pagehide', () => { for (const v of Object.keys(SH.games)) snap(v); });
 document.addEventListener('visibilitychange', () => { if (document.hidden) for (const v of Object.keys(SH.games)) snap(v); });
 SH.save = { snap, load, resume, clear, quiet, _dirty: dirty };
+})();
+
+// McLearn Daily Table — three puzzles a day, the same three for everybody. A streak that forgives one missed day,
+// a "waiting for you" list of saved games, and a result you can share. Nothing here costs or pays real money.
+(function () {
+'use strict';
+const SH = window.McShared, S = window.McSolo; if (!SH || !S) return;
+const $ = id => document.getElementById(id), LS = SH.LS;
+const A = ['sudoku', 'solitaire'], B = ['mahjong', 'mines', 'memory', 'stack'];
+const META = { sudoku: ['🔢', 'Sudoku', 'time'], solitaire: ['♠️', 'Solitaire', 'moves'], mahjong: ['🀄', 'Mahjong', 'time'], mines: ['🎤', 'Sound Check', 'time'], memory: ['🎼', 'Set List', 'turns'], stack: ['👑', 'Royalty Stack', 'score'] };
+const key = d => d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+const dayNum = d => Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 864e5);
+const back = n => { const d = new Date(); d.setDate(d.getDate() - n); return d; };
+function picks(d) { const n = dayNum(d || new Date()); return [A[n % 2], B[n % 4], B[(n + 2) % 4]]; }
+const won = (log, k) => { const e = log[k]; return e ? Object.keys(e).filter(v => e[v].res === 'w').length : 0; };
+// days in a row with at least one daily solved. One missed day in any seven is forgiven (a "rain check").
+function streak() {
+  const log = S.dailyLog(); let n = 0, used = -99, rain = false, i = won(log, key(new Date())) ? 0 : 1;
+  for (; i < 60; i++) { if (won(log, key(back(i)))) { n++; continue; } if (i - used > 6 && won(log, key(back(i + 1)))) { used = i; if (i < 7) rain = true; continue; } break; }
+  return { n, rain };
+}
+const fmt = (v, e) => { if (!e) return ''; const kind = META[v][2], x = e.score; return kind === 'time' ? S.clock(x == null ? e.t : x) : kind === 'moves' ? `${x} moves` : kind === 'turns' ? `${x} turns` : `${(x || 0).toLocaleString()} pts`; };
+function saves() {
+  const out = []; try { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (!k || k.indexOf('mcl-arena-save-') !== 0) continue; const v = k.slice(15), s = JSON.parse(localStorage.getItem(k)); if (s && s.at) out.push({ v, d: s.d || (s.ucis ? `Grandmaster Chess · move ${Math.ceil(s.ucis.length / 2)}` : v), at: s.at }); } } catch (e) { /* storage unavailable */ }
+  return out.sort((a, b) => b.at - a.at);
+}
+function shareText() {
+  const log = S.dailyLog()[key(new Date())] || {}, st = streak(), d = new Date();
+  return `McLearn Daily Table · ${d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}\n${picks().map(v => `${META[v][0]} ${META[v][1]}: ${log[v] && log[v].res === 'w' ? fmt(v, log[v]) : '—'}`).join('\n')}\n🔥 ${st.n}-day streak\nSame three puzzles for everyone today — come sit at the table.`;
+}
+function render() {
+  const lobby = $('view-lobby'), cont = $('cont-row'); if (!lobby || !cont) return;
+  let el = $('daily-row'); if (!el) { el = document.createElement('section'); el.id = 'daily-row'; el.className = 'dt'; cont.before(el); el.addEventListener('click', click); }
+  const today = key(new Date()), log = S.dailyLog()[today] || {}, P = picks(), done = P.filter(v => log[v] && log[v].res === 'w').length, st = streak(), sv = saves().slice(0, 3), names = {}; (SH.catalog || []).forEach(g => { names[g.v] = g; });
+  const week = []; for (let i = 6; i >= 0; i--) { const d = back(i), w = won(S.dailyLog(), key(d)); week.push(`<span class="dt-day ${w ? 'on' : ''} ${i === 0 ? 'today' : ''}" title="${d.toLocaleDateString(undefined, { weekday: 'long' })}: ${w ? w + ' solved' : 'none yet'}"><i>${d.toLocaleDateString(undefined, { weekday: 'narrow' })}</i><b>${w ? '✓' : ''}</b></span>`); }
+  el.innerHTML = `<div class="dt-card">
+    <div class="dt-head"><div><span class="dt-kick">The Daily Table · ${new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'short', day: 'numeric' })}</span><h3 class="disp">${done === 3 ? 'Clean plate. See you tomorrow.' : done ? `${3 - done} to go — finish your plate` : 'Three fresh puzzles. Same for everybody.'}</h3></div>
+      <div class="dt-streak" aria-label="${st.n} day streak"><b>${st.n}</b><small>day streak${st.rain ? ' · rain check used' : ''}</small><div class="dt-week" aria-hidden="true">${week.join('')}</div></div></div>
+    <div class="dt-picks">${P.map(v => { const e = log[v], ok = e && e.res === 'w'; return `<button class="dt-pick ${ok ? 'ok' : ''}" data-daily="${v}" aria-label="${META[v][1]} daily${ok ? ', solved, ' + fmt(v, e) : e ? ', tried, not solved yet' : ', not played yet'}"><span class="dt-ic">${META[v][0]}</span><b>${META[v][1]}</b><small>${ok ? '✓ ' + fmt(v, e) : e ? 'Try again' : 'Play'}</small></button>`; }).join('')}</div>
+    <div class="dt-foot"><span class="tiny muted">${done === 3 ? 'All three solved today. New puzzles at midnight.' : 'Solve one to keep your streak. Miss a day? One rain check a week keeps it alive.'}</span>${done ? '<button class="btn btn-sec" data-dshare>Share my table</button>' : ''}</div>
+    ${sv.length ? `<div class="dt-wait"><span class="label">Waiting for you</span>${sv.map(x => `<button data-go="${x.v}">${names[x.v] && SH.gameIcon ? SH.gameIcon(names[x.v], 30) : ''}<span>${String(x.d).replace(/[<>&]/g, '')}<small>saved — tap to pick it back up</small></span></button>`).join('')}</div>` : ''}
+  </div>`;
+}
+function click(e) { const d = e.target.closest('[data-daily]'); if (d) return S.playDaily(d.dataset.daily); if (e.target.closest('[data-dshare]') && SH.share) SH.share({ title: 'McLearn Daily Table', text: shareText() }); }
+// pay a small bonus the first time each daily is solved, and a little extra for the clean plate
+S.onFinish(r => {
+  if (!r.daily || r.res !== 'w') return; const today = key(new Date()); if (r.daily !== today || !picks().includes(r.v)) return;
+  const paid = LS.get('daily-paid', { k: 0, v: [] }); if (paid.k !== today) { paid.k = today; paid.v = []; paid.all = 0; }
+  if (!paid.v.includes(r.v)) { paid.v.push(r.v); const got = SH.wallet && SH.wallet.earn ? SH.wallet.earn(15, 'Daily Table puzzle') : 0; SH.toast(`Daily solved${got ? ` · +${got} McLearn Bucks` : ''} · ${streak().n}-day streak`, 'crown'); }
+  const log = S.dailyLog()[today] || {};
+  if (!paid.all && picks().every(v => log[v] && log[v].res === 'w')) { paid.all = 1; const got = SH.wallet && SH.wallet.earn ? SH.wallet.earn(40, 'Daily Table clean plate') : 0; setTimeout(() => { SH.toast(`Clean plate! All three solved${got ? ` · +${got} Bucks` : ''}`, 'crown'); if (SH.celebrate) SH.celebrate(true); }, 900); }
+  LS.set('daily-paid', paid);
+  const end = $(r.v + '-end'), card = end && end.querySelector('.so-endcard .row');
+  if (card) { const left = picks().filter(v => !(log[v] && log[v].res === 'w')); card.insertAdjacentHTML('afterbegin', left.length ? `<button class="btn btn-lux" data-nextdaily="${left[0]}">Next daily: ${META[left[0]][1]} →</button>` : '<button class="btn btn-lux" data-go="lobby">Clean plate — back to the lobby</button>'); }
+});
+document.addEventListener('click', e => { const n = e.target.closest('[data-nextdaily]'); if (n) S.playDaily(n.dataset.nextdaily); });
+const lobby = $('view-lobby');
+if (lobby) { new MutationObserver(() => { if (!lobby.classList.contains('hidden')) render(); }).observe(lobby, { attributes: true, attributeFilter: ['class'] }); if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', render); else setTimeout(render, 0); }
+SH.daily = { render, picks, streak, shareText, saves, _key: key };
+})();
+
+// McLearn Family Table — the computer players who sit across from you keep score all week and remember how it went.
+// Plus the Arena Passport: one stamp for every table you visit. Everything here is honest: the family are computer players.
+(function () {
+'use strict';
+const SH = window.McShared, S = window.McSolo; if (!SH) return;
+const $ = id => document.getElementById(id), LS = SH.LS;
+const CAST = {
+  'Cousin Dre': { hue: 28, lvl: 'easy', tag: 'easygoing — plays for the jokes',
+    ahead: ['“You only winning ’cause I let you warm up.”', '“Alright, alright… I see you been practicing.”'], behind: ['“Scoreboard don’t lie, cuz.”', '“You want me to play left-handed?”'], even: ['“All tied up. Next one’s for the bragging rights.”'], fresh: ['“New week, clean slate. Pull up a chair.”'] },
+  'Miss Loretta': { hue: 330, lvl: 'medium', tag: 'steady — never rushes a move',
+    ahead: ['“Mm-hm. Enjoy it while it lasts, baby.”', '“You’re playing well. I’m paying attention now.”'], behind: ['“Patience wins, sugar. Every time.”', '“Come on back when you’re ready to learn something.”'], even: ['“Even steven. I like a close one.”'], fresh: ['“It’s a new week. I’ve had my coffee — have you?”'] },
+  'Uncle Ray': { hue: 205, lvl: 'hard', tag: 'sharp — forty years at the table',
+    ahead: ['“Hm. Somebody taught you right.”', '“Don’t get comfortable, youngblood.”'], behind: ['“I been doing this since before you were born.”', '“Study the board, not the scoreboard.”'], even: ['“Dead even. Now we’ll see who wants it.”'], fresh: ['“Week’s young. Show me what you got.”'] },
+  'Deacon Earl': { hue: 130, lvl: 'pro', tag: 'the pool room pro',
+    ahead: ['“Well I’ll be. You ran that table clean.”'], behind: ['“Chalk up, son. We’ve got all evening.”'], even: ['“Tied. Rack ’em.”'], fresh: ['“Table’s open whenever you are.”'] }
+};
+const GAMES = { four: 'Four in a Row', dots: 'Dots & Boxes', ttt: 'Tic-Tac-Toe', bowling: 'Track Lanes', pong: 'Feedback Loop', memory: 'Set List', pool: 'Pool', eights: 'Crazy Eights' };
+const CALL = { four: 'four in a row', dots: 'a game of Dots & Boxes', ttt: 'a match of Tic-Tac-Toe', bowling: 'ten frames at the lanes', pong: 'a game of Feedback Loop', memory: 'the Set List cards' };
+const POOL = { rookie: 'Cousin Dre', hustler: 'Miss Loretta', shark: 'Uncle Ray', pro: 'Deacon Earl' };
+const now = () => new Date(), dayNum = (d = now()) => Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 864e5), week = (d = now()) => Math.floor((dayNum(d) + 3) / 7);
+const F = LS.get('family', null) || { r: {}, hist: [], call: {} };
+const save = () => LS.set('family', F);
+function rec(name) { const wk = week(); let r = F.r[name]; if (!r) r = F.r[name] = { w: 0, l: 0, wk, ww: 0, wl: 0, run: 0 }; if (r.wk !== wk) { if (r.ww + r.wl > 0) { F.hist.push({ wk: r.wk, name, w: r.ww, l: r.wl }); if (F.hist.length > 40) F.hist.shift(); } r.wk = wk; r.ww = 0; r.wl = 0; } return r; }
+const line = name => { const r = rec(name), c = CAST[name], set = r.ww + r.wl === 0 ? c.fresh : r.ww > r.wl ? c.ahead : r.ww < r.wl ? c.behind : c.even; return set[(dayNum() + r.ww + r.wl) % set.length]; };
+// today's call-out: one family member asks for you by name, in one game
+function callout() { const d = dayNum(), names = ['Cousin Dre', 'Miss Loretta', 'Uncle Ray'], gs = Object.keys(CALL); return { name: names[d % 3], v: gs[(d * 7 + 3) % gs.length], day: d }; }
+function setRival(v, name) {
+  if (v === 'pool' || !S || !S.games[v]) return; const lvl = CAST[name].lvl;
+  if (v === 'memory') S.setOpt(v, 'mode', lvl === 'hard' ? 'sharp' : lvl); else if (v === 'eights') S.setOpt(v, 'n', 2); else S.setOpt(v, 'level', lvl);
+}
+function play(v, name) { SH.go(v); if (v === 'pool') return; setRival(v, name); setTimeout(() => { const g = S.games[v]; if (!g) return; const G = g._G, cur = v === 'memory' ? G.mode : v === 'eights' ? (G.n === 2 ? 'easy' : '') : G.level, want = v === 'memory' && CAST[name].lvl === 'hard' ? 'sharp' : CAST[name].lvl; if (!(G.started && !G.over && cur === want && SH.save && SH.save.quiet(v, G))) g._new(); }, 220); }
+let lastVs = null;
+if (SH.onResult) { const orig = SH.onResult; SH.onResult = function (game, res, extra) {
+  const out = orig.apply(this, arguments); lastVs = null;
+  try {
+    let vs = extra && extra.vs; if (game === 'pool' && window.McRules) vs = POOL[McRules.get('pool').opp];
+    if (vs && CAST[vs] && (res === 'w' || res === 'l')) {
+      const r = rec(vs); if (res === 'w') { r.w++; r.ww++; r.run++; } else { r.l++; r.wl++; r.run = 0; } r.last = { v: game, res, at: Date.now() }; lastVs = vs;
+      const c = callout(); if (res === 'w' && c.name === vs && c.v === game && F.call.day !== c.day) { F.call = { day: c.day, name: vs, v: game }; const got = SH.wallet && SH.wallet.earn ? SH.wallet.earn(20, 'Answered the call-out') : 0; setTimeout(() => SH.toast(`You answered ${vs}’s call-out${got ? ` · +${got} McLearn Bucks` : ''}`, 'crown'), 1200); }
+      save();
+    }
+    stamp(game.replace(/-.*$/, ''), res === 'w');
+  } catch (e) { /* keeping score must never break a game */ }
+  return out; }; }
+if (S) S.onFinish(r => { if (!lastVs) return; const end = $(r.v + '-end'), card = end && end.querySelector('.so-endcard'), x = rec(lastVs); if (card) card.querySelector('.row').insertAdjacentHTML('beforebegin', `<div class="fam-line"><b>This week: you ${x.ww} · ${lastVs} ${x.wl}</b><span>${line(lastVs)}</span></div>`); });
+
+// ---------- Arena Passport ----------
+const PP = LS.get('passport', null) || { g: {}, paid: 0 };
+const cat = () => SH.catalog || [];
+function seedPassport() { try { const P = LS.get('player', null); if (P && P.played) for (const k of Object.keys(P.played)) { const v = k.replace(/-.*$/, ''); if (!PP.g[v]) PP.g[v] = { p: 1, w: P.games && P.games[k] && P.games[k].w ? 1 : 0 }; } } catch (e) { /* first visit */ } }
+const stamped = () => cat().filter(g => PP.g[g.v]).length, wonCount = () => cat().filter(g => PP.g[g.v] && PP.g[g.v].w).length;
+const MILE = [[5, 25], [10, 50], [20, 100], [34, 250]];
+function stamp(v, win) {
+  if (!cat().some(g => g.v === v)) return; const first = !PP.g[v]; const e = PP.g[v] = PP.g[v] || { p: 0, w: 0 }; e.p++; if (win) e.w++;
+  const n = stamped(); for (const [at, pay] of MILE) if (n >= at && PP.paid < at) { PP.paid = at; const got = SH.wallet && SH.wallet.earn ? SH.wallet.earn(pay, `Passport: ${at} tables`) : 0; setTimeout(() => SH.toast(`Arena Passport — ${at} tables stamped${got ? ` · +${got} McLearn Bucks` : ''}`, 'crown'), 1800); }
+  if (first) setTimeout(() => SH.toast(`New passport stamp · ${n} of ${cat().length}`), 2600);
+  LS.set('passport', PP);
+}
+function nextStamp() { const open = cat().filter(g => !PP.g[g.v]); return open.length ? open[dayNum() % open.length] : null; }
+function passport() {
+  let m = $('pp-modal'); if (!m) { m = document.createElement('div'); m.id = 'pp-modal'; m.className = 'modal hidden'; m.setAttribute('role', 'dialog'); m.setAttribute('aria-modal', 'true'); m.setAttribute('aria-labelledby', 'pp-title'); document.body.appendChild(m);
+    m.addEventListener('click', e => { if (e.target === m || e.target.closest('#pp-x')) m.classList.add('hidden'); const b = e.target.closest('[data-pp]'); if (b) { m.classList.add('hidden'); SH.go(b.dataset.pp); } });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') m.classList.add('hidden'); }); }
+  const n = stamped(), tot = cat().length, nx = MILE.find(([at]) => at > PP.paid);
+  m.innerHTML = `<div class="mcard pp-card"><div class="between"><h3 class="serif" id="pp-title">Arena Passport</h3><button class="btn btn-ghost" id="pp-x" aria-label="Close">✕</button></div>
+    <p class="tiny muted">One stamp for every table you sit down at. A gold ring means you have won there. <b>${n} of ${tot}</b> stamped · <b>${wonCount()}</b> won${nx ? ` · next reward at ${nx[0]} tables (+${nx[1]} McLearn Bucks)` : ' · every reward collected'}.</p>
+    <div class="pp-grid">${cat().map(g => { const e = PP.g[g.v]; return `<button class="pp-s ${e ? 'on' : ''} ${e && e.w ? 'won' : ''}" data-pp="${g.v}" aria-label="${g.title}: ${e ? (e.w ? 'won' : 'played') : 'not visited yet'}">${SH.gameIcon(g, 46)}<span>${g.title}</span>${e && e.w ? '<i>✓</i>' : ''}</button>`; }).join('')}</div></div>`;
+  m.classList.remove('hidden'); const x = $('pp-x'); if (x) x.focus();
+}
+
+// ---------- lobby card ----------
+function face(name, s) { const c = CAST[name]; return `<span class="fam-face" style="--h:${c.hue};--s:${s || 44}px" aria-hidden="true">${name.split(' ').map(w => w[0]).join('')}</span>`; }
+function render() {
+  const cont = $('cont-row'); if (!cont) return;
+  let el = $('family-row'); if (!el) { el = document.createElement('section'); el.id = 'family-row'; el.className = 'fam'; cont.after(el); el.addEventListener('click', click); }
+  const c = callout(), answered = F.call.day === c.day, wk = week();
+  const names = Object.keys(CAST).filter(n => n !== 'Deacon Earl' || F.r[n]).sort((a, b) => ((F.r[b] && F.r[b].last ? F.r[b].last.at : 0) - (F.r[a] && F.r[a].last ? F.r[a].last.at : 0)));
+  names.forEach(rec); // roll any finished week into the history before reading it
+  const lastWk = F.hist.filter(h => h.wk === wk - 1), wrap = lastWk.length ? `Last week: ${lastWk.map(h => h.w > h.l ? `you took the series from ${h.name} ${h.w}–${h.l}` : h.w < h.l ? `${h.name} took the series ${h.l}–${h.w}` : `you and ${h.name} split ${h.w}–${h.l}`).join(' · ')}.` : '';
+  const n = stamped(), tot = cat().length, nx = nextStamp();
+  el.innerHTML = `<div class="sec-h"><h3>The Family Table</h3><span>They keep score all week · computer players</span></div>
+    <div class="fam-call ${answered ? 'done' : ''}">${face(c.name, 52)}<div><span class="label">${answered ? 'Call-out answered ✓' : 'Today’s call-out'}</span><b>${c.name} wants ${CALL[c.v]}.</b><small>${answered ? 'You showed up and won. A new call-out comes tomorrow.' : 'Win it today for bragging rights and a little bonus.'}</small></div>${answered ? '' : `<button class="btn btn-lux" data-fam="${c.v}|${c.name}">Answer the call</button>`}</div>
+    <div class="fam-grid">${names.map(name => { const r = rec(name), g = r.last && GAMES[r.last.v] ? r.last.v : name === 'Deacon Earl' ? 'pool' : ['four', 'bowling', 'dots'][Object.keys(CAST).indexOf(name) % 3]; return `<div class="fam-c">${face(name)}<div class="fam-t"><b>${name}</b><small>${CAST[name].tag}</small><span class="fam-rec">${r.ww + r.wl ? `This week: you <b>${r.ww}</b> – <b>${r.wl}</b>` : 'No games yet this week'}${r.w + r.l ? ` · all-time ${r.w}–${r.l}` : ''}${r.run >= 3 ? ` · 🔥 ${r.run} straight` : ''}</span><em>${line(name)}</em></div><button class="btn btn-sec" data-fam="${g}|${name}">${r.last ? 'Rematch' : 'Play'} · ${GAMES[g]}</button></div>`; }).join('')}</div>
+    ${wrap ? `<div class="tiny muted fam-wrap">${wrap}</div>` : ''}
+    <button class="pp-bar" data-passport aria-label="Arena Passport: ${n} of ${tot} tables stamped. Open passport."><span class="pp-ic">🛂</span><span class="pp-tx"><b>Arena Passport</b><small>${n} of ${tot} tables stamped${nx ? ` · next stamp: ${nx.title}` : ' · every table visited!'}</small></span><span class="pp-meter"><i style="width:${Math.round(n / Math.max(1, tot) * 100)}%"></i></span></button>`;
+  save();
+}
+function click(e) { const f = e.target.closest('[data-fam]'); if (f) { const [v, name] = f.dataset.fam.split('|'); return play(v, name); } if (e.target.closest('[data-passport]')) passport(); }
+const lobby = $('view-lobby');
+if (lobby) { new MutationObserver(() => { if (!lobby.classList.contains('hidden')) render(); }).observe(lobby, { attributes: true, attributeFilter: ['class'] }); const boot = () => { seedPassport(); render(); }; if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else setTimeout(boot, 0); }
+SH.family = { render, passport, callout, rec, line, play, _F: F, _PP: PP, _stamp: stamp, _week: week };
 })();
 
 </script>
@@ -13396,6 +14707,8 @@ const CATS = [
   ['partner', 'Partner Tables', 'Bring a partner — the Southern way'],
   ['board', 'Board & Strategy', 'Think three moves ahead'],
   ['cards', 'Card Table Classics', 'Quick hands, big talk'],
+  ['quiet', 'The Quiet Corner', 'Just you and the puzzle — pick up any time'],
+  ['quick', 'Quick Play', 'Two-minute games against the family'],
   ['casino', 'Practice Casino', 'Practice chips only — games of chance with strategy, never real money']
 ];
 const GAMES = [
@@ -13416,13 +14729,25 @@ const GAMES = [
   { v: 'gofish', title: 'Go Fish', sub: 'The family favorite. Ask, fish, and make your books.', cats: ['cards'], icon: 'gofish', h1: '#052f45', h2: '#1aa0c8', stat: () => rec('gf-stats'), keys: 'go fish kids family' },
   { v: 'outdoors', title: 'McLearn Outdoors', sub: 'Fish the Rez, the Pearl and the Gulf, sit a Delta duck blind or a piney-woods deer stand — fair chase, no gore.', cats: ['orig'], icon: 'outdoors', h1: '#1f3a1c', h2: '#7a5a2a', stat: () => { const s = LS.get('od-stats', { trips: 0, w: 0 }); return `${s.trips} trips · ${s.w} wins`; }, keys: 'hunting fishing outdoors bass crappie catfish redfish duck hunting deer stand reservoir pearl river gulf coast delta photo safari' },
   { v: 'pool', title: 'McLearn Pool Room', sub: 'Real ball physics on four tables — Professional, Pool Room, Standard Online and Southern Style. 8, 9 and 10-Ball.', cats: ['board'], icon: 'pool', h1: '#0d3b24', h2: '#1e7a43', stat: () => rec('pool-stats'), keys: 'pool billiards 8 ball eight ball 9 ball nine ball 10 ball cue table pool hall southern juke joint bar box' },
+  { v: 'solitaire', title: 'Solitaire', sub: 'Klondike with tap-to-move, undo and deals that can always be won.', cats: ['quiet'], icon: 'solitaire', h1: '#0f3a26', h2: '#22845a', stat: () => { const s = LS.get('solitaire-stats', { w: 0 }); return s.w ? `${s.w} win${s.w === 1 ? '' : 's'}` : 'New'; }, keys: 'klondike patience cards solo quiet' },
+  { v: 'sudoku', title: 'Track Grid · Sudoku', sub: 'A fresh one-answer puzzle every time. Notes, hints and three levels.', cats: ['quiet'], icon: 'sudoku', h1: '#1a1440', h2: '#5a4fd0', stat: () => { const s = LS.get('sudoku-stats', { w: 0 }); return s.w ? `${s.w} win${s.w === 1 ? '' : 's'}` : 'New'; }, keys: 'sudoku numbers puzzle grid logic' },
+  { v: 'mahjong', title: 'Mahjong Solitaire', sub: 'A layered wall of tiles — match the free pairs. Every board can be cleared.', cats: ['quiet'], icon: 'mahjong', h1: '#3a2a0a', h2: '#b8861f', stat: () => { const s = LS.get('mahjong-stats', { w: 0 }); return s.w ? `${s.w} win${s.w === 1 ? '' : 's'}` : 'New'; }, keys: 'mahjong tiles shanghai match solo' },
+  { v: 'stack', title: 'Royalty Stack', sub: 'Slide and merge from a Hum to a Legend — the 2048 puzzle, McLearn style.', cats: ['quiet'], icon: 'stack', h1: '#3a0f1b', h2: '#c9684a', stat: () => { const s = LS.get('stack-stats', { w: 0 }); return s.w ? `${s.w} win${s.w === 1 ? '' : 's'}` : 'New'; }, keys: '2048 merge slide numbers puzzle' },
+  { v: 'mines', title: 'Sound Check', sub: 'Clear the stage without stepping on a hot mic. First tap is always safe.', cats: ['quiet'], icon: 'mines', h1: '#0d1a3a', h2: '#2e5fd0', stat: () => { const s = LS.get('mines-stats', { w: 0 }); return s.w ? `${s.w} win${s.w === 1 ? '' : 's'}` : 'New'; }, keys: 'minesweeper mines flags logic' },
+  { v: 'memory', title: 'Set List', sub: 'Memory match — solo for fewest turns, or against a rival who is watching too.', cats: ['quick'], icon: 'memory', h1: '#3b0a2a', h2: '#e0457b', stat: () => { const s = LS.get('memory-stats', { w: 0 }); return s.w ? `${s.w} win${s.w === 1 ? '' : 's'}` : 'New'; }, keys: 'memory match pairs concentration' },
+  { v: 'four', title: 'Four in a Row', sub: 'Drop discs, line up four. Three opponents from easygoing to sharp.', cats: ['quick'], icon: 'four', h1: '#3a0612', h2: '#b3264a', stat: () => { const s = LS.get('four-stats', { w: 0 }); return s.w ? `${s.w} win${s.w === 1 ? '' : 's'}` : 'New'; }, keys: 'connect four in a row discs drop' },
+  { v: 'dots', title: 'Dots & Boxes', sub: 'Draw a line, close a box, go again. The pencil-and-paper classic.', cats: ['quick'], icon: 'dots', h1: '#052c2a', h2: '#13806e', stat: () => { const s = LS.get('dots-stats', { w: 0 }); return s.w ? `${s.w} win${s.w === 1 ? '' : 's'}` : 'New'; }, keys: 'dots and boxes lines squares paper' },
+  { v: 'ttt', title: 'Tic-Tac-Toe', sub: 'Classic — or Three’s Company, where marks lift off and nobody draws.', cats: ['quick'], icon: 'ttt', h1: '#2a1a3a', h2: '#8a4fd0', stat: () => { const s = LS.get('ttt-stats', { w: 0 }); return s.w ? `${s.w} win${s.w === 1 ? '' : 's'}` : 'New'; }, keys: 'tic tac toe noughts crosses xo' },
+  { v: 'eights', title: 'Crazy Eights', sub: 'Match suit or number, eights are wild. Two to four at the table.', cats: ['cards'], icon: 'eights', h1: '#3d2412', h2: '#c97a26', stat: () => { const s = LS.get('eights-stats', { w: 0 }); return s.w ? `${s.w} win${s.w === 1 ? '' : 's'}` : 'New'; }, keys: 'crazy eights 8s shedding wild' },
+  { v: 'bowling', title: 'Track Lanes', sub: 'Ten frames against a rival’s scorecard. Spot, aim, power — bowl.', cats: ['quick'], icon: 'bowling', h1: '#3d2412', h2: '#9a5a26', stat: () => { const s = LS.get('bowling-stats', { w: 0 }); return s.w ? `${s.w} win${s.w === 1 ? '' : 's'}` : 'New'; }, keys: 'bowling ten pin strike spare lanes' },
+  { v: 'pong', title: 'Feedback Loop', sub: 'A fast paddle game. Keep the signal bouncing — first to seven.', cats: ['quick'], icon: 'pong', h1: '#12060a', h2: '#6b1630', stat: () => { const s = LS.get('pong-stats', { w: 0 }); return s.w ? `${s.w} win${s.w === 1 ? '' : 's'}` : 'New'; }, keys: 'pong paddle ball arcade tennis' },
   { v: 'war', title: 'I Declare War', sub: 'Classic War — plus a Pro Tactics mode where you pick your fighter.', cats: ['cards'], icon: 'war', h1: '#3b0b0b', h2: '#a02020', stat: () => rec('war-stats'), keys: 'war i declare war' },
   { v: 'blackjack', title: '21 · Blackjack', sub: 'The card game 21 on a real casino table. Practice chips, and a coach that grades every decision.', cats: ['casino'], icon: 'blackjack', h1: '#0f3a26', h2: '#22845a', stat: () => `Chips ${(LS.get('bj', { bank: 1000 }).bank).toLocaleString()}`, keys: '21 twenty-one twenty one blackjack card game casino' },
   { v: 'roulette', title: 'McLearn Roulette', sub: 'European or American wheel, a full betting layout and an odds coach. Practice chips only.', cats: ['casino'], icon: 'roulette', h1: '#3a0612', h2: '#b3264a', stat: () => `Chips ${(LS.get('rl', { bank: 1000 }).bank).toLocaleString()}`, keys: 'roulette wheel red black casino spin zero' },
   { v: 'keno', title: 'McLearn Keno', sub: 'Pick up to 10 numbers, watch 20 balls drop. Gold Ball doubles it. Practice credits only.', cats: ['casino'], icon: 'keno', h1: '#0d1a3a', h2: '#2e5fd0', stat: () => `Credits ${(LS.get('kn', { bank: 500 }).bank).toLocaleString()}`, keys: 'keno lottery numbers 80 balls lounge casino' },
   { v: 'poker', title: "Hold'em Poker", sub: 'Sit & Go tournament with practice chips and a live win-odds coach.', cats: ['casino'], icon: 'poker', h1: '#052c2a', h2: '#13806e', stat: () => { const s = LS.get('pk-stats', { w: 0, l: 0 }); return `${s.w} titles`; }, keys: 'poker holdem texas chips' }
 ];
-const TAG = { outdoors: 'First light. Lines wet. Fair chase.', pool: 'Rack ’em. Run the table.', dominoes: 'Slam the bones.', chess: 'Think like a grandmaster.', spades: 'Bid it. Make it. Bag it.', bidwhist: 'Uptown, Downtown — your call.', mogul: 'Own the whole catalog.', showdown: 'Write it. Sing it. Own it.', bingo: 'Daub it. Shout it. BINGO!', keno: 'Pick your spots. Watch them drop.', bourre: 'Take a trick or get boorayed.', roulette: 'Place your bets. Watch it spin.', colorclash: 'Match it or draw it.', tonk: 'Drop it like it’s low.', pittypat: 'Pair it up, Pitty Pat!', checkers: 'King me.', parcheesi: 'Race every pawn home.', gofish: 'Ask, fish, book it.', war: 'I — DE — CLARE — WAR!', blackjack: 'Get to 21 — beat the dealer.', poker: 'Last stack standing.' };
+const TAG = { solitaire: 'The quiet corner.', sudoku: 'One answer. No guessing.', mahjong: 'Clear the wall.', stack: 'From a Hum to a Legend.', mines: 'Check the stage. Mind the mics.', memory: 'Remember the set.', four: 'Line up four.', dots: 'Close the box. Go again.', ttt: 'Three in a row.', eights: 'Eights are wild.', bowling: 'Spot. Aim. Bowl.', pong: 'Keep the signal bouncing.', outdoors: 'First light. Lines wet. Fair chase.', pool: 'Rack ’em. Run the table.', dominoes: 'Slam the bones.', chess: 'Think like a grandmaster.', spades: 'Bid it. Make it. Bag it.', bidwhist: 'Uptown, Downtown — your call.', mogul: 'Own the whole catalog.', showdown: 'Write it. Sing it. Own it.', bingo: 'Daub it. Shout it. BINGO!', keno: 'Pick your spots. Watch them drop.', bourre: 'Take a trick or get boorayed.', roulette: 'Place your bets. Watch it spin.', colorclash: 'Match it or draw it.', tonk: 'Drop it like it’s low.', pittypat: 'Pair it up, Pitty Pat!', checkers: 'King me.', parcheesi: 'Race every pawn home.', gofish: 'Ask, fish, book it.', war: 'I — DE — CLARE — WAR!', blackjack: 'Get to 21 — beat the dealer.', poker: 'Last stack standing.' };
 const SOLO = (() => { try { return new URLSearchParams(location.search).get('solo') === '1'; } catch (e) { return false; } })();
 if (SOLO) document.body.classList.add('solo');
 const views = ['lobby', 'challenges', 'leaders'].concat(GAMES.map(g => g.v)).filter(v => document.getElementById('view-' + v));
