@@ -14614,8 +14614,9 @@ const CAST = {
   'Deacon Earl': { hue: 130, lvl: 'pro', tag: 'the pool room pro',
     ahead: ['“Well I’ll be. You ran that table clean.”'], behind: ['“Chalk up, son. We’ve got all evening.”'], even: ['“Tied. Rack ’em.”'], fresh: ['“Table’s open whenever you are.”'] }
 };
-const GAMES = { four: 'Four in a Row', dots: 'Dots & Boxes', ttt: 'Tic-Tac-Toe', bowling: 'Track Lanes', pong: 'Feedback Loop', memory: 'Set List', pool: 'Pool', eights: 'Crazy Eights' };
-const CALL = { four: 'four in a row', dots: 'a game of Dots & Boxes', ttt: 'a match of Tic-Tac-Toe', bowling: 'ten frames at the lanes', pong: 'a game of Feedback Loop', memory: 'the Set List cards' };
+const GAMES = { four: 'Four in a Row', dots: 'Dots & Boxes', ttt: 'Tic-Tac-Toe', bowling: 'Track Lanes', pong: 'Feedback Loop', memory: 'Set List', pool: 'Pool', eights: 'Crazy Eights', spades: 'Spades', dominoes: 'Dominoes', checkers: 'Checkers', gofish: 'Go Fish', tonk: 'Tonk', bourre: 'Bourré', war: 'War' };
+const TABLE = ['spades', 'dominoes', 'checkers', 'gofish', 'tonk', 'bourre', 'war']; let sit = null;
+const CALL = { four: 'four in a row', dots: 'a game of Dots & Boxes', ttt: 'a match of Tic-Tac-Toe', bowling: 'ten frames at the lanes', pong: 'a game of Feedback Loop', memory: 'the Set List cards', spades: 'a hand of Spades', dominoes: 'a game of Dominoes', checkers: 'a game of Checkers', gofish: 'a game of Go Fish', tonk: 'a hand of Tonk' };
 const POOL = { rookie: 'Cousin Dre', hustler: 'Miss Loretta', shark: 'Uncle Ray', pro: 'Deacon Earl' };
 const now = () => new Date(), dayNum = (d = now()) => Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 864e5), week = (d = now()) => Math.floor((dayNum(d) + 3) / 7);
 const F = LS.get('family', null) || { r: {}, hist: [], call: {} };
@@ -14628,12 +14629,13 @@ function setRival(v, name) {
   if (v === 'pool' || !S || !S.games[v]) return; const lvl = CAST[name].lvl;
   if (v === 'memory') S.setOpt(v, 'mode', lvl === 'hard' ? 'sharp' : lvl); else if (v === 'eights') S.setOpt(v, 'n', 2); else S.setOpt(v, 'level', lvl);
 }
-function play(v, name) { SH.go(v); if (v === 'pool') return; setRival(v, name); setTimeout(() => { const g = S.games[v]; if (!g) return; const G = g._G, cur = v === 'memory' ? G.mode : v === 'eights' ? (G.n === 2 ? 'easy' : '') : G.level, want = v === 'memory' && CAST[name].lvl === 'hard' ? 'sharp' : CAST[name].lvl; if (!(G.started && !G.over && cur === want && SH.save && SH.save.quiet(v, G))) g._new(); }, 220); }
+function play(v, name) { SH.go(v); if (TABLE.includes(v)) { sit = { v, name, at: Date.now() }; return; } if (v === 'pool') return; setRival(v, name); setTimeout(() => { const g = S.games[v]; if (!g) return; const G = g._G, cur = v === 'memory' ? G.mode : v === 'eights' ? (G.n === 2 ? 'easy' : '') : G.level, want = v === 'memory' && CAST[name].lvl === 'hard' ? 'sharp' : CAST[name].lvl; if (!(G.started && !G.over && cur === want && SH.save && SH.save.quiet(v, G))) g._new(); }, 220); }
 let lastVs = null;
 if (SH.onResult) { const orig = SH.onResult; SH.onResult = function (game, res, extra) {
   const out = orig.apply(this, arguments); lastVs = null;
   try {
     let vs = extra && extra.vs; if (game === 'pool' && window.McRules) vs = POOL[McRules.get('pool').opp];
+    if (!vs && sit && sit.v === game && Date.now() - sit.at < 36e5) vs = sit.name;
     if (vs && CAST[vs] && (res === 'w' || res === 'l')) {
       const r = rec(vs); if (res === 'w') { r.w++; r.ww++; r.run++; } else { r.l++; r.wl++; r.run = 0; } r.last = { v: game, res, at: Date.now() }; lastVs = vs;
       const c = callout(); if (res === 'w' && c.name === vs && c.v === game && F.call.day !== c.day) { F.call = { day: c.day, name: vs, v: game }; const got = SH.wallet && SH.wallet.earn ? SH.wallet.earn(20, 'Answered the call-out') : 0; setTimeout(() => SH.toast(`You answered ${vs}’s call-out${got ? ` · +${got} McLearn Bucks` : ''}`, 'crown'), 1200); }
@@ -14680,7 +14682,7 @@ function render() {
   const n = stamped(), tot = cat().length, nx = nextStamp();
   el.innerHTML = `<div class="sec-h"><h3>The Family Table</h3><span>They keep score all week · computer players</span></div>
     <div class="fam-call ${answered ? 'done' : ''}">${face(c.name, 52)}<div><span class="label">${answered ? 'Call-out answered ✓' : 'Today’s call-out'}</span><b>${c.name} wants ${CALL[c.v]}.</b><small>${answered ? 'You showed up and won. A new call-out comes tomorrow.' : 'Win it today for bragging rights and a little bonus.'}</small></div>${answered ? '' : `<button class="btn btn-lux" data-fam="${c.v}|${c.name}">Answer the call</button>`}</div>
-    <div class="fam-grid">${names.map(name => { const r = rec(name), g = r.last && GAMES[r.last.v] ? r.last.v : name === 'Deacon Earl' ? 'pool' : ['four', 'bowling', 'dots'][Object.keys(CAST).indexOf(name) % 3]; return `<div class="fam-c">${face(name)}<div class="fam-t"><b>${name}</b><small>${CAST[name].tag}</small><span class="fam-rec">${r.ww + r.wl ? `This week: you <b>${r.ww}</b> – <b>${r.wl}</b>` : 'No games yet this week'}${r.w + r.l ? ` · all-time ${r.w}–${r.l}` : ''}${r.run >= 3 ? ` · 🔥 ${r.run} straight` : ''}</span><em>${line(name)}</em></div><button class="btn btn-sec" data-fam="${g}|${name}">${r.last ? 'Rematch' : 'Play'} · ${GAMES[g]}</button></div>`; }).join('')}</div>
+    <div class="fam-grid">${names.map(name => { const r = rec(name), g = r.last && GAMES[r.last.v] ? r.last.v : name === 'Deacon Earl' ? 'pool' : ['four', 'spades', 'dots', 'dominoes', 'bowling', 'checkers'][(Object.keys(CAST).indexOf(name) + dayNum()) % 6]; return `<div class="fam-c">${face(name)}<div class="fam-t"><b>${name}</b><small>${CAST[name].tag}</small><span class="fam-rec">${r.ww + r.wl ? `This week: you <b>${r.ww}</b> – <b>${r.wl}</b>` : 'No games yet this week'}${r.w + r.l ? ` · all-time ${r.w}–${r.l}` : ''}${r.run >= 3 ? ` · 🔥 ${r.run} straight` : ''}</span><em>${line(name)}</em></div><button class="btn btn-sec" data-fam="${g}|${name}">${r.last ? 'Rematch' : 'Play'} · ${GAMES[g]}</button></div>`; }).join('')}</div>
     ${wrap ? `<div class="tiny muted fam-wrap">${wrap}</div>` : ''}
     <button class="pp-bar" data-passport aria-label="Arena Passport: ${n} of ${tot} tables stamped. Open passport."><span class="pp-ic">🛂</span><span class="pp-tx"><b>Arena Passport</b><small>${n} of ${tot} tables stamped${nx ? ` · next stamp: ${nx.title}` : ' · every table visited!'}</small></span><span class="pp-meter"><i style="width:${Math.round(n / Math.max(1, tot) * 100)}%"></i></span></button>`;
   save();
