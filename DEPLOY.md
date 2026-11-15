@@ -17,3 +17,10 @@ The site is static: no build step. Chosen setup: **Cloudflare Pages** (option A)
 ## After deploying, check
 - `/arena/` loads and the footer says 34 games.
 - `/games` and `/chess` redirect to `/arena/`.
+
+## C. Automatic deploy from GitHub (added)
+`.github/workflows/deploy-cloudflare.yml` publishes to Pages on every push to `main`.
+One-time: in GitHub > Settings > Secrets and variables > Actions, add
+`CLOUDFLARE_API_TOKEN` (Cloudflare token with Pages edit permission) and `CLOUDFLARE_ACCOUNT_ID`.
+If your Pages project isn't named `mclearn-media`, add a variable `PAGES_PROJECT` with its name.
+Until the secrets exist, the action just shows a reminder and does nothing.
