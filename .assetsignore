@@ -1,4 +1,5 @@
 .git
+.deployed
 .git/*
 .github
 .gitignore
