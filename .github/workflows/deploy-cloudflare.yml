@@ -24,6 +24,13 @@ jobs:
         run: |
           mkdir -p public
           rsync -a --exclude-from=.assetsignore --exclude public ./ public/
+      - name: Pre-flight check
+        run: |
+          for f in index.html arena/index.html listen.html legal.html 404.html _headers _redirects; do
+            test -s "public/$f" || { echo "::error::missing $f"; exit 1; }
+          done
+          grep -q "34 games" public/arena/index.html || { echo "::error::Arena build is not the 34-game version"; exit 1; }
+          echo "Ready: $(find public -type f | wc -l) files, $(du -sh public | cut -f1)"
       - name: Deploy
         if: ${{ env.HAS_TOKEN == 'true' }}
         uses: cloudflare/wrangler-action@v3
